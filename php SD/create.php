@@ -15,7 +15,7 @@ if (!isset($name, $studentnum, $email, $password, $transcript){
         die();
 }
 /* Select queries return a resultset */
-$result = mysqli_query($link, "INSERT INTO USER_INFORMATION(NAME, STUDENT_NUMBER, EMAIL_ADDRESS, PASSWORD, TRANSCRIPT) VALUES('$name','$studentnum','$email','$password','$transcript'"));
+$result = mysqli_query($link, "INSERT INTO USER_INFORMATION(NAME, STUDENT_NUMBER, EMAIL_ADDRESS, PASSWORD, TRANSCRIPT) VALUES('$name','$studentnum','$email','$password','$transcript')");
 $output["result"]=$result;
 mysqli_close($link);
 echo json_encode($output);
