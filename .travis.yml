@@ -53,7 +53,8 @@ before_script:
   - android-wait-for-emulator
  
 script:
-  - ./gradlew dependencyCheckAnalyze build
+  ##- ./gradlew dependencyCheckAnalyze build
+  - ./gradlew build
   - adb shell input keyevent 82
   - ./gradlew connectedCheck -PdisablePreDex --stacktrace
   
