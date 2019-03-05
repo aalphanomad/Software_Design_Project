@@ -53,9 +53,6 @@ before_script:
   - android-wait-for-emulator
  
 script:
-  ##- ./gradlew dependencyCheckAnalyze build
-  - ./gradlew build
-  - adb shell input keyevent 82
-  - ./gradlew connectedCheck -PdisablePreDex --stacktrace
+  - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
   
 after_failure: "cat $TRAVIS_BUILD_DIR/app/gen_build/reports/lint-results.xml"
