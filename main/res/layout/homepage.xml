@@ -24,11 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView12"
         android:layout_centerHorizontal="true"
-        android:onClick="something"
+        android:onClick="add"
         android:text="Add Lecture" />
 
     <LinearLayout
-        android:id="@+id/linLay"
         android:layout_width="match_parent"
         android:layout_height="480dp"
         android:layout_alignEnd="@+id/someBtn"
@@ -36,6 +35,31 @@
         android:layout_below="@+id/someBtn"
         android:layout_marginTop="13dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/t1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="22dp"
+            android:background="@android:color/holo_purple"
+            android:text="Subject to lecture: none"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/t2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_red_light"
+            android:text="# of hours: none"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/t3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_orange_light"
+            android:text="Pay Rate: R 99.00/hr"
+            android:textSize="22sp" />
 
     </LinearLayout>
 </RelativeLayout>
