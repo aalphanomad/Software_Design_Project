@@ -39,7 +39,7 @@ public class qrScanner extends AppCompatActivity implements ZXingScannerView.Res
     @Override
     public void handleResult(Result result) {
 
-        mainQR.resultTV.setText(result.getText());
+        //mainQR.resultTV.setText(result.getText());
         onBackPressed();
 
     }
@@ -55,3 +55,4 @@ public class qrScanner extends AppCompatActivity implements ZXingScannerView.Res
         ScannerView.startCamera();
     }
 }
+
