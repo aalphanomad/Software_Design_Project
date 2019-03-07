@@ -7,6 +7,15 @@
     android:gravity="center"
     tools:context="com.example.admin.tutortracker.MainActivity">
 
+    <TextView
+        android:id="@+id/tvCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Course Tutored: "
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/btn1"
         android:layout_width="wrap_content"
@@ -40,18 +49,6 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tv2"
-        android:gravity="center"
-        android:text="Payroll No: "
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/tvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,12 +61,24 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv4"
+        android:id="@+id/tvVenue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tv3"
+        android:layout_below="@+id/tvVenue"
+        android:gravity="center"
+        android:text="Venue: "
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvVenue"
         android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="Duration Of Lecture: "
@@ -81,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tv4"/>
+        android:layout_below="@id/tvDur"/>
 
     <Button
         android:id="@+id/btn2"
