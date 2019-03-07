@@ -10,34 +10,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String[]names={"Amy","John"};
-    InputStream is=null;
-    String line=null;
-    String result=null;
-    String temp="";
-    String[]arr;
+    String[] names = {"Amy", "John"};
+    InputStream is = null;
+    String line = null;
+    String result = null;
+    String temp = "";
+    String[] arr;
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
+    TextView dummy;
+    Button Claims;
+    String name;
+    String stud_num;
+
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,50 +39,41 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Intent i = getIntent();
 
-        int id = i.getIntExtra("user_id",-1);
+         name = i.getStringExtra("name");
+          stud_num = i.getStringExtra("stud_num");
         mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
+        dummy = findViewById(R.id.Name_TB);
+        if(dummy.length()!=0 || name.length()!=0) {
+            dummy.setText(name.toUpperCase().charAt(0) + name.substring(1, name.length()) + "!");
+        }
+
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-/*
-        try{
-            HttpClient httpClient=new DefaultHttpClient();
-            HttpPost httpPost=new HttpPost("http://lamp.ms.wits.ac.za/~s1601745/student.php");
-            HttpResponse response=httpClient.execute(httpPost);
-            HttpEntity entity=response.getEntity();
-            is=entity.getContent();
-        }catch(Exception e){
-            System.out.println("Error");
-        }
-        try{
-            BufferedReader reader=new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-            StringBuilder sb=new StringBuilder();
-            while((line=reader.readLine())!=null)
-                sb.append(line+"\n");
-            result=sb.toString();
-            is.close();
-            System.out.print("Here is the data");
-            System.out.print(result);
-            JSONArray jArray=new JSONArray(result);
-            int count=jArray.length();
-            for(int t=0;t<count;t++){
-                JSONObject json_data=jArray.getJSONObject(t);
-                temp+=json_data.getString("USERNAME")+":";
-                arr=temp.split(":");
-                System.out.print(arr.toString());
-                lv.setAdapter(new ArrayAdapter<String>(HomeActivity.this,android.R.layout.simple_list_item_1,arr));
+        Claims = findViewById(R.id.Claims_but);
+        Claims.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, Claim_Form.class);
+
+                i.putExtra("insert","insert");
+
+                    i.putExtra("name", name);
+                i.putExtra("student_num",stud_num);
+                HomeActivity.this.startActivity(i);
+
             }
+        });
 
-
-        }catch(Exception e){
-            System.out.print("Error 2");
-        }
-*/
         setNavigationViewListener();
+    }
+
+    public void onBackPressed(){
+
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -98,26 +83,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
 
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.println("Testing"+item.getItemId());
+        System.out.println("Testing" + item.getItemId());
         switch (item.getItemId()) {
             case R.id.MyCourses: {
                 Intent myIntent = new Intent(HomeActivity.this, FirstFragment.class);
-               HomeActivity.this.startActivity(myIntent);
+                HomeActivity.this.startActivity(myIntent);
                 break;
             }
             case R.id.MySchedule: {
                 Intent myIntent = new Intent(HomeActivity.this, MySchedule.class);
-                HomeActivity.this.startActivity(myIntent);                break;
+                HomeActivity.this.startActivity(myIntent);
+                break;
             }
             case R.id.Claim: {
                 Intent myIntent = new Intent(HomeActivity.this, FourthFragment.class);
-                HomeActivity.this.startActivity(myIntent);                break;
+                HomeActivity.this.startActivity(myIntent);
+                break;
             }
             case R.id.settings: {
                 Intent myIntent = new Intent(HomeActivity.this, FifthFragment.class);
-                HomeActivity.this.startActivity(myIntent);                break;
+                HomeActivity.this.startActivity(myIntent);
+                break;
             }
         }
         mDrawerlayout.closeDrawer(GravityCompat.START);

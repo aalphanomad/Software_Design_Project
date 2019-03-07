@@ -36,8 +36,8 @@ import java.util.List;
 
 
 public class BookActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-String date,time,duration,subject,add1,add2;
-TextView et_duration,et_subject,et_add1,et_add2;
+    String date, time, duration, subject, add1, add2;
+    TextView et_duration, et_subject, et_add1, et_add2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +45,10 @@ TextView et_duration,et_subject,et_add1,et_add2;
         setContentView(R.layout.book_form);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        et_duration=(TextView)findViewById(R.id.Duration);
-        et_subject=(TextView)findViewById(R.id.Subject);
-        et_add1=(TextView)findViewById(R.id.Add1);
-        et_add2=(TextView)findViewById(R.id.Add2);
+        et_duration = (TextView) findViewById(R.id.Duration);
+        et_subject = (TextView) findViewById(R.id.Subject);
+        et_add1 = (TextView) findViewById(R.id.Add1);
+        et_add2 = (TextView) findViewById(R.id.Add2);
 
 
         Button TimeBut = (Button) findViewById(R.id.Timebut);
@@ -59,7 +59,7 @@ TextView et_duration,et_subject,et_add1,et_add2;
                 timePicker.show(getSupportFragmentManager(), "time picker");
             }
         });
-        Button book=(Button)findViewById(R.id.BookButton);
+        Button book = (Button) findViewById(R.id.BookButton);
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,17 +69,17 @@ TextView et_duration,et_subject,et_add1,et_add2;
 
     }
 
-    public void book(){
+    public void book() {
         initialize();
-        if(validate()==false)
-            {
-                Toast.makeText(this, "Booking has failed", Toast.LENGTH_SHORT).show();
-            } else {
+        if (validate() == false) {
+            Toast.makeText(this, "Booking has failed", Toast.LENGTH_SHORT).show();
+        } else {
             OnProcess();
         }
 
 
     }
+
     public boolean validate() {
         boolean valid = true;
         if (duration.isEmpty() || duration.length() > 32) {
@@ -103,10 +103,7 @@ TextView et_duration,et_subject,et_add1,et_add2;
     }
 
 
-
-
-
-    public void OnProcess(){
+    public void OnProcess() {
         InputStream is = null;
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
         //nameValuePairs.add(new BasicNameValuePair("STUDENT_ID", name));
@@ -123,7 +120,7 @@ TextView et_duration,et_subject,et_add1,et_add2;
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
-            is=entity.getContent();
+            is = entity.getContent();
         } catch (ClientProtocolException e) {
             System.out.print("Error!");
         } catch (IOException e) {
@@ -135,15 +132,11 @@ TextView et_duration,et_subject,et_add1,et_add2;
     }
 
 
-
-
-
-
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         TextView textView = (TextView) findViewById(R.id.ShowTime);
-        time=hourOfDay+":"+minute;
-        textView.setText(hourOfDay+":"+minute);
+        time = hourOfDay + ":" + minute;
+        textView.setText(hourOfDay + ":" + minute);
     }
 
     public void datePicker(View view) {
@@ -154,7 +147,7 @@ TextView et_duration,et_subject,et_add1,et_add2;
 
     private void setDate(final Calendar calendar) {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        date=dateFormat.format(calendar.getTime());
+        date = dateFormat.format(calendar.getTime());
         ((TextView) findViewById(R.id.showDate)).setText(dateFormat.format(calendar.getTime()));
     }
 
@@ -178,7 +171,7 @@ TextView et_duration,et_subject,et_add1,et_add2;
     }
 
     public void initialize() {
-       duration = et_duration.getText().toString().trim();
+        duration = et_duration.getText().toString().trim();
         subject = et_subject.getText().toString().trim();
         add1 = et_add1.getText().toString().trim();
         add2 = et_add2.getText().toString().trim();

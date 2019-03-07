@@ -26,8 +26,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 
-
-
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
     Context context;
     AlertDialog alertDialog;
@@ -44,7 +42,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         if (type.equals("reg")) {
             try {
 
-                 reg_url = "http://lamp.ms.wits.ac.za/~s1601745/create.php/";
+                reg_url = "http://lamp.ms.wits.ac.za/~s1601745/create.php/";
 
                 URL url = new URL(reg_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -53,7 +51,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-
 
 
                 String name = params[1];
@@ -67,41 +64,41 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String course4;
                 String course5;
 
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")+"&"+URLEncoder.encode("admin", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
-                if(params.length==6){
-                     course1=params[5];
-                     post_data = post_data+"&"+URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8");
+                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&" + URLEncoder.encode("admin", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+                if (params.length == 6) {
+                    course1 = params[5];
+                    post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8");
 
                 }
-                 if(params.length==7){
-                     course1=params[5];
-                     course2=params[6];
-                     post_data =post_data+"&"+URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8")+"&"+URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8");
+                if (params.length == 7) {
+                    course1 = params[5];
+                    course2 = params[6];
+                    post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8");
 
                 }
-                 if (params.length == 8) {
-                     course1=params[5];
-                     course2=params[6];
-                     course3=params[7];
-                     post_data =post_data+"&"+URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8")+"&"+URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8")+"&"+URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8");
+                if (params.length == 8) {
+                    course1 = params[5];
+                    course2 = params[6];
+                    course3 = params[7];
+                    post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8");
 
                 }
-                 if(params.length==9){
-                     course1=params[5];
-                     course2=params[6];
-                     course3=params[7];
+                if (params.length == 9) {
+                    course1 = params[5];
+                    course2 = params[6];
+                    course3 = params[7];
 
-                     course4=params[8];
-                     post_data = post_data+"&"+URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8")+"&"+URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8")+"&"+URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8")+"&"+URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8");
+                    course4 = params[8];
+                    post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8");
 
                 }
-                 if(params.length==10){
-                     course1=params[5];
-                     course2=params[6];
-                     course3=params[7];
-                     course4=params[8];
-                     course5=params[9];
-                    post_data = post_data+"&"+URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8")+"&"+URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8")+"&"+URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8")+"&"+URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8")+"&"+URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
+                if (params.length == 10) {
+                    course1 = params[5];
+                    course2 = params[6];
+                    course3 = params[7];
+                    course4 = params[8];
+                    course5 = params[9];
+                    post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8") + "&" + URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
 
                 }
 
@@ -126,12 +123,11 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else if(type=="login") {
             try {
-                String stu_num=params[1];
-                System.out.println("test!"+stu_num);
-                String password=params[2];
+                String stu_num = params[1];
+                System.out.println("test!" + stu_num);
+                String password = params[2];
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/signin.php";
                 URL url = new URL(login_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -162,17 +158,59 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 //WHERE DO I PUT IT??
 
 
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-            }  catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
 
         }
-            return null;
+        else if(type=="booking"){
+            try {
+            String name = params[1];
+            String student_num = params[2];
+            String course=params[3];
+            String date=params[4];
+            String venue=params[5];
+            String duration=params[6];
+            login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
+            URL url = new URL(login_url);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8")+ "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8")+ "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")+ "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8")+ "&" + URLEncoder.encode("duration", "UTF-8") + "=" + URLEncoder.encode(duration, "UTF-8");
+
+            bufferedWriter.write(post_data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            outputStream.close();
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            String result = "";
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                result += line;
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return result;
+
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        }
+        return null;
+    }
 
 
     @Override
@@ -183,25 +221,35 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     //When us this called
     //how to get stuff from server?
-    
+
     @Override
     protected void onPostExecute(String result) {
         try {
-            JSONObject ja =(JSONObject) new JSONObject(result);
+            JSONObject ja = (JSONObject) new JSONObject(result);
 
-            if (ja.get("result").toString().equals("0")){
+            if (ja.get("result").toString().equals("0")) {
                 Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
-            }
-            else {
-               String stud_num = ja.getString("student_num");
-                Intent i = new Intent(context, HomeActivity.class);
-               // i.putExtra("name",name);
-                context.startActivity(i);
+            } else {
+                String stud_num = ja.getString("student_num");
+                String name = ja.getString("name");
+                String admin=ja.getString("admin");
+
+                if(admin.equals("0")) {
+                    Intent i = new Intent(context, HomeActivity.class);
+                    i.putExtra("name", name);
+                    i.putExtra("stud_num", stud_num);
+                    context.startActivity(i);
+                }
+                else{
+                    Intent i=new Intent(context,mainQR.class);
+                    i.putExtra("name", name);
+                    context.startActivity(i);
+                }
 
             }
 
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

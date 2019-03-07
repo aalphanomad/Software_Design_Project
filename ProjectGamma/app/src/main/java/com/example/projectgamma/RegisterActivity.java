@@ -42,19 +42,19 @@ import java.util.Arrays;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-//SORT UPLOADNIG FROM HAMZA
+    //SORT UPLOADNIG FROM HAMZA
     private EditText et_name, et_SN, et_password, et_cpassword;
-     String name,email, Stu_Num, password, cpassword;
+    String name, email, Stu_Num, password, cpassword;
     TextView wind;
     Button regbtn;
     AlertDialog myDialog;
     private Spinner mySpinner;
-    private List<String>courses;
+    private List<String> courses;
     String item;
-    TextView Course1,Course2,Course3,Course4,Course5,Course_Error;
-    int count=0;
-    String output ;
-    ArrayList selectedItems;
+    TextView Course1, Course2, Course3, Course4, Course5, Course_Error;
+    int count = 0;
+    String output;
+    ArrayList selectedItems=new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,19 +80,18 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         Course3 = findViewById(R.id.Course3);
         Course4 = findViewById(R.id.Course4);
         Course5 = findViewById(R.id.Course5);
-        Course_Error=findViewById(R.id.Course_Error);
-        mySpinner = (Spinner) findViewById(R.id.spinner);
+        Course_Error = findViewById(R.id.Course_Error);
+        mySpinner = (Spinner) findViewById(R.id.Degree_Spinner);
         mySpinner.setOnItemSelectedListener(this);
         courses = new ArrayList<String>();
         courses.add("COMS");
         courses.add("CAM");
         courses.add("STAT");
-        System.out.println("email"+email);
+        System.out.println("email" + email);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courses);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(dataAdapter);
-
 
 
         regbtn.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +104,8 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         });
         Thread refresh = new Thread() {
             @Override
-            public void run(){
-                while(!isInterrupted()){
+            public void run() {
+                while (!isInterrupted()) {
                     try {
                         Thread.sleep(100);
                         runOnUiThread(new Runnable() {
@@ -115,20 +114,19 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
                                 count++;
                                 Stu_Num = et_SN.getText().toString().trim();
-                            if (Stu_Num.length() != 0 || count<10) {
-                                wind.setText(Stu_Num.toString() + "@students.wits.ac.za");
-                                email = et_SN.getText().toString() + "@students.wits.ac.za";
-                                System.out.println(email);
+                                if (Stu_Num.length() != 0 || count < 10) {
+                                    wind.setText(Stu_Num.toString() + "@students.wits.ac.za");
+                                    email = et_SN.getText().toString() + "@students.wits.ac.za";
+                                    System.out.println(email);
 
-                            } else {
-                                wind.setText(" " + "@students.wits.ac.za");
+                                } else {
+                                    wind.setText(" " + "@students.wits.ac.za");
+                                }
                             }
-                        }
-
 
 
                         });
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
@@ -138,30 +136,27 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
-
     @Override
-    public void onItemSelected(AdapterView<?>parent,View view,int position,long id){
-         item=parent.getItemAtPosition(position).toString();
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        item = parent.getItemAtPosition(position).toString();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        
+
     }
 
     private void showAlert() {
         AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
-         CharSequence [] The_courses = new CharSequence[50];
-         CharSequence[] COMS_Courses = {"COMS1018(IAP)", "COMS1019(BCO)", "COMS2020(MC)", "COMS2021(DBF)","COMS2022"};
-        CharSequence[] CAM_Courses={"CAM1018","CAM1019","CAM2020","CAM2021","CAM2022"};
-        if(item=="COMS"){
-            The_courses=COMS_Courses;
-        }
-        else if(item=="CAM"){
-            The_courses=CAM_Courses;
+        CharSequence[] The_courses = new CharSequence[50];
+        CharSequence[] COMS_Courses = {"COMS1018(IAP)", "COMS1019(BCO)", "COMS2020(MC)", "COMS2021(DBF)", "COMS2022"};
+        CharSequence[] CAM_Courses = {"CAM1018", "CAM1019", "CAM2020", "CAM2021", "CAM2022"};
+        if (item == "COMS") {
+            The_courses = COMS_Courses;
+        } else if (item == "CAM") {
+            The_courses = CAM_Courses;
         }
 
-          selectedItems = new ArrayList();
         final CharSequence[] finalThe_courses = The_courses;
         myBuilder.setTitle("Proposed Courses").setMultiChoiceItems(The_courses, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
@@ -171,19 +166,19 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 } else if (selectedItems.contains(position)) {
                     selectedItems.remove(Integer.valueOf(position));
                 }
-                if(selectedItems.size()>=1) {
+                if (selectedItems.size() >= 1) {
                     Course1.setText(selectedItems.get(0).toString());
                 }
-                if(selectedItems.size()>=2) {
+                if (selectedItems.size() >= 2) {
                     Course2.setText(selectedItems.get(1).toString());
                 }
-                if(selectedItems.size()>=3) {
+                if (selectedItems.size() >= 3) {
                     Course3.setText(selectedItems.get(2).toString());
                 }
-                if(selectedItems.size()>=4) {
+                if (selectedItems.size() >= 4) {
                     Course4.setText(selectedItems.get(3).toString());
                 }
-                if(selectedItems.size()>=5) {
+                if (selectedItems.size() >= 5) {
                     Course5.setText(selectedItems.get(4).toString());
                 }
             }
@@ -215,29 +210,32 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     public void onSignupSuccess() {
 
-String type="reg";
+        String type = "reg";
         InputStream is = null;
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
         nameValuePairs.add(new BasicNameValuePair("name", name));
         nameValuePairs.add(new BasicNameValuePair("studentnum", Stu_Num));
         nameValuePairs.add(new BasicNameValuePair("email", email));
         nameValuePairs.add(new BasicNameValuePair("password", password));
-        if(selectedItems.size()==1) {
+        if (selectedItems.size() == 1) {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
             backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0));
         }
-        if(selectedItems.size()==2) {
+        if (selectedItems.size() == 2) {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0),(String) selectedItems.get(1));
-        }     if(selectedItems.size()==3) {
+            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1));
+        }
+        if (selectedItems.size() == 3) {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0),(String) selectedItems.get(1),(String) selectedItems.get(2));
-        }     if(selectedItems.size()==4) {
+            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1), (String) selectedItems.get(2));
+        }
+        if (selectedItems.size() == 4) {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0),(String) selectedItems.get(1),(String) selectedItems.get(2),(String) selectedItems.get(3));
-        }     if(selectedItems.size()==5) {
+            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1), (String) selectedItems.get(2), (String) selectedItems.get(3));
+        }
+        if (selectedItems.size() == 5) {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0),(String) selectedItems.get(1),(String) selectedItems.get(2),(String) selectedItems.get(3),(String) selectedItems.get(4));
+            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1), (String) selectedItems.get(2), (String) selectedItems.get(3), (String) selectedItems.get(4));
         }
 
 
@@ -251,7 +249,7 @@ String type="reg";
             is = entity.getContent();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             br.readLine();
-           // output = br.readLine().trim();
+            // output = br.readLine().trim();
         } catch (ClientProtocolException e) {
             System.out.print("Error!");
         } catch (IOException e) {
@@ -259,6 +257,8 @@ String type="reg";
         }
 
         Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("stud_num", Stu_Num);
         startActivity(intent);
     }
 
@@ -267,7 +267,7 @@ String type="reg";
         if (selectedItems.size() == 0) {
 
             Course_Error.setText(("Please Select atleast one Course"));
-            valid=false;
+            valid = false;
         }
         if (name.isEmpty() || name.length() > 32) {
             et_name.setError("Please enter a valid name");

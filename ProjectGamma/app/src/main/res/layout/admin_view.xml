@@ -9,8 +9,8 @@
         android:layout_height="56dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="176dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="191dp"
         android:text="Welcome Back,"
         android:textColor="#000000"
         android:textSize="24sp" />
@@ -21,20 +21,24 @@
         android:layout_height="56dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="67dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="81dp"
         android:textColor="#000000"
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/Claims_but"
-        android:layout_width="175dp"
-        android:layout_height="68dp"
+        android:id="@+id/Scan_button"
+        android:layout_width="120dp"
+        android:layout_height="86dp"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="222dp"
-        android:text="Generate Claims Form"
-        android:visibility="visible" />
+        android:layout_marginTop="189dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginBottom="121dp"
+        android:onClick="scanIn"
+        android:text="Scan"
+        android:textSize="16sp" />
+
 
 </RelativeLayout>

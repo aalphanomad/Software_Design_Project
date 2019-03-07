@@ -182,6 +182,7 @@
             android:layout_marginEnd="68dp"
             android:text="Are you a Honours Research Candidate?" />
 
+
         <CheckBox
             android:id="@+id/checkBox1"
             android:layout_width="98dp"
@@ -196,6 +197,7 @@
             android:textColor="#ffffff"
             android:visibility="visible" />
 
+
         <Button
             android:id="@+id/showAlertID"
             android:layout_width="wrap_content"
@@ -207,7 +209,7 @@
             android:text="Select Courses" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/Course_err"
             android:layout_width="387dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -217,7 +219,7 @@
             android:text="Please select the courses that you would like to tutor.          (Max 5)" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/Degree_Spinner"
             android:layout_width="204dp"
             android:layout_height="54dp"
             android:layout_alignParentStart="true"

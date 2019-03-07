@@ -32,7 +32,6 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
     ListView lv;
-    String[] names = {"Amy", "John"};
     InputStream is = null;
     String line = null;
     String result = null;
