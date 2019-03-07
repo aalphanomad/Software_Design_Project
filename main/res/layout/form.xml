@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,59 +11,92 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:text="PLEASE FILL IN THE FORM"
         android:textAllCaps="true"
         android:textSize="24sp"
         android:textStyle="normal|bold" />
 
-
-    <EditText
-        android:id="@+id/editText1"
+    <TextView
+        android:id="@+id/course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Full Name"
-        android:inputType="textPersonName" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView12"
+        android:layout_marginTop="29dp"
+        android:text="Course Tutored: "
+        android:textAllCaps="true"
+        android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/editText2"
+
+    <TextView
+        android:id="@+id/venue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Student No."
-        android:inputType="textPersonName" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/course"
+        android:layout_marginTop="87dp"
+        android:text="Venue: "
+        android:textAllCaps="true"
+        android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email Address"
-        android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Payroll No."
-        android:inputType="textPersonName" />
+    <Button
+        android:id="@+id/increase"
+        android:layout_width="56dp"
+        android:layout_height="44dp"
+        android:layout_above="@+id/send"
+        android:layout_alignEnd="@+id/textView12"
+        android:layout_alignRight="@+id/textView12"
+        android:layout_marginBottom="14dp"
+        android:onClick="increase"
+        android:text="+"
+        android:textAlignment="center" />
 
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Cellphone No."
-        android:inputType="textPersonName" />
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/increase"
+        android:layout_centerHorizontal="true"
+        android:text="0 hrs : 00 min"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/decrease"
+        android:layout_width="56dp"
+        android:layout_height="44dp"
+        android:layout_alignBaseline="@+id/increase"
+        android:layout_alignBottom="@+id/increase"
+        android:layout_alignLeft="@+id/textView12"
+        android:layout_alignStart="@+id/textView12"
+        android:onClick="decrease"
+        android:text="-"
+        android:textAlignment="center" />
+
 
     <Button
         android:id="@+id/send"
-        android:onClick="send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SEND" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="send"
+        android:text="CONFIRM" />
+
+    <EditText
+        android:id="@+id/enterVenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/venue"
+        android:layout_alignBottom="@+id/venue"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+
+</RelativeLayout>
