@@ -14,7 +14,16 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import static com.example.projectgamma.qrGenerator.Global.course;
+import static com.example.projectgamma.qrGenerator.Global.date;
+import static com.example.projectgamma.qrGenerator.Global.duration;
+import static com.example.projectgamma.qrGenerator.Global.name;
+import static com.example.projectgamma.qrGenerator.Global.student_num;
+import static com.example.projectgamma.qrGenerator.Global.venue;
+
 public class qrGenerator extends AppCompatActivity {
 
     public static class Global{
@@ -69,9 +78,9 @@ public class qrGenerator extends AppCompatActivity {
 
     private ImageView imageView;
     public static TextView  resultTV0, resultTV1, resultTV2, resultTV3, resultTV4, resultTV5, resultTV6;
-    String valueCourse,valueName,valueStud_num,valueHour, valueMin1, valueMin2, valueVenue,valueTime;
+    String valueCourse,valueName,valueStud_num, valueVenue,valueTime;
 
-
+    String currentDate;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +88,7 @@ public class qrGenerator extends AppCompatActivity {
         setContentView(R.layout.qrgenerator);
 
         Calendar calender = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calender.getTime());
+         currentDate = DateFormat.getDateInstance().format(calender.getTime());
 
 
         Bundle bundle=getIntent().getExtras();
@@ -94,7 +103,9 @@ public class qrGenerator extends AppCompatActivity {
         valueCourse=bundle.getString("course");
             valueVenue= bundle.getString("venue");
         valueTime=bundle.getString("time");
+
         Global.setName(valueName);
+        Global.setStudent_num(valueStud_num);
         Global.setCourse(valueCourse);
         Global.setDate(currentDate);
         Global.setCourse(valueCourse);
@@ -111,6 +122,7 @@ public class qrGenerator extends AppCompatActivity {
 
 
 
+
     }
 
     public void generate(View v) {
@@ -120,16 +132,35 @@ public class qrGenerator extends AppCompatActivity {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode("test", BarcodeFormat.QR_CODE, 500, 500);
+            Global.setName(valueName);
+            Global.setStudent_num(valueStud_num);
+            Global.setCourse(valueCourse);
+            Global.setDate(currentDate);
+            Global.setCourse(valueCourse);
+            Global.setVenue(valueVenue);
+            Global.setDuration(valueTime);
+            ArrayList arr = new ArrayList( );
+            arr.add(valueName);
+            arr.add(valueStud_num);
+            arr.add(valueCourse);
+            arr.add(currentDate);
+            arr.add(valueVenue);
+            arr.add(valueTime);
+            for(int i =0;i<arr.size();i++){
+                System.out.println(arr.get(i)+" ");
+            }
+            BitMatrix bitMatrix = multiFormatWriter.encode(String.valueOf(arr), BarcodeFormat.QR_CODE, 500, 500);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             imageView.setImageBitmap(bitmap);
+
         } catch (WriterException e) {
             e.printStackTrace();
         }
     }
 
     public void doneGen(View view) {
+
         Intent intent=new Intent(this,HomeActivity.class);
 
         startActivity(intent);

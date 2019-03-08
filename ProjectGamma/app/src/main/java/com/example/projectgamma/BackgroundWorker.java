@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.content.Intent;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,17 +16,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
-    Context context;
-    AlertDialog alertDialog;
+     Context context;
+    private AlertDialog alertDialog;
 
     BackgroundWorker(Context ctx) {
         context = ctx;
@@ -123,10 +119,9 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if(type=="login") {
+        } else if (type == "login") {
             try {
                 String stu_num = params[1];
-                System.out.println("test!" + stu_num);
                 String password = params[2];
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/signin.php";
                 URL url = new URL(login_url);
@@ -154,10 +149,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 httpURLConnection.disconnect();
                 return result;
 
-//HOW TO RECIEVE THE STUFF FROM THE SERVER???
-                //WHERE DO I PUT IT??
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -165,48 +156,45 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             }
 
 
-        }
-        else if(type=="booking"){
+        } else if (type == "booking") {
             try {
-            String name = params[1];
-            String student_num = params[2];
-            String course=params[3];
-            String date=params[4];
-            String venue=params[5];
-            String duration=params[6];
-            login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
-            URL url = new URL(login_url);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setDoInput(true);
-            OutputStream outputStream = httpURLConnection.getOutputStream();
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-            String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8")+ "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8")+ "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")+ "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8")+ "&" + URLEncoder.encode("duration", "UTF-8") + "=" + URLEncoder.encode(duration, "UTF-8");
+                String name = params[1];
+                String student_num = params[2];
+                String course = params[3];
+                String date = params[4];
+                String venue = params[5];
+                String duration = params[6];
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
+                URL url = new URL(login_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("duration", "UTF-8") + "=" + URLEncoder.encode(duration, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
 
-            bufferedWriter.write(post_data);
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            outputStream.close();
-            InputStream inputStream = httpURLConnection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            String result = "";
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                result += line;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            bufferedReader.close();
-            inputStream.close();
-            httpURLConnection.disconnect();
-            return result;
-
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         }
         return null;
@@ -219,29 +207,26 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         alertDialog.setTitle("Login Status");
     }
 
-    //When us this called
-    //how to get stuff from server?
 
     @Override
     protected void onPostExecute(String result) {
         try {
-            JSONObject ja = (JSONObject) new JSONObject(result);
+            JSONObject ja = new JSONObject(result);
 
             if (ja.get("result").toString().equals("0")) {
                 Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
             } else {
                 String stud_num = ja.getString("student_num");
                 String name = ja.getString("name");
-                String admin=ja.getString("admin");
+                String admin = ja.getString("admin");
 
-                if(admin.equals("0")) {
+                if (admin.equals("0")) {
                     Intent i = new Intent(context, HomeActivity.class);
                     i.putExtra("name", name);
                     i.putExtra("stud_num", stud_num);
                     context.startActivity(i);
-                }
-                else{
-                    Intent i=new Intent(context,mainQR.class);
+                } else {
+                    Intent i = new Intent(context, mainQR.class);
                     i.putExtra("name", name);
                     context.startActivity(i);
                 }

@@ -39,13 +39,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Intent i = getIntent();
 
-         name = i.getStringExtra("name");
-          stud_num = i.getStringExtra("stud_num");
-        mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
+        name = i.getStringExtra("name");
+        stud_num = i.getStringExtra("stud_num");
+        mDrawerlayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
         dummy = findViewById(R.id.Name_TB);
-        if(dummy.length()!=0 || name.length()!=0) {
+        if (dummy.length() != 0 || name.length() != 0) {
             dummy.setText(name.toUpperCase().charAt(0) + name.substring(1, name.length()) + "!");
         }
 
@@ -59,10 +59,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, Claim_Form.class);
 
-                i.putExtra("insert","insert");
+                i.putExtra("insert", "insert");
 
-                    i.putExtra("name", name);
-                i.putExtra("student_num",stud_num);
+                i.putExtra("name", name);
+                i.putExtra("student_num", stud_num);
                 HomeActivity.this.startActivity(i);
 
             }
@@ -71,10 +71,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setNavigationViewListener();
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToggle.onOptionsItemSelected(item)) {
@@ -114,7 +115,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setNavigationViewListener() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) HomeActivity.this);
+        NavigationView navigationView = findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener( HomeActivity.this);
     }
 }

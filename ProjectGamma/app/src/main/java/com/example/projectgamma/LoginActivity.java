@@ -17,8 +17,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        UsernameEt = (EditText) findViewById(R.id.etUserName);
-        PasswordEt = (EditText) findViewById(R.id.etPassword);
+        UsernameEt = findViewById(R.id.etUserName);
+        PasswordEt = findViewById(R.id.etPassword);
         final Button signin = (Button) findViewById(R.id.signin_but);
 
         signin.setOnClickListener(new View.OnClickListener() {

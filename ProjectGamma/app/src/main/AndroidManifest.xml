@@ -38,7 +38,8 @@
 
         <activity android:name="com.example.projectgamma.mainQR"
             android:label="Home Screen"/>
-        <activity android:name="com.example.projectgamma.qrScanner" />
+        <activity android:name="com.example.projectgamma.qrScanner"
+            android:label="Scan QR Code"/>
         <activity android:name="com.example.projectgamma.qrGenerator"
             android:label="Confirm Your Claim Form"/>
         <activity android:name="com.example.projectgamma.FirstFragment" />

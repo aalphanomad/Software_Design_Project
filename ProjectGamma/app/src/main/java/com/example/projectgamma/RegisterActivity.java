@@ -1,22 +1,17 @@
 package com.example.projectgamma;
 
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +37,6 @@ import java.util.Arrays;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //SORT UPLOADNIG FROM HAMZA
     private EditText et_name, et_SN, et_password, et_cpassword;
     String name, email, Stu_Num, password, cpassword;
     TextView wind;
@@ -53,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     String item;
     TextView Course1, Course2, Course3, Course4, Course5, Course_Error;
     int count = 0;
-    String output;
     ArrayList selectedItems=new ArrayList();
 
     @Override
@@ -86,8 +79,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         courses = new ArrayList<String>();
         courses.add("COMS");
         courses.add("CAM");
-        courses.add("STAT");
-        System.out.println("email" + email);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courses);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -97,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         regbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                register();//call when the buttonEditText is clicked
+                register();
             }
 
 
@@ -149,8 +140,8 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private void showAlert() {
         AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
         CharSequence[] The_courses = new CharSequence[50];
-        CharSequence[] COMS_Courses = {"COMS1018(IAP)", "COMS1019(BCO)", "COMS2020(MC)", "COMS2021(DBF)", "COMS2022"};
-        CharSequence[] CAM_Courses = {"CAM1018", "CAM1019", "CAM2020", "CAM2021", "CAM2022"};
+        CharSequence[] COMS_Courses = {"COMS1015(Basic Computer Organisation)","COMS1018(Introduction to Algorithms and Programming I","COMS1017(Introduction to Data Structures and Algorithms","COMS1016(Discrete Computational Structures)","COMS2002(Database Fundementals)","COMS2013(Mobile Computing)","COMS2014(Computer Networks)","COMS2015(Analysis of Algorithms)","COMS3003(Formal Languages and Automata)","COMS3005(Advanced Analysis of Algorithms)","COMS3009(Software Design)","COMS3010(Operating Systems and System Programming)","COMS3007(Machine Learning)","COMS3006(Computer Graphics and Visualisation","COMS3008(Parallel Computing)","COMS3011(Software Design)"};
+        CharSequence[] CAM_Courses = {"APPM1006", "APPM1025", "APPM2007", "CAM3017"};
         if (item == "COMS") {
             The_courses = COMS_Courses;
         } else if (item == "CAM") {
@@ -198,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
 
     public void register() {
-        initialize();//initialize the input to string variables
+        initialize();
         if (validate() == false) {
             Toast.makeText(this, "Signup has failed", Toast.LENGTH_SHORT).show();
         } else {
@@ -249,7 +240,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             is = entity.getContent();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             br.readLine();
-            // output = br.readLine().trim();
         } catch (ClientProtocolException e) {
             System.out.print("Error!");
         } catch (IOException e) {

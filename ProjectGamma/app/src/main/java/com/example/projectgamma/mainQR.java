@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 public class mainQR extends AppCompatActivity{
 
-    //public static TextView resultTV;
-    String value1, value2, value3, value4, value5, value6;
     Button scan;
 
 
@@ -24,7 +22,7 @@ public class mainQR extends AppCompatActivity{
         Intent i = getIntent();
         String test = i.getStringExtra("name");
         dummy = findViewById(R.id.Name_TB);
-        scan = (Button)findViewById(R.id.Scan_button);
+        scan = findViewById(R.id.Scan_button);
         dummy.setText(test.toUpperCase().charAt(0) +test.substring(1,test.length())+"!");
 
 
@@ -39,7 +37,6 @@ public void onBackPressed(){
     }
 
     public void doneScan(mainQR view) {
-        Toast.makeText(this, "Confirmation Complete", Toast.LENGTH_LONG).show();
         Intent i=new Intent(mainQR.this, qrScanner.class);
         this.startActivity(i);
 
