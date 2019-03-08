@@ -71,10 +71,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="113dp"
-            android:layout_marginTop="737dp"
-            android:layout_marginEnd="127dp"
-            android:layout_marginBottom="13dp"
+            android:layout_marginStart="111dp"
+            android:layout_marginTop="801dp"
+            android:layout_marginEnd="129dp"
+            android:layout_marginBottom="0dp"
             android:onClick="onClick"
             android:text="Register" />
 
@@ -157,7 +157,7 @@
             android:layout_marginEnd="32dp"
             android:ems="10"
             android:hint="Student Number"
-            android:inputType="number" />
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/AG_email"
@@ -231,48 +231,53 @@
 
         <TextView
             android:id="@+id/Course1"
-            android:layout_width="wrap_content"
+            android:layout_width="391dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="623dp"
-            android:layout_marginEnd="79dp" />
+            android:layout_marginTop="640dp"
+            android:layout_marginEnd="15dp"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/Course2"
-            android:layout_width="wrap_content"
+            android:layout_width="389dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="648dp"
-            android:layout_marginEnd="80dp" />
+            android:layout_marginTop="667dp"
+            android:layout_marginEnd="14dp"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/Course3"
-            android:layout_width="wrap_content"
+            android:layout_width="391dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="670dp"
-            android:layout_marginEnd="79dp" />
+            android:layout_marginTop="694dp"
+            android:layout_marginEnd="15dp"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/Course4"
-            android:layout_width="wrap_content"
+            android:layout_width="391dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="692dp"
-            android:layout_marginEnd="81dp" />
+            android:layout_marginTop="722dp"
+            android:layout_marginEnd="15dp"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/Course5"
-            android:layout_width="wrap_content"
+            android:layout_width="391dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="710dp"
-            android:layout_marginEnd="79dp" />
+            android:layout_marginTop="752dp"
+            android:layout_marginEnd="15dp"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/Course_mes"

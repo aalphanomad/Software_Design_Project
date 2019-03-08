@@ -224,10 +224,13 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     Intent i = new Intent(context, HomeActivity.class);
                     i.putExtra("name", name);
                     i.putExtra("stud_num", stud_num);
+                    qrGenerator.Global.setName(name);
+                    qrGenerator.Global.setStudent_num(stud_num);
                     context.startActivity(i);
                 } else {
                     Intent i = new Intent(context, mainQR.class);
                     i.putExtra("name", name);
+                    qrGenerator.Global.setName(name);
                     context.startActivity(i);
                 }
 

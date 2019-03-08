@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,10 +22,10 @@ public class Claim_Form extends AppCompatActivity {
     private Spinner mySpinner;
 
     ArrayList selectedItems = new ArrayList();
-    String course = "COMS2323";
+    String course ;
     String name;
     String stud_num;
-    TextView Thevenue, TimeError;
+    TextView Thevenue, TimeError,sel_Course;
     String type;
     String date;
     String venue;
@@ -39,6 +38,34 @@ public class Claim_Form extends AppCompatActivity {
         TimeError = findViewById(R.id.TimeError);
         venue = Thevenue.getText().toString();
         tv = (TextView) findViewById(R.id.duration);
+        Button button=(Button)findViewById(R.id.button);
+        sel_Course=findViewById(R.id.Sel_Course);
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String[] listItems = getResources().getStringArray(R.array.shopping_item);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(Claim_Form.this);
+                mBuilder.setTitle("Select a Course");
+                mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String[] topic=new String[3];
+                        topic=listItems[i].split(" ");
+                        course=topic[0];
+                        sel_Course.setText(course);
+                        System.out.println("THE ANSWER"+course);
+
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+            }
+
+        });
         Intent i = getIntent();
         type = i.getStringExtra("insert");
         name = i.getStringExtra("name");
@@ -110,4 +137,6 @@ public class Claim_Form extends AppCompatActivity {
 
         }
     }
+
+
 }

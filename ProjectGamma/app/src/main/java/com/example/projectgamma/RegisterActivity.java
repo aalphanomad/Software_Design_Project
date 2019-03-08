@@ -108,7 +108,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                                 if (Stu_Num.length() != 0 || count < 10) {
                                     wind.setText(Stu_Num.toString() + "@students.wits.ac.za");
                                     email = et_SN.getText().toString() + "@students.wits.ac.za";
-                                    System.out.println(email);
 
                                 } else {
                                     wind.setText(" " + "@students.wits.ac.za");
@@ -140,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private void showAlert() {
         AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
         CharSequence[] The_courses = new CharSequence[50];
-        CharSequence[] COMS_Courses = {"COMS1015(Basic Computer Organisation)","COMS1018(Introduction to Algorithms and Programming I","COMS1017(Introduction to Data Structures and Algorithms","COMS1016(Discrete Computational Structures)","COMS2002(Database Fundementals)","COMS2013(Mobile Computing)","COMS2014(Computer Networks)","COMS2015(Analysis of Algorithms)","COMS3003(Formal Languages and Automata)","COMS3005(Advanced Analysis of Algorithms)","COMS3009(Software Design)","COMS3010(Operating Systems and System Programming)","COMS3007(Machine Learning)","COMS3006(Computer Graphics and Visualisation","COMS3008(Parallel Computing)","COMS3011(Software Design)"};
+        CharSequence[] COMS_Courses = {"COMS1015 (Basic Computer Organisation)","COMS1018 (Introduction to Algorithms and Programming)","COMS1017 (Introduction to Data Structures and Algorithms","COMS1016 (Discrete Computational Structures)","COMS2002 (Database Fundementals)","COMS2013 (Mobile Computing)","COMS2014 (Computer Networks)","COMS2015 (Analysis of Algorithms)","COMS3003 (Formal Languages and Automata)","COMS3005 (Advanced Analysis of Algorithms)","COMS3009 (Software Design)","COMS3010 (Operating Systems and System Programming)","COMS3007 (Machine Learning)","COMS3006 (Computer Graphics and Visualisation)","COMS3008 (Parallel Computing)","COMS3011 (Software Design)"};
         CharSequence[] CAM_Courses = {"APPM1006", "APPM1025", "APPM2007", "CAM3017"};
         if (item == "COMS") {
             The_courses = COMS_Courses;
@@ -208,25 +207,80 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         nameValuePairs.add(new BasicNameValuePair("studentnum", Stu_Num));
         nameValuePairs.add(new BasicNameValuePair("email", email));
         nameValuePairs.add(new BasicNameValuePair("password", password));
+       String test=String.valueOf(selectedItems);
+       String[] arr=new String[20];
+       arr=test.split(",");
+
+       String[] arra=new String[20];
+       arra=arr[3].toString().split(" ");
+
+
+
+
         if (selectedItems.size() == 1) {
+            String[] arr1;
+            arr1=arr[0].split(" ");
+
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0));
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()));
         }
         if (selectedItems.size() == 2) {
+            String[] arr1;
+            arr1=arr[0].split(" ");
+
+            String[] arr2;
+            arr2=arr[1].split(" ");
+
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1));
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()), arr2[1]);
         }
         if (selectedItems.size() == 3) {
+            String[] arr1;
+            arr1=arr[0].split(" ");
+
+            String[] arr2;
+            arr2=arr[1].split(" ");
+
+            String[] arr3;
+            arr3=arr[2].split(" ");
+
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1), (String) selectedItems.get(2));
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()),arr2[1], arr3[1]);
         }
         if (selectedItems.size() == 4) {
+            String[] arr1;
+            arr1=arr[0].split(" ");
+
+            String[] arr2;
+            arr2=arr[1].split(" ");
+
+            String[] arr3;
+            arr3=arr[2].split(" ");
+
+            String[] arr4;
+            arr4=arr[3].split(" ");
+
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1), (String) selectedItems.get(2), (String) selectedItems.get(3));
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()),arr2[1], arr3[1],arr4[1]);
         }
         if (selectedItems.size() == 5) {
+            String[] arr1;
+            arr1=arr[0].split(" ");
+
+            String[] arr2;
+            arr2=arr[1].split(" ");
+
+            String[] arr3;
+            arr3=arr[2].split(" ");
+
+            String[] arr4;
+            arr4=arr[3].split(" ");
+
+            String[] arr5;
+            arr5=arr[4].split(" ");
+
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, (String) selectedItems.get(0), (String) selectedItems.get(1), (String) selectedItems.get(2), (String) selectedItems.get(3), (String) selectedItems.get(4));
+            backgroundWorker.execute(type, name, Stu_Num, email, password,arr1[0].substring(1,arr1[0].length()),arr2[1], arr3[1], arr4[1],arr5[1].substring(0,arr5[1].length()));
         }
 
 
@@ -247,8 +301,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         }
 
         Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-        intent.putExtra("name", name);
-        intent.putExtra("stud_num", Stu_Num);
+
+        qrGenerator.Global.setName(name);
+        qrGenerator.Global.setStudent_num(Stu_Num);
         startActivity(intent);
     }
 

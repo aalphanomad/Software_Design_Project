@@ -7,6 +7,31 @@
         <item>ENG</item>
     </string-array>
 
+    <string name="test">SingleChoiceDialog</string>
+
+    <string-array name="shopping_item">
+        <item>COMS1015 (Basic Computer Organisation)</item>
+        <item>COMS1018 (Introduction to Algorithms and Programming)</item>
+        <item>COMS1017 (Introduction to Data Structures and Algorithms)</item>
+        <item>COMS1016 (Discrete Computational Structures)</item>
+        <item>COMS2002 (Database Fundamentals)</item>
+        <item>COMS2013 (Mobile Computing)</item>
+        <item>COMS2014 (Computer	Networks)</item>
+        <item>COMS2015 (Analysis of Algorithms)</item>
+        <item>COMS3002 (Software Engineering)</item>
+        <item>COMS3003 (Formal Languages and Automata)</item>
+        <item>COMS3005 (Advanced Analysis of Algorithms)</item>
+        <item>COMS3009 (Software Design)</item>
+        <item>COMS3010 (Operating Systems and System Programming)</item>
+        <item>COMS3007 (Machine Learning)</item>
+        <item>COMS3006 (Computer Graphics and Visualisation)</item>
+        <item>COMS3008 (Parallel Computing)</item>
+        <item>COMS3011 (Software Design Project)</item>
+    </string-array>
+
+
+
+
     <string name="open">Open</string>
     <string name="close">Close</string>
 

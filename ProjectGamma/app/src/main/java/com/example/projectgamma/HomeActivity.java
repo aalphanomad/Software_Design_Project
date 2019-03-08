@@ -39,8 +39,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Intent i = getIntent();
 
-        name = i.getStringExtra("name");
-        stud_num = i.getStringExtra("stud_num");
+      //  name = i.getStringExtra("name");
+      //  stud_num = i.getStringExtra("stud_num");
+        name=qrGenerator.Global.GetName();
+        stud_num=qrGenerator.Global.GetStudent_Num();
         mDrawerlayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
