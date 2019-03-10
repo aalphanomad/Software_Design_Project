@@ -30,6 +30,13 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         context = ctx;
     }
 
+    /**
+     * this singular function handles the registration, login, and bookings
+     * it takes in an array of parameters whose length can vary depending on the type of task
+     * @param params an array of parameters as strings, the 0th item
+     *               is always the type of task to perform
+     * @return
+     */
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
@@ -208,6 +215,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     }
 
 
+    /**
+     * this function handles the output from the doInBackground() function
+     * @param result
+     */
     @Override
     protected void onPostExecute(String result) {
         try {

@@ -20,9 +20,42 @@ import static org.junit.Assert.*;
 
 public class BookActivityTest {
 
+    /*
+
     @Test
     public void book() {
+        String duration, subject, add1, add2,date;
+        duration = "1hrs:00mins";
+        subject = "COMS1016";
+        date = "10 Mar 2019";
+        add1 = "msl006";
+        add2 = "";
+        InputStream is = null;
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        //nameValuePairs.add(new BasicNameValuePair("STUDENT_ID", name));
+        //nameValuePairs.add(new BasicNameValuePair("TUTOR_ID", name));
+        nameValuePairs.add(new BasicNameValuePair("TIME", time));
+        nameValuePairs.add(new BasicNameValuePair("DATE", date));
+        nameValuePairs.add(new BasicNameValuePair("DURATION", duration));
+        nameValuePairs.add(new BasicNameValuePair("SUBJECT", subject));
+        nameValuePairs.add(new BasicNameValuePair("ADD_1", add1));
+        nameValuePairs.add(new BasicNameValuePair("ADD_2", add2));
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://lamp.ms.wits.ac.za/~s1601745/arrangement.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+        } catch (ClientProtocolException e) {
+            System.out.print("Error!");
+        } catch (IOException e) {
+            System.out.print("CHECK");
+        }
+
     }
+         */
+
 
     @Test
     public void validate() {

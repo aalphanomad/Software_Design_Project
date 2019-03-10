@@ -125,6 +125,11 @@ public class qrGenerator extends AppCompatActivity {
 
     }
 
+    /**
+     * this method takes the details of the booking and encodes them in a QR code
+     * this QR code is then displayed on screen
+     * @param v
+     */
     public void generate(View v) {
         imageView = findViewById(R.id.imageView);
 
@@ -159,6 +164,10 @@ public class qrGenerator extends AppCompatActivity {
         }
     }
 
+    /**
+     * this method transitions back to the home activity
+     * @param view
+     */
     public void doneGen(View view) {
 
         Intent intent=new Intent(this,HomeActivity.class);

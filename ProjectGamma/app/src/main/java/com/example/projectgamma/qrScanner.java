@@ -19,6 +19,10 @@ public class qrScanner extends AppCompatActivity implements ZXingScannerView.Res
 
     ZXingScannerView ScannerView;
 
+    /**
+     * this method creates the ui and request camera permissions if possible and necessary
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,11 @@ public class qrScanner extends AppCompatActivity implements ZXingScannerView.Res
         }
     }
 
+    /**
+     * this method creates a background worker to upload the details of the booking to the database
+     * and supplies it with the relevant data
+     * @param result
+     */
     @Override
     public void handleResult(Result result) {
     /*String type = "booking";

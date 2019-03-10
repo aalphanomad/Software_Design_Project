@@ -13,6 +13,10 @@ import android.widget.EditText;
 public class LoginActivity extends AppCompatActivity implements OnClickListener {
     EditText UsernameEt, PasswordEt;
 
+    /**
+     * this method creates the ui and binds the relevant onclick method to the login button
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,12 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         });
     }
 
+
+    /**
+     * this method checks whether the values in the username and password fields are empty
+     *
+     * @return a boolean value, True if the fields are nonempty, False otherwise
+     */
     private boolean validate() {
         boolean valid = true;
         if (UsernameEt.getText().toString().length() == 0) {
@@ -53,12 +63,21 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
     }
 
+    /**
+     * this method starts the home activity
+     * currently unused
+     */
     public void onExecute() {
         Intent i = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(i);
         finish();
     }
 
+    /**
+     * this method creates a BackgroundWorker which checks whether the login details are correct
+     * If they are correct then the background worker will start the home activity
+     * otherwise a message will be displayed that says the login details are incorrect
+     */
     private void attemptLogin() {
         String username = UsernameEt.getText().toString();
         String password = PasswordEt.getText().toString();
@@ -67,6 +86,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         backgroundWorker.execute(type, username, password);
     }
 
+    /**
+     * this method transitions to the register activity
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);

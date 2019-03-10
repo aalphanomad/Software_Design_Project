@@ -32,6 +32,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     String name;
     String stud_num;
 
+    /**
+     * this method runs when the activity is started
+     * it simply displays thee student number and name of the currently logged in user
+     *
+     * it also creates a button that will allow the user to generate a new claims form
+     *
+     * @param savedInstanceState
+     */
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

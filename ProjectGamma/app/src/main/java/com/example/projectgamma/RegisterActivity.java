@@ -49,6 +49,13 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     int count = 0;
     ArrayList selectedItems=new ArrayList();
 
+    /**
+     * this method initializes the ui
+     * it makes all the requisite buttons and textviews
+     * as well as starting a thread which will automatically update the contents
+     * of a certain textview depending on user input
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +143,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
+    /**
+     * this method creates a simple dialog which allows registrants to select their preferred courses
+     */
     private void showAlert() {
         AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
         CharSequence[] The_courses = new CharSequence[50];
@@ -187,6 +197,11 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
+    /**
+     * this method calls validate() to check if the details of the registrant are plausible
+     * if not a message will display telling the user that their registration has failed
+     * otherwise it will attempt to register
+     */
     public void register() {
         initialize();
         if (validate() == false) {
@@ -198,6 +213,12 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         }
     }
 
+    /**
+     * this method sends the captured details to a BackgroundWorker which then asynchronously
+     * attempts to register the user.
+     *
+     * after this is done, the app will transition to the home activity
+     */
     public void onSignupSuccess() {
 
         String type = "reg";
