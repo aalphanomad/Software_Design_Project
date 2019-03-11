@@ -30,6 +30,8 @@ public class Claim_Form extends AppCompatActivity {
     String date;
     String venue;
     TextView tv;
+    String[] topic=new String[3];
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +54,9 @@ public class Claim_Form extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String[] topic=new String[3];
                         topic=listItems[i].split(" ");
                         course=topic[0];
                         sel_Course.setText(course);
-                        System.out.println("THE ANSWER"+course);
 
                         dialogInterface.dismiss();
                     }
@@ -110,7 +110,11 @@ public class Claim_Form extends AppCompatActivity {
     public void send(View view) {
         if (Thevenue.length() == 0) {
             Thevenue.setError("Please enter the venue");
-        } else if (hour == 0 && min1 == 0 && min2 == 0) {
+        }
+        else if(topic[0]==null){
+            sel_Course.setText("Please Select a course");
+        }
+        else if (hour == 0 && min1 == 0 && min2 == 0) {
             TimeError.setText("Please enter the duration that you have tutored");
         } else {
             EditText e3 = findViewById(R.id.enterVenue);
