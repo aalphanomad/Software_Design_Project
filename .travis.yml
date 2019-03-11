@@ -4,13 +4,26 @@ sudo: false
 
 android:
   components:
+    - tools
     - platform-tools
     - tools
     - build-tools-3.3.1
     - android-27
     - android-27
-    - sys-img-armeabi-v7a-android-27
+    - extra-google-google_play_services
+    - extra-google-m2repository
     - extra-android-m2repository
+    - sys-img-x86-android-27
+    - sys-img-armeabi-v7a-android-17
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cach
 
 before_script:
   # Create and start emulator
