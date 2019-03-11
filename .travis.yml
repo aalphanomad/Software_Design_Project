@@ -33,5 +33,6 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-- ./gradlew build checkstyle connectedCheck -PdisablePreDex
+#- ./gradlew build checkstyle connectedCheck -PdisablePreDex
+- ./gradlew connectedAndroidTest
 #armeabi-v7a
