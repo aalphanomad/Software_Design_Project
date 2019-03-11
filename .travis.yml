@@ -14,7 +14,7 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - sys-img-x86-android-27
-    - sys-img-armeabi-v7a-android-27
+    - sys-img-armeabi-v7a-addon-google_apis-google-27
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
