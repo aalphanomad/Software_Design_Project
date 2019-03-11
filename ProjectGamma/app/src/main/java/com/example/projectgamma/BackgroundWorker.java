@@ -1,14 +1,13 @@
 package com.example.projectgamma;
 
+//Android Import Statements
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -30,16 +29,19 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         context = ctx;
     }
 
+
     @Override
     protected String doInBackground(String... params) {
+        //Determines whether the backgroundWorker is being imlemented for a registreation,logon or booking(String type)
         String type = params[0];
         String login_url;
         String reg_url;
+        //The below is executed if we are trying to use BackgroundWorker for registering
         if (type.equals("reg")) {
             try {
-
+//Specifies the URL in order to register
                 reg_url = "http://lamp.ms.wits.ac.za/~s1601745/create.php/";
-
+//Initialize an HTTP POST connection to send data to the server
                 URL url = new URL(reg_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -48,7 +50,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-
+//Retrieves the informations passed from other classes to BackgroundWorker if we are trying to register
                 String name = params[1];
                 String stu_num = params[2];
                 String email = params[3];
@@ -59,6 +61,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String course3;
                 String course4;
                 String course5;
+//The below creates the appropriate URL to send data to the server depending on the number of courses selected
 
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&" + URLEncoder.encode("admin", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
                 if (params.length == 6) {
@@ -119,18 +122,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //The code below is executed if we are using the BackgroundWorker to login
         } else if (type == "login") {
             try {
+                //Accepts the input passed from other classes which will be used to login
                 String stu_num = params[1];
                 String password = params[2];
+                //The URL below is used to send data to the server in order to login
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/signin.php";
                 URL url = new URL(login_url);
+
+                //The code below creates an HTTP POST connection
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                //Creates the URL to send the data to the server in order to login
                 String post_data = URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
                 bufferedWriter.write(post_data);
@@ -155,23 +164,28 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
 
-
+//The code below is executed if we are using BackgroundWorker to create a booking(generating a claim form)
         } else if (type == "booking") {
             try {
+
+                //The code below recieves input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
                 String name = params[1];
                 String student_num = params[2];
                 String course = params[3];
                 String date = params[4];
                 String venue = params[5];
                 String duration = params[6];
+                //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
                 URL url = new URL(login_url);
+                //The code below initializes an HTP POST request
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                //Creating the URL in order to send data for generating a claim form to the server
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("duration", "UTF-8") + "=" + URLEncoder.encode(duration, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
@@ -207,28 +221,35 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         alertDialog.setTitle("Login Status");
     }
 
-
+//Executed after receiving data from the server
     @Override
     protected void onPostExecute(String result) {
         try {
+            //Converts the result from the server to JSON format
             JSONObject ja = new JSONObject(result);
-
+            //If the value returned from the server is "0",implies that the login is unsuccessful
             if (ja.get("result").toString().equals("0")) {
                 Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
             } else {
+                //If the result from the server implies the login was successful,accept the student number and name from the server and determine whether they are an admin or not
                 String stud_num = ja.getString("student_num");
                 String name = ja.getString("name");
                 String admin = ja.getString("admin");
 
+                //If admin="0",implies the the user a not a lecturer(therefore a tutor)
                 if (admin.equals("0")) {
                     Intent i = new Intent(context, HomeActivity.class);
+                    //Send the name and student number of the student to the home Activity
                     i.putExtra("name", name);
                     i.putExtra("stud_num", stud_num);
+                    //Set the values of the Global class containing the details of the user
                     qrGenerator.Global.setName(name);
                     qrGenerator.Global.setStudent_num(stud_num);
                     context.startActivity(i);
                 } else {
+                    //If the admin is a lecturer(admin="1",they will be directed to a homescreenwhich will allow them to scan QR Codes
                     Intent i = new Intent(context, mainQR.class);
+                    //Send the name to the lecturers home screen
                     i.putExtra("name", name);
                     qrGenerator.Global.setName(name);
                     context.startActivity(i);

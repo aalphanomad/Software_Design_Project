@@ -26,6 +26,9 @@ import static com.example.projectgamma.qrGenerator.Global.venue;
 
 public class qrGenerator extends AppCompatActivity {
 
+    //A Global class which makes it veryeasy to get and set the information of the user such as the
+    //users name,student number,courses tutoring,the date,etc
+
     public static class Global{
         public static String name;
         public static String student_num;
@@ -34,6 +37,8 @@ public class qrGenerator extends AppCompatActivity {
         public static String venue;
         public static String duration;
 
+
+        //Get functions
         public static String GetName() {
             return name;
         }
@@ -52,6 +57,7 @@ public class qrGenerator extends AppCompatActivity {
             public static String GetDuration(){
                 return duration;
             }
+            //Set functions
         public static void setName(String name){
             Global.name=name;
         }
@@ -87,10 +93,11 @@ public class qrGenerator extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qrgenerator);
 
+        //Gets the current date
         Calendar calender = Calendar.getInstance();
          currentDate = DateFormat.getDateInstance().format(calender.getTime());
 
-
+//Assigns components(textviews) to variables
         Bundle bundle=getIntent().getExtras();
         resultTV0 = (TextView)findViewById(R.id.Course_tv);
         resultTV1 = (TextView)findViewById(R.id.Name_tv);
@@ -98,12 +105,16 @@ public class qrGenerator extends AppCompatActivity {
         resultTV4 = (TextView)findViewById(R.id.Date_tv);
         resultTV5 = (TextView)findViewById(R.id.Venue_tv);
         resultTV6 = (TextView)findViewById(R.id.Dur_tv);
+
+        //Gets the name,student_num,course selected,venue and duration
         valueName=bundle.getString("name");
         valueStud_num=bundle.getString("student_num");
         valueCourse=bundle.getString("course");
             valueVenue= bundle.getString("venue");
         valueTime=bundle.getString("time");
 
+
+        //Sets the respective values
         Global.setName(valueName);
         Global.setStudent_num(valueStud_num);
         Global.setCourse(valueCourse);
@@ -112,6 +123,8 @@ public class qrGenerator extends AppCompatActivity {
         Global.setVenue(valueVenue);
         Global.setDuration(valueTime);
 
+
+        //Sets the texts of the Labels
  resultTV0.setText("Course Tutored: "+valueCourse);
  resultTV1.setText("Name: "+valueName);
  resultTV2.setText("Student No: "+valueStud_num);
@@ -132,6 +145,7 @@ public class qrGenerator extends AppCompatActivity {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
         try {
+            /*
             Global.setName(valueName);
             Global.setStudent_num(valueStud_num);
             Global.setCourse(valueCourse);
@@ -139,6 +153,8 @@ public class qrGenerator extends AppCompatActivity {
             Global.setCourse(valueCourse);
             Global.setVenue(valueVenue);
             Global.setDuration(valueTime);
+            */
+            //Adds the data that needs to be encoded into the QR code into an array
             ArrayList arr = new ArrayList( );
             arr.add(valueName);
             arr.add(valueStud_num);
@@ -146,9 +162,7 @@ public class qrGenerator extends AppCompatActivity {
             arr.add(currentDate);
             arr.add(valueVenue);
             arr.add(valueTime);
-            for(int i =0;i<arr.size();i++){
-                System.out.println(arr.get(i)+" ");
-            }
+
             BitMatrix bitMatrix = multiFormatWriter.encode(String.valueOf(arr), BarcodeFormat.QR_CODE, 500, 500);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
@@ -160,7 +174,7 @@ public class qrGenerator extends AppCompatActivity {
     }
 
     public void doneGen(View view) {
-
+//Sets the "Done" button to go back to the HomeScreen
         Intent intent=new Intent(this,HomeActivity.class);
 
         startActivity(intent);

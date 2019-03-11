@@ -15,19 +15,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.InputStream;
-
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String[] names = {"Amy", "John"};
-    InputStream is = null;
-    String line = null;
-    String result = null;
-    String temp = "";
-    String[] arr;
+    //Initialization and assigning of vaariables
+
+//Initializes a drawerlayout for the side-swipe feature
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
-    TextView dummy;
+
+    TextView name_label;
     Button Claims;
     String name;
     String stud_num;
@@ -39,30 +35,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Intent i = getIntent();
 
-      //  name = i.getStringExtra("name");
-      //  stud_num = i.getStringExtra("stud_num");
+  //Recieves the name and student number
         name=qrGenerator.Global.GetName();
         stud_num=qrGenerator.Global.GetStudent_Num();
+
+
+        //Dont worry  about this,this is for the side-swipe feature which we will use later
         mDrawerlayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
-        dummy = findViewById(R.id.Name_TB);
-        if (dummy.length() != 0 || name.length() != 0) {
-            dummy.setText(name.toUpperCase().charAt(0) + name.substring(1, name.length()) + "!");
+
+        //Sets the label to Display the user's name
+        name_label = findViewById(R.id.Name_TB);
+        if (name_label.length() != 0 || name.length() != 0) {
+            name_label.setText(name.toUpperCase().charAt(0) + name.substring(1, name.length()) + "!");
         }
 
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         Claims = findViewById(R.id.Claims_but);
         Claims.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, Claim_Form.class);
-
+                //Sends the name and student number to the claims form class
                 i.putExtra("insert", "insert");
-
                 i.putExtra("name", name);
                 i.putExtra("student_num", stud_num);
                 HomeActivity.this.startActivity(i);
@@ -72,12 +71,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         setNavigationViewListener();
     }
-
+//Ensures you cannot go back to the login page when you are on the Home Page
     public void onBackPressed() {
 
 
     }
-
+//used for the side-swipe feature,dont worry about it now
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToggle.onOptionsItemSelected(item)) {
@@ -87,9 +86,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    //Handles events related to the side-swipe feature
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.println("Testing" + item.getItemId());
         switch (item.getItemId()) {
             case R.id.MyCourses: {
                 Intent myIntent = new Intent(HomeActivity.this, FirstFragment.class);

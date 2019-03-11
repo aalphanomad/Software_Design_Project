@@ -38,19 +38,11 @@ public class qrScanner extends AppCompatActivity implements ZXingScannerView.Res
 
     @Override
     public void handleResult(Result result) {
-    /*String type = "booking";
-        String name = qrGenerator.Global.GetName();
-        System.out.println("HELLO"+name);
-        String student_num = qrGenerator.Global.GetStudent_Num();
-        String date = qrGenerator.Global.GetDate();
-        String course = qrGenerator.Global.GetCourse();
-        String venue = qrGenerator.Global.GetVenue();
-        String duration = qrGenerator.Global.GetDuration();
-        System.out.println("THE DATA!!!" + name + " " + student_num + " " + date + " " + course + " " + venue + " " + duration);
-*/
+
     String[] arr=new String[8];
 String test=result.toString();
 arr=test.split(",");
+//Sets the intended type of use for the backgroundWorker
     String type="booking" ;
 
     String name=arr[0].substring(1,arr[0].length());
@@ -59,8 +51,7 @@ arr=test.split(",");
     String date=arr[3]+arr[4];
     String venue=arr[5];
     String duration=arr[6].substring(0,arr[6].length()-1);
-        System.out.println("THE DATA!!!" + name + " " + student_num + " " + date + " " + course + " " + venue + " " + duration);
-
+//Displays a Toast if the Confirmation is sucessful
         Toast.makeText(this, "Confirmation Complete", Toast.LENGTH_LONG).show();
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, name, student_num, course,date, venue, duration);

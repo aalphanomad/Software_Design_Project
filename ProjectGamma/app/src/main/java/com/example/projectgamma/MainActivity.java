@@ -20,10 +20,11 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-//Goes after AppCompat... implements NavigationView.OnNavigationItemSelectedListener
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 2000;
 
+
+    //Creates the splash screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
