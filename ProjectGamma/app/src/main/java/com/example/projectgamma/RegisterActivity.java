@@ -211,8 +211,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
        String[] arr=new String[20];
        arr=test.split(",");
 
-       String[] arra=new String[20];
-       arra=arr[3].toString().split(" ");
 
 
 
