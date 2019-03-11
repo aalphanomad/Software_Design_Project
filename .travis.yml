@@ -34,3 +34,4 @@ before_script:
 
 script: ./gradlew connectedAndroidTest
 
+after_failure: "cat $TRAVIS_BUILD_DIR/app/gen_build/reports/lint-results.xml"
