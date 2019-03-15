@@ -19,7 +19,8 @@ import java.util.Calendar;
 
 import static com.example.projectgamma.qrGenerator.Global.course;
 import static com.example.projectgamma.qrGenerator.Global.date;
-import static com.example.projectgamma.qrGenerator.Global.duration;
+import static com.example.projectgamma.qrGenerator.Global.startTime;
+import static com.example.projectgamma.qrGenerator.Global.endTime;
 import static com.example.projectgamma.qrGenerator.Global.name;
 import static com.example.projectgamma.qrGenerator.Global.student_num;
 import static com.example.projectgamma.qrGenerator.Global.venue;
@@ -35,7 +36,7 @@ public class qrGenerator extends AppCompatActivity {
         public static String course;
         public static String date;
         public static String venue;
-        public static String duration;
+        public static String startTime, endTime;
 
 
         //Get functions
@@ -54,9 +55,12 @@ public class qrGenerator extends AppCompatActivity {
             public static String GetVenue(){
                 return venue;
             }
-            public static String GetDuration(){
-                return duration;
+            public static String GetStartTime(){
+                return startTime;
             }
+            public static String GetEndTime(){
+            return endTime;
+        }
             //Set functions
         public static void setName(String name){
             Global.name=name;
@@ -73,8 +77,11 @@ public class qrGenerator extends AppCompatActivity {
         public static void setVenue(String venue){
             Global.venue=venue;
         }
-        public static void setDuration(String duration){
-            Global.duration=duration;
+        public static void setStartTime(String startTime){
+            Global.startTime=startTime;
+        }
+        public static void setEndTime(String endTime){
+            Global.endTime=endTime;
         }
         }
 
@@ -84,7 +91,7 @@ public class qrGenerator extends AppCompatActivity {
 
     private ImageView imageView;
     public static TextView  resultTV0, resultTV1, resultTV2, resultTV3, resultTV4, resultTV5, resultTV6;
-    String valueCourse,valueName,valueStud_num, valueVenue,valueTime;
+    String valueCourse,valueName,valueStud_num, valueVenue,valueStartTime, valueEndTime;
 
     String currentDate;
 
@@ -110,8 +117,9 @@ public class qrGenerator extends AppCompatActivity {
         valueName=bundle.getString("name");
         valueStud_num=bundle.getString("student_num");
         valueCourse=bundle.getString("course");
-            valueVenue= bundle.getString("venue");
-        valueTime=bundle.getString("time");
+        valueVenue= bundle.getString("venue");
+        valueStartTime=bundle.getString("startTime");
+        valueEndTime=bundle.getString("endTime");
 
 
         //Sets the respective values
@@ -121,7 +129,8 @@ public class qrGenerator extends AppCompatActivity {
         Global.setDate(currentDate);
         Global.setCourse(valueCourse);
         Global.setVenue(valueVenue);
-        Global.setDuration(valueTime);
+        Global.setStartTime(valueStartTime);
+        Global.setEndTime(valueEndTime);
 
 
         //Sets the texts of the Labels
@@ -130,7 +139,7 @@ public class qrGenerator extends AppCompatActivity {
  resultTV2.setText("Student No: "+valueStud_num);
  resultTV4.setText("Date: "+currentDate);
  resultTV5.setText("Venue: "+valueVenue);
- resultTV6.setText("Duration of Session: "+valueTime);
+ resultTV6.setText("Time: "+valueStartTime + " - " + valueEndTime);
 
 
 
@@ -161,7 +170,8 @@ public class qrGenerator extends AppCompatActivity {
             arr.add(valueCourse);
             arr.add(currentDate);
             arr.add(valueVenue);
-            arr.add(valueTime);
+            arr.add(valueStartTime);
+            arr.add(valueEndTime);
 
             BitMatrix bitMatrix = multiFormatWriter.encode(String.valueOf(arr), BarcodeFormat.QR_CODE, 500, 500);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
