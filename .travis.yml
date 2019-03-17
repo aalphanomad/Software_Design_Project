@@ -26,7 +26,7 @@ before_install:
   - yes | sdkmanager "build-tools;28.0.2"
 
 before_script:
-  - echo no | android create avd --force -n test -t android-27 --abi armeabi-v7a -c 100M
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - sleep 180
