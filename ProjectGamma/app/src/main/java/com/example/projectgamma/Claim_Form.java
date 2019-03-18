@@ -35,9 +35,8 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     String type;
     String date;
     String venue;
-    TextView tv, start, end;
+    TextView tv;
     String[] topic = new String[3];
-    int hourOfDay;
     private Spinner mySpinner;
     static int hour;
     static int minute;
@@ -94,7 +93,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     }
 
 
-    boolean validate() {
+    boolean validate(String startTime,String endTime) {
         boolean valid = true;
 
         //Checks whether a venue has been entered
@@ -108,19 +107,15 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
             valid = false;
         }
         //Checks if the start_time has been selected
-        start = (TextView) findViewById(R.id.start);
-        end = (TextView) findViewById(R.id.end);
 
-        if (check == true) {
-            start.setText(hourOfDay + " : " + minute);
-        } else {
-            end.setText(hourOfDay + " : " + minute);
-        }
+        TextView start = (TextView) findViewById(R.id.start);
+        TextView end = (TextView) findViewById(R.id.end);
         startTime=start.getText().toString();
         endTime=end.getText().toString();
-        System.out.println("THE END  "+startTime+"+"+endTime+"+");
 
-        if(startTime.equals("0 : 00 ") || endTime.equals("0 : 0")) {
+System.out.println("Para"+startTime+"+"+endTime+"+");
+
+        if(startTime.equals("0 : 00 ") || endTime.equals("0 : 00 ")) {
                 TimeError.setText("Please enter a valid period for which you have tutored");
                 valid=false;
 
@@ -159,21 +154,32 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        start = (TextView) findViewById(R.id.start);
-        end = (TextView) findViewById(R.id.end);
+        TextView start = (TextView) findViewById(R.id.start);
+        TextView end = (TextView) findViewById(R.id.end);
+
 
         if (check == true) {
-            start.setText(hourOfDay + " : " + minute);
-        } else {
-            end.setText(hourOfDay + " : " + minute);
+            if(Integer.toString(minute).length()==1) {
+                start.setText(hourOfDay + " : " + "0" + minute);
+            }
+            else{
+                start.setText(hourOfDay + " : " + minute);
+            }
+        } if(check==false) {
+            if (Integer.toString(minute).length() == 1) {
+                end.setText(hourOfDay + " : " + "0" + minute);
+            } else {
+                end.setText(hourOfDay + " : " + minute);
+            }
         }
-        startTime=start.getText().toString();
-        endTime=end.getText().toString();
+        startTime = start.getText().toString();
+        endTime = (String) end.getText();
+        System.out.println("Non"+startTime+" "+endTime);
     }
 
     public void send(View view) {
 
-        if (validate() == false) {
+        if (validate(startTime,endTime) == false) {
             Toast.makeText(Claim_Form.this, "Please fill in the form", Toast.LENGTH_LONG).show();
         } else {
 

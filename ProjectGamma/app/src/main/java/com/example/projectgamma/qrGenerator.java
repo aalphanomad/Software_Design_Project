@@ -132,8 +132,8 @@ valueEndTime=qrGenerator.Global.GetEndTime();
 //ADD START  AND END TIME
 
         //Sets the respective values
-        //valueStartTime=valueStartTime.replaceAll("\\s+","");
-       // valueStartTime=valueStartTime.replaceAll("\\s+","");
+        valueStartTime=valueStartTime.replaceAll("\\s+","");
+        valueStartTime=valueStartTime.replaceAll("\\s+","");
         Global.setStartTime(valueStartTime);
         Global.setEndTime(valueEndTime);
 
