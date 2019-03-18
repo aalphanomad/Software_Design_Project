@@ -31,45 +31,78 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/increase"
-        android:layout_width="56dp"
-        android:layout_height="44dp"
 
+    <Button
+        android:id="@+id/buttonStartTime"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="383dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="14dp"
-        android:onClick="increase"
-        android:text="+"
-        android:textAlignment="center" />
+        android:layout_gravity="center"
+        android:layout_marginTop="337dp"
+        android:layout_marginEnd="253dp"
+        android:onClick="buttonStartTime"
+        android:text="Enter Start Time" />
 
     <TextView
-        android:id="@+id/duration"
+        android:id="@+id/startTime"
         android:layout_width="130dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="389dp"
-        android:layout_marginEnd="109dp"
-        android:text="0 hrs : 00 min"
+        android:layout_marginTop="339dp"
+        android:layout_marginEnd="123dp"
+        android:text="Start Time: "
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="338dp"
+        android:layout_marginEnd="0dp"
+        android:text="0 : 00 "
         android:textAlignment="center"
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/decrease"
-        android:layout_width="56dp"
-        android:layout_height="44dp"
-        android:layout_alignBaseline="@+id/increase"
-
+        android:id="@+id/buttonEndTime"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="380dp"
-        android:layout_marginEnd="282dp"
-        android:onClick="decrease"
-        android:text="-"
-        android:textAlignment="center" />
+        android:layout_gravity="center"
+        android:layout_marginTop="410dp"
+        android:layout_marginEnd="255dp"
+        android:onClick="buttonEndTime"
+        android:text="Enter End Time" />
+
+    <TextView
+        android:id="@+id/endtime"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="408dp"
+        android:layout_marginEnd="121dp"
+        android:text="End Time: "
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/end"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="410dp"
+        android:layout_marginEnd="0dp"
+        android:text="0 : 00 "
+        android:textAlignment="center"
+        android:textSize="20sp" />
 
 
     <TextView
@@ -116,8 +149,8 @@
         android:layout_height="61dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="308dp"
-        android:layout_marginEnd="23dp"
+        android:layout_marginTop="227dp"
+        android:layout_marginEnd="12dp"
         android:textColor="#ff0000"
         android:textStyle="bold"
         android:visibility="visible" />

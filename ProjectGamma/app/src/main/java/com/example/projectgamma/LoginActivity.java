@@ -1,20 +1,32 @@
 package com.example.projectgamma;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import android.preference.PreferenceManager;
 
 
 public class LoginActivity extends AppCompatActivity implements OnClickListener {
+
+     ConnectivityManager conMgr;
+     NetworkInfo activeNetwork;
+
+
     EditText UsernameEt, PasswordEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         //Setting components to variables
         setContentView(R.layout.activity_login);
@@ -26,8 +38,14 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             public void onClick(View v) {
                 //if the input received from the login screen is valid,proceed to login
                 if (validate() == true) {
-                    attemptLogin();
-
+                    ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+                    if(activeNetwork != null && activeNetwork.isConnected()) {
+                        attemptLogin();
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this, "Please check  your internet connection and try again.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -59,14 +77,19 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
 
     private void attemptLogin() {
-        String username = UsernameEt.getText().toString();
-        String password = PasswordEt.getText().toString();
-        //Sets the type to login and send the necesary data to the BackgroundWorker to login the user
-        String type = "login";
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, username, password);
-    }
+            String username = UsernameEt.getText().toString();
+            String password = PasswordEt.getText().toString();
+            //Sets the type to login and send the necesary data to the BackgroundWorker to login the user
+            String type = "login";
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, username, password);
 
+
+    }
+public void onBackPressed(){
+
+
+}
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);

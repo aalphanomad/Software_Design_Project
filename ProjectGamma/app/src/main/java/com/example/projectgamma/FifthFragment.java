@@ -15,7 +15,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 
 
 public class FifthFragment extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,13 +66,22 @@ public class FifthFragment extends AppCompatActivity implements NavigationView.O
                 Intent myIntent = new Intent(FifthFragment.this, FifthFragment.class);
                 FifthFragment.this.startActivity(myIntent);                break;
             }
+            case R.id.Logout: {
+                Intent myIntent = new Intent(FifthFragment.this, LoginActivity.class);
+                FifthFragment.this.startActivity(myIntent);
+                break;
+            }
         }
         mDrawerlayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void setNavigationViewListener() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) FifthFragment.this);
+        NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
     }
 }

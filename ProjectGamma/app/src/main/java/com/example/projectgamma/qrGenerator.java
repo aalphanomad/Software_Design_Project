@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -19,10 +20,11 @@ import java.util.Calendar;
 
 import static com.example.projectgamma.qrGenerator.Global.course;
 import static com.example.projectgamma.qrGenerator.Global.date;
-import static com.example.projectgamma.qrGenerator.Global.duration;
 import static com.example.projectgamma.qrGenerator.Global.name;
 import static com.example.projectgamma.qrGenerator.Global.student_num;
 import static com.example.projectgamma.qrGenerator.Global.venue;
+import static com.example.projectgamma.qrGenerator.Global.startTime;
+import static com.example.projectgamma.qrGenerator.Global.endTime;
 
 public class qrGenerator extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class qrGenerator extends AppCompatActivity {
         public static String course;
         public static String date;
         public static String venue;
-        public static String duration;
+        public static String startTime, endTime;
 
 
         //Get functions
@@ -54,9 +56,12 @@ public class qrGenerator extends AppCompatActivity {
             public static String GetVenue(){
                 return venue;
             }
-            public static String GetDuration(){
-                return duration;
-            }
+        public static String GetStartTime(){
+            return startTime;
+        }
+        public static String GetEndTime(){
+            return endTime;
+        }
             //Set functions
         public static void setName(String name){
             Global.name=name;
@@ -73,10 +78,13 @@ public class qrGenerator extends AppCompatActivity {
         public static void setVenue(String venue){
             Global.venue=venue;
         }
-        public static void setDuration(String duration){
-            Global.duration=duration;
+        public static void setStartTime(String startTime){
+            Global.startTime=startTime;
         }
+        public static void setEndTime(String endTime){
+            Global.endTime=endTime;
         }
+    }
 
 
 
@@ -84,7 +92,7 @@ public class qrGenerator extends AppCompatActivity {
 
     private ImageView imageView;
     public static TextView  resultTV0, resultTV1, resultTV2, resultTV3, resultTV4, resultTV5, resultTV6;
-    String valueCourse,valueName,valueStud_num, valueVenue,valueTime;
+    String valueCourse,valueName,valueStud_num, valueVenue,valueStartTime, valueEndTime;
 
     String currentDate;
 
@@ -98,7 +106,13 @@ public class qrGenerator extends AppCompatActivity {
          currentDate = DateFormat.getDateInstance().format(calender.getTime());
 
 //Assigns components(textviews) to variables
-        Bundle bundle=getIntent().getExtras();
+valueCourse=qrGenerator.Global.GetCourse();
+valueName=qrGenerator.Global.GetName();
+valueStud_num=qrGenerator.Global.GetStudent_Num();
+valueVenue=qrGenerator.Global.GetVenue();
+valueStartTime=qrGenerator.Global.GetStartTime();
+valueEndTime=qrGenerator.Global.GetEndTime();
+
         resultTV0 = (TextView)findViewById(R.id.Course_tv);
         resultTV1 = (TextView)findViewById(R.id.Name_tv);
         resultTV2= (TextView)findViewById(R.id.SN_tv);
@@ -107,30 +121,23 @@ public class qrGenerator extends AppCompatActivity {
         resultTV6 = (TextView)findViewById(R.id.Dur_tv);
 
         //Gets the name,student_num,course selected,venue and duration
-        valueName=bundle.getString("name");
-        valueStud_num=bundle.getString("student_num");
-        valueCourse=bundle.getString("course");
-            valueVenue= bundle.getString("venue");
-        valueTime=bundle.getString("time");
-
-
-        //Sets the respective values
-        Global.setName(valueName);
-        Global.setStudent_num(valueStud_num);
-        Global.setCourse(valueCourse);
-        Global.setDate(currentDate);
-        Global.setCourse(valueCourse);
-        Global.setVenue(valueVenue);
-        Global.setDuration(valueTime);
-
 
         //Sets the texts of the Labels
- resultTV0.setText("Course Tutored: "+valueCourse);
- resultTV1.setText("Name: "+valueName);
- resultTV2.setText("Student No: "+valueStud_num);
- resultTV4.setText("Date: "+currentDate);
- resultTV5.setText("Venue: "+valueVenue);
- resultTV6.setText("Duration of Session: "+valueTime);
+        resultTV0.setText("Course Tutored: "+valueCourse);
+        resultTV1.setText("Name: "+valueName);
+        resultTV2.setText("Student No: "+valueStud_num);
+        resultTV4.setText("Date: "+currentDate);
+        resultTV5.setText("Venue: "+valueVenue);
+        resultTV6.setText("Time: "+valueStartTime + " - " + valueEndTime);
+//ADD START  AND END TIME
+
+        //Sets the respective values
+        //valueStartTime=valueStartTime.replaceAll("\\s+","");
+       // valueStartTime=valueStartTime.replaceAll("\\s+","");
+        Global.setStartTime(valueStartTime);
+        Global.setEndTime(valueEndTime);
+
+
 
 
 
@@ -145,25 +152,16 @@ public class qrGenerator extends AppCompatActivity {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
         try {
-            /*
-            Global.setName(valueName);
-            Global.setStudent_num(valueStud_num);
-            Global.setCourse(valueCourse);
-            Global.setDate(currentDate);
-            Global.setCourse(valueCourse);
-            Global.setVenue(valueVenue);
-            Global.setDuration(valueTime);
-            */
-            //Adds the data that needs to be encoded into the QR code into an array
-            ArrayList arr = new ArrayList( );
-            arr.add(valueName);
-            arr.add(valueStud_num);
-            arr.add(valueCourse);
-            arr.add(currentDate);
-            arr.add(valueVenue);
-            arr.add(valueTime);
+            String type="booking" ;
+//Displays a Toast if the Confirmation is successful
+            //Toast.makeText(this, "Confirmation Complete", Toast.LENGTH_LONG).show();
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, valueName, valueStud_num, valueCourse,currentDate, valueVenue,valueStartTime,valueEndTime);
 
-            BitMatrix bitMatrix = multiFormatWriter.encode(String.valueOf(arr), BarcodeFormat.QR_CODE, 500, 500);
+
+
+
+            BitMatrix bitMatrix = multiFormatWriter.encode("test", BarcodeFormat.QR_CODE, 500, 500);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             imageView.setImageBitmap(bitmap);

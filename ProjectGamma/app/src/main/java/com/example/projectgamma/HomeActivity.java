@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //Initialization and assigning of vaariables
@@ -36,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent i = getIntent();
 
   //Recieves the name and student number
-        name=qrGenerator.Global.GetName();
+        name= GetName();
         stud_num=qrGenerator.Global.GetStudent_Num();
 
 
@@ -110,6 +113,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
+            case R.id.Logout: {
+                Intent myIntent = new Intent(HomeActivity.this, LoginActivity.class);
+                HomeActivity.this.startActivity(myIntent);
+                break;
+            }
         }
         mDrawerlayout.closeDrawer(GravityCompat.START);
         return true;
@@ -117,6 +125,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void setNavigationViewListener() {
         NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+
         navigationView.setNavigationItemSelectedListener( HomeActivity.this);
     }
 }

@@ -1,38 +1,52 @@
 package com.example.projectgamma;
 //The java import statements
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class Claim_Form extends AppCompatActivity {
+import static java.lang.String.valueOf;
+
+public class Claim_Form extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
     //Variable assignments
-    int hour = 0;
-    int min1 = 0;
-    int min2 = 0;
     ArrayList selectedItems = new ArrayList();
-    String course ;
+    String course;
     String name;
     String stud_num;
-    TextView Thevenue, TimeError,sel_Course;
+    TextView Thevenue, TimeError, sel_Course;
     String type;
     String date;
     String venue;
-    TextView tv;
-    String[] topic=new String[3];
+    TextView tv, start, end;
+    String[] topic = new String[3];
+    int hourOfDay;
     private Spinner mySpinner;
+    static int hour;
+    static int minute;
+     String startTime;
+     String endTime;
 
 
 
+    boolean check;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +56,8 @@ public class Claim_Form extends AppCompatActivity {
         TimeError = findViewById(R.id.TimeError);
         venue = Thevenue.getText().toString();
         tv = (TextView) findViewById(R.id.duration);
-        Button button=(Button)findViewById(R.id.button);
-        sel_Course=findViewById(R.id.Sel_Course);
+        Button button = (Button) findViewById(R.id.button);
+        sel_Course = findViewById(R.id.Sel_Course);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +72,8 @@ public class Claim_Form extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        topic=listItems[i].split(" ");
-                        course=topic[0];
+                        topic = listItems[i].split(" ");
+                        course = topic[0];
                         //Displays the course selected
                         sel_Course.setText(course);
 
@@ -78,76 +92,109 @@ public class Claim_Form extends AppCompatActivity {
         stud_num = i.getStringExtra("student_num");
 
     }
-//Increases the time-picker
-   public void increase(View view) {
 
 
-        min1 += 3;
+    boolean validate() {
+        boolean valid = true;
 
-        if (min1 == 6) {
-            min1 = 0;
-            hour += 1;
-        }
-
-        tv.setText(hour + " hrs : " + min1 + min2 + " min");
-    }
-//Decreases the time-picker
-    public void decrease(View view) {
-        TextView tv = findViewById(R.id.duration);
-        int prevmin1 = min1;
-        min1 -= 3;
-
-        if (hour > 0 && min1 - 3 == 0) {
-            min1 = 0;
-        } else if (hour > 0 && prevmin1 == 0) {
-            hour -= 1;
-            min1 = 3;
-        }
-
-        if (min1 - 3 < 0) {
-            min1 = 0;
-        }
-
-
-        tv.setText(hour + " hrs : " + min1 + min2 + " min");
-    }
-
-
-    public void send(View view) {
         //Checks whether a venue has been entered
         if (Thevenue.length() == 0) {
             Thevenue.setError("Please enter the venue");
+            valid = false;
         }
         //Checks if a course has been selected
-               else if(topic[0]==null){
+        if (topic[0] == null) {
             sel_Course.setText("Please Select a course");
+            valid = false;
         }
-        //Checks if a duration has been selected
-        else if (hour == 0 && min1 == 0 && min2 == 0) {
-            TimeError.setText("Please enter the duration that you have tutored");
+        //Checks if the start_time has been selected
+        start = (TextView) findViewById(R.id.start);
+        end = (TextView) findViewById(R.id.end);
+
+        if (check == true) {
+            start.setText(hourOfDay + " : " + minute);
         } else {
+            end.setText(hourOfDay + " : " + minute);
+        }
+        startTime=start.getText().toString();
+        endTime=end.getText().toString();
+        System.out.println("THE END  "+startTime+"+"+endTime+"+");
+
+        if(startTime.equals("0 : 00 ") || endTime.equals("0 : 0")) {
+                TimeError.setText("Please enter a valid period for which you have tutored");
+                valid=false;
+
+        }
+
+        return valid;
+
+    }
+
+    @SuppressLint("ValidFragment")
+    public static class TimePickerFragment extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            Calendar c = Calendar.getInstance();
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            minute = c.get(Calendar.MINUTE);
+
+            return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), hour, minute, DateFormat.is24HourFormat(getActivity()));
+        }
+    }
+
+
+    public void buttonStartTime(View v) {
+        check = true;
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getSupportFragmentManager(), "time picker");
+    }
+
+    public void buttonEndTime(View v) {
+        check = false;
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getSupportFragmentManager(), "time picker");
+    }
+
+
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        start = (TextView) findViewById(R.id.start);
+        end = (TextView) findViewById(R.id.end);
+
+        if (check == true) {
+            start.setText(hourOfDay + " : " + minute);
+        } else {
+            end.setText(hourOfDay + " : " + minute);
+        }
+        startTime=start.getText().toString();
+        endTime=end.getText().toString();
+    }
+
+    public void send(View view) {
+
+        if (validate() == false) {
+            Toast.makeText(Claim_Form.this, "Please fill in the form", Toast.LENGTH_LONG).show();
+        } else {
+
             EditText e3 = findViewById(R.id.enterVenue);
-
-            final String hourString, min1String, min2String;
-            hourString = String.valueOf(hour);
-            min1String = String.valueOf(min1);
-            min2String = String.valueOf(min2);
-
             venue = e3.getText().toString();
 
             Intent intent = new Intent(this, qrGenerator.class);
-            String time = hourString + "hrs" + ":" + min1String + min2String + "mins";
-//Sends the course,name,student numbber,venue and time to the qrGenerator Class
-            intent.putExtra("course", course);
-            intent.putExtra("name", name);
-            intent.putExtra("student_num", stud_num);
-            intent.putExtra("venue", venue);
-            intent.putExtra("time", time);
+//Sends the course,name,student number,venue and time to the qrGenerator Class
+
+            qrGenerator.Global.setCourse(course);
+            qrGenerator.Global.setName(name);
+            qrGenerator.Global.setStudent_num(stud_num);
+            qrGenerator.Global.setVenue(venue);
+            qrGenerator.Global.setStartTime(startTime);
+            qrGenerator.Global.setEndTime(endTime);
+
+
 
             startActivity(intent);
 
         }
     }
-
-
 }
+

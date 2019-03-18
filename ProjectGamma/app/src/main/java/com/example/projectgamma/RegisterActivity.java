@@ -1,8 +1,11 @@
 package com.example.projectgamma;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +40,8 @@ import java.util.Arrays;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+     ConnectivityManager conMgr;
+     NetworkInfo activeNetwork;
 
     //Variable assigning and initialization
     private EditText et_name, et_SN, et_password, et_cpassword;
@@ -49,12 +54,13 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     String item;
     TextView Course1, Course2, Course3, Course4, Course5, Course_Error;
     int count = 0;
-    ArrayList selectedItems=new ArrayList();
+    ArrayList selectedItems = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         //Assigning components to variables
@@ -92,9 +98,11 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         regbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                register();
-            }
 
+                    register();
+
+
+            }
 
         });
         Thread refresh = new Thread() {
@@ -130,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         refresh.start();
     }
 
-//Gets the item selected
+    //Gets the item selected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         item = parent.getItemAtPosition(position).toString();
@@ -145,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         //Displays the courses in the popup spinner
         AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
         CharSequence[] The_courses = new CharSequence[50];
-        CharSequence[] COMS_Courses = {"COMS1015 (Basic Computer Organisation)","COMS1018 (Introduction to Algorithms and Programming)","COMS1017 (Introduction to Data Structures and Algorithms","COMS1016 (Discrete Computational Structures)","COMS2002 (Database Fundementals)","COMS2013 (Mobile Computing)","COMS2014 (Computer Networks)","COMS2015 (Analysis of Algorithms)","COMS3003 (Formal Languages and Automata)","COMS3005 (Advanced Analysis of Algorithms)","COMS3009 (Software Design)","COMS3010 (Operating Systems and System Programming)","COMS3007 (Machine Learning)","COMS3006 (Computer Graphics and Visualisation)","COMS3008 (Parallel Computing)","COMS3011 (Software Design)"};
+        CharSequence[] COMS_Courses = {"COMS1015 (Basic Computer Organisation)", "COMS1018 (Introduction to Algorithms and Programming)", "COMS1017 (Introduction to Data Structures and Algorithms", "COMS1016 (Discrete Computational Structures)", "COMS2002 (Database Fundementals)", "COMS2013 (Mobile Computing)", "COMS2014 (Computer Networks)", "COMS2015 (Analysis of Algorithms)", "COMS3003 (Formal Languages and Automata)", "COMS3005 (Advanced Analysis of Algorithms)", "COMS3009 (Software Design)", "COMS3010 (Operating Systems and System Programming)", "COMS3007 (Machine Learning)", "COMS3006 (Computer Graphics and Visualisation)", "COMS3008 (Parallel Computing)", "COMS3011 (Software Design)"};
         CharSequence[] CAM_Courses = {"APPM1006", "APPM1025", "APPM2007", "CAM3017"};
         if (item == "COMS") {
             The_courses = COMS_Courses;
@@ -200,12 +208,19 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         if (validate() == false) {
             Toast.makeText(this, "Signup has failed", Toast.LENGTH_SHORT).show();
         } else {
+            ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+if(activeNetwork != null && activeNetwork.isConnected()) {
+    onSignupSuccess();
+}
+else{
+    Toast.makeText(RegisterActivity.this, "Please check  your internet connection and try again.", Toast.LENGTH_SHORT).show();
 
-            onSignupSuccess();
-
+}
         }
     }
-//If the signup is successful
+
+    //If the signup is successful
     public void onSignupSuccess() {
 //Sets the type for which the BackgroundWorker will be used for
         String type = "reg";
@@ -215,110 +230,114 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         nameValuePairs.add(new BasicNameValuePair("studentnum", Stu_Num));
         nameValuePairs.add(new BasicNameValuePair("email", email));
         nameValuePairs.add(new BasicNameValuePair("password", password));
-       String test=String.valueOf(selectedItems);
-       String[] arr=new String[20];
-       arr=test.split(",");
+        String test = String.valueOf(selectedItems);
+        String[] arr = new String[20];
+        arr = test.split(",");
 
-       //Sends the information to the backgroundworker depending on the number of courses selected
-        if (selectedItems.size() == 1) {
-            String[] arr1;
-            arr1=arr[0].split(" ");
+            //Sends the information to the backgroundworker depending on the number of courses selected
+            if (selectedItems.size() == 1) {
+                String[] arr1;
+                arr1 = arr[0].split(" ");
 
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()));
-        }
-        if (selectedItems.size() == 2) {
-            String[] arr1;
-            arr1=arr[0].split(" ");
+                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()));
+            }
+            if (selectedItems.size() == 2) {
+                String[] arr1;
+                arr1 = arr[0].split(" ");
 
-            String[] arr2;
-            arr2=arr[1].split(" ");
+                String[] arr2;
+                arr2 = arr[1].split(" ");
 
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()), arr2[1]);
-        }
-        if (selectedItems.size() == 3) {
-            String[] arr1;
-            arr1=arr[0].split(" ");
+                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1]);
+            }
+            if (selectedItems.size() == 3) {
+                String[] arr1;
+                arr1 = arr[0].split(" ");
 
-            String[] arr2;
-            arr2=arr[1].split(" ");
+                String[] arr2;
+                arr2 = arr[1].split(" ");
 
-            String[] arr3;
-            arr3=arr[2].split(" ");
+                String[] arr3;
+                arr3 = arr[2].split(" ");
 
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()),arr2[1], arr3[1]);
-        }
-        if (selectedItems.size() == 4) {
-            String[] arr1;
-            arr1=arr[0].split(" ");
+                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1]);
+            }
+            if (selectedItems.size() == 4) {
+                String[] arr1;
+                arr1 = arr[0].split(" ");
 
-            String[] arr2;
-            arr2=arr[1].split(" ");
+                String[] arr2;
+                arr2 = arr[1].split(" ");
 
-            String[] arr3;
-            arr3=arr[2].split(" ");
+                String[] arr3;
+                arr3 = arr[2].split(" ");
 
-            String[] arr4;
-            arr4=arr[3].split(" ");
+                String[] arr4;
+                arr4 = arr[3].split(" ");
 
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1,arr1[0].length()),arr2[1], arr3[1],arr4[1]);
-        }
-        if (selectedItems.size() == 5) {
-            String[] arr1;
-            arr1=arr[0].split(" ");
+                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1], arr4[1]);
+            }
+            if (selectedItems.size() == 5) {
+                String[] arr1;
+                arr1 = arr[0].split(" ");
 
-            String[] arr2;
-            arr2=arr[1].split(" ");
+                String[] arr2;
+                arr2 = arr[1].split(" ");
 
-            String[] arr3;
-            arr3=arr[2].split(" ");
+                String[] arr3;
+                arr3 = arr[2].split(" ");
 
-            String[] arr4;
-            arr4=arr[3].split(" ");
+                String[] arr4;
+                arr4 = arr[3].split(" ");
 
-            String[] arr5;
-            arr5=arr[4].split(" ");
+                String[] arr5;
+                arr5 = arr[4].split(" ");
 
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, name, Stu_Num, email, password,arr1[0].substring(1,arr1[0].length()),arr2[1], arr3[1], arr4[1],arr5[1].substring(0,arr5[1].length()));
-        }
+                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1], arr4[1], arr5[1].substring(0, arr5[1].length()));
+            }
 
 
-        try {
+            try {
 //Initializes an HTTP Post connection
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://lamp.ms.wits.ac.za/~s1601745/create.php");
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            is = entity.getContent();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            br.readLine();
-        } catch (ClientProtocolException e) {
-            System.out.print("Error!");
-        } catch (IOException e) {
-            System.out.print("CHECK");
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://lamp.ms.wits.ac.za/~s1601745/create.php");
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpClient.execute(httpPost);
+                HttpEntity entity = response.getEntity();
+                is = entity.getContent();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                br.readLine();
+            } catch (ClientProtocolException e) {
+                System.out.print("Error!");
+            } catch (IOException e) {
+                System.out.print("CHECK");
+            }
+
+            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+//Sets the name and student number of the user
+            qrGenerator.Global.setName(name);
+            qrGenerator.Global.setStudent_num(Stu_Num);
+            startActivity(intent);
         }
 
-        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-//Sets the name and student number of the user
-        qrGenerator.Global.setName(name);
-        qrGenerator.Global.setStudent_num(Stu_Num);
-        startActivity(intent);
-    }
+
+
+
 //Validates the users input on the register screen
     public boolean validate() {
         boolean valid = true;
-        //cheks if no courses has been selected
+        //checks if no courses has been selected
         if (selectedItems.size() == 0) {
 
-            Course_Error.setText(("Please Select atleast one Course"));
+            Course1.setText(("Please Select atleast one Course"));
             valid = false;
         }
-        //Chevks if  no name has been entered or a too long name has been entered
+        //Checks if  no name has been entered or a too long name has been entered
         if (name.isEmpty() || name.length() > 32) {
             et_name.setError("Please enter a valid name");
             valid = false;

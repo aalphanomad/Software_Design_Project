@@ -33,9 +33,12 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent HomeIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(HomeIntent);
-                finish();
+
+                    Intent HomeIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(HomeIntent);
+                    finish();
+
+
             }
         }, SPLASH_TIME_OUT);
     }

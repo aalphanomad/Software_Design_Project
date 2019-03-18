@@ -39,22 +39,15 @@ public class qrScanner extends AppCompatActivity implements ZXingScannerView.Res
     @Override
     public void handleResult(Result result) {
 
-    String[] arr=new String[8];
+    String[] The_details=new String[8];
 String test=result.toString();
-arr=test.split(",");
-//Sets the intended type of use for the backgroundWorker
-    String type="booking" ;
-
-    String name=arr[0].substring(1,arr[0].length());
-    String student_num=arr[1];
-    String course=arr[2];
-    String date=arr[3]+arr[4];
-    String venue=arr[5];
-    String duration=arr[6].substring(0,arr[6].length()-1);
-//Displays a Toast if the Confirmation is sucessful
-        Toast.makeText(this, "Confirmation Complete", Toast.LENGTH_LONG).show();
+The_details=test.split(",");
+/*
+String type="verify";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, name, student_num, course,date, venue, duration);
+        backgroundWorker.execute(type, valueName, valueStud_num, valueCourse,currentDate, valueVenue,startTime,endTime);
+        */
+
 
 
         onBackPressed();
