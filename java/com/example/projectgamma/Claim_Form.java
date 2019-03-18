@@ -114,10 +114,18 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         System.out.println(check);
         TextView start = (TextView) findViewById(R.id.start);
         TextView end = (TextView) findViewById(R.id.end);
+        String hourString;
+        String minuteString;
+        hourString = String.valueOf(hourOfDay);
+        minuteString = String.valueOf(minute);
+
+        if (minuteString.length()==1){
+            minuteString = "0"+minuteString;
+        }
         if (check == true) {
-            start.setText(hourOfDay + " : " + minute);
+            start.setText(hourString + " : " + minuteString);
         } else {
-            end.setText(hourOfDay + " : " + minute);
+            end.setText(hourString + " : " + minuteString);
         }
 
     }
