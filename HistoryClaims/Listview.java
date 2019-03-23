@@ -16,7 +16,7 @@ public class Listview extends AppCompatActivity {
         setContentView(R.layout.listview);
 
         String type="history" ;
-
+        //declaring and initialsing the values of course, date, etc. to send to the custom-made list
         String course = qrGenerator.Global.GetCourse();
         String date = qrGenerator.Global.GetDate();
         String venue = qrGenerator.Global.GetVenue();
@@ -24,8 +24,10 @@ public class Listview extends AppCompatActivity {
         //BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         //backgroundWorker.execute(type,course,date, venue, duration);
 
+        //sending the information in an array format
         String[] test = {date, course, venue, duration};
 
+        //calling CustomAdaptor function to take our information
         ListAdapter adapter = new CustomAdapter(this, test);
         ListView list = (ListView)findViewById(R.id.lv);
         list.setAdapter(adapter);
