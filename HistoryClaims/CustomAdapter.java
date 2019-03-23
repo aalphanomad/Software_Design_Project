@@ -31,7 +31,7 @@ class CustomAdapter extends ArrayAdapter<String> {
         TextView tvDuration = (TextView) customView.findViewById(R.id.durationHistory);
         TextView tvStatus = (TextView) customView.findViewById(R.id.status);
         //setting textviews with appropriate information
-        tvDate.setText("Date: " + date);
+        tvDate.setText(date);
         tvSubject.setText("Subject: " + subject);
         tvVenue.setText("Venue: " + venue);
         tvDuration.setText("Duration: " + duration);
