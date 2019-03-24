@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class Listview extends AppCompatActivity {
 
     ListView listview;
-    //gets valur from claims form generator for now
+    //gets value from claims form generator for now
     String subject = qrGenerator.Global.GetCourse();
     String date = qrGenerator.Global.GetDate();
     String venue = qrGenerator.Global.GetVenue();
