@@ -17,11 +17,13 @@ import android.widget.Toast;
 public class Listview extends AppCompatActivity {
 
     ListView listview;
+    //gets valur from claims form generator for now
     String subject = qrGenerator.Global.GetCourse();
     String date = qrGenerator.Global.GetDate();
     String venue = qrGenerator.Global.GetVenue();
     String duration = "2hrs";
 
+    //stores values into arrays to pass to the ArrayAdapter
     String[] mDate = {date};
     String[] mSubject = {subject};
     String[] mVenue = {venue};
@@ -35,6 +37,7 @@ public class Listview extends AppCompatActivity {
 
         listview = findViewById(R.id.lv);
 
+        //call adapter class to take in our arrays
         MyAdapter adapter = new MyAdapter(this, mDate, mSubject, mVenue, mDuration);
         listview.setAdapter(adapter);
 
@@ -57,6 +60,7 @@ public class Listview extends AppCompatActivity {
         String rVenue[];
         String rDuration[];
 
+        //class will take in the above arrays 
         MyAdapter(Context c, String date[], String subject[], String venue[], String duration[]){
             super(c, R.layout.customlist, R.id.dateHistory, date);
             this.context = c;
@@ -70,12 +74,14 @@ public class Listview extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = inflater.inflate(R.layout.customlist, parent, false);
 
+            //declare our textviews
             TextView theDate = row.findViewById(R.id.dateHistory);
             TextView theSubject = row.findViewById(R.id.subjectHistory);
             TextView theVenue = row.findViewById(R.id.venueHistory);
             TextView theDuration = row.findViewById(R.id.durationHistory);
             TextView theStatus = row.findViewById(R.id.status);
 
+            //set our textviews with values from the arrays passed in
             theDate.setText(rDate[position]);
             theSubject.setText("Subject: " + rSubject[position]);
             theVenue.setText("Venue: " + rVenue[position]);
