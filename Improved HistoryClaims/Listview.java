@@ -21,7 +21,7 @@ public class Listview extends AppCompatActivity {
     String subject = qrGenerator.Global.GetCourse();
     String date = qrGenerator.Global.GetDate();
     String venue = qrGenerator.Global.GetVenue();
-    String duration = "2hrs";
+    String duration;
 
     //stores values into arrays to pass to the ArrayAdapter
     String[] mDate = {date};
