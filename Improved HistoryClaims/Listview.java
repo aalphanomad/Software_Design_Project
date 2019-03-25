@@ -86,7 +86,8 @@ public class Listview extends AppCompatActivity {
             theSubject.setText("Subject: " + rSubject[position]);
             theVenue.setText("Venue: " + rVenue[position]);
             theDuration.setText("Duration: " + rDuration[position]);
-            theStatus.setText("Status: Not Validated");
+            //if tutor session has been validated then set text to:
+            //theStatus.setText("Status: Validated");
 
 
             return row;
