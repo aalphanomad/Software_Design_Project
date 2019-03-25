@@ -234,7 +234,7 @@ String type;
                 String valid = "0";
                 System.out.println("WTF"+name+" "+student_num+" "+startTime+" "+endTime);
                 //The URL to send data to the server when creating a booking/claim form
-                login_url = "http://lamp.ms.wits.ac.za/~s1601745/new_booking.php";
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
                 URL url = new URL(login_url);
                 //The code below initializes an HTP POST request
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -244,7 +244,7 @@ String type;
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 //Creating the URL in order to send data for generating a claim form to the server
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("start_time", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("end_time", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
+                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -333,7 +333,21 @@ String type;
     }
 
 
+}else if(type=="booking"){
+                JSONObject ja = new JSONObject(result);
+                System.out.println("THe truth "+ja.get("result").toString());
+if(ja.get("result").toString().equals("0")){
+    Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
+    Intent i = new Intent(context, HomeActivity.class);
+    context.startActivity(i);
+}else{
+    Toast.makeText(context, "This is a duplicate claim! Please try again!", Toast.LENGTH_LONG).show();
+
 }
+
+
+
+            }
 
 
         } catch (JSONException e) {

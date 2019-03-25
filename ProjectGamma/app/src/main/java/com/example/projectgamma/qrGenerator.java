@@ -104,7 +104,6 @@ public class qrGenerator extends AppCompatActivity {
         //Gets the current date
         Calendar calender = Calendar.getInstance();
          currentDate = DateFormat.getDateInstance().format(calender.getTime());
-
 //Assigns components(textviews) to variables
 valueCourse=qrGenerator.Global.GetCourse();
 valueName=qrGenerator.Global.GetName();
@@ -133,7 +132,7 @@ valueEndTime=qrGenerator.Global.GetEndTime();
 
         //Sets the respective values
         valueStartTime=valueStartTime.replaceAll("\\s+","");
-        valueStartTime=valueStartTime.replaceAll("\\s+","");
+        valueEndTime=valueEndTime.replaceAll("\\s+","");
         Global.setStartTime(valueStartTime);
         Global.setEndTime(valueEndTime);
 

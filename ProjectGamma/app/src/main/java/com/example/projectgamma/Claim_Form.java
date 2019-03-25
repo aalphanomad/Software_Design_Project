@@ -19,8 +19,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import static java.lang.String.valueOf;
 
@@ -106,12 +109,19 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
             sel_Course.setText("Please Select a course");
             valid = false;
         }
+
+
         //Checks if the start_time has been selected
 
         TextView start = (TextView) findViewById(R.id.start);
         TextView end = (TextView) findViewById(R.id.end);
         startTime=start.getText().toString();
         endTime=end.getText().toString();
+
+        if(checktimings(startTime,endTime)==false){
+            valid=false;
+            TimeError.setText("End time cannot be before start time");
+        }
 
 System.out.println("Para"+startTime+"+"+endTime+"+");
 
@@ -121,9 +131,37 @@ System.out.println("Para"+startTime+"+"+endTime+"+");
 
         }
 
+
         return valid;
 
     }
+
+    private boolean checktimings(String startTime1, String endTime1) {
+
+        String pattern = "HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        startTime1=startTime1.replaceAll("\\s+","");
+        endTime1=endTime1.replaceAll("\\s+","");
+        try {
+            Date date1 = sdf.parse(startTime1);
+            Date date2 = sdf.parse(endTime1);
+
+startTime=startTime1;
+endTime=endTime1;
+            if(date1.before(date2)) {
+                return true;
+            } else {
+
+                return false;
+            }
+
+
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     @SuppressLint("ValidFragment")
     public static class TimePickerFragment extends DialogFragment {
