@@ -39,7 +39,7 @@ public class Listview extends AppCompatActivity {
 
         //call adapter class to take in our arrays
         MyAdapter adapter = new MyAdapter(this, mDate, mSubject, mVenue, mDuration);
-        listview.setAdapter(adapter);
+        listview.setAdapter(adapter); //update listview with values passed through
 
         /*listview.setOnClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,6 +54,7 @@ public class Listview extends AppCompatActivity {
     }
 
     class MyAdapter extends ArrayAdapter<String>{
+        //global arrays for the class
         Context context;
         String rDate[];
         String rSubject[];
@@ -63,6 +64,7 @@ public class Listview extends AppCompatActivity {
         //class will take in the above arrays 
         MyAdapter(Context c, String date[], String subject[], String venue[], String duration[]){
             super(c, R.layout.customlist, R.id.dateHistory, date);
+            //set the global arrays of class to the those that have been given to the parameters 
             this.context = c;
             this.rDate = date;
             this.rSubject = subject;
@@ -71,7 +73,9 @@ public class Listview extends AppCompatActivity {
         }
 
         public View getView(int position, View convertView, ViewGroup parent){
+            //using class to represent layout in xml
             LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //row will be rendered by creating view object in memory. 
             View row = inflater.inflate(R.layout.customlist, parent, false);
 
             //declare our textviews
