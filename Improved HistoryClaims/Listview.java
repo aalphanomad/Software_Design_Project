@@ -61,7 +61,7 @@ public class Listview extends AppCompatActivity {
         String rVenue[];
         String rDuration[];
 
-        //class will take in the above arrays 
+        //class will set above arrays to those passed in
         MyAdapter(Context c, String date[], String subject[], String venue[], String duration[]){
             super(c, R.layout.customlist, R.id.dateHistory, date);
             //set the global arrays of class to the those that have been given to the parameters 
