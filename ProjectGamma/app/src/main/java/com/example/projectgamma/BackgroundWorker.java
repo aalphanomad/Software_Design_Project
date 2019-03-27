@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -232,7 +235,6 @@ String type;
                 String startTime = params[6];
                 String endTime = params[7];
                 String valid = "0";
-                System.out.println("WTF"+name+" "+student_num+" "+startTime+" "+endTime);
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
                 URL url = new URL(login_url);
@@ -245,6 +247,48 @@ String type;
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 //Creating the URL in order to send data for generating a claim form to the server
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if (type == "fetching") {
+            try {
+
+                //The code below recieves input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
+                String name = params[1];
+                String student_num = params[2];
+
+                //The URL to send data to the server when creating a booking/claim form
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/fetching.php";
+                URL url = new URL(login_url);
+                //The code below initializes an HTP POST request
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                //Creating the URL in order to send data for generating a claim form to the server
+                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8")+"="+ URLEncoder.encode(student_num, "UTF-8")  ;
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -344,7 +388,35 @@ if(ja.get("result").toString().equals("0")){
     Toast.makeText(context, "This is a duplicate claim! Please try again!", Toast.LENGTH_LONG).show();
 
 }
+            }
 
+            else if(type=="fetching"){
+                JSONObject ja = new JSONObject(result);
+
+                  String[] dates=ja.getString("dates").split(",");
+                String[] courses=ja.getString("courses").split(",");
+                String[] start_time=ja.getString("start_time").split(",");
+                String[] end_time=ja.getString("end_time").split(",");
+                String[] venue=ja.getString("venue").split(",");
+                String[] valid=ja.getString("valid").split(",");
+
+                Intent intent1 = new Intent("INTENT_1").putExtra("dates",dates);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent1);
+
+                Intent intent2 = new Intent("INTENT_2").putExtra("courses", courses);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent2);
+
+                Intent intent3 = new Intent("INTENT_3").putExtra("start_time", start_time);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent3);
+
+                Intent intent4 = new Intent("INTENT_4").putExtra("end_time", end_time);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent4);
+
+                Intent intent5 = new Intent("INTENT_5").putExtra("venue", venue);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent5);
+
+                Intent intent6 = new Intent("INTENT_6").putExtra("valid", valid);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent6);
 
 
             }

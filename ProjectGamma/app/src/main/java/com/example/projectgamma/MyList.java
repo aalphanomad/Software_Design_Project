@@ -151,7 +151,7 @@ switch (position){
 
         /*private void populateListView() {
             String[] Grades = {"Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"};
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.tutoritems, Grades);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.customlist, Grades);
             ListView list = (ListView) findViewById(R.id.listviewmain);
             list.setAdapter(adapter);
         }
