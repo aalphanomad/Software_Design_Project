@@ -1,16 +1,13 @@
 package com.example.projectgamma;
 
 //Android Import Statements
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -29,9 +26,9 @@ import java.net.URLEncoder;
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
 
-     Context context;
-    private AlertDialog alertDialog;
-String type;
+    private Context context;
+    private String type;
+
     BackgroundWorker(Context ctx) {
         context = ctx;
 
@@ -40,25 +37,16 @@ String type;
 
     @Override
     protected String doInBackground(String... params) {
-        //Determines whether the backgroundWorker is being imlemented for a registreation,logon or booking(String type)
+        //Determines whether the backgroundWorker is being implemented for a registration,logon or booking(String type)
         type = params[0];
-        String login_url;
-        String reg_url;
+        String login_url = null;
+        String post_data=null ;
         //The below is executed if we are trying to use BackgroundWorker for registering
-        if (type.equals("reg")) {
-            try {
-//Specifies the URL in order to register
-                reg_url = "http://lamp.ms.wits.ac.za/~s1601745/create.php/";
-//Initialize an HTTP POST connection to send data to the server
-                URL url = new URL(reg_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+        try {
+            if (type.equals("reg")) {
 
-//Retrieves the informations passed from other classes to BackgroundWorker if we are trying to register
+//Specifies the URL in order to register
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/create.php/";
                 String name = params[1];
                 String stu_num = params[2];
                 String email = params[3];
@@ -71,7 +59,7 @@ String type;
                 String course5;
 //The below creates the appropriate URL to send data to the server depending on the number of courses selected
 
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&" + URLEncoder.encode("admin", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&" + URLEncoder.encode("admin", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
                 if (params.length == 6) {
                     course1 = params[5];
                     post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8");
@@ -108,33 +96,7 @@ String type;
                     post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8") + "&" + URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
 
                 }
-
-
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                String result = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return result;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
-            //The code below is executed if we are using the BackgroundWorker to login
-        } else if (type == "verify") {
-            try {
-                //Accepts the input passed from other classes which will be used to verify
+            } else if (type.equals("verify")) {
                 String name = params[1];
                 String student_num = params[2];
                 String course = params[3];
@@ -142,91 +104,21 @@ String type;
                 String venue = params[5];
                 String startTime = params[6];
                 String endTime = params[7];
-                String valid="1";
+                String valid = "1";
                 //The URL below is used to send data to the server in order to login
-                login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
-                URL url = new URL(login_url);
-
-                //The code below creates an HTTP POST connection
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                //Creates the URL to send the data to the server in order to login
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("start_time", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("end_time", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
-
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                String result = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return result;
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
+                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("start_time", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("end_time", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
 
 
-
-        } else if (type == "login") {
-            try {
-                //Accepts the input passed from other classes which will be used to login
+            } else if (type.equals("login")) {
                 String stu_num = params[1];
                 String password = params[2];
                 //The URL below is used to send data to the server in order to login
-                login_url = "http://lamp.ms.wits.ac.za/~s1601745/signin.php";
-                URL url = new URL(login_url);
+                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/signin.php";
+                post_data = URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
-                //The code below creates an HTTP POST connection
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                //Creates the URL to send the data to the server in order to login
-                String post_data = URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
-
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                String result = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return result;
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-//The code below is executed if we are using BackgroundWorker to create a booking(generating a claim form)
-        } else if (type == "booking") {
-            try {
-
-                //The code below recieves input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
+            } else if (type.equals("booking")) {
+                //The code below receives input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
                 String name = params[1];
                 String student_num = params[2];
                 String course = params[3];
@@ -237,89 +129,59 @@ String type;
                 String valid = "0";
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
-                URL url = new URL(login_url);
-                //The code below initializes an HTP POST request
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                //Creating the URL in order to send data for generating a claim form to the server
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                String result = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return result;
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
 
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }else if (type == "fetching") {
-            try {
-
-                //The code below recieves input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
+            } else if (type.equals("fetching")) {
                 String name = params[1];
                 String student_num = params[2];
 
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/fetching.php";
-                URL url = new URL(login_url);
-                //The code below initializes an HTP POST request
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                //Creating the URL in order to send data for generating a claim form to the server
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8")+"="+ URLEncoder.encode(student_num, "UTF-8")  ;
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                String result = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return result;
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
 
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+//Initialize an HTTP POST connection to send data to the server
+            URL url = new URL(login_url);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+
+//Retrieves the informations passed from other classes to BackgroundWorker if we are trying to register
+
+            bufferedWriter.write(post_data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            outputStream.close();
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            String result = "";
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                result += line;
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return result;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
 
         }
+        //The code below is executed if we are using the BackgroundWorker to login
+
+
+//The code below is executed if we are using BackgroundWorker to create a booking(generating a claim form)
+
         return null;
     }
-
-
     @Override
     protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(context).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Login Status");
     }
 
@@ -360,47 +222,41 @@ String type;
                         context.startActivity(i);
                     }
                 }
-            }
-
-
-            else if(type=="verify"){
-    //Converts the result from the server to JSON format
-    JSONObject ja = new JSONObject(result);
-    if (ja.get("answer").toString().equals("Successful")) {
-        Toast.makeText(context, "Confirmation Successful", Toast.LENGTH_LONG).show();
-        Intent i = new Intent(context, HomeActivity.class);
-        context.startActivity(i);
-    }
-    else{
-        Toast.makeText(context, "Confirmation Unsuccessful", Toast.LENGTH_LONG).show();
-
-    }
-
-
-}else if(type=="booking"){
+            } else if (type == "verify") {
+                //Converts the result from the server to JSON format
                 JSONObject ja = new JSONObject(result);
-                System.out.println("THe truth "+ja.get("result").toString());
-if(ja.get("result").toString().equals("0")){
-    Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
-    Intent i = new Intent(context, HomeActivity.class);
-    context.startActivity(i);
-}else{
-    Toast.makeText(context, "This is a duplicate claim! Please try again!", Toast.LENGTH_LONG).show();
+                if (ja.get("answer").toString().equals("Successful")) {
+                    Toast.makeText(context, "Confirmation Successful", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(context, HomeActivity.class);
+                    context.startActivity(i);
+                } else {
+                    Toast.makeText(context, "Confirmation Unsuccessful", Toast.LENGTH_LONG).show();
 
-}
-            }
+                }
 
-            else if(type=="fetching"){
+
+            } else if (type == "booking") {
+                JSONObject ja = new JSONObject(result);
+                System.out.println("THe truth " + ja.get("result").toString());
+                if (ja.get("result").toString().equals("0")) {
+                    Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(context, HomeActivity.class);
+                    context.startActivity(i);
+                } else {
+                    Toast.makeText(context, "This is a duplicate claim! Please try again!", Toast.LENGTH_LONG).show();
+
+                }
+            } else if (type == "fetching") {
                 JSONObject ja = new JSONObject(result);
 
-                  String[] dates=ja.getString("dates").split(",");
-                String[] courses=ja.getString("courses").split(",");
-                String[] start_time=ja.getString("start_time").split(",");
-                String[] end_time=ja.getString("end_time").split(",");
-                String[] venue=ja.getString("venue").split(",");
-                String[] valid=ja.getString("valid").split(",");
+                String[] dates = ja.getString("dates").split(",");
+                String[] courses = ja.getString("courses").split(",");
+                String[] start_time = ja.getString("start_time").split(",");
+                String[] end_time = ja.getString("end_time").split(",");
+                String[] venue = ja.getString("venue").split(",");
+                String[] valid = ja.getString("valid").split(",");
 
-                Intent intent1 = new Intent("INTENT_1").putExtra("dates",dates);
+                Intent intent1 = new Intent("INTENT_1").putExtra("dates", dates);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent1);
 
                 Intent intent2 = new Intent("INTENT_2").putExtra("courses", courses);
@@ -420,8 +276,6 @@ if(ja.get("result").toString().equals("0")){
 
 
             }
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -432,6 +286,4 @@ if(ja.get("result").toString().equals("0")){
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
-
-
 }

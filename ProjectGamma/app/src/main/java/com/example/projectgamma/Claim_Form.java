@@ -45,9 +45,6 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     static int minute;
      String startTime;
      String endTime;
-
-
-
     boolean check;
 
     protected void onCreate(Bundle savedInstanceState) {
