@@ -159,11 +159,19 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selected = ((TextView) view.findViewById(R.id.subjectHistory)).getText().toString();
+                Toast.makeText(getApplicationContext(),selected,Toast.LENGTH_LONG).show();
+            }
+        });
+        
+        /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                     Toast.makeText(getApplicationContext(), "HI", Toast.LENGTH_SHORT).show();
                     startActivity(i);
             }
-        });
+        });*/
 
         System.out.println("Hello " + Arrays.toString(end_time));
 
