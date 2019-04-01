@@ -155,6 +155,15 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
         //call adapter class to take in our arrays
         MyAdapter adapter = new MyAdapter(this, dates, courses, venue, start_time, end_time, valid);
         listview.setAdapter(adapter);
+        
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                    Toast.makeText(getApplicationContext(), "HI", Toast.LENGTH_SHORT).show();
+                    startActivity(i);
+            }
+        });
 
         System.out.println("Hello " + Arrays.toString(end_time));
 
