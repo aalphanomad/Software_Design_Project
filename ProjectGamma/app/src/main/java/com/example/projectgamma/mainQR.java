@@ -14,7 +14,6 @@ public class mainQR extends AppCompatActivity{
 
     Button scan;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_view);
@@ -23,22 +22,20 @@ public class mainQR extends AppCompatActivity{
         String test = i.getStringExtra("name");
         dummy = findViewById(R.id.Name_TB);
         scan = findViewById(R.id.Scan_button);
+        //sets the name label to the user's name
         dummy.setText(test.toUpperCase().charAt(0) +test.substring(1,test.length())+"!");
 
 
     }
+    //Prevents the user from going back to the login screen from the homescreen
 public void onBackPressed(){
 
 }
-
+//Goes to the QR Scanner
     public void scanIn(View view) {
         Intent i = new Intent(view.getContext(), qrScanner.class);
         startActivity(i);
     }
 
-    public void doneScan(mainQR view) {
-        Intent i=new Intent(mainQR.this, qrScanner.class);
-        this.startActivity(i);
 
-    }
 }

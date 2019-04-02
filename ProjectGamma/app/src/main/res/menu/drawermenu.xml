@@ -19,14 +19,11 @@ xlmns:tools="http://schemas.android.com/tools"
     <item android:id="@+id/settings"
         android:title="Settings"
         android:icon="@drawable/setting"/>
-</group>
-    <group>
         <item android:id="@+id/Logout"
             android:title="Logout"
             android:icon="@drawable/logout"/>
+</group>
 
-
-    </group>
 
 
 </menu>

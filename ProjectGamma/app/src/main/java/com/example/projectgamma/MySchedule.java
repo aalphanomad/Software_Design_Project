@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -33,6 +34,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 
 public class MySchedule extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -131,13 +135,22 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
                 Intent myIntent = new Intent(MySchedule.this, FifthFragment.class);
                 MySchedule.this.startActivity(myIntent);                break;
             }
+            case R.id.Logout: {
+                Intent myIntent = new Intent(MySchedule.this, LoginActivity.class);
+                MySchedule.this.startActivity(myIntent);
+                break;
+            }
         }
         mDrawerlayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void setNavigationViewListener() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) MySchedule.this);
+        NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
     }
 }

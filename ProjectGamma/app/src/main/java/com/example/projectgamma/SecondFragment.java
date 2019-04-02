@@ -11,8 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 
 
 public class SecondFragment extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -121,13 +125,22 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
                 Intent myIntent = new Intent(SecondFragment.this, FifthFragment.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
+            case R.id.Logout: {
+                Intent myIntent = new Intent(SecondFragment.this, LoginActivity.class);
+                SecondFragment.this.startActivity(myIntent);
+                break;
+            }
         }
         mDrawerlayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void setNavigationViewListener() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) SecondFragment.this);
+        NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
     }
     }

@@ -9,7 +9,7 @@
 
     <string name="test">SingleChoiceDialog</string>
 
-    <string-array name="shopping_item">
+    <string-array name="course_list">
         <item>COMS1015 (Basic Computer Organisation)</item>
         <item>COMS1018 (Introduction to Algorithms and Programming)</item>
         <item>COMS1017 (Introduction to Data Structures and Algorithms)</item>

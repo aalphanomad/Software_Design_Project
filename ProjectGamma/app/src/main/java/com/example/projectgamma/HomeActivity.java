@@ -1,7 +1,9 @@
 package com.example.projectgamma;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,36 +12,30 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.InputStream;
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String[] names = {"Amy", "John"};
-    InputStream is = null;
-    String line = null;
-    String result = null;
-    String temp = "";
-    String[] arr;
+    //Initialization and assigning of vaariables
+
+//Initializes a drawerlayout for the side-swipe feature
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
-    TextView dummy;
+
+    TextView name_label;
     Button Claims;
+    Button Report;
     String name;
     String stud_num;
 
-    /**
-     * this method runs when the activity is started
-     * it simply displays thee student number and name of the currently logged in user
-     *
-     * it also creates a button that will allow the user to generate a new claims form
-     *
-     * @param savedInstanceState
-     */
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +43,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Intent i = getIntent();
 
-      //  name = i.getStringExtra("name");
-      //  stud_num = i.getStringExtra("stud_num");
-        name=qrGenerator.Global.GetName();
+  //Recieves the name and student number
+        name= GetName();
         stud_num=qrGenerator.Global.GetStudent_Num();
+
+
+        //Dont worry  about this,this is for the side-swipe feature which we will use later
         mDrawerlayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
-        dummy = findViewById(R.id.Name_TB);
-        if (dummy.length() != 0 || name.length() != 0) {
-            dummy.setText(name.toUpperCase().charAt(0) + name.substring(1, name.length()) + "!");
+
+        //Sets the label to Display the user's name
+        name_label = findViewById(R.id.Name_TB);
+        if (name_label.length() != 0 || name.length() != 0) {
+            name_label.setText(name.toUpperCase().charAt(0) + name.substring(1, name.length()) + "!");
         }
 
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         Claims = findViewById(R.id.Claims_but);
         Claims.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, Claim_Form.class);
-
+                //Sends the name and student number to the claims form class
                 i.putExtra("insert", "insert");
-
                 i.putExtra("name", name);
                 i.putExtra("student_num", stud_num);
                 HomeActivity.this.startActivity(i);
@@ -78,14 +77,40 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        Report = (Button) findViewById(R.id.Report_Button);
+        Log.d("LOOK HERE", "onCreate: " + Report.toString());
+        Report.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+
+                    // we obtain the url of the pdf report
+                    String[] params = {"PDF", stud_num};
+                    String download_url = new BackgroundWorker(HomeActivity.this).doInBackground(params);
+                    Log.d("URL", "onClick: " + download_url);
+                    // we create a new intent which receives the url and opens it in the browser
+                    // where the user can then download it
+                    // we do this since it is easier than managing the downloading and viewing ourselves
+                    Intent browser_intent = new Intent(Intent.ACTION_VIEW, Uri.parse(download_url));
+                    startActivity(browser_intent);
+                }
+                catch (
+                    ActivityNotFoundException e) {
+                    Toast.makeText(HomeActivity.this, "No application can handle this request."
+                            + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         setNavigationViewListener();
     }
-
+//Ensures you cannot go back to the login page when you are on the Home Page
     public void onBackPressed() {
 
 
     }
-
+//used for the side-swipe feature,dont worry about it now
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToggle.onOptionsItemSelected(item)) {
@@ -95,9 +120,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    //Handles events related to the side-swipe feature
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.println("Testing" + item.getItemId());
         switch (item.getItemId()) {
             case R.id.MyCourses: {
                 Intent myIntent = new Intent(HomeActivity.this, FirstFragment.class);
@@ -119,6 +144,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
+            case R.id.Logout: {
+                Intent myIntent = new Intent(HomeActivity.this, LoginActivity.class);
+                HomeActivity.this.startActivity(myIntent);
+                break;
+            }
         }
         mDrawerlayout.closeDrawer(GravityCompat.START);
         return true;
@@ -126,6 +156,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void setNavigationViewListener() {
         NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+
         navigationView.setNavigationItemSelectedListener( HomeActivity.this);
     }
 }
