@@ -41,14 +41,16 @@ public class qrScanner extends AppCompatActivity implements ZXingScannerView.Res
 
     String[] The_details=new String[8];
 String test=result.toString();
-The_details=test.split(",");
-/*
 String type="verify";
+The_details=test.split(",");
+String valueName=The_details[1];
+String valueStud_num=The_details[2];
+String valueCourse=The_details[3];
+String valueDate=The_details[4];
+String valueVenue=The_details[5];
+System.out.println("Hamza "+type+" "+valueName+" "+valueStud_num+" "+valueCourse+" "+valueDate+" "+valueVenue);
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, valueName, valueStud_num, valueCourse,currentDate, valueVenue,startTime,endTime);
-        */
-
-
+        backgroundWorker.execute(type, valueName, valueStud_num, valueCourse,valueDate, valueVenue);
 
         onBackPressed();
 

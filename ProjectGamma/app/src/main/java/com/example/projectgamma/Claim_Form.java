@@ -46,6 +46,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
      String startTime;
      String endTime;
     boolean check;
+    String currentDate;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,7 +222,6 @@ endTime=endTime1;
             EditText e3 = findViewById(R.id.enterVenue);
             venue = e3.getText().toString();
 
-            Intent intent = new Intent(this, qrGenerator.class);
 //Sends the course,name,student number,venue and time to the qrGenerator Class
 
             qrGenerator.Global.setCourse(course);
@@ -230,10 +230,15 @@ endTime=endTime1;
             qrGenerator.Global.setVenue(venue);
             qrGenerator.Global.setStartTime(startTime);
             qrGenerator.Global.setEndTime(endTime);
+            Calendar calender = Calendar.getInstance();
+            currentDate = java.text.DateFormat.getDateInstance().format(calender.getTime());
+
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+
+            backgroundWorker.execute("booking", name, stud_num, course,currentDate, venue,startTime,endTime);
 
 
 
-            startActivity(intent);
 
         }
     }

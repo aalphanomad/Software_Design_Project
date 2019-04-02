@@ -51,6 +51,8 @@
         <activity android:name="com.example.projectgamma.FifthFragment" />
         <activity android:name="com.example.projectgamma.MyList" />
         <activity android:name="com.example.projectgamma.BookActivity" />
+        <activity android:name="com.example.projectgamma.Validate" />
+
 
 
     </application>

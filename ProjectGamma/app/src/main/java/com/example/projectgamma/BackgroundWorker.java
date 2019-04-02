@@ -39,6 +39,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         //Determines whether the backgroundWorker is being implemented for a registration,logon or booking(String type)
         type = params[0];
+        System.out.println("The answer "+type);
         String login_url = null;
         String post_data=null ;
         //The below is executed if we are trying to use BackgroundWorker for registering
@@ -102,12 +103,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String course = params[3];
                 String date = params[4];
                 String venue = params[5];
-                String startTime = params[6];
-                String endTime = params[7];
-                String valid = "1";
+
                 //The URL below is used to send data to the server in order to login
                  login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
-                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("start_time", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("end_time", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
+                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8");
 
 
             } else if (type.equals("login")) {
@@ -225,25 +224,25 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } else if (type == "verify") {
                 //Converts the result from the server to JSON format
                 JSONObject ja = new JSONObject(result);
-                if (ja.get("answer").toString().equals("Successful")) {
+                System.out.println("Table "+ja.get("result").toString());
+                if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Confirmation Successful", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context, HomeActivity.class);
+                    Intent i = new Intent(context,HomeActivity.class);
                     context.startActivity(i);
                 } else {
                     Toast.makeText(context, "Confirmation Unsuccessful", Toast.LENGTH_LONG).show();
 
                 }
-
-
             } else if (type == "booking") {
                 JSONObject ja = new JSONObject(result);
-                System.out.println("THe truth " + ja.get("result").toString());
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context, HomeActivity.class);
+                    Intent i = new Intent(context, qrGenerator.class);
                     context.startActivity(i);
                 } else {
                     Toast.makeText(context, "This is a duplicate claim! Please try again!", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(context, Claim_Form.class);
+                    context.startActivity(i);
 
                 }
             } else if (type == "fetching") {

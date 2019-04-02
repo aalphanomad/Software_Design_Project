@@ -19,7 +19,7 @@ public class mainQR extends AppCompatActivity{
         setContentView(R.layout.admin_view);
         TextView dummy;
         Intent i = getIntent();
-        String test = i.getStringExtra("name");
+String test=qrGenerator.Global.GetName();
         dummy = findViewById(R.id.Name_TB);
         scan = findViewById(R.id.Scan_button);
         //sets the name label to the user's name

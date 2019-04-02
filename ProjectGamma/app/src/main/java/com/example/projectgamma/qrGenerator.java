@@ -151,16 +151,18 @@ valueEndTime=qrGenerator.Global.GetEndTime();
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
         try {
-            String type="booking" ;
-//Displays a Toast if the Confirmation is successful
-            //Toast.makeText(this, "Confirmation Complete", Toast.LENGTH_LONG).show();
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, valueName, valueStud_num, valueCourse,currentDate, valueVenue,valueStartTime,valueEndTime);
 
 
+            ArrayList data=new ArrayList();
+            data.add("verify");
+            data.add(valueName);
+            data.add(valueStud_num);
+            data.add(valueCourse);
+            data.add(currentDate);
+            data.add(valueVenue);
 
 
-            BitMatrix bitMatrix = multiFormatWriter.encode("test", BarcodeFormat.QR_CODE, 500, 500);
+            BitMatrix bitMatrix = multiFormatWriter.encode(data.toString(), BarcodeFormat.QR_CODE, 500, 500);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             imageView.setImageBitmap(bitmap);
