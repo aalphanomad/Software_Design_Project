@@ -225,8 +225,8 @@ endTime=endTime1;
 //Sends the course,name,student number,venue and time to the qrGenerator Class
 
             qrGenerator.Global.setCourse(course);
-            qrGenerator.Global.setName(name);
-            qrGenerator.Global.setStudent_num(stud_num);
+            //qrGenerator.Global.setName(name);
+            //qrGenerator.Global.setStudent_num(stud_num);
             qrGenerator.Global.setVenue(venue);
             qrGenerator.Global.setStartTime(startTime);
             qrGenerator.Global.setEndTime(endTime);

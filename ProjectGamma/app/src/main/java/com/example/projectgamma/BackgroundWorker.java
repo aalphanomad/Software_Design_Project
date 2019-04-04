@@ -39,7 +39,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         //Determines whether the backgroundWorker is being implemented for a registration,logon or booking(String type)
         type = params[0];
-        System.out.println("The answer "+type);
         String login_url = null;
         String post_data=null ;
         //The below is executed if we are trying to use BackgroundWorker for registering
@@ -118,14 +117,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
             } else if (type.equals("booking")) {
                 //The code below receives input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
-                String name = params[1];
-                String student_num = params[2];
+                String name = qrGenerator.Global.GetName();
+                String student_num = qrGenerator.Global.GetStudent_Num();
                 String course = params[3];
                 String date = params[4];
                 String venue = params[5];
                 String startTime = params[6];
                 String endTime = params[7];
                 String valid = "0";
+                System.out.println("Pencil "+name+" "+student_num+" "+course+" "+date+" "+venue+" "+startTime+" "+endTime);
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
@@ -200,6 +200,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     String stud_num = ja.getString("student_num");
                     String name = ja.getString("name");
                     String admin = ja.getString("admin");
+                    qrGenerator.Global.setName(name);
+                    qrGenerator.Global.setStudent_num(stud_num);
 
 
                     //If admin="0",implies the the user a not a lecturer(therefore a tutor)
@@ -208,9 +210,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         //Send the name and student number of the student to the home Activity
                         i.putExtra("name", name);
                         i.putExtra("stud_num", stud_num);
-                        //Set the values of the Global class containing the details of the user
-                        qrGenerator.Global.setName(name);
-                        qrGenerator.Global.setStudent_num(stud_num);
+
                         context.startActivity(i);
                     } else {
                         //If the admin is a lecturer(admin="1",they will be directed to a homescreen which will allow them to scan QR Codes
@@ -218,6 +218,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         //Send the name to the lecturers home screen
                         i.putExtra("name", name);
                         qrGenerator.Global.setName(name);
+                        qrGenerator.Global.setStudent_num(stud_num);
                         context.startActivity(i);
                     }
                 }
@@ -235,6 +236,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 }
             } else if (type == "booking") {
                 JSONObject ja = new JSONObject(result);
+                System.out.println("The result "+ja.get("result").toString());
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(context, qrGenerator.class);

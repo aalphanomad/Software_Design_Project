@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -32,11 +33,13 @@ public class FourthFragment extends AppCompatActivity implements NavigationView.
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fourth_layout);
-        mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
+        mDrawerlayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         setNavigationViewListener();
 
     }
@@ -87,5 +90,7 @@ public class FourthFragment extends AppCompatActivity implements NavigationView.
         TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
         navUsername.setText(GetName());
         navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+        navigationView.setNavigationItemSelectedListener( FourthFragment.this);
+
     }
 }

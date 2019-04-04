@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -120,7 +121,7 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
         listview = findViewById(R.id.lv);
 
         System.out.println(Arrays.toString(end_time));
-
+        System.out.println(Arrays.toString(dates));
         for(int i=0; i<dates.length; i++){
             dates[i] = dates[i].substring(9, dates[i].length()-2);
             courses[i] = courses[i].substring(11, courses[i].length()-2);
@@ -130,6 +131,7 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
             end_time[i] = end_time[i].substring(13, end_time[i].length()-2);
 
         }
+        System.out.println(Arrays.toString(dates));
 
         //get rid of inverted commas on the end of the arrays
         dates[0]= dates[0].substring(1, dates[1].length()+1);//1st element = 2nd char of first element to the 1st element's last char
