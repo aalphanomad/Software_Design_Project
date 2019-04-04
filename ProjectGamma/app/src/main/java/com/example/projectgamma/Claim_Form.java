@@ -55,7 +55,6 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         Thevenue = findViewById(R.id.enterVenue);
         TimeError = findViewById(R.id.TimeError);
         venue = Thevenue.getText().toString();
-        tv = (TextView) findViewById(R.id.duration);
         Button button = (Button) findViewById(R.id.button);
         sel_Course = findViewById(R.id.Sel_Course);
 

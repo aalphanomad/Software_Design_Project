@@ -104,12 +104,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.Claim: {
-                Intent myIntent = new Intent(HomeActivity.this, FourthFragment.class);
+                Intent myIntent = new Intent(HomeActivity.this, Claim_Form.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
             case R.id.settings: {
-                Intent myIntent = new Intent(HomeActivity.this, FifthFragment.class);
+                Intent myIntent = new Intent(HomeActivity.this, ForthFragment.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }

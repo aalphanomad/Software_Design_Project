@@ -1,32 +1,21 @@
 package com.example.projectgamma;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,8 +34,6 @@ import java.util.Arrays;
 
 import static com.example.projectgamma.qrGenerator.Global.GetName;
 import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
-import static com.example.projectgamma.qrGenerator.Global.date;
-import static com.example.projectgamma.qrGenerator.Global.startTime;
 
 
 public class FirstFragment extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,7 +49,14 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
-
+        mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
+        mDrawerlayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setNavigationViewListener();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         try {
 
             //The code below recieves input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
@@ -190,10 +183,17 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
         backgroundWorker.execute(type, name, student_no);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //setNavigationViewListener();
+        setNavigationViewListener();
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+        }
 
+        return super.onOptionsItemSelected(item);
+
+    }
 
 
     @Override
@@ -212,12 +212,12 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
             }
 
             case R.id.Claim: {
-                Intent myIntent = new Intent(FirstFragment.this, FourthFragment.class);
+                Intent myIntent = new Intent(FirstFragment.this, Claim_Form.class);
                 FirstFragment.this.startActivity(myIntent);
                 break;
             }
             case R.id.settings: {
-                Intent myIntent = new Intent(FirstFragment.this, FifthFragment.class);
+                Intent myIntent = new Intent(FirstFragment.this, ForthFragment.class);
                 FirstFragment.this.startActivity(myIntent);
                 break;
             }
@@ -238,6 +238,8 @@ public class FirstFragment extends AppCompatActivity implements NavigationView.O
         TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
         navUsername.setText(GetName());
         navUserEmail.setText(GetStudent_Num() + "@students.wits.ac.za");
+        navigationView.setNavigationItemSelectedListener( FirstFragment.this);
+
     }
 
 }

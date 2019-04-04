@@ -44,13 +44,12 @@
         <activity android:name="com.example.projectgamma.qrGenerator"
             android:label="Confirm Your Claim Form"/>
         <activity android:name="com.example.projectgamma.FirstFragment" />
+        android:label="Claim Form History"/>
+
         <activity android:name="com.example.projectgamma.MySchedule" />
         <activity android:name="com.example.projectgamma.Claim_Form"
             android:label="Claim Form"/>
-        <activity android:name="com.example.projectgamma.FourthFragment" />
-        <activity android:name="com.example.projectgamma.FifthFragment" />
-        <activity android:name="com.example.projectgamma.MyList" />
-        <activity android:name="com.example.projectgamma.BookActivity" />
+        <activity android:name="com.example.projectgamma.ForthFragment" />
         <activity android:name="com.example.projectgamma.Validate" />
 
 

@@ -13,7 +13,7 @@ xlmns:tools="http://schemas.android.com/tools"
         android:icon="@drawable/schedule"/>
 
         <item android:id="@+id/Claim"
-        android:title="Claims_Form"
+        android:title="Claims Form"
         android:icon="@drawable/claim_form"/>
 
     <item android:id="@+id/settings"
