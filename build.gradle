@@ -16,9 +16,8 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-apply plugin: 'com.android.application'
 
-/*
+
 allprojects {
     repositories {
         google()
@@ -28,7 +27,7 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}*/
+}
 
 
 /*dependencies {
