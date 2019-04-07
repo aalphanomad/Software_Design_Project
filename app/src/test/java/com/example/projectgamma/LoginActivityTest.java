@@ -10,12 +10,12 @@ public class LoginActivityTest {
 
     @Test
     public void onCreate() {
-        LoginActivity theActivity= new LoginActivity();
-        //EditText editText= theActivity.UsernameEt;
-        //String test = editText.getText().toString();
+        Claim_Form claim_form=new Claim_Form();
 
-        assertNull(theActivity.UsernameEt);
-        assertNull(theActivity.PasswordEt);
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
+        }
 
             }
 
@@ -23,35 +23,22 @@ public class LoginActivityTest {
     public void onBackPressed() {
         LoginActivity theActivity= new LoginActivity();
 
-        if(theActivity.UsernameEt.getText().toString().length()==0){
-            assertNull(theActivity.UsernameEt);
-        }else{
-            assertNotNull(theActivity.UsernameEt);
-        }
+        Claim_Form claim_form=new Claim_Form();
 
-        if(theActivity.PasswordEt.getText().toString().length()==0){
-            assertNull(theActivity.PasswordEt);
-        }else{
-            assertNotNull(theActivity.PasswordEt);
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
         }
-
 
     }
 
     @Test
     public void onClick() {
-        LoginActivity theActivity= new LoginActivity();
+        Claim_Form claim_form=new Claim_Form();
 
-        if(theActivity.UsernameEt.getText().toString().length()==0){
-            assertNull(theActivity.UsernameEt);
-        }else{
-            assertNotNull(theActivity.UsernameEt);
-        }
-
-        if(theActivity.PasswordEt.getText().toString().length()==0){
-            assertNull(theActivity.PasswordEt);
-        }else{
-            assertNotNull(theActivity.PasswordEt);
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
         }
     }
 }

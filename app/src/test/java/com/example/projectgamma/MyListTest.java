@@ -8,18 +8,11 @@ public class MyListTest {
 
     @Test
     public void onCreate() {
-        LoginActivity theActivity= new LoginActivity();
+        Claim_Form claim_form=new Claim_Form();
 
-        if(theActivity.UsernameEt.getText().toString().length()==0){
-            assertNull(theActivity.UsernameEt);
-        }else{
-            assertNotNull(theActivity.UsernameEt);
-        }
-
-        if(theActivity.PasswordEt.getText().toString().length()==0){
-            assertNull(theActivity.PasswordEt);
-        }else{
-            assertNotNull(theActivity.PasswordEt);
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
         }
     }
 }

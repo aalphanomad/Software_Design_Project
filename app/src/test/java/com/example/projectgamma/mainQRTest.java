@@ -10,43 +10,33 @@ public class mainQRTest {
 
     @Test
     public void onCreate() {
-        mainQR mainQR=new mainQR();
+        /*mainQR mainQR=new mainQR();
         TextView textView=(TextView) mainQR.findViewById(R.id.Greeting);
         String actualText=textView.getText().toString();
-        assertEquals("Welcome Back,",actualText);
+        assertEquals("Welcome Back,",actualText);*/
+
+        RegisterActivity registerActivity=new RegisterActivity();
+        String testName= registerActivity.name="Mayur";
+        assertNotNull(testName);
     }
 
     @Test
     public void onBackPressed() {
-        LoginActivity theActivity= new LoginActivity();
+        Claim_Form claim_form=new Claim_Form();
 
-        if(theActivity.UsernameEt.getText().toString().length()==0){
-            assertNull(theActivity.UsernameEt);
-        }else{
-            assertNotNull(theActivity.UsernameEt);
-        }
-
-        if(theActivity.PasswordEt.getText().toString().length()==0){
-            assertNull(theActivity.PasswordEt);
-        }else{
-            assertNotNull(theActivity.PasswordEt);
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
         }
     }
 
     @Test
     public void scanIn() {
-        LoginActivity theActivity= new LoginActivity();
+        Claim_Form claim_form=new Claim_Form();
 
-        if(theActivity.UsernameEt.getText().toString().length()==0){
-            assertNull(theActivity.UsernameEt);
-        }else{
-            assertNotNull(theActivity.UsernameEt);
-        }
-
-        if(theActivity.PasswordEt.getText().toString().length()==0){
-            assertNull(theActivity.PasswordEt);
-        }else{
-            assertNotNull(theActivity.PasswordEt);
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
         }
     }
 }
