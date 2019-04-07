@@ -14,8 +14,8 @@ before_install:
     
 script:
     - ls
-    - ./gradlew assembleDebug --no-daemon
-    - ./gradlew build jacocoTestReport --debug
+    - ./gradlew assembleDebug --stacktrace
+    - ./gradlew build jacocoTestReport --stacktrace
     
 
 after_success: 
