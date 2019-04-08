@@ -4,6 +4,7 @@ Are you a lecturer or tutor? AlphaNomad is a web and mobile-based application to
 
 [![Build Status](https://travis-ci.org/aalphanomad/Software_Design_Project.svg?branch=master)](https://travis-ci.org/aalphanomad/Software_Design_Project)
 
+[[imgs/Test.png]]
 
 
 [![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/iBranch/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
