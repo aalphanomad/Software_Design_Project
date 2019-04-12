@@ -107,7 +107,7 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
         System.out.println("Testing"+item.getItemId());
         switch (item.getItemId()) {
             case R.id.MyCourses: {
-                Intent myIntent = new Intent(SecondFragment.this, FirstFragment.class);
+                Intent myIntent = new Intent(SecondFragment.this, Claim_History.class);
                 SecondFragment.this.startActivity(myIntent);
                 break;
             }
@@ -120,7 +120,7 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
                 Intent myIntent = new Intent(SecondFragment.this, Claim_Form.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
-            case R.id.settings: {
+            case R.id.user_profile: {
                 Intent myIntent = new Intent(SecondFragment.this, ForthFragment.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }

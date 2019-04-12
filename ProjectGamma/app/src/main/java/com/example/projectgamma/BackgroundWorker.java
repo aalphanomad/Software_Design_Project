@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
@@ -31,7 +34,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     BackgroundWorker(Context ctx) {
         context = ctx;
-
     }
 
 
@@ -40,7 +42,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         //Determines whether the backgroundWorker is being implemented for a registration,logon or booking(String type)
         type = params[0];
         String login_url = null;
-        String post_data=null ;
+        String post_data = null;
         //The below is executed if we are trying to use BackgroundWorker for registering
         try {
             if (type.equals("reg")) {
@@ -59,7 +61,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String course5;
 //The below creates the appropriate URL to send data to the server depending on the number of courses selected
 
-                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&" + URLEncoder.encode("admin", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&" + URLEncoder.encode("role", "UTF-8") + "=" + URLEncoder.encode("0", "UTF-8");
                 if (params.length == 6) {
                     course1 = params[5];
                     post_data = post_data + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8");
@@ -104,16 +106,16 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String venue = params[5];
 
                 //The URL below is used to send data to the server in order to login
-                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
-                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8");
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8");
 
 
             } else if (type.equals("login")) {
                 String stu_num = params[1];
                 String password = params[2];
                 //The URL below is used to send data to the server in order to login
-                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/signin.php";
-                post_data = URLEncoder.encode("studentnum", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/signin.php";
+                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(stu_num, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
             } else if (type.equals("booking")) {
                 //The code below receives input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
@@ -125,10 +127,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String startTime = params[6];
                 String endTime = params[7];
                 String valid = "0";
-                System.out.println("Pencil "+name+" "+student_num+" "+course+" "+date+" "+venue+" "+startTime+" "+endTime);
+                System.out.println("Pencil " + name + " " + student_num + " " + course + " " + date + " " + venue + " " + startTime + " " + endTime);
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
-                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
 
             } else if (type.equals("fetching")) {
                 String name = params[1];
@@ -136,9 +138,22 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/fetching.php";
-                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_no", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
+
+            } else if (type.equals("PDF")) {
+                String student_num = params[1];
+                //The URL to send data to the server when creating a booking/claim form
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/select_booking.php?";
+                post_data = "table=BOOKINGS&target=*&student_num=" + student_num;
+            } else if (type.equals("get courses")) {
+                String name = params[1];
+                String student_num = params[2];
+
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/get_courses.php?";
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
 
             }
+
 //Initialize an HTTP POST connection to send data to the server
             URL url = new URL(login_url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -178,6 +193,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
         return null;
     }
+
     @Override
     protected void onPreExecute() {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
@@ -191,21 +207,22 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         try {
             if (type == "login") {
                 //Converts the result from the server to JSON format
+
                 JSONObject ja = new JSONObject(result);
                 //If the value returned from the server is "0",implies that the login is unsuccessful
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
                 } else {
-                    //If the result from the server implies the login was successful,accept the student number and name from the server and determine whether they are an admin or not
+                    //If the result from the server implies the login was successful,accept the student number and name from the server and determine whether they are an role or not
                     String stud_num = ja.getString("student_num");
                     String name = ja.getString("name");
-                    String admin = ja.getString("admin");
+                    String role = ja.getString("role");
                     qrGenerator.Global.setName(name);
                     qrGenerator.Global.setStudent_num(stud_num);
 
 
-                    //If admin="0",implies the the user a not a lecturer(therefore a tutor)
-                    if (admin.equals("0")) {
+                    //If role="0",implies the the user a not a lecturer(therefore a tutor)
+                    if (role.equals("0")) {
                         Intent i = new Intent(context, HomeActivity.class);
                         //Send the name and student number of the student to the home Activity
                         i.putExtra("name", name);
@@ -213,7 +230,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
                         context.startActivity(i);
                     } else {
-                        //If the admin is a lecturer(admin="1",they will be directed to a homescreen which will allow them to scan QR Codes
+                        //If the role is a lecturer(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
                         Intent i = new Intent(context, mainQR.class);
                         //Send the name to the lecturers home screen
                         i.putExtra("name", name);
@@ -225,10 +242,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } else if (type == "verify") {
                 //Converts the result from the server to JSON format
                 JSONObject ja = new JSONObject(result);
-                System.out.println("Table "+ja.get("result").toString());
+                System.out.println("Table " + ja.get("result").toString());
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Confirmation Successful", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context,HomeActivity.class);
+                    Intent i = new Intent(context, HomeActivity.class);
                     context.startActivity(i);
                 } else {
                     Toast.makeText(context, "Confirmation Unsuccessful", Toast.LENGTH_LONG).show();
@@ -236,7 +253,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 }
             } else if (type == "booking") {
                 JSONObject ja = new JSONObject(result);
-                System.out.println("The result "+ja.get("result").toString());
+                System.out.println("The result " + ja.get("result").toString());
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(context, qrGenerator.class);
@@ -276,6 +293,11 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent6);
 
 
+            }else if(type.equals("get courses")){
+                JSONObject ja = new JSONObject(result);
+                String []courses = ja.getString("result").split(",");
+                Intent intent7 = new Intent("INTENT_7").putExtra("get courses", courses);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent7);
             }
         } catch (JSONException e) {
             e.printStackTrace();

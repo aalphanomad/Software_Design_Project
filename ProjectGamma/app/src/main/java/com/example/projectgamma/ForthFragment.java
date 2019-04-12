@@ -44,7 +44,7 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.MyCourses: {
-                Intent myIntent = new Intent(ForthFragment.this, FirstFragment.class);
+                Intent myIntent = new Intent(ForthFragment.this, Claim_History.class);
                 ForthFragment.this.startActivity(myIntent);
                 break;
             }
@@ -57,7 +57,7 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
                 Intent myIntent = new Intent(ForthFragment.this, Claim_Form.class);
                 ForthFragment.this.startActivity(myIntent);                break;
             }
-            case R.id.settings: {
+            case R.id.user_profile: {
                 Intent myIntent = new Intent(ForthFragment.this, ForthFragment.class);
                 ForthFragment.this.startActivity(myIntent);                break;
             }

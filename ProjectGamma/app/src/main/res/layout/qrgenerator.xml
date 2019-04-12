@@ -96,12 +96,12 @@
         tools:ignore="OnClick" />
 
     <Button
-        android:id="@+id/Done_Button"
+        android:id="@+id/Home_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:onClick="doneGen"
-        android:text="Done"
+        android:text="Home"
         android:textSize="16sp"
         tools:ignore="OnClick" />
 

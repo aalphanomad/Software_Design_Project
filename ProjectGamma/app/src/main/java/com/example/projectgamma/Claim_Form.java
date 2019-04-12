@@ -1,13 +1,18 @@
 package com.example.projectgamma;
 //The java import statements
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -22,8 +27,11 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Objects;
 
 import static java.lang.String.valueOf;
 
@@ -31,31 +39,26 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
     //Variable assignments
     ArrayList selectedItems = new ArrayList();
-    String course;
-    String name;
-    String stud_num;
+    String course, name, stud_num, type, venue, startTime, endTime, currentDate;
     TextView Thevenue, TimeError, sel_Course;
-    String type;
-    String date;
-    String venue;
-    TextView tv;
     String[] topic = new String[3];
+    String[] get_courses1,get_courses2;
+    ArrayList get_courses3=new ArrayList();
     private Spinner mySpinner;
-    static int hour;
-    static int minute;
-     String startTime;
-     String endTime;
+    static int hour,minute;
     boolean check;
-    String currentDate;
+
 
     protected void onCreate(Bundle savedInstanceState) {
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver1, new IntentFilter("INTENT_7"));
+
         super.onCreate(savedInstanceState);
-        //Selecting wich xml res file is called when calling the Claim_form class
+        //Selecting which xml res file is called when calling the Claim_form class
         setContentView(R.layout.form);
         Thevenue = findViewById(R.id.enterVenue);
         TimeError = findViewById(R.id.TimeError);
         venue = Thevenue.getText().toString();
-        Button button = (Button) findViewById(R.id.button);
+        Button button = findViewById(R.id.button);
         sel_Course = findViewById(R.id.Sel_Course);
 
 
@@ -63,6 +66,11 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
             @Override
             public void onClick(View view) {
                 //Array containing list of courses
+                String name = qrGenerator.Global.GetName();
+                String student_no = qrGenerator.Global.GetStudent_Num();
+                BackgroundWorker backgroundWorker = new BackgroundWorker(Claim_Form.this);
+                backgroundWorker.execute("get courses", name, student_no);
+
                 final String[] listItems = getResources().getStringArray(R.array.course_list);
                 //Pop up form when selecting course is displayed
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Claim_Form.this);
@@ -92,8 +100,38 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
     }
 
+    private BroadcastReceiver mReceiver1 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            get_courses1= intent.getStringArrayExtra("get courses");
+            System.out.println("Beautiful");
+            for(int i=0;i<get_courses1.length;i++){
+                get_courses2=get_courses1[i].split(":");
+                //if(get_courses2[1].equals(null)==false || get_courses2[1]!=null) {
+                    get_courses3.add(get_courses2[1]);
 
-    boolean validate(String startTime,String endTime) {
+               // }
+            }
+
+            get_courses3.set(get_courses3.size()-1,get_courses3.get(get_courses3.size()-1).toString().substring(0,(Integer)(get_courses3.get(get_courses3.size()-1).toString().length())-2));
+/*
+            for(int i=0;i<get_courses3.size();i++){
+if(get_courses3.get(i)==null || get_courses3.get(i).equals(null)==false) {
+    System.out.println("WTF");
+
+    get_courses3.remove(i);
+}
+}
+*/
+if(get_courses3.contains(null)){
+    System.out.println("CGV");
+}
+        System.out.println(get_courses3);
+
+        }
+    };
+
+    boolean validate(String startTime, String endTime) {
         boolean valid = true;
 
         //Checks whether a venue has been entered
@@ -112,19 +150,18 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
         TextView start = (TextView) findViewById(R.id.start);
         TextView end = (TextView) findViewById(R.id.end);
-        startTime=start.getText().toString();
-        endTime=end.getText().toString();
+        startTime = start.getText().toString();
+        endTime = end.getText().toString();
 
-        if(checktimings(startTime,endTime)==false){
-            valid=false;
+        if (checktimings(startTime, endTime) == false) {
+            valid = false;
             TimeError.setText("End time cannot be before start time");
         }
 
-System.out.println("Para"+startTime+"+"+endTime+"+");
 
-        if(startTime.equals("0 : 00 ") || endTime.equals("0 : 00 ")) {
-                TimeError.setText("Please enter a valid period for which you have tutored");
-                valid=false;
+        if (startTime.equals("0 : 00 ") || endTime.equals("0 : 00 ")) {
+            TimeError.setText("Please enter a valid period for which you have tutored");
+            valid = false;
 
         }
 
@@ -137,15 +174,15 @@ System.out.println("Para"+startTime+"+"+endTime+"+");
 
         String pattern = "HH:mm";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        startTime1=startTime1.replaceAll("\\s+","");
-        endTime1=endTime1.replaceAll("\\s+","");
+        startTime1 = startTime1.replaceAll("\\s+", "");
+        endTime1 = endTime1.replaceAll("\\s+", "");
         try {
             Date date1 = sdf.parse(startTime1);
             Date date2 = sdf.parse(endTime1);
 
-startTime=startTime1;
-endTime=endTime1;
-            if(date1.before(date2)) {
+            startTime = startTime1;
+            endTime = endTime1;
+            if (date1.before(date2)) {
                 return true;
             } else {
 
@@ -153,7 +190,7 @@ endTime=endTime1;
             }
 
 
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return false;
@@ -194,13 +231,13 @@ endTime=endTime1;
 
 
         if (check == true) {
-            if(Integer.toString(minute).length()==1) {
+            if (Integer.toString(minute).length() == 1) {
                 start.setText(hourOfDay + " : " + "0" + minute);
-            }
-            else{
+            } else {
                 start.setText(hourOfDay + " : " + minute);
             }
-        } if(check==false) {
+        }
+        if (check == false) {
             if (Integer.toString(minute).length() == 1) {
                 end.setText(hourOfDay + " : " + "0" + minute);
             } else {
@@ -209,12 +246,12 @@ endTime=endTime1;
         }
         startTime = start.getText().toString();
         endTime = (String) end.getText();
-        System.out.println("Non"+startTime+" "+endTime);
+        System.out.println("Non" + startTime + " " + endTime);
     }
 
     public void send(View view) {
 
-        if (validate(startTime,endTime) == false) {
+        if (validate(startTime, endTime) == false) {
             Toast.makeText(Claim_Form.this, "Please fill in the form", Toast.LENGTH_LONG).show();
         } else {
 
@@ -234,9 +271,7 @@ endTime=endTime1;
 
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
 
-            backgroundWorker.execute("booking", name, stud_num, course,currentDate, venue,startTime,endTime);
-
-
+            backgroundWorker.execute("booking", name, stud_num, course, currentDate, venue, startTime, endTime);
 
 
         }

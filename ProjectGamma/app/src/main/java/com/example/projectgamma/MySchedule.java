@@ -117,7 +117,7 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
         System.out.println("Testing"+item.getItemId());
         switch (item.getItemId()) {
             case R.id.MyCourses: {
-                Intent myIntent = new Intent(MySchedule.this, FirstFragment.class);
+                Intent myIntent = new Intent(MySchedule.this, Claim_History.class);
                 MySchedule.this.startActivity(myIntent);
                 break;
             }
@@ -130,7 +130,7 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
                 Intent myIntent = new Intent(MySchedule.this, Claim_Form.class);
                 MySchedule.this.startActivity(myIntent);                break;
             }
-            case R.id.settings: {
+            case R.id.user_profile: {
                 Intent myIntent = new Intent(MySchedule.this, ForthFragment.class);
                 MySchedule.this.startActivity(myIntent);                break;
             }

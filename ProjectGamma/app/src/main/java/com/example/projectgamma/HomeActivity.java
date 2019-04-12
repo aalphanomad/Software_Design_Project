@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.MyCourses: {
-                Intent myIntent = new Intent(HomeActivity.this, FirstFragment.class);
+                Intent myIntent = new Intent(HomeActivity.this, Claim_History.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
@@ -108,7 +108,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
-            case R.id.settings: {
+            case R.id.user_profile: {
                 Intent myIntent = new Intent(HomeActivity.this, ForthFragment.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;

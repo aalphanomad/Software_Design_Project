@@ -16,9 +16,9 @@ xlmns:tools="http://schemas.android.com/tools"
         android:title="Claims Form"
         android:icon="@drawable/claim_form"/>
 
-    <item android:id="@+id/settings"
-        android:title="Settings"
-        android:icon="@drawable/setting"/>
+    <item android:id="@+id/user_profile"
+        android:title="User Profile"
+        android:icon="@drawable/person_icon"/>
         <item android:id="@+id/Logout"
             android:title="Logout"
             android:icon="@drawable/logout"/>

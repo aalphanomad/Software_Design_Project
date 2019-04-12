@@ -28,7 +28,7 @@ import static com.example.projectgamma.qrGenerator.Global.endTime;
 
 public class qrGenerator extends AppCompatActivity {
 
-    //A Global class which makes it veryeasy to get and set the information of the user such as the
+    //A Global class which makes it very easy to get and set the information of the user such as the
     //users name,student number,courses tutoring,the date,etc
 
     public static class Global{
