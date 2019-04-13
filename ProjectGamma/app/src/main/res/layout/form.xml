@@ -157,8 +157,8 @@
 
     <TextView
         android:id="@+id/Sel_Course"
-        android:layout_width="193dp"
-        android:layout_height="51dp"
+        android:layout_width="192dp"
+        android:layout_height="84dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="90dp"

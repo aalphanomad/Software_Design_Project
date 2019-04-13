@@ -33,6 +33,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 
+import static com.example.projectgamma.qrGenerator.Global.GetCourse;
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
+import static com.example.projectgamma.qrGenerator.Global.Get_Courses;
 import static java.lang.String.valueOf;
 
 public class Claim_Form extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
@@ -42,7 +46,6 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     String course, name, stud_num, type, venue, startTime, endTime, currentDate;
     TextView Thevenue, TimeError, sel_Course;
     String[] topic = new String[3];
-    String[] get_courses1,get_courses2;
     ArrayList get_courses3=new ArrayList();
     private Spinner mySpinner;
     static int hour,minute;
@@ -50,7 +53,6 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
 
     protected void onCreate(Bundle savedInstanceState) {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver1, new IntentFilter("INTENT_7"));
 
         super.onCreate(savedInstanceState);
         //Selecting which xml res file is called when calling the Claim_form class
@@ -60,6 +62,10 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         venue = Thevenue.getText().toString();
         Button button = findViewById(R.id.button);
         sel_Course = findViewById(R.id.Sel_Course);
+        final String[] listItems =Get_Courses();
+        for(int i=0;i<listItems.length;i++){
+            System.out.println(listItems[i]);
+        }
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +74,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
                 //Array containing list of courses
                 String name = qrGenerator.Global.GetName();
                 String student_no = qrGenerator.Global.GetStudent_Num();
-                BackgroundWorker backgroundWorker = new BackgroundWorker(Claim_Form.this);
-                backgroundWorker.execute("get courses", name, student_no);
 
-                final String[] listItems = getResources().getStringArray(R.array.course_list);
                 //Pop up form when selecting course is displayed
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Claim_Form.this);
                 mBuilder.setTitle("Select a Course");
@@ -100,36 +103,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
     }
 
-    private BroadcastReceiver mReceiver1 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            get_courses1= intent.getStringArrayExtra("get courses");
-            System.out.println("Beautiful");
-            for(int i=0;i<get_courses1.length;i++){
-                get_courses2=get_courses1[i].split(":");
-                //if(get_courses2[1].equals(null)==false || get_courses2[1]!=null) {
-                    get_courses3.add(get_courses2[1]);
 
-               // }
-            }
-
-            get_courses3.set(get_courses3.size()-1,get_courses3.get(get_courses3.size()-1).toString().substring(0,(Integer)(get_courses3.get(get_courses3.size()-1).toString().length())-2));
-/*
-            for(int i=0;i<get_courses3.size();i++){
-if(get_courses3.get(i)==null || get_courses3.get(i).equals(null)==false) {
-    System.out.println("WTF");
-
-    get_courses3.remove(i);
-}
-}
-*/
-if(get_courses3.contains(null)){
-    System.out.println("CGV");
-}
-        System.out.println(get_courses3);
-
-        }
-    };
 
     boolean validate(String startTime, String endTime) {
         boolean valid = true;
