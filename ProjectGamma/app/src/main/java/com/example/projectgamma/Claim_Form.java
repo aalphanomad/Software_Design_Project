@@ -251,4 +251,3 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         }
     }
 }
-

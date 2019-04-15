@@ -120,7 +120,6 @@ get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j
             }
 
             setGet_courses(str);
-            System.out.println("CHEM");
         }
     };
 //used for the side-swipe feature,dont worry about it now

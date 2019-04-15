@@ -106,6 +106,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String course = params[3];
                 String date = params[4];
                 String venue = params[5];
+                venue=venue.substring(0,venue.length()-1);
+                System.out.println("Venue"+venue);
 
                 //The URL below is used to send data to the server in order to login
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
@@ -128,6 +130,14 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String venue = params[5];
                 String startTime = params[6];
                 String endTime = params[7];
+                String[]test1= startTime.split(":");
+                String[]test2=endTime.split(":");
+                if(test1[0].length()==1){
+                    startTime="0"+startTime;
+                }
+                if(test2[0].length()==1){
+                    endTime="0"+endTime;
+                }
                 String valid = "0";
                 System.out.println("Pencil " + name + " " + student_num + " " + course + " " + date + " " + venue + " " + startTime + " " + endTime);
                 //The URL to send data to the server when creating a booking/claim form
@@ -247,7 +257,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 System.out.println("Table " + ja.get("result").toString());
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Confirmation Successful", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context, HomeActivity.class);
+                    Intent i = new Intent(context, mainQR.class);
                     context.startActivity(i);
                 } else {
                     Toast.makeText(context, "Confirmation Unsuccessful", Toast.LENGTH_LONG).show();

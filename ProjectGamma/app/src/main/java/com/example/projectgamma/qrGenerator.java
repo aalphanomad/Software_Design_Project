@@ -45,25 +45,25 @@ public class qrGenerator extends AppCompatActivity {
         public static String GetName() {
             return name;
         }
-            public static String GetStudent_Num(){
-                return student_num;
-            }
-            public static String GetCourse(){
-                return course;
-            }
-            public static String[] Get_Courses(){
-                return get_courses;
-            }
-            public static String GetVenue(){
-                return venue;
-            }
+        public static String GetStudent_Num(){
+            return student_num;
+        }
+        public static String GetCourse(){
+            return course;
+        }
+        public static String[] Get_Courses(){
+            return get_courses;
+        }
+        public static String GetVenue(){
+            return venue;
+        }
         public static String GetStartTime(){
             return startTime;
         }
         public static String GetEndTime(){
             return endTime;
         }
-            //Set functions
+        //Set functions
         public static void setName(String name){
             Global.name=name;
         }
@@ -105,14 +105,14 @@ public class qrGenerator extends AppCompatActivity {
 
         //Gets the current date
         Calendar calender = Calendar.getInstance();
-         currentDate = DateFormat.getDateInstance().format(calender.getTime());
+        currentDate = DateFormat.getDateInstance().format(calender.getTime());
 //Assigns components(textviews) to variables
-valueCourse=qrGenerator.Global.GetCourse();
-valueName=qrGenerator.Global.GetName();
-valueStud_num=qrGenerator.Global.GetStudent_Num();
-valueVenue=qrGenerator.Global.GetVenue();
-valueStartTime=qrGenerator.Global.GetStartTime();
-valueEndTime=qrGenerator.Global.GetEndTime();
+        valueCourse=qrGenerator.Global.GetCourse();
+        valueName=qrGenerator.Global.GetName();
+        valueStud_num=qrGenerator.Global.GetStudent_Num();
+        valueVenue=qrGenerator.Global.GetVenue();
+        valueStartTime=qrGenerator.Global.GetStartTime();
+        valueEndTime=qrGenerator.Global.GetEndTime();
 
         resultTV0 = (TextView)findViewById(R.id.Course_tv);
         resultTV1 = (TextView)findViewById(R.id.Name_tv);

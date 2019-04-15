@@ -2,6 +2,7 @@ package com.example.projectgamma;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,7 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
     ListView listview;
     String result, login_url;
     Button Report;
+    TextView Message;
 
 
 
@@ -55,6 +58,7 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
         mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
+        Message=findViewById(R.id.Message);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
         mToggle.syncState();
@@ -117,100 +121,108 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
         }
 
         listview = findViewById(R.id.lv);
-
-        //System.out.println(Arrays.toString(end_time));
-
-        for(int i=0; i<dates.length; i++){
-            dates[i] = dates[i].substring(9, dates[i].length()-2);
-            courses[i] = courses[i].substring(11, courses[i].length()-2);
-            venue[i] = venue[i].substring(10, venue[i].length()-2);
-            valid[i] = valid[i].substring(10, valid[i].length()-2);
-            start_time[i] = start_time[i].substring(15, start_time[i].length()-2);
-            end_time[i] = end_time[i].substring(13, end_time[i].length()-2);
-
-        }
         System.out.println(Arrays.toString(dates));
 
-        //get rid of inverted commas on the end of the arrays
-        dates[0]= dates[0].substring(1, dates[0].length());//1st element = 2nd char of first element to the 1st element's last char
-        dates[dates.length-1] = dates[dates.length-1].substring(0, dates[dates.length-1].length()-1);
+        System.out.println(dates.length);
+if(Arrays.toString(dates).contains("DATE")==true){
+            for (int i = 0; i < dates.length; i++) {
+                dates[i] = dates[i].substring(9, dates[i].length() - 2);
+                courses[i] = courses[i].substring(11, courses[i].length() - 2);
+                venue[i] = venue[i].substring(10, venue[i].length() - 2);
+                valid[i] = valid[i].substring(10, valid[i].length() - 2);
+                start_time[i] = start_time[i].substring(15, start_time[i].length() - 2);
+                end_time[i] = end_time[i].substring(13, end_time[i].length() - 2);
 
-        courses[0]= courses[0].substring(1, courses[0].length());
-        courses[courses.length-1] = courses[courses.length-1].substring(0, courses[courses.length-1].length()-1);
-
-        venue[0]= venue[0].substring(1, venue[0].length());
-        venue[venue.length-1] = venue[venue.length-1].substring(0, venue[venue.length-1].length()-1);
-
-        valid[0]= valid[0].substring(1, valid[0].length());
-        valid[valid.length-1] = valid[valid.length-1].substring(0, valid[valid.length-1].length()-1);
-
-        start_time[0]= start_time[0].substring(1, start_time[0].length());
-        start_time[start_time.length-1] = start_time[start_time.length-1].substring(0, start_time[start_time.length-1].length()-1);
-
-        end_time[0]= end_time[0].substring(1, end_time[0].length());
-        end_time[end_time.length-1] = end_time[end_time.length-1].substring(0, end_time[end_time.length-1].length()-1);
-
-
-
-        //call adapter class to take in our arrays
-        MyAdapter adapter = new MyAdapter(this, dates, courses, venue, start_time, end_time, valid);
-        listview.setAdapter(adapter);
-
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selected = ((TextView) view.findViewById(R.id.subjectHistory)).getText().toString();
-                Toast.makeText(getApplicationContext(),selected,Toast.LENGTH_SHORT).show();
             }
-        });
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //get rid of inverted commas on the end of the arrays
+            dates[0] = dates[0].substring(1, dates[0].length());//1st element = 2nd char of first element to the 1st element's last char
+            dates[dates.length - 1] = dates[dates.length - 1].substring(0, dates[dates.length - 1].length() - 1);
+
+            courses[0] = courses[0].substring(1, courses[0].length());
+            courses[courses.length - 1] = courses[courses.length - 1].substring(0, courses[courses.length - 1].length() - 1);
+
+            venue[0] = venue[0].substring(1, venue[0].length());
+            venue[venue.length - 1] = venue[venue.length - 1].substring(0, venue[venue.length - 1].length() - 1);
+
+            valid[0] = valid[0].substring(1, valid[0].length());
+            valid[valid.length - 1] = valid[valid.length - 1].substring(0, valid[valid.length - 1].length() - 1);
+
+            start_time[0] = start_time[0].substring(1, start_time[0].length());
+            start_time[start_time.length - 1] = start_time[start_time.length - 1].substring(0, start_time[start_time.length - 1].length() - 1);
+
+            end_time[0] = end_time[0].substring(1, end_time[0].length());
+            end_time[end_time.length - 1] = end_time[end_time.length - 1].substring(0, end_time[end_time.length - 1].length() - 1);
+
+
+            //call adapter class to take in our arrays
+            MyAdapter adapter = new MyAdapter(this, dates, courses, venue, start_time, end_time, valid);
+            listview.setAdapter(adapter);
+
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String selected = ((TextView) view.findViewById(R.id.subjectHistory)).getText().toString();
+                    Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent i = new Intent(getApplicationContext(), Validate.class);
-                    i.putExtra("date",((TextView) view.findViewById(R.id.dateHistory)).getText().toString());
+                    i.putExtra("date", ((TextView) view.findViewById(R.id.dateHistory)).getText().toString());
                     i.putExtra("course", ((TextView) view.findViewById(R.id.subjectHistory)).getText().toString());
-                    i.putExtra("duration",((TextView) view.findViewById(R.id.durationHistory)).getText().toString());
-                    i.putExtra("venue",((TextView) view.findViewById(R.id.venueHistory)).getText().toString());
+                    i.putExtra("duration", ((TextView) view.findViewById(R.id.durationHistory)).getText().toString());
+                    i.putExtra("venue", ((TextView) view.findViewById(R.id.venueHistory)).getText().toString());
                     startActivity(i);
-            }
-        });
+                }
+            });
 
 
-        String type = "fetching";
-        String name = qrGenerator.Global.GetName();
-        final String student_no = qrGenerator.Global.GetStudent_Num();
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, name, student_no);
+            String type = "fetching";
+            String name = qrGenerator.Global.GetName();
+            final String student_no = qrGenerator.Global.GetStudent_Num();
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, name, student_no);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            Report = (Button) findViewById(R.id.Report_Button);
+                Report.setVisibility(View.VISIBLE);
+            Report.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View v) {
+                    try {
+                        Toast.makeText(Claim_History.this, "Please wait a moment.", Toast.LENGTH_LONG).show();
+                        // we obtain the url of the pdf report
+                        String[] params = {"PDF", student_no};
+                        String download_url = new BackgroundWorker(Claim_History.this).doInBackground(params);
+                        Log.d("URL", "onClick: " + download_url);
+                        // we create a new intent which receives the url and opens it in the browser
+                        // where the user can then download it
+                        // we do this since it is easier than managing the downloading and viewing ourselves
+                        Intent browser_intent = new Intent(Intent.ACTION_VIEW, Uri.parse(download_url));
+                        startActivity(browser_intent);
+                    } catch (
+                            ActivityNotFoundException e) {
+                        Toast.makeText(Claim_History.this, "No application can handle this request."
+                                + " Please install a web browser", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+else{
+    ImageView imgView=(ImageView) findViewById(R.id.imageView5);
+    Drawable drawable  = getResources().getDrawable(R.drawable.mag_glass);
+    imgView.setImageDrawable(drawable);
+    Message.setText("It's Empty Here...");
+        }
 
         setNavigationViewListener();
-        Report = (Button) findViewById(R.id.Report_Button);
-        Log.d("LOOK HERE", "onCreate: " + Report.toString());
-        Report.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
-                try {
-                    Toast.makeText(Claim_History.this, "Please wait a moment.", Toast.LENGTH_LONG).show();
-                    // we obtain the url of the pdf report
-                    String[] params = {"PDF", student_no};
-                    String download_url = new BackgroundWorker(Claim_History.this).doInBackground(params);
-                    Log.d("URL", "onClick: " + download_url);
-                    // we create a new intent which receives the url and opens it in the browser
-                    // where the user can then download it
-                    // we do this since it is easier than managing the downloading and viewing ourselves
-                    Intent browser_intent = new Intent(Intent.ACTION_VIEW, Uri.parse(download_url));
-                    startActivity(browser_intent);
-                } catch (
-                        ActivityNotFoundException e) {
-                    Toast.makeText(Claim_History.this, "No application can handle this request."
-                            + " Please install a web browser", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     @Override
