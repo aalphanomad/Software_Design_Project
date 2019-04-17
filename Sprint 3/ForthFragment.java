@@ -22,9 +22,9 @@ import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 public class ForthFragment extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
-    String name, stud_num, email, password;
+    String name, stud_num, email;
     String[] courses;
-    public static TextView  nameTV, stud_numTV, emailTV, passwordTV;
+    public static TextView  nameTV, stud_numTV, emailTV;
     ListView listview;
     ArrayAdapter<String> adapter = null;
 
@@ -40,26 +40,26 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //setNavigationViewListener();
 
-
+        //recieving account details of tutor from global variables set in qrGenerator function
         name = qrGenerator.Global.GetName();
         stud_num = qrGenerator.Global.GetStudent_Num();
         email = stud_num+"@students.wits.ac.za";
-        password = qrGenerator.Global.GetPassword();
         courses = qrGenerator.Global.Get_Courses();
 
+        //declaring the textviews
         nameTV = (TextView)findViewById(R.id.tv_Name);
         stud_numTV = (TextView)findViewById(R.id.tv_stud_num2);
         emailTV = (TextView)findViewById(R.id.tv_email2);
-        passwordTV = (TextView)findViewById(R.id.tv_password2);
 
+        //setting textviews with the informatin we recieve from the global variables
         nameTV.setText(name);
         stud_numTV.setText(stud_num);
         emailTV.setText(email);
-        passwordTV.setText(password);
 
+        //declare adapter for listview with simple layout
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, courses);
         listview = findViewById(R.id.lv2);
-        listview.setAdapter(adapter);
+        listview.setAdapter(adapter);   //update listview with information in array
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -111,11 +111,13 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
 
     }
 
+    //button to start editing courses
     public void edit(View view) {
         Intent i = new Intent(ForthFragment.this, editUserProfile.class);
         ForthFragment.this.startActivity(i);
     }
 
+    //button to take us home
     public void home(View view) {
         Intent i = new Intent(ForthFragment.this, HomeActivity.class);
         ForthFragment.this.startActivity(i);
