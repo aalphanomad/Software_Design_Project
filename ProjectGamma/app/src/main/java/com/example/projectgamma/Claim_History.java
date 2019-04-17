@@ -56,7 +56,7 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listview);
+        setContentView(R.layout.claim_list);
         mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
         Message=findViewById(R.id.Message);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);

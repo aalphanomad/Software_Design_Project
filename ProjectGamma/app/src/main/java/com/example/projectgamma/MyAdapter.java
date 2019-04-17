@@ -20,7 +20,7 @@ public class MyAdapter extends ArrayAdapter<String>{
     //class will take in the above arrays
 
     MyAdapter(Context c, String date[], String courses[], String venue[], String start[], String end[], String valid[]){
-        super(c, R.layout.customlist, R.id.dateHistory, date);
+        super(c, R.layout.history_item, R.id.dateHistory, date);
         this.context = c;
         this.rDate = date;
         this.rCourses = courses;
@@ -31,7 +31,7 @@ public class MyAdapter extends ArrayAdapter<String>{
     }
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.customlist, parent, false);
+        View row = inflater.inflate(R.layout.history_item, parent, false);
         //declare our textviews
         TextView theDate = row.findViewById(R.id.dateHistory);
         TextView theSubject = row.findViewById(R.id.subjectHistory);

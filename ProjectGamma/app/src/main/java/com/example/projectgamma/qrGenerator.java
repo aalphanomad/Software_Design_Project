@@ -39,6 +39,7 @@ public class qrGenerator extends AppCompatActivity {
         public static String venue;
         public static String startTime, endTime;
         public static String[] get_courses;
+        public static String role;
 
 
         //Get functions
@@ -63,6 +64,7 @@ public class qrGenerator extends AppCompatActivity {
         public static String GetEndTime(){
             return endTime;
         }
+        public static String GetRole(){return role;}
         //Set functions
         public static void setName(String name){
             Global.name=name;
@@ -76,7 +78,6 @@ public class qrGenerator extends AppCompatActivity {
         public static void setGet_courses(String[] courses){
             Global.get_courses=courses;
         }
-
         public static void setVenue(String venue){
             Global.venue=venue;
         }
@@ -86,6 +87,7 @@ public class qrGenerator extends AppCompatActivity {
         public static void setEndTime(String endTime){
             Global.endTime=endTime;
         }
+        public static void setRole(String role){Global.role=role;}
     }
 
 

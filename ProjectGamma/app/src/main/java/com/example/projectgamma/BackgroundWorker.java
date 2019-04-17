@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -23,9 +24,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
@@ -165,6 +163,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
 
             }
+            else if(type.equals("get tutors")){
+                String student_num = params[1];
+
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/get_students.php?";
+                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
+            }
+            else if(type.equals("edit courses")){
+                String student_num=params[1];
+                String course1=params[2];
+                String course2=params[3];
+                String course3=params[4];
+                String course4=params[5];
+                String course5=params[6];
+
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/update_details.php?";
+                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8")+"&"+URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8")+"&"+URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8")+"&"+URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8")+"&"+URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8")+"&"+URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
+
+            }
 
 //Initialize an HTTP POST connection to send data to the server
             URL url = new URL(login_url);
@@ -231,6 +247,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     String role = ja.getString("role");
                     qrGenerator.Global.setName(name);
                     qrGenerator.Global.setStudent_num(stud_num);
+                    qrGenerator.Global.setRole(role);
 
 
                     //If role="0",implies the the user a not a lecturer(therefore a tutor)
@@ -243,7 +260,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         context.startActivity(i);
                     } else {
                         //If the role is a lecturer(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
-                        Intent i = new Intent(context, mainQR.class);
+                        Intent i = new Intent(context, LecturerHome.class);
                         //Send the name to the lecturers home screen
                         i.putExtra("name", name);
                         qrGenerator.Global.setName(name);
@@ -254,13 +271,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } else if (type == "verify") {
                 //Converts the result from the server to JSON format
                 JSONObject ja = new JSONObject(result);
-                System.out.println("Table " + ja.get("result").toString());
+
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Confirmation Successful", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context, mainQR.class);
+                    Intent i = new Intent(context, LecturerHome.class);
                     context.startActivity(i);
                 } else {
                     Toast.makeText(context, "Confirmation Unsuccessful", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(context, qrScanner.class);
+                    context.startActivity(i);
 
                 }
             } else if (type == "booking") {
@@ -310,6 +329,36 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String []courses = ja.getString("result").split(",");
                 Intent intent7 = new Intent("INTENT_7").putExtra("get courses", courses);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent7);
+            }
+            else if(type.equals("get tutors")){
+               // Log.i("tagconvertstr", "["+result+"]");
+                JSONObject ja = new JSONObject(result);
+                String Course1=ja.getString("Course1");
+                String Course2=ja.getString("Course2");
+                String Course3=ja.getString("Course3");
+                String Course4=ja.getString("Course4");
+                String Course5=ja.getString("Course5");
+
+                Intent intent10 = new Intent("INTENT_10").putExtra("Course1", Course1);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent10);
+
+                Intent intent11 = new Intent("INTENT_11").putExtra("Course2", Course2);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent11);
+
+                Intent intent12 = new Intent("INTENT_12").putExtra("Course3", Course3);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent12);
+
+                Intent intent13 = new Intent("INTENT_13").putExtra("Course4", Course4);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent13);
+
+                Intent intent14 = new Intent("INTENT_14").putExtra("Course2", Course5);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent14);
+
+            }else if(type.equals("edit courses")){
+                 Log.i("tagconvertstr", "["+result+"]");
+
+                Intent i = new Intent(context, HomeActivity.class);
+                context.startActivity(i);
             }
         } catch (JSONException e) {
             e.printStackTrace();

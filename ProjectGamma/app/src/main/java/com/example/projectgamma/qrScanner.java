@@ -48,7 +48,6 @@ String valueStud_num=The_details[2];
 String valueCourse=The_details[3];
 String valueDate=The_details[4];
 String valueVenue=The_details[5];
-System.out.println("Hamza "+type+" "+valueName+" "+valueStud_num+" "+valueCourse+" "+valueDate+" "+valueVenue);
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, valueName, valueStud_num, valueCourse,valueDate, valueVenue);
 

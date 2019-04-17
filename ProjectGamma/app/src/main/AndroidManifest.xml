@@ -37,7 +37,7 @@
             android:name=".LoginActivity"
             android:label="Sign In" />
 
-        <activity android:name="com.example.projectgamma.mainQR"
+        <activity android:name="com.example.projectgamma.LecturerHome"
             android:label="Home Screen"/>
         <activity android:name="com.example.projectgamma.qrScanner"
             android:label="Scan QR Code"/>
@@ -51,7 +51,8 @@
             android:label="Claim Form"/>
         <activity android:name="com.example.projectgamma.ForthFragment" />
         <activity android:name="com.example.projectgamma.Validate" />
-
+        <activity android:name="com.example.projectgamma.MyTutors" />
+        <activity android:name="com.example.projectgamma.editUserProfile" />
 
 
     </application>
