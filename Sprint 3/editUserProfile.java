@@ -116,9 +116,15 @@ public class editUserProfile extends AppCompatActivity {
                     //Selects the labels of the courses seleted by the user
                     if (isChecked == true) {
                         //if a certain item is selected to add to courses tutored, add it to the arraylist that already contains current curses taken
-                        arrayListofCourses.add(String.valueOf(finalThe_courses[position]));
+                        if (arrayListofCourses.size() < 5) {
+                            arrayListofCourses.add(String.valueOf(finalThe_courses[position]));
+                        }
 
-                    } else {
+                        else{
+                            Toast.makeText(getApplicationContext(),"You cannot add any more courses!",Toast.LENGTH_SHORT).show();
+                        }
+                    } 
+                    else {
                         //if unchecked remove from arraylist or do nt even add it
                         arrayListofCourses.remove(String.valueOf(finalThe_courses[position]));
                     }
