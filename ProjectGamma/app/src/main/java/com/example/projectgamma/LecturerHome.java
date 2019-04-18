@@ -13,9 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetRole;
 import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 
 
@@ -24,9 +24,12 @@ public class LecturerHome extends AppCompatActivity  implements NavigationView.O
     private ActionBarDrawerToggle mToggle;
     Button scan;
 
+
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_view);
+        setContentView(R.layout.lecturer_view);
         TextView dummy;
         mDrawerlayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
@@ -39,12 +42,24 @@ String test=qrGenerator.Global.GetName();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         scan = findViewById(R.id.Scan_button);
+        scan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(LecturerHome.this, qrScanner.class);
+                LecturerHome.this.startActivity(i);
+
+
+            }
+        });
+
+
         //sets the name label to the user's name
         dummy.setText(test.toUpperCase().charAt(0) +test.substring(1,test.length())+"!");
 
         setNavigationViewListener();
 
     }
+
+
     //Prevents the user from going back to the login screen from the homescreen
 public void onBackPressed(){
 
@@ -78,8 +93,14 @@ public void onBackPressed(){
                 break;
             }
             case R.id.user_profile: {
-                Intent myIntent = new Intent(LecturerHome.this, ForthFragment.class);
-                LecturerHome.this.startActivity(myIntent);
+                if(GetRole().equals("1")){
+                    Intent myIntent = new Intent(LecturerHome.this, MyTutors.class);
+                    LecturerHome.this.startActivity(myIntent);
+                }else{
+                    Intent myIntent = new Intent(LecturerHome.this, ForthFragment.class);
+                    LecturerHome.this.startActivity(myIntent);
+                }
+
                 break;
             }
             case R.id.Logout: {

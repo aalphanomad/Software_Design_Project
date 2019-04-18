@@ -24,7 +24,6 @@ import java.util.Collections;
 
 import static com.example.projectgamma.qrGenerator.Global.GetName;
 import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
-import static com.example.projectgamma.qrGenerator.Global.Get_Courses;
 import static com.example.projectgamma.qrGenerator.Global.setGet_courses;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -72,7 +71,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Claims = findViewById(R.id.Claims_but);
+        Claims = findViewById(R.id.Scan_button);
         Claims.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, Claim_Form.class);

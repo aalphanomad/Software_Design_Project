@@ -248,6 +248,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     qrGenerator.Global.setName(name);
                     qrGenerator.Global.setStudent_num(stud_num);
                     qrGenerator.Global.setRole(role);
+                    System.out.println("The Role"+role);
 
 
                     //If role="0",implies the the user a not a lecturer(therefore a tutor)
@@ -339,6 +340,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String Course4=ja.getString("Course4");
                 String Course5=ja.getString("Course5");
 
+
                 Intent intent10 = new Intent("INTENT_10").putExtra("Course1", Course1);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent10);
 
@@ -351,7 +353,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 Intent intent13 = new Intent("INTENT_13").putExtra("Course4", Course4);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent13);
 
-                Intent intent14 = new Intent("INTENT_14").putExtra("Course2", Course5);
+                Intent intent14 = new Intent("INTENT_14").putExtra("Course5", Course5);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent14);
 
             }else if(type.equals("edit courses")){

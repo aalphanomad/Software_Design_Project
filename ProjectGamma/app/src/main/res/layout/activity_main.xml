@@ -43,7 +43,7 @@
 
 
     <Button
-        android:id="@+id/Claims_but"
+        android:id="@+id/Scan_button"
         android:layout_width="175dp"
         android:layout_height="60dp"
         android:layout_marginStart="40dp"

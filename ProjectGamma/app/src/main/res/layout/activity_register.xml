@@ -144,7 +144,6 @@
             android:text="Confirm Password" />
 
 
-        <!--Can Student numbers have alphabets???-->
         <EditText
             android:id="@+id/SN_TB"
             android:layout_width="366dp"
