@@ -85,6 +85,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
                         topic = listItems[i].split(" ");
                         course = topic[0];
                         //Displays the course selected
+
                         sel_Course.setText(course);
 
                         dialogInterface.dismiss();

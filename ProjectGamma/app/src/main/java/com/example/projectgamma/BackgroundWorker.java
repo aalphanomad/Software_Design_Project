@@ -339,6 +339,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String Course3=ja.getString("Course3");
                 String Course4=ja.getString("Course4");
                 String Course5=ja.getString("Course5");
+                String MyCourses=ja.getString("Courses");
+
 
 
                 Intent intent10 = new Intent("INTENT_10").putExtra("Course1", Course1);
@@ -355,6 +357,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
                 Intent intent14 = new Intent("INTENT_14").putExtra("Course5", Course5);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent14);
+
+                Intent intent15 = new Intent("INTENT_15").putExtra("Courses", MyCourses);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent15);
+
 
             }else if(type.equals("edit courses")){
                  Log.i("tagconvertstr", "["+result+"]");
