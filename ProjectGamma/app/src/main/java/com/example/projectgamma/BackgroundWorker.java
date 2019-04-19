@@ -105,7 +105,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String date = params[4];
                 String venue = params[5];
                 venue = venue.substring(0, venue.length() - 1);
-                System.out.println("Venue" + venue);
 
                 //The URL below is used to send data to the server in order to login
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
@@ -137,20 +136,11 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     endTime = "0" + endTime;
                 }
                 String valid = "0";
-                System.out.println("Pencil " + name + " " + student_num + " " + course + " " + date + " " + venue + " " + startTime + " " + endTime);
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
 
-            } else if (type.equals("fetching")) {
-                String name = params[1];
-                String student_num = params[2];
-
-                //The URL to send data to the server when creating a booking/claim form
-                login_url = "http://lamp.ms.wits.ac.za/~s1601745/fetching.php";
-                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
-
-            } else if (type.equals("PDF")) {
+            }  else if (type.equals("PDF")) {
                 String student_num = params[1];
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/select_booking.php?";
@@ -241,10 +231,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     qrGenerator.Global.setName(name);
                     qrGenerator.Global.setStudent_num(stud_num);
                     qrGenerator.Global.setRole(role);
-                    System.out.println("The Role" + role);
 
 
-                    //If role="0",implies the the user a not a lecturer(therefore a tutor)
+
+                    //If role="0",implies the the user a not a tutor(therefore a tutor)
                     if (role.equals("0")) {
                         Intent i = new Intent(context, HomeActivity.class);
                         //Send the name and student number of the student to the home Activity
@@ -253,7 +243,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
                         context.startActivity(i);
                     } else {
-                        //If the role is a lecturer(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
+                        //If the role is a tutor(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
                         Intent i = new Intent(context, LecturerHome.class);
                         //Send the name to the lecturers home screen
                         i.putExtra("name", name);
@@ -278,7 +268,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 }
             } else if (type == "booking") {
                 JSONObject ja = new JSONObject(result);
-                System.out.println("The result " + ja.get("result").toString());
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(context, qrGenerator.class);
@@ -289,35 +278,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     context.startActivity(i);
 
                 }
-            } else if (type == "fetching") {
-                JSONObject ja = new JSONObject(result);
-
-                String[] dates = ja.getString("dates").split(",");
-                String[] courses = ja.getString("courses").split(",");
-                String[] start_time = ja.getString("start_time").split(",");
-                String[] end_time = ja.getString("end_time").split(",");
-                String[] venue = ja.getString("venue").split(",");
-                String[] valid = ja.getString("valid").split(",");
-
-                Intent intent1 = new Intent("INTENT_1").putExtra("dates", dates);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent1);
-
-                Intent intent2 = new Intent("INTENT_2").putExtra("courses", courses);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent2);
-
-                Intent intent3 = new Intent("INTENT_3").putExtra("start_time", start_time);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent3);
-
-                Intent intent4 = new Intent("INTENT_4").putExtra("end_time", end_time);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent4);
-
-                Intent intent5 = new Intent("INTENT_5").putExtra("venue", venue);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent5);
-
-                Intent intent6 = new Intent("INTENT_6").putExtra("valid", valid);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent6);
-
-
             } else if (type.equals("get courses")) {
                 Log.i("tagconvertstr", "[" + result + "]");
 
@@ -327,7 +287,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent7);
             } else if (type.equals("edit courses")) {
                 Log.i("tagconvertstr", "[" + result + "]");
-
                 Intent i = new Intent(context, HomeActivity.class);
                 context.startActivity(i);
             }

@@ -30,7 +30,7 @@ public class Validate extends AppCompatActivity {
 
 
     private ImageView imageView;
-    public static TextView  resultTV0, resultTV1, resultTV2, resultTV3, resultTV4, resultTV5, resultTV6;
+    public static TextView  resultTV0, resultTV1, resultTV2, resultTV4, resultTV5, resultTV6;
     String valueCourse,valueName,valueStud_num, valueVenue,valueDuration,valueDate;
 
     String currentDate;
@@ -48,10 +48,6 @@ public class Validate extends AppCompatActivity {
         valueDate=bundle.getString("date");
         valueVenue=bundle.getString("venue");
         valueDuration=bundle.getString("duration");
-
-
-
-
 
 
         resultTV0 = (TextView)findViewById(R.id.Course_tv);

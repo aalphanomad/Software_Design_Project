@@ -61,7 +61,7 @@
     app:headerLayout="@layout/header"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    app:menu="@menu/drawermenu"
+    app:menu="@menu/tutor"
     android:id="@+id/navigation"
     android:layout_gravity="start"
     >

@@ -107,9 +107,8 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
             e.printStackTrace();
         }
 
-        JSONObject ja = null;
         try {
-            ja = new JSONObject(result);
+            JSONObject ja = new JSONObject(result);
             dates=ja.getString("dates").split(",");
             courses=ja.getString("courses").split(",");
             start_time=ja.getString("start_time").split(",");
@@ -121,9 +120,7 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
         }
 
         listview = findViewById(R.id.lv);
-        System.out.println(Arrays.toString(dates));
 
-        System.out.println(dates.length);
 if(Arrays.toString(dates).contains("DATE")==true){
             for (int i = 0; i < dates.length; i++) {
                 dates[i] = dates[i].substring(9, dates[i].length() - 2);
@@ -238,14 +235,13 @@ else{
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
+            case R.id.Claim_History: {
                 Intent myIntent = new Intent(Claim_History.this, Claim_History.class);
                 Claim_History.this.startActivity(myIntent);
                 break;
             }
-            case R.id.MySchedule: {
+            case R.id.My_Schedule: {
                 Intent myIntent = new Intent(Claim_History.this, MySchedule.class);
-                //myIntent.putExtra("user_id", "" + user_id);
                 Claim_History.this.startActivity(myIntent);
                 break;
             }

@@ -12,6 +12,34 @@
         android:layout_height="match_parent">
 
 
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="229dp"
+            android:layout_height="179dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/Message"
+            android:layout_width="275dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.693" />
+
         <ListView
             android:id="@+id/lv"
             android:layout_width="394dp"
@@ -50,7 +78,7 @@
         app:headerLayout="@layout/header"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:menu="@menu/drawermenu"
+        app:menu="@menu/lecturer"
         android:id="@+id/navigation"
         android:layout_gravity="start"
         />

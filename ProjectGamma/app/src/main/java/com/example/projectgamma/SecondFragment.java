@@ -72,9 +72,6 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
                 sb.append(line + "\n");
             result = sb.toString();
             is.close();
-            System.out.print("Here is the data");
-            System.out.print(result);
-
         } catch (Exception e) {
             System.out.print("Error 2");
         }
@@ -106,12 +103,12 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         System.out.println("Testing"+item.getItemId());
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
+            case R.id.Scan_QR: {
                 Intent myIntent = new Intent(SecondFragment.this, Claim_History.class);
                 SecondFragment.this.startActivity(myIntent);
                 break;
             }
-            case R.id.MySchedule: {
+            case R.id.View_Tutors: {
                 Intent myIntent = new Intent(SecondFragment.this, SecondFragment.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }

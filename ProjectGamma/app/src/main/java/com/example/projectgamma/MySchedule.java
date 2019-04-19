@@ -54,7 +54,6 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.second_layout);
         Intent i = getIntent();
         String id = i.getStringExtra("user_id");
-        System.out.println(id);
         mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
@@ -85,8 +84,6 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
                 sb.append(line+"\n");
             result=sb.toString();
             is.close();
-            System.out.print("Here is the data");
-            System.out.print(result);
 
         }catch(Exception e){
             System.out.print("Error 2");
@@ -114,14 +111,13 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.println("Testing"+item.getItemId());
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
+            case R.id.Claim_History: {
                 Intent myIntent = new Intent(MySchedule.this, Claim_History.class);
                 MySchedule.this.startActivity(myIntent);
                 break;
             }
-            case R.id.MySchedule: {
+            case R.id.My_Schedule: {
                 Intent myIntent = new Intent(MySchedule.this, SecondFragment.class);
                 MySchedule.this.startActivity(myIntent);
                 break;

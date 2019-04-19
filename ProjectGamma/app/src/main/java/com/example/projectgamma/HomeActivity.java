@@ -110,7 +110,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             get_courses3.removeAll(Collections.singletonList("null"));
 
 
-            //System.out.println(get_courses3);
             str = new String[get_courses3.size()];
             for (int j = 0; j < get_courses3.size(); j++) {
 get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j).toString().length()-1));
@@ -135,13 +134,13 @@ get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
+            case R.id.Claim_History: {
                 Intent myIntent = new Intent(HomeActivity.this, Claim_History.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
-            case R.id.MySchedule: {
-                Intent myIntent = new Intent(HomeActivity.this, adminViewCourses.class);
+            case R.id.My_Schedule: {
+                Intent myIntent = new Intent(HomeActivity.this, SecondFragment.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }

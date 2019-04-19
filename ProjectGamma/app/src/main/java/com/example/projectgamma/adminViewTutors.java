@@ -1,5 +1,6 @@
 package com.example.projectgamma;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ public class adminViewTutors extends AppCompatActivity {
     String post_data = null;
     String[] lecturers;
     String[] tutors;
+    TextView Message;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class adminViewTutors extends AppCompatActivity {
         courseTV = (TextView) findViewById(R.id.tv_course2);
         courseTV.setText(courseName);
 
+        Message=findViewById(R.id.Message);
 
         try {
 
@@ -101,31 +105,26 @@ public class adminViewTutors extends AppCompatActivity {
             JSONObject ja = new JSONObject(result);
             lecturers = ja.getString("lecturers").split(",");
             tutors = ja.getString("tutors").split(",");
-            lecturers[0] = lecturers[0].substring(1);
-            lecturers[lecturers.length - 1] = lecturers[lecturers.length - 1].substring(0, lecturers[lecturers.length - 1].length() - 1);
-            tutors[0] = tutors[0].substring(1);
-            tutors[tutors.length - 1] = tutors[tutors.length - 1].substring(0, tutors[tutors.length - 1].length() - 1);
-            for (int i = 0; i < lecturers.length; i++) {
-                lecturers[i] = lecturers[i].substring(1, lecturers[i].length() - 1);
-            }
-            for (int j = 0; j < tutors.length; j++) {
-                tutors[j] = tutors[j].substring(1, tutors[j].length() - 1);
-            }
-            //the adapter initialised for our lecturer array to show all lecturers of the specific course in the listview
-            adapterOfLecturers = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lecturers);
-            listview = findViewById(R.id.lv_lecturers);
-            listview.setAdapter(adapterOfLecturers);
+            tutors=qrGenerator.Global.formatter(tutors);
+            //the adapter initialised for our tutor array to show all lecturers of the specific course in the listview
+            if(lecturers!=null && tutors!=null) {
+                adapterOfLecturers = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lecturers);
+                lecturers = qrGenerator.Global.formatter(lecturers);
+                listview = findViewById(R.id.lv_lecturers);
+                listview.setAdapter(adapterOfLecturers);
 
-            //the adapter initialised for our tutors array to show all tutors of the specific course in the listview
-            adapterOfTutors = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tutors);
-            listview = findViewById(R.id.lv_tutors);
-            listview.setAdapter(adapterOfTutors);
-            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(getApplicationContext(), "HELLO", Toast.LENGTH_SHORT).show();
-                }
-            });
+                adapterOfTutors = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tutors);
+                listview = findViewById(R.id.lv_tutors);
+                listview.setAdapter(adapterOfTutors);
+            }
+            else{
+                ImageView imgView=(ImageView) findViewById(R.id.imageView5);
+                Drawable drawable  = getResources().getDrawable(R.drawable.mag_glass);
+                imgView.setImageDrawable(drawable);
+                Message.setText("It's Empty Here...");
+            }
+
+
 
 
         } catch (JSONException e) {

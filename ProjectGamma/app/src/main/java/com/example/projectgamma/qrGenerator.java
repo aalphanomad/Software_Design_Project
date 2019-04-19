@@ -16,6 +16,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import static com.example.projectgamma.qrGenerator.Global.course;
@@ -65,6 +66,22 @@ public class qrGenerator extends AppCompatActivity {
             return endTime;
         }
         public static String GetRole(){return role;}
+        public static String[] formatter(String[] arr){
+            System.out.println("Length "+ Arrays.asList(arr));
+
+            if(arr.length!=0) {
+                arr[0] = arr[0].substring(1);
+                arr[arr.length - 1] = arr[arr.length - 1].substring(0, arr[arr.length - 1].length() - 1);
+
+                for (int i = 0; i < arr.length; i++) {
+                    arr[i] = arr[i].substring(1, arr[i].length() - 1);
+                }
+                return arr;
+            }
+            else{
+                return arr;
+            }
+        }
         //Set functions
         public static void setName(String name){
             Global.name=name;

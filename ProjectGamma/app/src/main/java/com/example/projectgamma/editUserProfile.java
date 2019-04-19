@@ -2,9 +2,17 @@ package com.example.projectgamma;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +27,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class editUserProfile extends AppCompatActivity {
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
+
+public class editUserProfile extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+    private DrawerLayout mDrawerlayout;
+    private ActionBarDrawerToggle mToggle;
     ListView listview;
     android.support.v7.app.AlertDialog myDialog;
     ArrayAdapter<String> adapter = null;
@@ -34,16 +47,22 @@ public class editUserProfile extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofile);
-
+        mDrawerlayout = findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
+        mDrawerlayout.addDrawerListener(mToggle);
         //create array that takes thhe values of the courses the tutor contains
         courses = qrGenerator.Global.Get_Courses();
         //convert above array to arraylist so we can perform certain actions later on
         arrayListofCourses = new ArrayList<String>(Arrays.asList(courses));
-
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         //declare adapter for listview with simple layout that will show the courses tutored
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListofCourses);
         listview = findViewById(R.id.lv3);
         listview.setAdapter(adapter);   //update listview
+        setNavigationViewListener();
 
 
         //when a course in the listview is clicked the user will have the option to delete that specific course
@@ -161,5 +180,59 @@ public class editUserProfile extends AppCompatActivity {
         myDialog = myBuilder.create();
         myDialog.show();
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+    //Handles events related to the side-swipe feature
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Claim_History: {
+                Intent myIntent = new Intent(editUserProfile.this, Claim_Form.class);
+                editUserProfile.this.startActivity(myIntent);
+                break;
+            }
+            case R.id.My_Schedule: {
+                Intent myIntent = new Intent(editUserProfile.this, SecondFragment.class);
+                editUserProfile.this.startActivity(myIntent);
+                break;
+            }
+
+            case R.id.Claim: {
+                Intent myIntent = new Intent(editUserProfile.this, Claim_Form.class);
+                editUserProfile.this.startActivity(myIntent);
+                break;
+            }
+
+            case R.id.user_profile: {
+                Intent myIntent = new Intent(editUserProfile.this, ForthFragment.class);
+                editUserProfile.this.startActivity(myIntent);
+                break;
+            }
+            case R.id.Logout: {
+                Intent myIntent = new Intent(editUserProfile.this, LoginActivity.class);
+                editUserProfile.this.startActivity(myIntent);
+                break;
+            }
+        }
+        mDrawerlayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void setNavigationViewListener() {
+        NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+
+        navigationView.setNavigationItemSelectedListener( editUserProfile.this);
     }
 }

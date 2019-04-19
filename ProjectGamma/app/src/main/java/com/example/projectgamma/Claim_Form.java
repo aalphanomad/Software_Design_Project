@@ -63,9 +63,6 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         Button button = findViewById(R.id.button);
         sel_Course = findViewById(R.id.Sel_Course);
         final String[] listItems =Get_Courses();
-        for(int i=0;i<listItems.length;i++){
-            System.out.println(listItems[i]);
-        }
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +218,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         }
         startTime = start.getText().toString();
         endTime = (String) end.getText();
-        System.out.println("Non" + startTime + " " + endTime);
+
     }
 
     public void send(View view) {

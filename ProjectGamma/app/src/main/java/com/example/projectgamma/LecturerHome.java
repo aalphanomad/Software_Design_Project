@@ -86,33 +86,18 @@ public void onBackPressed(){
 
     }
     //Handles events related to the side-swipe feature
+    //SPLIT FOR LECTURER AND ADMIN HERE!!!!!!!!!!!!!!!!
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
+            case R.id.Scan_QR: {
+                Intent myIntent = new Intent(LecturerHome.this, qrScanner.class);
+                LecturerHome.this.startActivity(myIntent);
+                break;
+            }
+            case R.id.View_Tutors: {
                 Intent myIntent = new Intent(LecturerHome.this, MyTutors.class);
                 LecturerHome.this.startActivity(myIntent);
-                break;
-            }
-            case R.id.MySchedule: {
-                Intent myIntent = new Intent(LecturerHome.this, MySchedule.class);
-                LecturerHome.this.startActivity(myIntent);
-                break;
-            }
-            case R.id.Claim: {
-                Intent myIntent = new Intent(LecturerHome.this, Claim_Form.class);
-                LecturerHome.this.startActivity(myIntent);
-                break;
-            }
-            case R.id.user_profile: {
-                if(GetRole().equals("1")){
-                    Intent myIntent = new Intent(LecturerHome.this, MyTutors.class);
-                    LecturerHome.this.startActivity(myIntent);
-                }else{
-                    Intent myIntent = new Intent(LecturerHome.this, ForthFragment.class);
-                    LecturerHome.this.startActivity(myIntent);
-                }
-
                 break;
             }
             case R.id.Logout: {

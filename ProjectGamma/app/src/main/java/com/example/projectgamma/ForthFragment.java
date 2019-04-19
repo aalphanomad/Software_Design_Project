@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,12 +71,12 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
+            case R.id.Claim_History: {
                 Intent myIntent = new Intent(ForthFragment.this, Claim_History.class);
                 ForthFragment.this.startActivity(myIntent);
                 break;
             }
-            case R.id.MySchedule: {
+            case R.id.My_Schedule: {
                 Intent myIntent = new Intent(ForthFragment.this, MySchedule.class);
                 ForthFragment.this.startActivity(myIntent);                break;
             }
