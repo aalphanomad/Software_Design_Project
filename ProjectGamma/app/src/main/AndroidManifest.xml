@@ -53,6 +53,8 @@
         <activity android:name="com.example.projectgamma.Validate" />
         <activity android:name="com.example.projectgamma.MyTutors" />
         <activity android:name="com.example.projectgamma.editUserProfile" />
+        <activity android:name="com.example.projectgamma.adminViewCourses" />
+        <activity android:name="com.example.projectgamma.adminViewTutors" />
 
 
     </application>

@@ -17,12 +17,25 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,25 +48,22 @@ import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 public class MyTutors extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
+    String result;
+    String login_url=null;
+    String post_data=null;
+
     Button mycourses;
-    String Course1;
-    String Course2;
-    String Course3;
-    String Course4;
-    String Course5;
+    String[] Course1;
+    String[] Course2;
+    String[] Course3;
+    String[] Course4;
+    String[] Course5;
     String MyCourses;
     List<String> course_arr;
     String sel_course;
     ArrayList dummy=new ArrayList();
     ListView listview;
     protected void onCreate(Bundle savedInstanceState) {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver1, new IntentFilter("INTENT_10"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver2, new IntentFilter("INTENT_11"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver3, new IntentFilter("INTENT_12"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver4, new IntentFilter("INTENT_13"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver5, new IntentFilter("INTENT_14"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver6, new IntentFilter("INTENT_15"));
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_tutors);
@@ -66,11 +76,75 @@ public class MyTutors extends AppCompatActivity  implements NavigationView.OnNav
         StrictMode.setThreadPolicy(policy);
         mycourses=findViewById(R.id.Select_Course);
         listview = findViewById(R.id.lv);
-        //MyAdapter adapter = new MyAdapter(this,Course1);
-        //listview.setAdapter(adapter);
 
-        BackgroundWorker backgroundWorker = new BackgroundWorker(MyTutors.this);
-        backgroundWorker.execute("get tutors",GetStudent_Num());
+
+        try {
+
+            //The code below recieves input from other classes to use the BackgroundWorker to send Booking/Claim form information to the server
+            String student_num = qrGenerator.Global.GetStudent_Num();
+
+            //The URL to send data to the server when creating a booking/claim form
+
+
+            login_url = "http://lamp.ms.wits.ac.za/~s1601745/get_students.php?";
+            post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
+            URL url = new URL(login_url);
+            //The code below initializes an HTP POST request
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            //Creating the URL in order to send data for generating a claim form to the server
+            bufferedWriter.write(post_data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            outputStream.close();
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            result = "";
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                result += line;
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject ja = new JSONObject(result);
+             Course1=ja.getString("Course1").split(",");
+             Course2=ja.getString("Course2").split(",");
+             Course3=ja.getString("Course3").split(",");
+             Course4=ja.getString("Course4").split(",");
+             Course5=ja.getString("Course5").split(",");
+             MyCourses=ja.getString("Courses");
+
+            course_arr= Arrays.asList(MyCourses.split(","));
+            course_arr.set(course_arr.size()-1,course_arr.get(course_arr.size()-1).substring(0,course_arr.get(course_arr.size()-1).length()-1));
+            course_arr.set(0,course_arr.get(0).substring(1,course_arr.get(0).length()));
+            System.out.println("REMOVED");
+            for(int i=0;i<course_arr.size();i++){
+
+                if(!course_arr.get(i).equals("null")){
+                    dummy.add(course_arr.get(i).substring(1,course_arr.get(i).length()-1));
+                }
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         mycourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,8 +157,23 @@ public class MyTutors extends AppCompatActivity  implements NavigationView.OnNav
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        System.out.println("THE I "+i);
                         Toast.makeText(MyTutors.this, dummy.get(i).toString(), Toast.LENGTH_LONG).show();
-
+                        if(i==0) {
+                            listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course1));
+                        }
+                        if(i==1) {
+                            listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course2));
+                        }
+                        if(i==2) {
+                            listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course3));
+                        }
+                        if(i==3) {
+                            listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course4));
+                        }
+                        if(i==4) {
+                            listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course5));
+                        }
 
                     }
                 });
@@ -99,79 +188,6 @@ public class MyTutors extends AppCompatActivity  implements NavigationView.OnNav
     }
 
 
-    private BroadcastReceiver mReceiver1 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Course1 = intent.getStringExtra("Course1");
-            System.out.println(Course1);
-
-
-        }
-    };
-    private BroadcastReceiver mReceiver2 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Course2 = intent.getStringExtra("Course2");
-            System.out.println(Course2);
-
-
-
-        }
-    };
-
-    private BroadcastReceiver mReceiver3 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Course3 = intent.getStringExtra("Course3");
-            System.out.println(Course3);
-
-
-
-        }
-    };
-
-    private BroadcastReceiver mReceiver4 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Course4 = intent.getStringExtra("Course4");
-            System.out.println("HELLO");
-
-            System.out.println(Course4);
-
-
-
-        }
-    };
-
-    private BroadcastReceiver mReceiver5 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Course5 = intent.getStringExtra("Course5");
-            System.out.println(Course5);
-
-
-
-        }
-    };
-
-    private BroadcastReceiver mReceiver6 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            MyCourses = intent.getStringExtra("Courses");
-            course_arr= Arrays.asList(MyCourses.split(","));
-            course_arr.set(course_arr.size()-1,course_arr.get(course_arr.size()-1).substring(0,course_arr.get(course_arr.size()-1).length()-1));
-            course_arr.set(0,course_arr.get(0).substring(1,course_arr.get(0).length()));
-            System.out.println("REMOVED");
-            for(int i=0;i<course_arr.size();i++){
-
-                if(!course_arr.get(i).equals("null")){
-                    dummy.add(course_arr.get(i).substring(1,course_arr.get(i).length()-1));
-                }
-            }
-
-
-        }
-    };
     //Prevents the user from going back to the login screen from the homescreen
     public void onBackPressed(){
 

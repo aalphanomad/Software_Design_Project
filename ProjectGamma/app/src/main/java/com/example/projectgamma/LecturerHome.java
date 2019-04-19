@@ -23,7 +23,7 @@ public class LecturerHome extends AppCompatActivity  implements NavigationView.O
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
     Button scan;
-
+    String role=GetRole();
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,25 +35,37 @@ public class LecturerHome extends AppCompatActivity  implements NavigationView.O
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
         Intent i = getIntent();
-String test=qrGenerator.Global.GetName();
+        String test=qrGenerator.Global.GetName();
         dummy = findViewById(R.id.Name_TB);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        scan = findViewById(R.id.Scan_button);
-        scan.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(LecturerHome.this, qrScanner.class);
-                LecturerHome.this.startActivity(i);
-
-
-            }
-        });
-
-
         //sets the name label to the user's name
         dummy.setText(test.toUpperCase().charAt(0) +test.substring(1,test.length())+"!");
+        scan = findViewById(R.id.Scan_button);
+        if(role.equals("1")) {
+            scan.setText("Scan QR Code");
+            scan.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent i = new Intent(LecturerHome.this, qrScanner.class);
+                    LecturerHome.this.startActivity(i);
+                }
+            });
+        }
+
+        if(role.equals("2")) {
+            scan.setText("View All Details");
+            scan.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent i = new Intent(LecturerHome.this, adminViewCourses.class);
+                    LecturerHome.this.startActivity(i);
+                }
+            });
+        }
+
+
+
 
         setNavigationViewListener();
 

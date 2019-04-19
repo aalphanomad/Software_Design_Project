@@ -141,7 +141,7 @@ get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j
                 break;
             }
             case R.id.MySchedule: {
-                Intent myIntent = new Intent(HomeActivity.this, MySchedule.class);
+                Intent myIntent = new Intent(HomeActivity.this, adminViewCourses.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }

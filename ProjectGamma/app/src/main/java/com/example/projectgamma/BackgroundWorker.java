@@ -104,8 +104,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String course = params[3];
                 String date = params[4];
                 String venue = params[5];
-                venue=venue.substring(0,venue.length()-1);
-                System.out.println("Venue"+venue);
+                venue = venue.substring(0, venue.length() - 1);
+                System.out.println("Venue" + venue);
 
                 //The URL below is used to send data to the server in order to login
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
@@ -128,13 +128,13 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String venue = params[5];
                 String startTime = params[6];
                 String endTime = params[7];
-                String[]test1= startTime.split(":");
-                String[]test2=endTime.split(":");
-                if(test1[0].length()==1){
-                    startTime="0"+startTime;
+                String[] test1 = startTime.split(":");
+                String[] test2 = endTime.split(":");
+                if (test1[0].length() == 1) {
+                    startTime = "0" + startTime;
                 }
-                if(test2[0].length()==1){
-                    endTime="0"+endTime;
+                if (test2[0].length() == 1) {
+                    endTime = "0" + endTime;
                 }
                 String valid = "0";
                 System.out.println("Pencil " + name + " " + student_num + " " + course + " " + date + " " + venue + " " + startTime + " " + endTime);
@@ -162,23 +162,16 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/get_courses.php?";
                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
 
-            }
-            else if(type.equals("get tutors")){
+            } else if (type.equals("edit courses")) {
                 String student_num = params[1];
-
-                login_url = "http://lamp.ms.wits.ac.za/~s1601745/get_students.php?";
-                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
-            }
-            else if(type.equals("edit courses")){
-                String student_num=params[1];
-                String course1=params[2];
-                String course2=params[3];
-                String course3=params[4];
-                String course4=params[5];
-                String course5=params[6];
+                String course1 = params[2];
+                String course2 = params[3];
+                String course3 = params[4];
+                String course4 = params[5];
+                String course5 = params[6];
 
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/update_details.php?";
-                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8")+"&"+URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8")+"&"+URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8")+"&"+URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8")+"&"+URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8")+"&"+URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
+                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8") + "&" + URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
 
             }
 
@@ -248,7 +241,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     qrGenerator.Global.setName(name);
                     qrGenerator.Global.setStudent_num(stud_num);
                     qrGenerator.Global.setRole(role);
-                    System.out.println("The Role"+role);
+                    System.out.println("The Role" + role);
 
 
                     //If role="0",implies the the user a not a lecturer(therefore a tutor)
@@ -325,45 +318,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent6);
 
 
-            }else if(type.equals("get courses")){
+            } else if (type.equals("get courses")) {
+                Log.i("tagconvertstr", "[" + result + "]");
+
                 JSONObject ja = new JSONObject(result);
-                String []courses = ja.getString("result").split(",");
+                String[] courses = ja.getString("result").split(",");
                 Intent intent7 = new Intent("INTENT_7").putExtra("get courses", courses);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent7);
-            }
-            else if(type.equals("get tutors")){
-               // Log.i("tagconvertstr", "["+result+"]");
-                JSONObject ja = new JSONObject(result);
-                String Course1=ja.getString("Course1");
-                String Course2=ja.getString("Course2");
-                String Course3=ja.getString("Course3");
-                String Course4=ja.getString("Course4");
-                String Course5=ja.getString("Course5");
-                String MyCourses=ja.getString("Courses");
-
-
-
-                Intent intent10 = new Intent("INTENT_10").putExtra("Course1", Course1);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent10);
-
-                Intent intent11 = new Intent("INTENT_11").putExtra("Course2", Course2);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent11);
-
-                Intent intent12 = new Intent("INTENT_12").putExtra("Course3", Course3);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent12);
-
-                Intent intent13 = new Intent("INTENT_13").putExtra("Course4", Course4);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent13);
-
-                Intent intent14 = new Intent("INTENT_14").putExtra("Course5", Course5);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent14);
-
-                Intent intent15 = new Intent("INTENT_15").putExtra("Courses", MyCourses);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent15);
-
-
-            }else if(type.equals("edit courses")){
-                 Log.i("tagconvertstr", "["+result+"]");
+            } else if (type.equals("edit courses")) {
+                Log.i("tagconvertstr", "[" + result + "]");
 
                 Intent i = new Intent(context, HomeActivity.class);
                 context.startActivity(i);
