@@ -111,7 +111,7 @@ public class adminViewTutors extends AppCompatActivity {
             qrGenerator.Global.formatter(tutors);
             qrGenerator.Global.formatter(lecturers);
             //the adapter initialised for our tutor array to show all lecturers of the specific course in the listview
-            if(!lecturers[0].equals("[]") && tutors!=null) {    //if array has lecturers then fill it onto the listview
+            if(!lecturers[0].equals("[]") && !tutors[0].equals("[]")) {    //if array has lecturers then fill it onto the listview
                 adapterOfLecturers = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lecturers);
                 listview = findViewById(R.id.lv_lecturers);
                 listview.setAdapter(adapterOfLecturers);
