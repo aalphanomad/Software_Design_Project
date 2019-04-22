@@ -1,6 +1,5 @@
 package com.example.projectgamma;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -108,7 +107,7 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
         System.out.println("Testing"+item.getItemId());
         switch (item.getItemId()) {
             case R.id.MyCourses: {
-                Intent myIntent = new Intent(SecondFragment.this, FirstFragment.class);
+                Intent myIntent = new Intent(SecondFragment.this, Claim_History.class);
                 SecondFragment.this.startActivity(myIntent);
                 break;
             }
@@ -118,11 +117,11 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
             }
 
             case R.id.Claim: {
-                Intent myIntent = new Intent(SecondFragment.this, FourthFragment.class);
+                Intent myIntent = new Intent(SecondFragment.this, Claim_Form.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
-            case R.id.settings: {
-                Intent myIntent = new Intent(SecondFragment.this, FifthFragment.class);
+            case R.id.user_profile: {
+                Intent myIntent = new Intent(SecondFragment.this, ForthFragment.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
             case R.id.Logout: {
@@ -142,5 +141,7 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
         TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
         navUsername.setText(GetName());
         navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+        navigationView.setNavigationItemSelectedListener( SecondFragment.this);
+
     }
     }

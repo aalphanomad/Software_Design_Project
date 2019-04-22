@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class LoginActivityTest {
+public class editUserProfileTest {
 
     @Test
     public void onCreate() {
@@ -15,12 +15,21 @@ public class LoginActivityTest {
         if(isTrue==true || isTrue==false){
             assertNotNull(isTrue);
         }
+    }
 
+    @Test
+    public void change() {
+        Claim_Form claim_form=new Claim_Form();
+
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
+        }
 
     }
 
     @Test
-    public void onBackPressed() {
+    public void removeElement() {
 
         Claim_Form claim_form=new Claim_Form();
 
@@ -31,7 +40,7 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void onClick() {
+    public void addCourse() {
 
         Claim_Form claim_form=new Claim_Form();
 

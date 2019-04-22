@@ -1,8 +1,5 @@
 package com.example.projectgamma;
 
-import android.widget.Button;
-import android.widget.TextView;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,6 +8,7 @@ public class RegisterActivityTest {
 
     @Test
     public void onCreate() {
+
         /*RegisterActivity registerActivity=new RegisterActivity();
         Button button=(Button) registerActivity.findViewById(R.id.test);
         assertNotNull(button);
@@ -24,11 +22,11 @@ public class RegisterActivityTest {
         RegisterActivity registerActivity=new RegisterActivity();
         String testName= registerActivity.name="Marubini";
         assertNotNull(testName);
-
     }
 
     @Test
     public void onItemSelected() {
+
         Claim_Form claim_form=new Claim_Form();
 
         boolean isTrue=claim_form.check;
@@ -39,6 +37,7 @@ public class RegisterActivityTest {
 
     @Test
     public void onNothingSelected() {
+
         Claim_Form claim_form=new Claim_Form();
 
         boolean isTrue=claim_form.check;
@@ -49,7 +48,8 @@ public class RegisterActivityTest {
 
     @Test
     public void register() {
-       /* RegisterActivity registerActivity=new RegisterActivity();
+
+        /* RegisterActivity registerActivity=new RegisterActivity();
         boolean isTrue=registerActivity.validate();
 
         assertNotNull(isTrue);*/
@@ -65,11 +65,11 @@ public class RegisterActivityTest {
         boolean True=true;
 
         assertNotNull(True);
-
     }
 
     @Test
     public void onSignupSuccess() {
+
         RegisterActivity registerActivity=new RegisterActivity();
 
         /*TextView textView=(TextView) registerActivity.findViewById(R.id.name_label);
@@ -99,6 +99,7 @@ public class RegisterActivityTest {
 
     @Test
     public void validate() {
+
         RegisterActivity registerActivity=new RegisterActivity();
         boolean isTrue=true;
 
@@ -113,6 +114,7 @@ public class RegisterActivityTest {
 
     @Test
     public void initialize() {
+
         Claim_Form claim_form=new Claim_Form();
 
         boolean isTrue=claim_form.check;

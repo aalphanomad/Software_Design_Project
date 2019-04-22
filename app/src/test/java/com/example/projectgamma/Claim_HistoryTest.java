@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SecondFragmentTest {
+public class Claim_HistoryTest {
 
     @Test
     public void onCreate() {
@@ -31,20 +31,15 @@ public class SecondFragmentTest {
     @Test
     public void onNavigationItemSelected() {
 
-        SecondFragment secondFragment=new SecondFragment();
-
+        RegisterActivity registerActivity=new RegisterActivity();
         boolean isTrue=true;
-        assertNotNull(isTrue);
-        /*Button button=(Button) secondFragment.findViewById(R.id.MyCourses);
-        Button button1=(Button) secondFragment.findViewById(R.id.MySchedule);
-        Button button2=(Button) secondFragment.findViewById(R.id.Claim);
-        Button button3=(Button) secondFragment.findViewById(R.id.settings);
-        Button button4=(Button) secondFragment.findViewById(R.id.Logout);
 
-        assertNotNull(button);
-        assertNotNull(button1);
-        assertNotNull(button2);
-        assertNotNull(button3);
-        assertNotNull(button4);*/
+        assertNotNull(isTrue);
+
+        String testName= registerActivity.name="Marubini";
+        assertEquals("Marubini",testName);
+
+        String testPass= registerActivity.password="953344";
+        assertEquals("953344",testPass);
     }
 }

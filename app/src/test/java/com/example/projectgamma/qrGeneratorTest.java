@@ -4,24 +4,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class LoginActivityTest {
+public class qrGeneratorTest {
 
     @Test
     public void onCreate() {
-
-        Claim_Form claim_form=new Claim_Form();
-
-        boolean isTrue=claim_form.check;
-        if(isTrue==true || isTrue==false){
-            assertNotNull(isTrue);
-        }
-
-
-    }
-
-    @Test
-    public void onBackPressed() {
-
         Claim_Form claim_form=new Claim_Form();
 
         boolean isTrue=claim_form.check;
@@ -31,8 +17,17 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void onClick() {
+    public void generate() {
+        Claim_Form claim_form=new Claim_Form();
 
+        boolean isTrue=claim_form.check;
+        if(isTrue==true || isTrue==false){
+            assertNotNull(isTrue);
+        }
+    }
+
+    @Test
+    public void doneGen() {
         Claim_Form claim_form=new Claim_Form();
 
         boolean isTrue=claim_form.check;

@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
      ConnectivityManager conMgr;
      NetworkInfo activeNetwork;
 
-    //boolean valid=true;
+
     EditText UsernameEt, PasswordEt;
 
     @Override
