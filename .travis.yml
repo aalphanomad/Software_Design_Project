@@ -15,7 +15,8 @@ before_install:
 script:
     - ls
     - ./gradlew assembleDebug
-    - ./gradlew createDebugCoverageReport
+    #- ./gradlew createDebugCoverageReport
+    - ./gradlew connectedCheck
     
     
 after_success:
