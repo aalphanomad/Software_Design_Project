@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     TextView name_label;
     Button Claims;
-    Button Report;
+    Button Upload;
     String name;
     String stud_num;
 
@@ -77,11 +77,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        Report = (Button) findViewById(R.id.Report_Button);
-        Log.d("LOOK HERE", "onCreate: " + Report.toString());
-        Report.setOnClickListener(new View.OnClickListener() {
+        Upload = findViewById(R.id.Upload_but);
+        Upload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
+                Intent i = new Intent(HomeActivity.this, upload_transcript.class);
+                HomeActivity.this.startActivity(i);
+            }
+        });
+
+        setNavigationViewListener();
 
                     // we obtain the url of the pdf report
                     String[] params = {"PDF", stud_num};
