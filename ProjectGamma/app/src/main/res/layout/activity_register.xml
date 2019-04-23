@@ -72,7 +72,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="111dp"
-            android:layout_marginTop="801dp"
+            android:layout_marginTop="808dp"
             android:layout_marginEnd="129dp"
             android:layout_marginBottom="0dp"
             android:onClick="onClick"
@@ -275,8 +275,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="752dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginTop="844dp"
+            android:layout_marginEnd="20dp"
             android:textSize="12sp" />
 
         <TextView
@@ -298,6 +298,17 @@
             android:layout_marginTop="663dp"
             android:layout_marginEnd="116dp"
             android:textColor="#ff0000" />
+
+        <Button
+            android:text="Upload Transcript"
+            android:id="@+id/upload_but"
+            android:layout_width="391dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="772dp"
+            android:layout_marginEnd="15dp"
+            android:textSize="12sp"/>
 
 
 

@@ -86,28 +86,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
 
         setNavigationViewListener();
-
-                    // we obtain the url of the pdf report
-                    String[] params = {"PDF", stud_num};
-                    String download_url = new BackgroundWorker(HomeActivity.this).doInBackground(params);
-                    Log.d("URL", "onClick: " + download_url);
-                    // we create a new intent which receives the url and opens it in the browser
-                    // where the user can then download it
-                    // we do this since it is easier than managing the downloading and viewing ourselves
-                    Intent browser_intent = new Intent(Intent.ACTION_VIEW, Uri.parse(download_url));
-                    startActivity(browser_intent);
-                }
-                catch (
-                    ActivityNotFoundException e) {
-                    Toast.makeText(HomeActivity.this, "No application can handle this request."
-                            + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
-        setNavigationViewListener();
     }
 //Ensures you cannot go back to the login page when you are on the Home Page
     public void onBackPressed() {
