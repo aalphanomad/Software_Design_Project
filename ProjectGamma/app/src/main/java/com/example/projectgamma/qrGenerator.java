@@ -16,6 +16,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import static com.example.projectgamma.qrGenerator.Global.course;
@@ -28,7 +29,7 @@ import static com.example.projectgamma.qrGenerator.Global.endTime;
 
 public class qrGenerator extends AppCompatActivity {
 
-    //A Global class which makes it veryeasy to get and set the information of the user such as the
+    //A Global class which makes it very easy to get and set the information of the user such as the
     //users name,student number,courses tutoring,the date,etc
 
     public static class Global{
@@ -38,31 +39,50 @@ public class qrGenerator extends AppCompatActivity {
         public static String date;
         public static String venue;
         public static String startTime, endTime;
+        public static String[] get_courses;
+        public static String role;
 
 
         //Get functions
         public static String GetName() {
             return name;
         }
-            public static String GetStudent_Num(){
-                return student_num;
-            }
-            public static String GetCourse(){
-                return course;
-            }
-            public static String GetDate(){
-                return date;
-            }
-            public static String GetVenue(){
-                return venue;
-            }
+        public static String GetStudent_Num(){
+            return student_num;
+        }
+        public static String GetCourse(){
+            return course;
+        }
+        public static String[] Get_Courses(){
+            return get_courses;
+        }
+        public static String GetVenue(){
+            return venue;
+        }
         public static String GetStartTime(){
             return startTime;
         }
         public static String GetEndTime(){
             return endTime;
         }
-            //Set functions
+        public static String GetRole(){return role;}
+        public static String[] formatter(String[] arr){
+            System.out.println("Length "+ Arrays.asList(arr));
+
+            if(arr.length!=0) {
+                arr[0] = arr[0].substring(1);
+                arr[arr.length - 1] = arr[arr.length - 1].substring(0, arr[arr.length - 1].length() - 1);
+
+                for (int i = 0; i < arr.length; i++) {
+                    arr[i] = arr[i].substring(1, arr[i].length() - 1);
+                }
+                return arr;
+            }
+            else{
+                return arr;
+            }
+        }
+        //Set functions
         public static void setName(String name){
             Global.name=name;
         }
@@ -72,8 +92,8 @@ public class qrGenerator extends AppCompatActivity {
         public static void setCourse(String course){
             Global.course=course;
         }
-        public static void setDate(String date){
-            Global.date=date;
+        public static void setGet_courses(String[] courses){
+            Global.get_courses=courses;
         }
         public static void setVenue(String venue){
             Global.venue=venue;
@@ -84,6 +104,7 @@ public class qrGenerator extends AppCompatActivity {
         public static void setEndTime(String endTime){
             Global.endTime=endTime;
         }
+        public static void setRole(String role){Global.role=role;}
     }
 
 
@@ -103,14 +124,14 @@ public class qrGenerator extends AppCompatActivity {
 
         //Gets the current date
         Calendar calender = Calendar.getInstance();
-         currentDate = DateFormat.getDateInstance().format(calender.getTime());
+        currentDate = DateFormat.getDateInstance().format(calender.getTime());
 //Assigns components(textviews) to variables
-valueCourse=qrGenerator.Global.GetCourse();
-valueName=qrGenerator.Global.GetName();
-valueStud_num=qrGenerator.Global.GetStudent_Num();
-valueVenue=qrGenerator.Global.GetVenue();
-valueStartTime=qrGenerator.Global.GetStartTime();
-valueEndTime=qrGenerator.Global.GetEndTime();
+        valueCourse=qrGenerator.Global.GetCourse();
+        valueName=qrGenerator.Global.GetName();
+        valueStud_num=qrGenerator.Global.GetStudent_Num();
+        valueVenue=qrGenerator.Global.GetVenue();
+        valueStartTime=qrGenerator.Global.GetStartTime();
+        valueEndTime=qrGenerator.Global.GetEndTime();
 
         resultTV0 = (TextView)findViewById(R.id.Course_tv);
         resultTV1 = (TextView)findViewById(R.id.Name_tv);
@@ -151,16 +172,18 @@ valueEndTime=qrGenerator.Global.GetEndTime();
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
         try {
-            String type="booking" ;
-//Displays a Toast if the Confirmation is successful
-            //Toast.makeText(this, "Confirmation Complete", Toast.LENGTH_LONG).show();
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-            backgroundWorker.execute(type, valueName, valueStud_num, valueCourse,currentDate, valueVenue,valueStartTime,valueEndTime);
 
 
+            ArrayList data=new ArrayList();
+            data.add("verify");
+            data.add(valueName);
+            data.add(valueStud_num);
+            data.add(valueCourse);
+            data.add(currentDate);
+            data.add(valueVenue);
 
 
-            BitMatrix bitMatrix = multiFormatWriter.encode("test", BarcodeFormat.QR_CODE, 500, 500);
+            BitMatrix bitMatrix = multiFormatWriter.encode(data.toString(), BarcodeFormat.QR_CODE, 500, 500);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             imageView.setImageBitmap(bitmap);

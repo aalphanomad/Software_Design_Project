@@ -1,6 +1,5 @@
 package com.example.projectgamma;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -73,9 +72,6 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
                 sb.append(line + "\n");
             result = sb.toString();
             is.close();
-            System.out.print("Here is the data");
-            System.out.print(result);
-
         } catch (Exception e) {
             System.out.print("Error 2");
         }
@@ -107,22 +103,22 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         System.out.println("Testing"+item.getItemId());
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
-                Intent myIntent = new Intent(SecondFragment.this, FirstFragment.class);
+            case R.id.Scan_QR: {
+                Intent myIntent = new Intent(SecondFragment.this, Claim_History.class);
                 SecondFragment.this.startActivity(myIntent);
                 break;
             }
-            case R.id.MySchedule: {
+            case R.id.View_Tutors: {
                 Intent myIntent = new Intent(SecondFragment.this, SecondFragment.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
 
             case R.id.Claim: {
-                Intent myIntent = new Intent(SecondFragment.this, FourthFragment.class);
+                Intent myIntent = new Intent(SecondFragment.this, Claim_Form.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
-            case R.id.settings: {
-                Intent myIntent = new Intent(SecondFragment.this, FifthFragment.class);
+            case R.id.user_profile: {
+                Intent myIntent = new Intent(SecondFragment.this, ForthFragment.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
             case R.id.Logout: {
@@ -142,5 +138,7 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
         TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
         navUsername.setText(GetName());
         navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+        navigationView.setNavigationItemSelectedListener( SecondFragment.this);
+
     }
     }

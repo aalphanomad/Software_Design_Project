@@ -36,24 +36,27 @@
         <activity
             android:name=".LoginActivity"
             android:label="Sign In" />
-        <activity
-            android:name=".mainQR"
-            android:label="Home Screen" />
-        <activity
-            android:name=".qrScanner"
-            android:label="Scan QR Code" />
-        <activity
-            android:name=".qrGenerator"
-            android:label="Confirm Your Claim Form" />
-        <activity
-            android:name=".Claim_History"
-            android:label="Claim Form History" />
-        <activity android:name=".MySchedule" />
-        <activity
-            android:name=".Claim_Form"
-            android:label="Claim Form" />
-        <activity android:name=".ForthFragment" />
-        <activity android:name=".Validate" />
+
+        <activity android:name="com.example.projectgamma.LecturerHome"
+            android:label="Home Screen"/>
+        <activity android:name="com.example.projectgamma.qrScanner"
+            android:label="Scan QR Code"/>
+        <activity android:name="com.example.projectgamma.qrGenerator"
+            android:label="Confirm Your Claim Form"/>
+        <activity android:name="com.example.projectgamma.Claim_History"
+        android:label="Claim Form History"/>
+
+        <activity android:name="com.example.projectgamma.MySchedule" />
+        <activity android:name="com.example.projectgamma.Claim_Form"
+            android:label="Claim Form"/>
+        <activity android:name="com.example.projectgamma.ForthFragment" />
+        <activity android:name="com.example.projectgamma.Validate" />
+        <activity android:name="com.example.projectgamma.MyTutors" />
+        <activity android:name="com.example.projectgamma.editUserProfile" />
+        <activity android:name="com.example.projectgamma.adminViewCourses" />
+        <activity android:name="com.example.projectgamma.adminViewTutors" />
+
+
     </application>
 
 </manifest>

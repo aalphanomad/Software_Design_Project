@@ -144,7 +144,6 @@
             android:text="Confirm Password" />
 
 
-        <!--Can Student numbers have alphabets???-->
         <EditText
             android:id="@+id/SN_TB"
             android:layout_width="366dp"
@@ -172,15 +171,15 @@
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="480dp"
-            android:layout_marginEnd="68dp"
-            android:text="Are you a Honours Research Candidate?" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="482dp"
+            android:layout_marginEnd="0dp"
+            android:text="Are you on Postgraduate Merit Award(PMA)?" />
 
 
         <CheckBox

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -106,8 +108,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String course = params[3];
                 String date = params[4];
                 String venue = params[5];
-                venue=venue.substring(0,venue.length()-1);
-                System.out.println("Venue"+venue);
+                venue = venue.substring(0, venue.length() - 1);
 
                 //The URL below is used to send data to the server in order to login
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/verify.php";
@@ -130,29 +131,20 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String venue = params[5];
                 String startTime = params[6];
                 String endTime = params[7];
-                String[]test1= startTime.split(":");
-                String[]test2=endTime.split(":");
-                if(test1[0].length()==1){
-                    startTime="0"+startTime;
+                String[] test1 = startTime.split(":");
+                String[] test2 = endTime.split(":");
+                if (test1[0].length() == 1) {
+                    startTime = "0" + startTime;
                 }
-                if(test2[0].length()==1){
-                    endTime="0"+endTime;
+                if (test2[0].length() == 1) {
+                    endTime = "0" + endTime;
                 }
                 String valid = "0";
-                System.out.println("Pencil " + name + " " + student_num + " " + course + " " + date + " " + venue + " " + startTime + " " + endTime);
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
 
-            } else if (type.equals("fetching")) {
-                String name = params[1];
-                String student_num = params[2];
-
-                //The URL to send data to the server when creating a booking/claim form
-                login_url = "http://lamp.ms.wits.ac.za/~s1601745/fetching.php";
-                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
-
-            } else if (type.equals("PDF")) {
+            }  else if (type.equals("PDF")) {
                 String student_num = params[1];
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/select_booking.php?";
@@ -163,6 +155,17 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/get_courses.php?";
                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8");
+
+            } else if (type.equals("edit courses")) {
+                String student_num = params[1];
+                String course1 = params[2];
+                String course2 = params[3];
+                String course3 = params[4];
+                String course4 = params[5];
+                String course5 = params[6];
+
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/update_details.php?";
+                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8") + "&" + URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
 
             }
 
@@ -231,9 +234,11 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     String role = ja.getString("role");
                     qrGenerator.Global.setName(name);
                     qrGenerator.Global.setStudent_num(stud_num);
+                    qrGenerator.Global.setRole(role);
 
 
-                    //If role="0",implies the the user a not a lecturer(therefore a tutor)
+
+                    //If role="0",implies the the user a not a tutor(therefore a tutor)
                     if (role.equals("0")) {
                         Intent i = new Intent(context, HomeActivity.class);
                         //Send the name and student number of the student to the home Activity
@@ -242,8 +247,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
                         context.startActivity(i);
                     } else {
-                        //If the role is a lecturer(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
-                        Intent i = new Intent(context, mainQR.class);
+                        //If the role is a tutor(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
+                        Intent i = new Intent(context, LecturerHome.class);
                         //Send the name to the lecturers home screen
                         i.putExtra("name", name);
                         qrGenerator.Global.setName(name);
@@ -254,18 +259,19 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             } else if (type == "verify") {
                 //Converts the result from the server to JSON format
                 JSONObject ja = new JSONObject(result);
-                System.out.println("Table " + ja.get("result").toString());
+
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Confirmation Successful", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context, mainQR.class);
+                    Intent i = new Intent(context, LecturerHome.class);
                     context.startActivity(i);
                 } else {
                     Toast.makeText(context, "Confirmation Unsuccessful", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(context, qrScanner.class);
+                    context.startActivity(i);
 
                 }
             } else if (type == "booking") {
                 JSONObject ja = new JSONObject(result);
-                System.out.println("The result " + ja.get("result").toString());
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(context, qrGenerator.class);
@@ -276,40 +282,17 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     context.startActivity(i);
 
                 }
-            } else if (type == "fetching") {
+            } else if (type.equals("get courses")) {
+                Log.i("tagconvertstr", "[" + result + "]");
+
                 JSONObject ja = new JSONObject(result);
-
-                String[] dates = ja.getString("dates").split(",");
-                String[] courses = ja.getString("courses").split(",");
-                String[] start_time = ja.getString("start_time").split(",");
-                String[] end_time = ja.getString("end_time").split(",");
-                String[] venue = ja.getString("venue").split(",");
-                String[] valid = ja.getString("valid").split(",");
-
-                Intent intent1 = new Intent("INTENT_1").putExtra("dates", dates);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent1);
-
-                Intent intent2 = new Intent("INTENT_2").putExtra("courses", courses);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent2);
-
-                Intent intent3 = new Intent("INTENT_3").putExtra("start_time", start_time);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent3);
-
-                Intent intent4 = new Intent("INTENT_4").putExtra("end_time", end_time);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent4);
-
-                Intent intent5 = new Intent("INTENT_5").putExtra("venue", venue);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent5);
-
-                Intent intent6 = new Intent("INTENT_6").putExtra("valid", valid);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent6);
-
-
-            }else if(type.equals("get courses")){
-                JSONObject ja = new JSONObject(result);
-                String []courses = ja.getString("result").split(",");
+                String[] courses = ja.getString("result").split(",");
                 Intent intent7 = new Intent("INTENT_7").putExtra("get courses", courses);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent7);
+            } else if (type.equals("edit courses")) {
+                Log.i("tagconvertstr", "[" + result + "]");
+                Intent i = new Intent(context, HomeActivity.class);
+                context.startActivity(i);
             }
         } catch (JSONException e) {
             e.printStackTrace();

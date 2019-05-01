@@ -10,10 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,7 +54,6 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.second_layout);
         Intent i = getIntent();
         String id = i.getStringExtra("user_id");
-        System.out.println(id);
         mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
@@ -87,8 +84,6 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
                 sb.append(line+"\n");
             result=sb.toString();
             is.close();
-            System.out.print("Here is the data");
-            System.out.print(result);
 
         }catch(Exception e){
             System.out.print("Error 2");
@@ -116,23 +111,23 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.println("Testing"+item.getItemId());
         switch (item.getItemId()) {
-            case R.id.MyCourses: {
-                Intent myIntent = new Intent(MySchedule.this, FirstFragment.class);
+            case R.id.Claim_History: {
+                Intent myIntent = new Intent(MySchedule.this, Claim_History.class);
                 MySchedule.this.startActivity(myIntent);
                 break;
             }
-            case R.id.MySchedule: {
+            case R.id.My_Schedule: {
                 Intent myIntent = new Intent(MySchedule.this, SecondFragment.class);
-                MySchedule.this.startActivity(myIntent);                break;
+                MySchedule.this.startActivity(myIntent);
+                break;
             }
             case R.id.Claim: {
-                Intent myIntent = new Intent(MySchedule.this, FourthFragment.class);
+                Intent myIntent = new Intent(MySchedule.this, Claim_Form.class);
                 MySchedule.this.startActivity(myIntent);                break;
             }
-            case R.id.settings: {
-                Intent myIntent = new Intent(MySchedule.this, FifthFragment.class);
+            case R.id.user_profile: {
+                Intent myIntent = new Intent(MySchedule.this, ForthFragment.class);
                 MySchedule.this.startActivity(myIntent);                break;
             }
             case R.id.Logout: {
@@ -152,5 +147,7 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
         TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
         navUsername.setText(GetName());
         navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+        navigationView.setNavigationItemSelectedListener( MySchedule.this);
+
     }
 }

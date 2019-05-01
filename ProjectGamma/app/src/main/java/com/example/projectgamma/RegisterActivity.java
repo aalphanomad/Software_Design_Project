@@ -107,15 +107,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         });
 
 
-        uploadbtn = findViewById(R.id.upload_but);
-        uploadbtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(RegisterActivity.this, upload_transcript.class);
-                RegisterActivity.this.startActivity(i);
-            }
-        });
-
-
         Thread refresh = new Thread() {
             @Override
             public void run() {
