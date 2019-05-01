@@ -85,7 +85,7 @@ class Upload extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        String url_path = "http://lamp.ms.wits.ac.za/~s1601745/upload_transcript.php";
+        String url_path = "http://lamp.ms.wits.ac.za/~s1601745/upload_transcript.php?student_num=" + qrGenerator.Global.GetStudent_Num();;
         HttpURLConnection conn = null;
 
         int maxBufferSize = 1024;
