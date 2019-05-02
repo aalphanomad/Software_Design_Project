@@ -1,6 +1,8 @@
 package com.example.projectgamma;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -116,6 +118,31 @@ public class adminViewTutors extends AppCompatActivity {
                 adapterOfTutors = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tutors);
                 listview = findViewById(R.id.lv_tutors);
                 listview.setAdapter(adapterOfTutors);
+
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Toast.makeText(adminViewTutors.this, "Please wait a moment.", Toast.LENGTH_LONG).show();
+                        // we obtain the url of the pdf report
+                        final String student_no = qrGenerator.Global.GetStudent_Num();
+                        String[] params = {"transcript", student_no};
+                        String download_url = new BackgroundWorker(adminViewTutors.this).doInBackground(params);
+                        Log.d("URL", "onClick: " + download_url);
+                        // we create a new intent which receives the url and opens it in the browser
+                        // where the user can then download it
+                        // we do this since it is easier than managing the downloading and viewing ourselves
+                        try
+                        {
+                            Intent browser_intent = new Intent(Intent.ACTION_VIEW, Uri.parse(download_url));
+                            startActivity(browser_intent);
+                        }
+                        catch (Exception e)
+                        {
+                            Toast.makeText(getApplicationContext(),"We can't seem to find that users transcript. Sorry",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
             }
             else{
                 ImageView imgView=(ImageView) findViewById(R.id.imageView5);
