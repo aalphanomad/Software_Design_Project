@@ -140,11 +140,16 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
                 post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
 
-            }  else if (type.equals("PDF")) {
+            } else if (type.equals("PDF")) {
                 String student_num = params[1];
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/select_booking.php?";
                 post_data = "table=BOOKINGS&target=*&student_num=" + student_num;
+            } else if (type.equals("transcript")) {
+                String student_num = params[1];
+                //The URL to send data to the server when creating a booking/claim form
+                login_url = "http://lamp.ms.wits.ac.za/~s1601745/download_transcript.php?";
+                post_data = "student_num=" + student_num;
             } else if (type.equals("get courses")) {
                 String name = params[1];
                 String student_num = params[2];

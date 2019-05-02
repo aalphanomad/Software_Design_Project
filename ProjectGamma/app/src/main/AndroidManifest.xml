@@ -55,6 +55,7 @@
         <activity android:name="com.example.projectgamma.editUserProfile" />
         <activity android:name="com.example.projectgamma.adminViewCourses" />
         <activity android:name="com.example.projectgamma.adminViewTutors" />
+        <activity android:name="com.example.projectgamma.upload_transcript" />
 
 
     </application>

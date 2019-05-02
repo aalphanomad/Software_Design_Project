@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     String[] get_courses1,get_courses2;
     ArrayList get_courses3=new ArrayList();
     String []str;
+    Button Upload;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("student_num", stud_num);
                 HomeActivity.this.startActivity(i);
 
+            }
+        });
+
+        Upload = findViewById(R.id.Upload_but);
+        Upload.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, upload_transcript.class);
+                HomeActivity.this.startActivity(i);
             }
         });
 

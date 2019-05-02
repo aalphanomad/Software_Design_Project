@@ -69,7 +69,7 @@ public class qrGenerator extends AppCompatActivity {
         public static String[] formatter(String[] arr){
             System.out.println("Length "+ Arrays.asList(arr));
 
-            if(arr.length!=0) {
+            if(!arr[0].equals("[]")) {
                 arr[0] = arr[0].substring(1);
                 arr[arr.length - 1] = arr[arr.length - 1].substring(0, arr[arr.length - 1].length() - 1);
 
