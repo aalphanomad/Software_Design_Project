@@ -124,7 +124,7 @@ public class adminViewTutors extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Toast.makeText(adminViewTutors.this, "Please wait a moment.", Toast.LENGTH_LONG).show();
                         // we obtain the url of the pdf report
-                        final String student_no = qrGenerator.Global.GetStudent_Num();
+                        final String student_no = listview.getItemAtPosition(position).toString();;
                         String[] params = {"transcript", student_no};
                         String download_url = new BackgroundWorker(adminViewTutors.this).doInBackground(params);
                         Log.d("URL", "onClick: " + download_url);
@@ -139,6 +139,8 @@ public class adminViewTutors extends AppCompatActivity {
                         catch (Exception e)
                         {
                             Toast.makeText(getApplicationContext(),"We can't seem to find that users transcript. Sorry",Toast.LENGTH_SHORT).show();
+                            Log.d("URL", "onItemClick: " + download_url);
+                            Log.d("ERROR", "onItemClick: " + e.toString());
                         }
 
                     }

@@ -150,10 +150,11 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/select_booking.php?";
                 post_data = "table=BOOKINGS&target=*&student_num=" + student_num;
             } else if (type.equals("transcript")) {
-                String student_num = params[1];
+                String name = params[1];
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/download_transcript.php?";
-                post_data = "student_num=" + student_num;
+                post_data = "name=" + URLEncoder.encode(name, "UTF-8");
+                Log.d("BGWRKR", "doInBackground: " + login_url + post_data);
             } else if (type.equals("get courses")) {
                 String name = params[1];
                 String student_num = params[2];
