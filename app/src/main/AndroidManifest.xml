@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.projectgamma">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.hardware.camera" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="AlphaNomad"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:hardwareAccelerated="true"
+            android:label="Home Screen" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Register"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="Sign In" />
+
+        <activity android:name="com.example.projectgamma.LecturerHome"
+            android:label="Home Screen"/>
+        <activity android:name="com.example.projectgamma.qrScanner"
+            android:label="Scan QR Code"/>
+        <activity android:name="com.example.projectgamma.qrGenerator"
+            android:label="Confirm Your Claim Form"/>
+        <activity android:name="com.example.projectgamma.Claim_History"
+        android:label="Claim Form History"/>
+
+        <activity android:name="com.example.projectgamma.MySchedule" />
+        <activity android:name="com.example.projectgamma.Claim_Form"
+            android:label="Claim Form"/>
+        <activity android:name="com.example.projectgamma.ForthFragment" />
+        <activity android:name="com.example.projectgamma.Validate" />
+        <activity android:name="com.example.projectgamma.MyTutors" />
+        <activity android:name="com.example.projectgamma.editUserProfile" />
+
+
+    </application>
+
+</manifest>
