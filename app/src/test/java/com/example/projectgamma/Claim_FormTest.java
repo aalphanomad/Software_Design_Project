@@ -34,9 +34,24 @@ public class Claim_FormTest {
         Claim_Form claim_form=new Claim_Form();
 
         boolean isTrue=claim_form.check;
-        if(isTrue==true || isTrue==false){
-            assertNotNull(isTrue);
-        }
+
+        String date1="10:30";
+        String date2="22:20";
+
+        boolean result = claim_form.checktimings(date1, date2);
+        assert(result==true);
+
+        String date3="10:30";
+        String date4="9:30";
+
+        boolean result2 = claim_form.checktimings(date3, date4);
+        assert(result2==false);
+
+        String date5="201as";
+        String date6="201asdas8-01-01";
+
+        boolean result3 = claim_form.checktimings(date5, date6);
+        assert(result3==false);
     }
 
     @Test
