@@ -27,7 +27,12 @@ before_install:
 
 script:
   - chmod +x gradlew
-  - ./gradlew connectedDebugAndroidTest
+  - ./gradlew generateDebugSources
+  - ./gradlew compileDebugSources
+  - ./gradlew createMockableJar
+  - ./gradlew compileDebugUnitTestSources
+  
+  #- ./gradlew connectedDebugAndroidTest
   #- ./gradlew build jacocoTestReport
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
   - android-wait-for-emulator
