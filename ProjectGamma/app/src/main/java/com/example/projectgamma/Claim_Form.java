@@ -10,12 +10,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -31,6 +34,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import static com.example.projectgamma.qrGenerator.Global.GetCourse;
@@ -39,7 +43,7 @@ import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 import static com.example.projectgamma.qrGenerator.Global.Get_Courses;
 import static java.lang.String.valueOf;
 
-public class Claim_Form extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class Claim_Form extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
 
     //Variable assignments
     ArrayList selectedItems = new ArrayList();
@@ -50,6 +54,9 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     private Spinner mySpinner;
     static int hour,minute;
     boolean check;
+    private List<String> activities;
+    String selected;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +70,16 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         Button button = findViewById(R.id.button);
         sel_Course = findViewById(R.id.Sel_Course);
         final String[] listItems =Get_Courses();
+        mySpinner = (Spinner) findViewById(R.id.Activity_Spinner);
+        mySpinner.setOnItemSelectedListener(this);
+        activities = new ArrayList<String>();
 
+        activities.add("Tutoring");
+        activities.add("Invigilating");
+        activities.add("Other");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, activities);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner.setAdapter(dataAdapter);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +97,8 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
                     public void onClick(DialogInterface dialogInterface, int i) {
                         topic = listItems[i].split(" ");
                         course = topic[0];
+                        sel_Course.setTextColor(Color.parseColor("#808080"));
+
                         //Displays the course selected
 
                         sel_Course.setText(course);
@@ -113,7 +131,9 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         }
         //Checks if a course has been selected
         if (topic[0] == null) {
+            sel_Course.setTextColor(Color.parseColor("#ff0000"));
             sel_Course.setText("Please Select a course");
+
             valid = false;
         }
 
@@ -139,6 +159,15 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
 
         return valid;
+
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        selected = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
@@ -243,7 +272,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
 
-            backgroundWorker.execute("booking", name, stud_num, course, currentDate, venue, startTime, endTime);
+            backgroundWorker.execute("booking", name, stud_num, course, currentDate, venue, startTime, endTime,selected);
 
 
         }

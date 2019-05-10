@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,8 @@ public class Validate extends AppCompatActivity {
 
     private ImageView imageView;
     public static TextView  resultTV0, resultTV1, resultTV2, resultTV4, resultTV5, resultTV6;
-    String valueCourse,valueName,valueStud_num, valueVenue,valueDuration,valueDate;
+    String valueCourse,valueName,valueStud_num, valueVenue,valueDuration,valueDate,status;
+    Button generate;
 
     String currentDate;
 
@@ -48,6 +50,7 @@ public class Validate extends AppCompatActivity {
         valueDate=bundle.getString("date");
         valueVenue=bundle.getString("venue");
         valueDuration=bundle.getString("duration");
+        status=bundle.getString("status");
 
 
         resultTV0 = (TextView)findViewById(R.id.Course_tv);
@@ -56,6 +59,7 @@ public class Validate extends AppCompatActivity {
         resultTV4 = (TextView)findViewById(R.id.Date_tv);
         resultTV5 = (TextView)findViewById(R.id.Venue_tv);
         resultTV6 = (TextView)findViewById(R.id.Dur_tv);
+        generate=(Button)findViewById(R.id.Generate_but);
 
         //Gets the name,student_num,course selected,venue and duration
 
@@ -67,13 +71,9 @@ public class Validate extends AppCompatActivity {
         resultTV5.setText("Venue: "+valueVenue);
         resultTV6.setText("Time: "+valueDuration);
 
-
-
-
-
-
-
-
+if(!status.equals("Status: Not Validated")){
+    generate.setVisibility(View.INVISIBLE);
+}
 
     }
 

@@ -127,6 +127,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String venue = params[5];
                 String startTime = params[6];
                 String endTime = params[7];
+                String activity=params[8];
                 String[] test1 = startTime.split(":");
                 String[] test2 = endTime.split(":");
                 if (test1[0].length() == 1) {
@@ -138,7 +139,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 String valid = "0";
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/booking.php";
-                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&" + URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
+                post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" + URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course", "UTF-8") + "=" + URLEncoder.encode(course, "UTF-8") + "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8") + "&" + URLEncoder.encode("venue", "UTF-8") + "=" + URLEncoder.encode(venue, "UTF-8") + "&" + URLEncoder.encode("chkStartTime", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&" + URLEncoder.encode("chkEndTime", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8") + "&"+ URLEncoder.encode("activity", "UTF-8") + "=" + URLEncoder.encode(activity, "UTF-8") +"&"+ URLEncoder.encode("valid", "UTF-8") + "=" + URLEncoder.encode(valid, "UTF-8");
 
             } else if (type.equals("PDF")) {
                 String student_num = params[1];
@@ -272,6 +273,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
                 }
             } else if (type == "booking") {
+                Log.i("tagconvertstr", "[" + result + "]");
+
                 JSONObject ja = new JSONObject(result);
                 if (ja.get("result").toString().equals("0")) {
                     Toast.makeText(context, "Booking Successful", Toast.LENGTH_LONG).show();

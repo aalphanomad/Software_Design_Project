@@ -173,6 +173,7 @@ if(Arrays.toString(dates).contains("DATE")==true){
                     i.putExtra("course", ((TextView) view.findViewById(R.id.subjectHistory)).getText().toString());
                     i.putExtra("duration", ((TextView) view.findViewById(R.id.durationHistory)).getText().toString());
                     i.putExtra("venue", ((TextView) view.findViewById(R.id.venueHistory)).getText().toString());
+                    i.putExtra("status", ((TextView) view.findViewById(R.id.status)).getText().toString());
                     startActivity(i);
                 }
             });

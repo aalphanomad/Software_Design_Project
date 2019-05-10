@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Claims = findViewById(R.id.Scan_button);
+        Claims = findViewById(R.id.Activity_button);
         Claims.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, Claim_Form.class);

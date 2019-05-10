@@ -43,7 +43,7 @@ public class LecturerHome extends AppCompatActivity  implements NavigationView.O
         StrictMode.setThreadPolicy(policy);
         //sets the name label to the user's name
         dummy.setText(test.toUpperCase().charAt(0) +test.substring(1,test.length())+"!");
-        scan = findViewById(R.id.Scan_button);
+        scan = findViewById(R.id.Activity_button);
         if(role.equals("1")) {
             scan.setText("Scan QR Code");
             scan.setOnClickListener(new View.OnClickListener() {

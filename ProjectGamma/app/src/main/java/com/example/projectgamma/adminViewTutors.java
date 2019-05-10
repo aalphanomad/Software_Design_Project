@@ -125,11 +125,12 @@ public class adminViewTutors extends AppCompatActivity {
         Log.i("tagconvertstr", "[" + result + "]");
 
         JSONObject ja = new JSONObject(result);
-        lecturers = ja.getString("lecturers").split(",");
-        tutors = ja.getString("tutors").split(",");
-        tutors=qrGenerator.Global.formatter(tutors);
+            lecturers = ja.getString("lecturers").split(",");
+            tutors = ja.getString("tutors").split(",");
+            qrGenerator.Global.formatter(tutors);
+            qrGenerator.Global.formatter(lecturers);
         //the adapter initialised for our tutor array to show all lecturers of the specific course in the listview
-        if(lecturers!=null && tutors!=null) {
+        if(!lecturers[0].equals("[]") && !tutors[0].equals("[]")) {
             adapterOfLecturers = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lecturers);
             lecturers = qrGenerator.Global.formatter(lecturers);
             listview = findViewById(R.id.lv_lecturers);
