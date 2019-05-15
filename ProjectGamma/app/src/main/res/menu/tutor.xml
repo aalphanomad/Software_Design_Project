@@ -4,16 +4,16 @@
 xlmns:tools="http://schemas.android.com/tools"
     <group android:checkableBehavior="single">
 
-    <item android:id="@+id/Claim_History"
-        android:title="Claim Form History"
+    <item android:id="@+id/Activity_History"
+        android:title="Activity History"
         android:icon="@drawable/clock"/>
 
     <item android:id="@+id/My_Schedule"
         android:title="My Schedule"
         android:icon="@drawable/schedule"/>
 
-        <item android:id="@+id/Claim"
-        android:title="Claims Form"
+        <item android:id="@+id/Activity"
+        android:title="Create New Activity"
         android:icon="@drawable/claim_form"/>
 
     <item android:id="@+id/user_profile"

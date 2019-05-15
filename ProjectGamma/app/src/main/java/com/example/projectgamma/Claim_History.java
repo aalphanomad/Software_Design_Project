@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,8 +47,8 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
     InputStream is = null;
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
-    String[] dates, courses, start_time, end_time, venue, valid;
-    ListView listview;
+    String[] dates, courses, start_time, end_time, venue, valid,activity;
+    GridView gridView;
     String result, login_url;
     Button Report;
     TextView Message;
@@ -109,18 +110,20 @@ public class Claim_History extends AppCompatActivity implements NavigationView.O
 
         try {
             JSONObject ja = new JSONObject(result);
+            Log.i("tagconvertstr", "[" + result + "]");
+
             dates=ja.getString("dates").split(",");
             courses=ja.getString("courses").split(",");
             start_time=ja.getString("start_time").split(",");
             end_time=ja.getString("end_time").split(",");
             venue=ja.getString("venue").split(",");
             valid=ja.getString("valid").split(",");
+            activity=ja.getString("activity").split(",");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        listview = findViewById(R.id.lv);
-
+        gridView = findViewById(R.id.lv);
 if(Arrays.toString(dates).contains("DATE")==true){
             for (int i = 0; i < dates.length; i++) {
                 dates[i] = dates[i].substring(9, dates[i].length() - 2);
@@ -129,6 +132,7 @@ if(Arrays.toString(dates).contains("DATE")==true){
                 valid[i] = valid[i].substring(10, valid[i].length() - 2);
                 start_time[i] = start_time[i].substring(15, start_time[i].length() - 2);
                 end_time[i] = end_time[i].substring(13, end_time[i].length() - 2);
+                activity[i] = activity[i].substring(13, activity[i].length() - 2);
 
             }
 
@@ -151,21 +155,23 @@ if(Arrays.toString(dates).contains("DATE")==true){
             end_time[0] = end_time[0].substring(1, end_time[0].length());
             end_time[end_time.length - 1] = end_time[end_time.length - 1].substring(0, end_time[end_time.length - 1].length() - 1);
 
+    activity[0] = activity[0].substring(1, activity[0].length());
+    activity[activity.length - 1] = activity[activity.length - 1].substring(0, activity[activity.length - 1].length() - 1);
 
             //call adapter class to take in our arrays
-            MyAdapter adapter = new MyAdapter(this, dates, courses, venue, start_time, end_time, valid);
-            listview.setAdapter(adapter);
+    MyAdapter adapter = new MyAdapter(this, dates, courses, venue, start_time, end_time, valid,activity);
+    gridView.setAdapter(adapter);
 
 
-            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String selected = ((TextView) view.findViewById(R.id.subjectHistory)).getText().toString();
-                    Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
-                }
-            });
+    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            String selected = ((TextView) view.findViewById(R.id.subjectHistory)).getText().toString();
+            Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
+        }
+    });
 
-            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent i = new Intent(getApplicationContext(), Validate.class);
@@ -174,6 +180,7 @@ if(Arrays.toString(dates).contains("DATE")==true){
                     i.putExtra("duration", ((TextView) view.findViewById(R.id.durationHistory)).getText().toString());
                     i.putExtra("venue", ((TextView) view.findViewById(R.id.venueHistory)).getText().toString());
                     i.putExtra("status", ((TextView) view.findViewById(R.id.status)).getText().toString());
+                    i.putExtra("activity", ((TextView) view.findViewById(R.id.activityHistory)).getText().toString());
                     startActivity(i);
                 }
             });
@@ -236,7 +243,7 @@ else{
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Claim_History: {
+            case R.id.Activity_History: {
                 Intent myIntent = new Intent(Claim_History.this, Claim_History.class);
                 Claim_History.this.startActivity(myIntent);
                 break;
@@ -247,13 +254,13 @@ else{
                 break;
             }
 
-            case R.id.Claim: {
+            case R.id.Activity: {
                 Intent myIntent = new Intent(Claim_History.this, Claim_Form.class);
                 Claim_History.this.startActivity(myIntent);
                 break;
             }
             case R.id.user_profile: {
-                Intent myIntent = new Intent(Claim_History.this, ForthFragment.class);
+                Intent myIntent = new Intent(Claim_History.this, ViewProfile.class);
                 Claim_History.this.startActivity(myIntent);
                 break;
             }

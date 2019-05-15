@@ -112,7 +112,7 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Claim_History: {
+            case R.id.Activity_History: {
                 Intent myIntent = new Intent(MySchedule.this, Claim_History.class);
                 MySchedule.this.startActivity(myIntent);
                 break;
@@ -122,12 +122,12 @@ public class MySchedule extends AppCompatActivity implements NavigationView.OnNa
                 MySchedule.this.startActivity(myIntent);
                 break;
             }
-            case R.id.Claim: {
+            case R.id.Activity: {
                 Intent myIntent = new Intent(MySchedule.this, Claim_Form.class);
                 MySchedule.this.startActivity(myIntent);                break;
             }
             case R.id.user_profile: {
-                Intent myIntent = new Intent(MySchedule.this, ForthFragment.class);
+                Intent myIntent = new Intent(MySchedule.this, ViewProfile.class);
                 MySchedule.this.startActivity(myIntent);                break;
             }
             case R.id.Logout: {

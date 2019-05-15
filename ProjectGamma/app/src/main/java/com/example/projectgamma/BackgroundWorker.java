@@ -36,7 +36,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         context = ctx;
     }
 
-
+String []Global;
     @Override
     protected String doInBackground(String... params) {
         //Determines whether the backgroundWorker is being implemented for a registration,logon or booking(String type)
@@ -46,13 +46,14 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         //The below is executed if we are trying to use BackgroundWorker for registering
         try {
             if (type.equals("reg")) {
-
+Global=params;
 //Specifies the URL in order to register
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/create.php/";
                 String name = params[1];
                 String stu_num = params[2];
                 String email = params[3];
                 String password = params[4];
+                System.out.println("THE STU NUM "+stu_num);
 
                 String course1;
                 String course2;
@@ -222,6 +223,22 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         try {
+            if(type=="reg"){
+                JSONObject ja = new JSONObject(result);
+                System.out.println("THE RESULT "+ja.get("result").toString());
+                if (ja.get("result").toString().equals("1")) {
+                    Toast.makeText(context, "This is a Duplicate Student Number", Toast.LENGTH_LONG).show();
+
+                }
+                else{
+                    Intent intent = new Intent(context, HomeActivity.class);
+//Sets the name and student number of the user
+                    qrGenerator.Global.setName(Global[1]);
+                    qrGenerator.Global.setStudent_num(Global[2]);
+                    context.startActivity(intent);
+                }
+                }
+
             if (type == "login") {
                 //Converts the result from the server to JSON format
 
@@ -248,9 +265,22 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         i.putExtra("stud_num", stud_num);
 
                         context.startActivity(i);
-                    } else {
+                    }
+
+
+                    else if (role.equals("1")){
                         //If the role is a tutor(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
-                        Intent i = new Intent(context, LecturerHome.class);
+                        Intent i = new Intent(context, MyTutors.class);
+                        //Send the name to the lecturers home screen
+                        i.putExtra("name", name);
+                        qrGenerator.Global.setName(name);
+                        qrGenerator.Global.setStudent_num(stud_num);
+                        context.startActivity(i);
+                    }
+
+                    else if (role.equals("2")){
+                        //If the role is a tutor(role="1",they will be directed to a homescreen which will allow them to scan QR Codes
+                        Intent i = new Intent(context, adminViewCourses.class);
                         //Send the name to the lecturers home screen
                         i.putExtra("name", name);
                         qrGenerator.Global.setName(name);
@@ -282,8 +312,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     context.startActivity(i);
                 } else {
                     Toast.makeText(context, "This is a duplicate claim! Please try again!", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context, Claim_Form.class);
-                    context.startActivity(i);
+
 
                 }
             } else if (type.equals("get courses")) {
@@ -294,7 +323,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 Intent intent7 = new Intent("INTENT_7").putExtra("get courses", courses);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent7);
             } else if (type.equals("edit courses")) {
-                Log.i("tagconvertstr", "[" + result + "]");
                 Intent i = new Intent(context, HomeActivity.class);
                 context.startActivity(i);
             }

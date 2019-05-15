@@ -113,12 +113,12 @@ public class SecondFragment extends AppCompatActivity implements NavigationView.
                 SecondFragment.this.startActivity(myIntent);                break;
             }
 
-            case R.id.Claim: {
+            case R.id.Activity: {
                 Intent myIntent = new Intent(SecondFragment.this, Claim_Form.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
             case R.id.user_profile: {
-                Intent myIntent = new Intent(SecondFragment.this, ForthFragment.class);
+                Intent myIntent = new Intent(SecondFragment.this, ViewProfile.class);
                 SecondFragment.this.startActivity(myIntent);                break;
             }
             case R.id.Logout: {

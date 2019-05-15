@@ -67,7 +67,7 @@ public class qrGenerator extends AppCompatActivity {
         }
         public static String GetRole(){return role;}
         public static String[] formatter(String[] arr){
-            System.out.println("Length "+ Arrays.asList(arr));
+
 
             if(!arr[0].equals("[]")) {
                 arr[0] = arr[0].substring(1);
@@ -76,6 +76,7 @@ public class qrGenerator extends AppCompatActivity {
                 for (int i = 0; i < arr.length; i++) {
                     arr[i] = arr[i].substring(1, arr[i].length() - 1);
                 }
+                System.out.println(Arrays.asList(arr));
                 return arr;
             }
             else{

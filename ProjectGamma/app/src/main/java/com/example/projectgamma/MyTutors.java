@@ -15,11 +15,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -51,11 +54,8 @@ public class MyTutors extends AppCompatActivity  implements NavigationView.OnNav
     String post_data=null;
 
     Button mycourses;
-    String[] Course1;
-    String[] Course2;
-    String[] Course3;
-    String[] Course4;
-    String[] Course5;
+    String[] Course1,Course2,Course3,Course4,Course5;
+    String[] stu_Course1,stu_Course2,stu_Course3,stu_Course4,stu_Course5;
     String MyCourses;
     List<String> course_arr;
 TextView Message;
@@ -122,11 +122,18 @@ ArrayList dummy=new ArrayList();
 
         try {
             JSONObject ja = new JSONObject(result);
-             Course1=ja.getString("Course1").split(",");
-             Course2=ja.getString("Course2").split(",");
-             Course3=ja.getString("Course3").split(",");
-             Course4=ja.getString("Course4").split(",");
-             Course5=ja.getString("Course5").split(",");
+             Course1=ja.getString("Course1").split(",");//Gets tutors name for Course 1
+             Course2=ja.getString("Course2").split(",");//Gets tutors name for Course 2
+             Course3=ja.getString("Course3").split(",");//Gets tutors name for Course 3
+             Course4=ja.getString("Course4").split(",");//Gets tutors name for Course 4
+             Course5=ja.getString("Course5").split(",");//Gets tutors name for Course 5
+             stu_Course1=qrGenerator.Global.formatter(ja.getString("stu_Course1").split(","));//Gets tutors name for Course 5
+            stu_Course2=qrGenerator.Global.formatter(ja.getString("stu_Course2").split(","));//Gets tutors name for Course 5
+            stu_Course3=qrGenerator.Global.formatter(ja.getString("stu_Course3").split(","));//Gets tutors name for Course 5
+            stu_Course4=qrGenerator.Global.formatter(ja.getString("stu_Course4").split(","));//Gets tutors name for Course 5
+            stu_Course5=qrGenerator.Global.formatter(ja.getString("stu_Course5").split(","));//Gets tutors name for Course 5
+
+
 
              MyCourses=ja.getString("Courses");
 
@@ -150,21 +157,27 @@ ArrayList dummy=new ArrayList();
             public void onClick(View view) {
 
                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MyTutors.this);
-
                 mBuilder.setTitle("Select a Course");
                 String[] dummy2 = (String[]) dummy.toArray(new String[dummy.size()]);
                 mBuilder.setSingleChoiceItems(dummy2, -1, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        System.out.println("THE I "+i);
+
                         if(i==0) {
                             if(Course1!=null) {
                                 Course1 = qrGenerator.Global.formatter(Course1);
                                 listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course1));
                                 dialogInterface.dismiss();
+                                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Toast.makeText(MyTutors.this,stu_Course1[position], Toast.LENGTH_SHORT).show();
 
-                            }
+
+                                }
+                            });
+                                }
                             else{
                                 ImageView imgView=(ImageView) findViewById(R.id.imageView5);
                                 Drawable drawable  = getResources().getDrawable(R.drawable.mag_glass);
@@ -223,6 +236,7 @@ ArrayList dummy=new ArrayList();
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToggle.onOptionsItemSelected(item)) {
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -262,6 +276,14 @@ ArrayList dummy=new ArrayList();
         navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
 
         navigationView.setNavigationItemSelectedListener( MyTutors.this);
+    }
+    public void scan(View view) {
+        Intent i = new Intent(MyTutors.this, qrScanner.class);
+        MyTutors.this.startActivity(i);
+    }
+
+    public void onBackPressed(){
+
     }
 
 

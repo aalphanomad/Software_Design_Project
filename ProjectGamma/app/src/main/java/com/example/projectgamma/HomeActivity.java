@@ -99,7 +99,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         backgroundWorker.execute("get courses", GetName(), GetStudent_Num());
 
     }
-//Ensures you cannot go back to the login page when you are on the Home Page
+
+    public void generate(View view){
+        Intent i=new Intent(HomeActivity.this,Claim_Form.class);
+        i.putExtra("name",name);
+        i.putExtra("student_num",stud_num);
+        HomeActivity.this.startActivity(i);
+
+    };
+    //Ensures you cannot go back to the login page when you are on the Home Page
     public void onBackPressed() {
 
 
@@ -143,7 +151,7 @@ get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Claim_History: {
+            case R.id.Activity_History: {
                 Intent myIntent = new Intent(HomeActivity.this, Claim_History.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
@@ -153,13 +161,13 @@ get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
-            case R.id.Claim: {
+            case R.id.Activity: {
                 Intent myIntent = new Intent(HomeActivity.this, Claim_Form.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }
             case R.id.user_profile: {
-                Intent myIntent = new Intent(HomeActivity.this, ForthFragment.class);
+                Intent myIntent = new Intent(HomeActivity.this, ViewProfile.class);
                 HomeActivity.this.startActivity(myIntent);
                 break;
             }

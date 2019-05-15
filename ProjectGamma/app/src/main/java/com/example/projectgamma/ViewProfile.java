@@ -18,7 +18,7 @@ import static com.example.projectgamma.qrGenerator.Global.GetName;
 import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 
 
-public class ForthFragment extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ViewProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
     String name, stud_num, email;
@@ -34,10 +34,10 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.userprofile);
         mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
-        //mDrawerlayout.addDrawerListener(mToggle);
-        //mToggle.syncState();
+        mDrawerlayout.addDrawerListener(mToggle);
+        mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //setNavigationViewListener();
+        setNavigationViewListener();
 
         //recieving account details of tutor from global variables set in qrGenerator function
         name = qrGenerator.Global.GetName();
@@ -71,27 +71,27 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Claim_History: {
-                Intent myIntent = new Intent(ForthFragment.this, Claim_History.class);
-                ForthFragment.this.startActivity(myIntent);
+            case R.id.Activity_History: {
+                Intent myIntent = new Intent(ViewProfile.this, Claim_History.class);
+                ViewProfile.this.startActivity(myIntent);
                 break;
             }
             case R.id.My_Schedule: {
-                Intent myIntent = new Intent(ForthFragment.this, MySchedule.class);
-                ForthFragment.this.startActivity(myIntent);                break;
+                Intent myIntent = new Intent(ViewProfile.this, MySchedule.class);
+                ViewProfile.this.startActivity(myIntent);                break;
             }
 
-            case R.id.Claim: {
-                Intent myIntent = new Intent(ForthFragment.this, Claim_Form.class);
-                ForthFragment.this.startActivity(myIntent);                break;
+            case R.id.Activity: {
+                Intent myIntent = new Intent(ViewProfile.this, Claim_Form.class);
+                ViewProfile.this.startActivity(myIntent);                break;
             }
             case R.id.user_profile: {
-                Intent myIntent = new Intent(ForthFragment.this, ForthFragment.class);
-                ForthFragment.this.startActivity(myIntent);                break;
+                Intent myIntent = new Intent(ViewProfile.this, ViewProfile.class);
+                ViewProfile.this.startActivity(myIntent);                break;
             }
             case R.id.Logout: {
-                Intent myIntent = new Intent(ForthFragment.this, LoginActivity.class);
-                ForthFragment.this.startActivity(myIntent);
+                Intent myIntent = new Intent(ViewProfile.this, LoginActivity.class);
+                ViewProfile.this.startActivity(myIntent);
                 break;
             }
         }
@@ -106,19 +106,19 @@ public class ForthFragment extends AppCompatActivity implements NavigationView.O
         TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
         navUsername.setText(GetName());
         navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
-        navigationView.setNavigationItemSelectedListener( ForthFragment.this);
+        navigationView.setNavigationItemSelectedListener( ViewProfile.this);
 
     }
 
     //button to start editing courses
     public void edit(View view) {
-        Intent i = new Intent(ForthFragment.this, editUserProfile.class);
-        ForthFragment.this.startActivity(i);
+        Intent i = new Intent(ViewProfile.this, editUserProfile.class);
+        ViewProfile.this.startActivity(i);
     }
 
     //button to take us home
     public void home(View view) {
-        Intent i = new Intent(ForthFragment.this, HomeActivity.class);
-        ForthFragment.this.startActivity(i);
+        Intent i = new Intent(ViewProfile.this, HomeActivity.class);
+        ViewProfile.this.startActivity(i);
     }
 }

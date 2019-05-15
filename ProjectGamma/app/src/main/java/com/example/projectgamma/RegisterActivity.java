@@ -100,8 +100,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View view) {
 
                     register();
-
-
             }
 
         });
@@ -232,106 +230,78 @@ else{
     public void onSignupSuccess() {
 //Sets the type for which the BackgroundWorker will be used for
         String type = "reg";
-        InputStream is = null;
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-        nameValuePairs.add(new BasicNameValuePair("name", name));
-        nameValuePairs.add(new BasicNameValuePair("studentnum", Stu_Num));
-        nameValuePairs.add(new BasicNameValuePair("email", email));
-        nameValuePairs.add(new BasicNameValuePair("password", password));
         String test = String.valueOf(selectedItems);
         String[] arr = new String[20];
         arr = test.split(",");
 
-            //Sends the information to the backgroundworker depending on the number of courses selected
-            if (selectedItems.size() == 1) {
-                String[] arr1;
-                arr1 = arr[0].split(" ");
+        //Sends the information to the backgroundworker depending on the number of courses selected
+        if (selectedItems.size() == 1) {
+            String[] arr1;
+            arr1 = arr[0].split(" ");
 
-                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()));
-            }
-            if (selectedItems.size() == 2) {
-                String[] arr1;
-                arr1 = arr[0].split(" ");
-
-                String[] arr2;
-                arr2 = arr[1].split(" ");
-
-                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1]);
-            }
-            if (selectedItems.size() == 3) {
-                String[] arr1;
-                arr1 = arr[0].split(" ");
-
-                String[] arr2;
-                arr2 = arr[1].split(" ");
-
-                String[] arr3;
-                arr3 = arr[2].split(" ");
-
-                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1]);
-            }
-            if (selectedItems.size() == 4) {
-                String[] arr1;
-                arr1 = arr[0].split(" ");
-
-                String[] arr2;
-                arr2 = arr[1].split(" ");
-
-                String[] arr3;
-                arr3 = arr[2].split(" ");
-
-                String[] arr4;
-                arr4 = arr[3].split(" ");
-
-                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1], arr4[1]);
-            }
-            if (selectedItems.size() == 5) {
-                String[] arr1;
-                arr1 = arr[0].split(" ");
-
-                String[] arr2;
-                arr2 = arr[1].split(" ");
-
-                String[] arr3;
-                arr3 = arr[2].split(" ");
-
-                String[] arr4;
-                arr4 = arr[3].split(" ");
-
-                String[] arr5;
-                arr5 = arr[4].split(" ");
-
-                BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-                backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1], arr4[1], arr5[1].substring(0, arr5[1].length()));
-            }
-
-
-            try {
-//Initializes an HTTP Post connection
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://lamp.ms.wits.ac.za/~s1601745/create.php");
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpClient.execute(httpPost);
-                HttpEntity entity = response.getEntity();
-                is = entity.getContent();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                br.readLine();
-            } catch (ClientProtocolException e) {
-                System.out.print("Error!");
-            } catch (IOException e) {
-                System.out.print("CHECK");
-            }
-
-            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-//Sets the name and student number of the user
-            qrGenerator.Global.setName(name);
-            qrGenerator.Global.setStudent_num(Stu_Num);
-            startActivity(intent);
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()));
         }
+        if (selectedItems.size() == 2) {
+            String[] arr1;
+            arr1 = arr[0].split(" ");
+
+            String[] arr2;
+            arr2 = arr[1].split(" ");
+
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1]);
+        }
+        if (selectedItems.size() == 3) {
+            String[] arr1;
+            arr1 = arr[0].split(" ");
+
+            String[] arr2;
+            arr2 = arr[1].split(" ");
+
+            String[] arr3;
+            arr3 = arr[2].split(" ");
+
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1]);
+        }
+        if (selectedItems.size() == 4) {
+            String[] arr1;
+            arr1 = arr[0].split(" ");
+
+            String[] arr2;
+            arr2 = arr[1].split(" ");
+
+            String[] arr3;
+            arr3 = arr[2].split(" ");
+
+            String[] arr4;
+            arr4 = arr[3].split(" ");
+
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1], arr4[1]);
+        }
+        if (selectedItems.size() == 5) {
+            String[] arr1;
+            arr1 = arr[0].split(" ");
+
+            String[] arr2;
+            arr2 = arr[1].split(" ");
+
+            String[] arr3;
+            arr3 = arr[2].split(" ");
+
+            String[] arr4;
+            arr4 = arr[3].split(" ");
+
+            String[] arr5;
+            arr5 = arr[4].split(" ");
+
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.execute(type, name, Stu_Num, email, password, arr1[0].substring(1, arr1[0].length()), arr2[1], arr3[1], arr4[1], arr5[1].substring(0, arr5[1].length()));
+        }
+
+    }
 
 
 

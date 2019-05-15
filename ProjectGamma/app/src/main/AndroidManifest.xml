@@ -49,12 +49,18 @@
         <activity android:name="com.example.projectgamma.MySchedule" />
         <activity android:name="com.example.projectgamma.Claim_Form"
             android:label="Claim Form"/>
-        <activity android:name="com.example.projectgamma.ForthFragment" />
-        <activity android:name="com.example.projectgamma.Validate" />
-        <activity android:name="com.example.projectgamma.MyTutors" />
-        <activity android:name="com.example.projectgamma.editUserProfile" />
-        <activity android:name="com.example.projectgamma.adminViewCourses" />
-        <activity android:name="com.example.projectgamma.adminViewTutors" />
+        <activity android:name="com.example.projectgamma.ViewProfile"
+            android:label="View Profile"/>
+        <activity android:name="com.example.projectgamma.Validate"
+            android:label="Validate"/>
+        <activity android:name="com.example.projectgamma.MyTutors"
+            android:label="View My Tutors"/>
+        <activity android:name="com.example.projectgamma.editUserProfile"
+            android:label="View Profile"/>
+        <activity android:name="com.example.projectgamma.adminViewCourses"
+            android:label="View All Courses"/>
+        <activity android:name="com.example.projectgamma.adminViewTutors"
+            android:label="View All Tutors"/>
         <activity android:name="com.example.projectgamma.upload_transcript" />
 
 

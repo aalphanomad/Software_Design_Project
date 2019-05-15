@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
+
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,9 +9,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <android.support.v4.widget.NestedScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:fillViewport="true">
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,125 +45,131 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.976"
+            app:layout_constraintHorizontal_bias="0.924"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.923"
             app:srcCompat="@drawable/upload" />
-
 
 
         <TextView
             android:id="@+id/tv_stud_num"
-            android:layout_width="0dp"
-            android:layout_height="41dp"
-            android:layout_marginStart="16dp"
-            android:text="Student Number"
+            android:layout_width="162dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="196dp"
+            android:text="Student Number:"
             android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_stud_num2"
-            app:layout_constraintEnd_toStartOf="@+id/tv_stud_num2"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="148dp"
             android:fontFamily="sans-serif-condensed"
             android:text="Name"
             android:textSize="22dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tv_stud_num"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/tv_stud_num2"
-            android:layout_width="0dp"
-            android:layout_height="41dp"
+            android:layout_width="228dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="172dp"
             android:layout_marginTop="196dp"
-            android:layout_marginEnd="46dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_stud_num"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_email"
-            android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="16dp"
-            android:text="Email"
+            android:layout_width="143dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="252dp"
+            android:text="Email:"
             android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_email2"
-            app:layout_constraintEnd_toStartOf="@+id/tv_email2"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_email2"
-            android:layout_width="0dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="45dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_email"
-            app:layout_constraintTop_toTopOf="@+id/tv_stud_num" />
+            android:layout_width="266dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="252dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_Courses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="292dp"
             android:fontFamily="sans-serif-condensed"
             android:text="My Courses"
             android:textSize="22dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.523" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/homeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="92dp"
-            android:layout_marginBottom="20dp"
-            android:text="Home"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="656dp"
             android:onClick="home"
+            android:text="Home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="OnClick" />
 
         <Button
             android:id="@+id/editButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="656dp"
             android:layout_marginEnd="92dp"
-            android:layout_marginBottom="20dp"
-            android:text="Edit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:onClick="edit"
+            android:text="Edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="OnClick" />
 
         <ListView
             android:id="@+id/lv2"
-            android:layout_width="0dp"
-            android:layout_height="190dp"
+            android:layout_width="364dp"
+            android:layout_height="292dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="171dp"
+            android:layout_marginBottom="88dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Courses"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.645"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginBottom="72dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Upload Transcript"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
     <android.support.design.widget.NavigationView
         app:headerLayout="@layout/header"
         android:layout_width="wrap_content"

@@ -16,15 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static com.example.projectgamma.qrGenerator.Global.GetName;
@@ -193,7 +190,7 @@ public class editUserProfile extends AppCompatActivity  implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Claim_History: {
+            case R.id.Activity_History: {
                 Intent myIntent = new Intent(editUserProfile.this, Claim_Form.class);
                 editUserProfile.this.startActivity(myIntent);
                 break;
@@ -204,14 +201,14 @@ public class editUserProfile extends AppCompatActivity  implements NavigationVie
                 break;
             }
 
-            case R.id.Claim: {
+            case R.id.Activity: {
                 Intent myIntent = new Intent(editUserProfile.this, Claim_Form.class);
                 editUserProfile.this.startActivity(myIntent);
                 break;
             }
 
             case R.id.user_profile: {
-                Intent myIntent = new Intent(editUserProfile.this, ForthFragment.class);
+                Intent myIntent = new Intent(editUserProfile.this, ViewProfile.class);
                 editUserProfile.this.startActivity(myIntent);
                 break;
             }
