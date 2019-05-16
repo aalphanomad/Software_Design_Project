@@ -19,9 +19,10 @@ public class MyAdapter extends ArrayAdapter<String>{
     String rEnd[];
     String rDuration[];
     String rValid[];
+    String rActivity[];
     //class will take in the above arrays
 
-    MyAdapter(Context c, String date[], String courses[], String venue[], String start[], String end[], String valid[]){
+    MyAdapter(Context c, String date[], String courses[], String venue[], String start[], String end[], String valid[],String activity[]){
         super(c, R.layout.history_item, R.id.dateHistory, date);
         this.context = c;
         this.rDate = date;
@@ -30,6 +31,7 @@ public class MyAdapter extends ArrayAdapter<String>{
         this.rStart = start;
         this.rEnd = end;
         this.rValid = valid;
+        this.rActivity = activity;
     }
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,17 +42,20 @@ public class MyAdapter extends ArrayAdapter<String>{
         TextView theVenue = row.findViewById(R.id.venueHistory);
         TextView theDuration = row.findViewById(R.id.durationHistory);
         TextView theStatus = row.findViewById(R.id.status);
+        TextView theActivity=row.findViewById(R.id.activityHistory);
+
 
         Paint p = new Paint();
         p.setColor(Color.YELLOW);
         theDate.setPaintFlags(p.getColor());
         theDate.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
-        //set our textviews with values from the arrays passed in
+//set our textviews with values from the arrays passed in
         theDate.setText(rDate[position]);
         theSubject.setText(rCourses[position]);
         theVenue.setText(rVenue[position]);
         theDuration.setText(rStart[position] + " - " + rEnd[position]);
+        theActivity.setText(rActivity[position]);
         //if tutor session has been validated then set text to:
         if(rValid[position].equals("1")) {
             theStatus.setText("Status: Validated");
