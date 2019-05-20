@@ -73,6 +73,11 @@ public class adminViewCourses extends AppCompatActivity implements AdapterView.O
         });
 
     }
+    //Ensures you cannot go back to the login page when you are on the Home Page
+    public void onBackPressed() {
+
+
+    }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

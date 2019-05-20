@@ -1,6 +1,8 @@
 package com.example.projectgamma;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,12 @@ public class MyAdapter extends ArrayAdapter<String>{
         TextView theDuration = row.findViewById(R.id.durationHistory);
         TextView theStatus = row.findViewById(R.id.status);
         TextView theActivity=row.findViewById(R.id.activityHistory);
+
+        Paint p = new Paint();
+        p.setColor(Color.YELLOW);
+        theDate.setPaintFlags(p.getColor());
+        theDate.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
         //set our textviews with values from the arrays passed in
         theDate.setText(rDate[position]);
         theSubject.setText(rCourses[position]);

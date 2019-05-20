@@ -72,26 +72,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Claims = findViewById(R.id.Activity_button);
-        Claims.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, Claim_Form.class);
-                //Sends the name and student number to the claims form class
-                i.putExtra("insert", "insert");
-                i.putExtra("name", name);
-                i.putExtra("student_num", stud_num);
-                HomeActivity.this.startActivity(i);
-
-            }
-        });
-
-        Upload = findViewById(R.id.Upload_but);
-        Upload.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, upload_transcript.class);
-                HomeActivity.this.startActivity(i);
-            }
-        });
 
         setNavigationViewListener();
 
@@ -101,9 +81,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void generate(View view){
-        Intent i=new Intent(HomeActivity.this,Claim_Form.class);
-        i.putExtra("name",name);
-        i.putExtra("student_num",stud_num);
+        Intent i = new Intent(HomeActivity.this, Claim_Form.class);
+        //Sends the name and student number to the claims form class
+        i.putExtra("insert", "insert");
+        i.putExtra("name", name);
+        i.putExtra("student_num", stud_num);
         HomeActivity.this.startActivity(i);
 
     };
@@ -129,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             str = new String[get_courses3.size()];
             for (int j = 0; j < get_courses3.size(); j++) {
-get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j).toString().length()-1));
+        get_courses3.set(j,get_courses3.get(j).toString().substring(1,get_courses3.get(j).toString().length()-1));
                 // Assign each value to String array
                 str[j] = get_courses3.get(j).toString()+" "+MainActivity.Global.Course_corr(get_courses3.get(j).toString());
             }

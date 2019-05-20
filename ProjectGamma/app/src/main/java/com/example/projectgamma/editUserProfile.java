@@ -85,11 +85,26 @@ public class editUserProfile extends AppCompatActivity  implements NavigationVie
                 String[] dummy=arrayListofCourses.get(i).split(" ");
                 test.set(i,dummy[0]);
             }
-            String course1=test.get(0).toString();
-            String course2=test.get(1).toString();
-            String course3=test.get(2).toString();
-            String course4=test.get(3).toString();
-            String course5=test.get(4).toString();
+        String course1=null;
+        String course2=null;
+        String course3=null;
+        String course4=null;
+        String course5=null;
+
+       if(test.get(0)!=null) {
+            course1 = test.get(0).toString();
+       }      if(test.get(1)!=null) {
+            course2 = test.get(1).toString();
+        }
+            if(test.get(2)!=null) {
+                course3 = test.get(2).toString();
+            }
+                if(test.get(3)!=null) {
+                    course4 = test.get(3).toString();
+                }
+                    if(test.get(4)!=null) {
+                         course5 = test.get(4).toString();
+                    }
 
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
             backgroundWorker.execute("edit courses", qrGenerator.Global.GetStudent_Num(), course1,course2,course3,course4,course5);
@@ -121,7 +136,7 @@ public class editUserProfile extends AppCompatActivity  implements NavigationVie
 
         ArrayList allCourses = new ArrayList(); //create arraylist containing all possible courses
         //fill in the this array
-        allCourses.addAll(Arrays.asList(new String[]{"COMS1015 (Basic Computer Organisation)", "COMS1018 (Introduction to Algorithms and Programming)", "COMS1017 (Introduction to Data Structures and Algorithms", "COMS1016 (Discrete Computational Structures)", "COMS2002 (Database Fundementals)", "COMS2013 (Mobile Computing)", "COMS2014 (Computer Networks)", "COMS2015 (Analysis of Algorithms)", "COMS3003 (Formal Languages and Automata)", "COMS3005 (Advanced Analysis of Algorithms)", "COMS3009 (Software Design)", "COMS3010 (Operating Systems and System Programming)", "COMS3007 (Machine Learning)", "COMS3006 (Computer Graphics and Visualisation)", "COMS3008 (Parallel Computing)", "COMS3011 (Software Design)"}));
+        allCourses.addAll(Arrays.asList(new String[]{"COMS1015 (Basic Computer Organisation)", "COMS1018 (Introduction to Algorithms and Programming)", "COMS1017 (Introduction to Data Structures and Algorithms", "COMS1016 (Discrete Computational Structures)", "COMS2002 (Database Fundementals)", "COMS2013 (Mobile Computing)", "COMS2014 (Computer Networks)", "COMS2015 (Analysis of Algorithms)", "COMS3003 (Formal Languages and Automata)", "COMS3005 (Advanced Analysis of Algorithms)", "COMS3009 (Software Design)", "COMS3010 (Operating Systems and System Programming)", "COMS3007 (Machine Learning)", "COMS3006 (Computer Graphics and Visualisation)", "COMS3008 (Parallel Computing)", "COMS3011 (Software Design Project)"}));
 
         //create another arraylist that will represent all the courses the tutor does not take
         //equate it to allCourses array for now

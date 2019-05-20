@@ -24,6 +24,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> {
@@ -148,10 +151,10 @@ Global=params;
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/select_booking.php?";
                 post_data = "table=BOOKINGS&target=*&student_num=" + student_num;
             } else if (type.equals("transcript")) {
-                String student_num = params[1];
+                String name = params[1];
                 //The URL to send data to the server when creating a booking/claim form
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/download_transcript.php?";
-                post_data = "student_num=" + student_num;
+                post_data = "name=" + URLEncoder.encode(name, "UTF-8");
             } else if (type.equals("get courses")) {
                 String name = params[1];
                 String student_num = params[2];
@@ -161,14 +164,38 @@ Global=params;
 
             } else if (type.equals("edit courses")) {
                 String student_num = params[1];
-                String course1 = params[2];
-                String course2 = params[3];
-                String course3 = params[4];
-                String course4 = params[5];
-                String course5 = params[6];
+                List<String> Test = new ArrayList<String>(Arrays.asList(params));
+                System.out.println("BYEEE"+Test);
+                String course1 = Test.get(2);
+                String course2 = Test.get(3);
+                String course3 = Test.get(4);
+                String course4 = Test.get(5);
+                String course5 = Test.get(6);
 
                 login_url = "http://lamp.ms.wits.ac.za/~s1601745/update_details.php?";
-                post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8") + "&" + URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
+
+                if(course2==null) {
+    post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8");
+}
+
+               else  if(course3==null) {
+                    post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") ;
+                }
+
+                else if(course4==null) {
+                    post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") ;
+                }
+
+               else if(course5==null) {
+                    post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8");
+                    System.out.println("TEST5 "+post_data);
+
+                }
+                else{
+    post_data = URLEncoder.encode("student_num", "UTF-8") + "=" + URLEncoder.encode(student_num, "UTF-8") + "&" + URLEncoder.encode("course1", "UTF-8") + "=" + URLEncoder.encode(course1, "UTF-8") + "&" + URLEncoder.encode("course2", "UTF-8") + "=" + URLEncoder.encode(course2, "UTF-8") + "&" + URLEncoder.encode("course3", "UTF-8") + "=" + URLEncoder.encode(course3, "UTF-8") + "&" + URLEncoder.encode("course4", "UTF-8") + "=" + URLEncoder.encode(course4, "UTF-8") + "&" + URLEncoder.encode("course5", "UTF-8") + "=" + URLEncoder.encode(course5, "UTF-8");
+System.out.println("TEST6 "+post_data);
+                }
+
 
             }
 
@@ -223,6 +250,8 @@ Global=params;
     @Override
     protected void onPostExecute(String result) {
         try {
+            Log.i("tagconvertstr", "[" + result + "]");
+
             if(type=="reg"){
                 JSONObject ja = new JSONObject(result);
                 System.out.println("THE RESULT "+ja.get("result").toString());
@@ -303,7 +332,7 @@ Global=params;
 
                 }
             } else if (type == "booking") {
-                Log.i("tagconvertstr", "[" + result + "]");
+                //Log.i("tagconvertstr", "[" + result + "]");
 
                 JSONObject ja = new JSONObject(result);
                 if (ja.get("result").toString().equals("0")) {
@@ -316,7 +345,6 @@ Global=params;
 
                 }
             } else if (type.equals("get courses")) {
-                Log.i("tagconvertstr", "[" + result + "]");
 
                 JSONObject ja = new JSONObject(result);
                 String[] courses = ja.getString("result").split(",");

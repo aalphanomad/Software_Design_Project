@@ -60,6 +60,11 @@ public class ViewProfile extends AppCompatActivity implements NavigationView.OnN
         listview = findViewById(R.id.lv2);
         listview.setAdapter(adapter);   //update listview with information in array
     }
+
+    public void upload_transcript(View view){
+        Intent myIntent = new Intent(ViewProfile.this, upload_transcript.class);
+        ViewProfile.this.startActivity(myIntent);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToggle.onOptionsItemSelected(item)) {

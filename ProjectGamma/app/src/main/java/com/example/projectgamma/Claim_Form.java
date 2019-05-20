@@ -51,11 +51,13 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     TextView Thevenue, TimeError, sel_Course;
     String[] topic = new String[3];
     ArrayList get_courses3=new ArrayList();
-    private Spinner mySpinner;
+    private Spinner mySpinner1,mySpinner2;
     static int hour,minute;
     boolean check;
     private List<String> activities;
-    String selected;
+    private List<String> courses;
+    String activity_selected;
+    String []listItems;
 
 
 
@@ -67,50 +69,28 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         Thevenue = findViewById(R.id.enterVenue);
         TimeError = findViewById(R.id.TimeError);
         venue = Thevenue.getText().toString();
-        Button button = findViewById(R.id.button);
+       // Button button = findViewById(R.id.button);
         sel_Course = findViewById(R.id.Sel_Course);
-        final String[] listItems =Get_Courses();
-        mySpinner = (Spinner) findViewById(R.id.Activity_Spinner);
-        mySpinner.setOnItemSelectedListener(this);
-        activities = new ArrayList<String>();
+          listItems =Get_Courses();
+        mySpinner1 = (Spinner) findViewById(R.id.Activity_Spinner);
+        mySpinner1.setOnItemSelectedListener(this);
 
+        mySpinner2 = (Spinner) findViewById(R.id.Course_Spinner);
+        mySpinner2.setOnItemSelectedListener(this);
+        activities = new ArrayList<String>();
         activities.add("Tutoring");
         activities.add("Invigilating");
         activities.add("Other");
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, activities);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mySpinner.setAdapter(dataAdapter);
+        mySpinner1.setAdapter(dataAdapter);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Array containing list of courses
-                String name = qrGenerator.Global.GetName();
-                String student_no = qrGenerator.Global.GetStudent_Num();
+        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listItems);
+        dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner2.setAdapter(dataAdapter1);
 
-                //Pop up form when selecting course is displayed
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(Claim_Form.this);
-                mBuilder.setTitle("Select a Course");
-                mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        topic = listItems[i].split(" ");
-                        course = topic[0];
-                        sel_Course.setTextColor(Color.parseColor("#808080"));
-
-                        //Displays the course selected
-
-                        sel_Course.setText(course);
-
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog mDialog = mBuilder.create();
-                mDialog.show();
-            }
-
-        });
         Intent i = getIntent();
         //Recieves data from another class
         type = i.getStringExtra("insert");
@@ -130,7 +110,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
             valid = false;
         }
         //Checks if a course has been selected
-        if (topic[0] == null) {
+        if (topic[0]==null) {
             sel_Course.setTextColor(Color.parseColor("#ff0000"));
             sel_Course.setText("Please Select a course");
 
@@ -163,8 +143,15 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        selected = parent.getItemAtPosition(position).toString();
+        activity_selected = parent.getItemAtPosition(position).toString();
+        topic = listItems[position].split(" ");
+        course = topic[0];
+        System.out.println("THE COURSE   "+course);
+
+
+
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -255,7 +242,9 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         if (validate(startTime, endTime) == false) {
             Toast.makeText(Claim_Form.this, "Please fill in the form", Toast.LENGTH_LONG).show();
         } else {
-
+//sel_Course.setText(listItems[mySpinner2.getSelectedItemPosition()]);
+            course = topic[0];
+            System.out.println("THE COURSE   "+course);
             EditText e3 = findViewById(R.id.enterVenue);
             venue = e3.getText().toString();
 
@@ -272,7 +261,7 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
 
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
 
-            backgroundWorker.execute("booking", name, stud_num, course, currentDate, venue, startTime, endTime,selected);
+            backgroundWorker.execute("booking", name, stud_num, course, currentDate, venue, startTime, endTime,activity_selected);
 
 
         }
