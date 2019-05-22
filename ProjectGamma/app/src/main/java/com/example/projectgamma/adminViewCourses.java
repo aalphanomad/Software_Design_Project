@@ -2,19 +2,34 @@ package com.example.projectgamma;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class adminViewCourses extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
+
+public class adminViewCourses extends AppCompatActivity implements AdapterView.OnItemSelectedListener,NavigationView.OnNavigationItemSelectedListener  {
     private Spinner mySpinner;
     private List<String> courses;
+
+    private DrawerLayout mDrawerlayout;
+    private ActionBarDrawerToggle mToggle;
     String item;
 
     ListView listview;
@@ -41,7 +56,16 @@ public class adminViewCourses extends AppCompatActivity implements AdapterView.O
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courses);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(dataAdapter);
+        mDrawerlayout = findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
+        mDrawerlayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
+
+        setNavigationViewListener();
     }
 
     @Override
@@ -82,5 +106,36 @@ public class adminViewCourses extends AppCompatActivity implements AdapterView.O
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.View_Everything: {
+                break;
+            }
+
+            case R.id.Logout: {
+                Intent myIntent = new Intent(adminViewCourses.this, LoginActivity.class);
+                adminViewCourses.this.startActivity(myIntent);
+                break;
+            }
+
+
+        }
+        mDrawerlayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void setNavigationViewListener() {
+        NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+
+        navigationView.setNavigationItemSelectedListener( adminViewCourses.this);
     }
 }

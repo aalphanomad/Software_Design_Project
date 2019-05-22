@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -57,7 +66,7 @@
         android:id="@+id/MessageForLecturer"
         android:layout_width="275dp"
         android:layout_height="39dp"
-        android:layout_marginStart="68dp"
+        android:layout_marginStart="108dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:textSize="20sp"
@@ -65,7 +74,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.275" />
+        app:layout_constraintVertical_bias="0.307" />
 
     <TextView
         android:id="@+id/tv_tutors"
@@ -98,7 +107,7 @@
         android:id="@+id/MessageForTutors"
         android:layout_width="275dp"
         android:layout_height="39dp"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="108dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:textSize="20sp"
@@ -106,7 +115,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintVertical_bias="0.812" />
 
 
 </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.design.widget.NavigationView
+        app:headerLayout="@layout/header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/admin"
+        android:id="@+id/navigation"
+        android:layout_gravity="start"
+        >
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

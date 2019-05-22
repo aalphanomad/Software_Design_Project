@@ -47,6 +47,10 @@
         android:label="Claim Form History"/>
 
         <activity android:name="com.example.projectgamma.MySchedule" />
+        <activity android:name="com.example.projectgamma.tutorProfile"
+            android:label="View Tutor's Profile"/>
+
+
         <activity android:name="com.example.projectgamma.Claim_Form"
             android:label="Claim Form"/>
         <activity android:name="com.example.projectgamma.ViewProfile"

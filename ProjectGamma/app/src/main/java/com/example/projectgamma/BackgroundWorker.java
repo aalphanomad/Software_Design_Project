@@ -250,7 +250,6 @@ System.out.println("TEST6 "+post_data);
     @Override
     protected void onPostExecute(String result) {
         try {
-            Log.i("tagconvertstr", "[" + result + "]");
 
             if(type=="reg"){
                 JSONObject ja = new JSONObject(result);

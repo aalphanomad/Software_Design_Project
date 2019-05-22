@@ -62,6 +62,7 @@ public class MyTutors extends AppCompatActivity  implements NavigationView.OnNav
 TextView Message;
 ArrayList dummy=new ArrayList();
     ListView listview;
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -161,82 +162,7 @@ ArrayList dummy=new ArrayList();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        /*
-        mycourses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MyTutors.this);
-                mBuilder.setTitle("Select a Course");
-                String[] dummy2 = (String[]) dummy.toArray(new String[dummy.size()]);
-                mBuilder.setSingleChoiceItems(dummy2, -1, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        if(i==0) {
-                            if(Course1!=null) {
-                                Course1 = qrGenerator.Global.formatter(Course1);
-                                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course1));
-                                dialogInterface.dismiss();
-                                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        Toast.makeText(MyTutors.this,stu_Course1[position], Toast.LENGTH_SHORT).show();
-
-
-                                }
-                            });
-                                }
-                            else{
-                                ImageView imgView=(ImageView) findViewById(R.id.imageView5);
-                                Drawable drawable  = getResources().getDrawable(R.drawable.mag_glass);
-                                imgView.setImageDrawable(drawable);
-                                Message.setText("It's Empty Here...");
-                            }
-                        }
-                        if(i==1) {
-                            if(Course2!=null){
-                                Course2 = qrGenerator.Global.formatter(Course2);
-                                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course2));
-                                dialogInterface.dismiss();
-
-                            }
-                        }
-                        if(i==2) {
-                            if (Course3!=null) {
-                                Course3 = qrGenerator.Global.formatter(Course3);
-                                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course3));
-                                dialogInterface.dismiss();
-
-                            }
-                        }
-                        if(i==3) {
-                            if (Course4.length != 0) {
-                                Course4 = qrGenerator.Global.formatter(Course4);
-                                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course4));
-                                dialogInterface.dismiss();
-
-                            }
-                            }
-                        if(i==4) {
-                            if (Course5.length != 0) {
-                                Course5 = qrGenerator.Global.formatter(Course5);
-                                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course5));
-                                dialogInterface.dismiss();
-
-                            }
-                        }
-
-                    }
-                });
-                AlertDialog mDialog = mBuilder.create();
-                mDialog.show();
-
-            }
-
-        });
-        */
         setNavigationViewListener();
 
     }
@@ -306,37 +232,113 @@ ArrayList dummy=new ArrayList();
                 listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course1));
 
             }
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    String selectedNum = stu_Course1[position].toString(); //get string of the clicked subject
+                    String selectedName = Course1[position].toString();
+                    //send this string to the activity that follows
+                    Intent i = new Intent(getApplicationContext(), tutorProfile.class);
+                    i.putExtra("tutorNum", selectedNum);
+                    i.putExtra("tutorName", selectedName);
+                    startActivity(i);
+
+                }
+            });
         }
 
 
-            if (position == 1) {
-                if (Course2 != null) {
-                    Course2 = qrGenerator.Global.formatter(Course2);
-                    listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course2));
+        if (position == 1) {
+            if (Course2 != null) {
+                Course2 = qrGenerator.Global.formatter(Course2);
+                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course2));
+
+
+            }
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    String selectedNum = stu_Course2[position].toString(); //get string of the clicked subject
+                    String selectedName = Course2[position].toString();
+                    //send this string to the activity that follows
+                    Intent i = new Intent(getApplicationContext(), tutorProfile.class);
+                    i.putExtra("tutorNum", selectedNum);
+                    i.putExtra("tutorName", selectedName);
+                    startActivity(i);
 
                 }
+            });
+        }
+        if (position == 2) {
+            if (Course3 != null) {
+                Course3 = qrGenerator.Global.formatter(Course3);
+                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course3));
+
             }
-            if (position == 2) {
-                if (Course3 != null) {
-                    Course3 = qrGenerator.Global.formatter(Course3);
-                    listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course3));
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    String selectedNum = stu_Course3[position].toString(); //get string of the clicked subject
+                    String selectedName = Course3[position].toString();
+                    //send this string to the activity that follows
+                    Intent i = new Intent(getApplicationContext(), tutorProfile.class);
+                    i.putExtra("tutorNum", selectedNum);
+                    i.putExtra("tutorName", selectedName);
+                    startActivity(i);
 
                 }
+            });
+        }
+        if (position == 3) {
+            if (Course4.length != 0) {
+                Course4 = qrGenerator.Global.formatter(Course4);
+                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course4));
+
             }
-            if (position == 3) {
-                if (Course4.length != 0) {
-                    Course4 = qrGenerator.Global.formatter(Course4);
-                    listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course4));
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    String selectedNum = stu_Course4[position].toString(); //get string of the clicked subject
+                    String selectedName = Course4[position].toString();
+                    //send this string to the activity that follows
+                    Intent i = new Intent(getApplicationContext(), tutorProfile.class);
+                    i.putExtra("tutorNum", selectedNum);
+                    i.putExtra("tutorName", selectedName);
+                    startActivity(i);
 
                 }
+            });
+        }
+        if (position == 4) {
+            if (Course5.length != 0) {
+                Course5 = qrGenerator.Global.formatter(Course5);
+                listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course5));
+
             }
-            if (position == 4) {
-                if (Course5.length != 0) {
-                    Course5 = qrGenerator.Global.formatter(Course5);
-                    listview.setAdapter(new ArrayAdapter<String>(MyTutors.this, android.R.layout.simple_list_item_1, Course5));
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    String selectedNum = stu_Course5[position].toString(); //get string of the clicked subject
+                    String selectedName = Course5[position].toString();
+                    //send this string to the activity that follows
+                    Intent i = new Intent(getApplicationContext(), tutorProfile.class);
+                    i.putExtra("tutorNum", selectedNum);
+                    i.putExtra("tutorName", selectedName);
+                    startActivity(i);
 
                 }
-            }
+            });
+        }
+
 
     }
 

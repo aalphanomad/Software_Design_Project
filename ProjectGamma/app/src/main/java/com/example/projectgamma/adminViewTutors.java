@@ -4,10 +4,17 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,8 +41,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
 
-public class adminViewTutors extends AppCompatActivity {
+import static com.example.projectgamma.qrGenerator.Global.GetName;
+import static com.example.projectgamma.qrGenerator.Global.GetStudent_Num;
 
+public class adminViewTutors extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout mDrawerlayout;
+    private ActionBarDrawerToggle mToggle;
     ListView listview;
     ArrayAdapter<String> adapterOfLecturers = null;
     ArrayAdapter<String> adapterOfTutors = null;
@@ -62,7 +74,13 @@ public class adminViewTutors extends AppCompatActivity {
         courseTV.setText(courseName);
 
         Message=findViewById(R.id.Message);
-
+        mDrawerlayout = findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
+        mDrawerlayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
 
         try {
@@ -110,30 +128,33 @@ public class adminViewTutors extends AppCompatActivity {
             Log.i("tagconvertstr", "[" + result + "]");
 
 
-        JSONObject ja = new JSONObject(result);
+            JSONObject ja = new JSONObject(result);
             lecturers = ja.getString("lecturers").split(",");
             tutors = ja.getString("tutors").split(",");
+            System.out.println(Arrays.asList(lecturers));
 
-        //the adapter initialised for our tutor array to show all lecturers of the specific course in the listview
-        if(!lecturers[0].equals("[]") && !tutors[0].equals("[]")) {
-            adapterOfLecturers = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lecturers);
-            lecturers = qrGenerator.Global.formatter(lecturers);
-            listview = findViewById(R.id.lv_lecturers);
-            listview.setAdapter(adapterOfLecturers);
+            //the adapter initialised for our tutor array to show all lecturers of the specific course in the listview
+            if(!lecturers[0].equals("[]")) {
+                lecturers = qrGenerator.Global.formatter(lecturers);
 
-            adapterOfTutors = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tutors);
-            listview = findViewById(R.id.lv_tutors);
-            listview.setAdapter(adapterOfTutors);
-                Message=findViewById(R.id.MessageForLecturer);
-                Message.setText("It's Empty Here...");
+                adapterOfLecturers = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lecturers);
+                listview = findViewById(R.id.lv_lecturers);
+                listview.setAdapter(adapterOfLecturers);
             }
+
             if(!tutors[0].equals("[]")){
+                tutors=qrGenerator.Global.formatter(tutors);
                 adapterOfTutors = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tutors);
                 listview = findViewById(R.id.lv_tutors);
                 listview.setAdapter(adapterOfTutors);
 
             }
-            else{//if there are no lecturers and tutors then send the message that it is empty
+
+            if(lecturers[0].equals("[]")){
+                Message=findViewById(R.id.MessageForLecturer);
+                Message.setText("It's Empty Here...");
+            }
+            if(tutors[0].equals("[]")){//if there are no lecturers and tutors then send the message that it is empty
 
 
                 Message2=findViewById(R.id.MessageForTutors);
@@ -148,5 +169,35 @@ public class adminViewTutors extends AppCompatActivity {
         }
 
 
+    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.View_Everything: {
+                break;
+            }
+
+            case R.id.Logout: {
+                Intent myIntent = new Intent(adminViewTutors.this, LoginActivity.class);
+                adminViewTutors.this.startActivity(myIntent);
+                break;
+            }
+
+
+        }
+        mDrawerlayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void setNavigationViewListener() {
+        NavigationView navigationView = findViewById(R.id.navigation);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.user_name);
+        TextView navUserEmail = (TextView) headerView.findViewById(R.id.user_email);
+        navUsername.setText(GetName());
+        navUserEmail.setText(GetStudent_Num()+"@students.wits.ac.za");
+
+        navigationView.setNavigationItemSelectedListener( adminViewTutors.this);
     }
 }
