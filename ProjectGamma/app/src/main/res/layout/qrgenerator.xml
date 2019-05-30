@@ -82,9 +82,11 @@
         android:id="@+id/Generate_but"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#003b5c"
         android:gravity="right"
         android:onClick="generate"
         android:text="generate"
+        android:textColor="@android:color/white"
         tools:ignore="OnClick" />
 
     <Button
@@ -92,8 +94,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
+        android:backgroundTint="#b18d5b"
         android:onClick="doneGen"
         android:text="Home"
+        android:textColor="#ffffff"
         android:textSize="16sp"
         tools:ignore="OnClick" />
 

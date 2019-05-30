@@ -46,8 +46,10 @@
         android:layout_gravity="center"
         android:layout_marginTop="337dp"
         android:layout_marginEnd="253dp"
+        android:backgroundTint="#003b5c"
         android:onClick="buttonStartTime"
-        android:text="Enter Start Time" />
+        android:text="Enter Start Time"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/startTime"
@@ -82,8 +84,10 @@
         android:layout_gravity="center"
         android:layout_marginTop="410dp"
         android:layout_marginEnd="255dp"
+        android:backgroundTint="#003b5c"
         android:onClick="buttonEndTime"
-        android:text="Enter End Time" />
+        android:text="Enter End Time"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/endtime"
@@ -145,8 +149,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:backgroundTint="#b18d5b"
         android:onClick="send"
-        android:text="CONFIRM" />
+        android:text="CONFIRM"
+        android:textColor="#ffffff" />
 
     <EditText
         android:id="@+id/enterVenue"

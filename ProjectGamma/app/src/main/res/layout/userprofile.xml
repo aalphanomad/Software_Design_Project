@@ -140,8 +140,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="92dp"
                 android:layout_marginTop="656dp"
+                android:backgroundTint="#003b5c"
                 android:onClick="home"
                 android:text="Home"
+                android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="OnClick" />
@@ -152,8 +154,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="656dp"
                 android:layout_marginEnd="92dp"
+                android:backgroundTint="#003b5c"
                 android:onClick="edit"
                 android:text="Edit"
+                android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="OnClick" />

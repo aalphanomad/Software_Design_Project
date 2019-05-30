@@ -75,14 +75,25 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
         mySpinner1 = (Spinner) findViewById(R.id.Activity_Spinner);
         mySpinner1.setOnItemSelectedListener(this);
 
-        mySpinner2 = (Spinner) findViewById(R.id.Course_Spinner);
-        mySpinner2.setOnItemSelectedListener(this);
+
         activities = new ArrayList<String>();
         activities.add("Tutoring");
         activities.add("Invigilating");
         activities.add("Other");
+        mySpinner2 = (Spinner) findViewById(R.id.Course_Spinner);
+        mySpinner2.setOnItemSelectedListener(this);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, activities);
+        mySpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                activity_selected = parent.getItemAtPosition(position).toString();
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                //User selected same item. Nothing to do.
+            }
+        });
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, activities);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner1.setAdapter(dataAdapter);
 
@@ -143,7 +154,6 @@ public class Claim_Form extends AppCompatActivity implements TimePickerDialog.On
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        activity_selected = parent.getItemAtPosition(position).toString();
         topic = listItems[position].split(" ");
         course = topic[0];
         System.out.println("THE COURSE   "+course);
