@@ -74,13 +74,15 @@ public class DBHelper {
 		try {
 			Response response = (Response) http_result.get();
 			
+			//we only return the body if the request is successful
 			if(response.getStatusCode() >= 200 && response.getStatusCode() < 300 ) 
 			{
-				return String.valueOf(response.getStatusCode());
+				return response.getResponseBody();
 			}
 			else
 			{
-				return response.getResponseBody();
+				return String.valueOf(response.getStatusCode());
+				
 			}
 			
 			

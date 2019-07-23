@@ -1,6 +1,7 @@
 package com.vaadin.vaadin_archetype_application;
 
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -18,9 +19,19 @@ public class MainView extends VerticalLayout {
     public MainView() {
     	String[] params = {"student_num","password"} ;
     	String[] values = {"1","test"};
-        Button button = new Button("Click me",
+    	Button button = new Button("Click me",
                 event -> Notification.show(php_request("signin",params,values)));
-        
+    	
+    	Button change_button = new Button("Change",
+                event -> UI.getCurrent().navigate(ProfileView.class));
+    	
+    	String[] params_2 = {"table","target","student_num"} ;
+    	String[] values_2 = {"BOOKINGS","*","1"};
+    	Button pdf_button = new Button("generate pdf",
+    			//event -> Notification.show(php_request("select_booking",params_2,values_2)));
+    			event -> UI.getCurrent().getPage().executeJavaScript("window.open(\"" + php_request("select_booking",params_2,values_2).strip() + "\");"));
+    	add(pdf_button);
+    	add(change_button);
         add(button);
     }
     
