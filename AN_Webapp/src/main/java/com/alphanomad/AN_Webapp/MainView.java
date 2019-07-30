@@ -44,6 +44,10 @@ public class MainView extends VerticalLayout implements View{
 				
 				);
 		
+		Button Login=new Button("Login",event->getUI().getNavigator().navigateTo("login"));
+		addComponent(Login);
+		Button Register=new Button("Register",event->getUI().getNavigator().navigateTo("register"));
+		addComponent(Register);
 		addComponent(pdf_button);
     }
 	
