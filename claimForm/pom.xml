@@ -66,11 +66,6 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>qrcode</artifactId>
-			<version>2.0.1</version>
-		</dependency>
 	</dependencies>
 
 	<build>
