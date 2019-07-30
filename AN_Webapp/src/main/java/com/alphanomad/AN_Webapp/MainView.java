@@ -7,6 +7,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+
 
 public class MainView extends VerticalLayout implements View{
 	
@@ -16,15 +18,33 @@ public class MainView extends VerticalLayout implements View{
 		String[] values = {"1","test"};
 		DBHelper dbh = new DBHelper();
 		
-		Button button = new Button("Click me",
-	            event -> Notification.show(dbh.php_request("signin",params,values)));
-		
-	    addComponent(button);
+		/*
+		 * Button button = new Button("Click me", event ->
+		 * Notification.show(dbh.php_request("signin",params,values)));
+		 * 
+		 * addComponent(button);
+		 */
 	    
 	    Button profile_button = new Button("go to profile view",
 	            event -> getUI().getNavigator().navigateTo("profile"));
 	    
 	    addComponent(profile_button);
+	    
+	    String studentNum="1";
+        
+        String[] parameters= { "table", "target", "student_num" };
+		String[] valuess = { "BOOKINGS", "*", studentNum };
+		
+		
+		Button pdf_button = new Button("Generate PDF",
+				
+				
+				event -> UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess),"_blank")
+				//event -> Notification.show(dbh.php_request("select_booking", parameters, valuess))
+				
+				);
+		
+		addComponent(pdf_button);
     }
 	
 }
