@@ -33,6 +33,7 @@ public class MyUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         getPage().setTitle("Navigation Example");
+    	addStyleName("image-backgound");
 
         // Create a navigator to control the views
         navigator = new Navigator(this, this);
@@ -49,7 +50,7 @@ public class MyUI extends UI {
         
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+    @VaadinServletConfiguration(ui = MyUI.class, productionMode = true)
     public static class MyUIServlet extends VaadinServlet {
     }
 }
