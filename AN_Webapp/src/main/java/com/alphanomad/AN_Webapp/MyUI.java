@@ -29,6 +29,7 @@ public class MyUI extends UI {
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String LOGINVIEW="login";
 	protected static final String REGVIEW="register";
+	protected static final String HISTORYVIEW="history";
 
     @Override
     protected void init(VaadinRequest request) {
