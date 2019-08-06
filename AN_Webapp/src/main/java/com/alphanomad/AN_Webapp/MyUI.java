@@ -33,7 +33,6 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        getPage().setTitle("Navigation Example");
     	addStyleName("image-backgound");
         getPage().setTitle("Alpha Nomad");
 
@@ -47,7 +46,7 @@ public class MyUI extends UI {
         navigator.addView(REGVIEW, new Register());
         
         
-        navigator.navigateTo(MAINVIEW);
+        navigator.navigateTo(LOGINVIEW);
     }
         
 

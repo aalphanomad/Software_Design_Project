@@ -54,9 +54,6 @@ public class LoginView extends VerticalLayout implements View {
 			
 	  }
   public  LoginView() {
-	  
-		String[] values = {"1","test"};
-		DBHelper dbh = new DBHelper();
 
  
 	  setSizeFull();
@@ -92,7 +89,7 @@ public class LoginView extends VerticalLayout implements View {
 	  	 HorizontalLayout buttons=new HorizontalLayout();
 	  	
 	  	  Button button1 = new Button("Login",
-				event -> Notification.show(TheLogin(Username.getValue(),Password.getValue())));
+				event -> );
 	  	 Button button2=new Button("Register",
 	  			 event ->getUI().getNavigator().navigateTo("register"));
 	  	 buttons.addComponent(button1);
@@ -107,8 +104,15 @@ public class LoginView extends VerticalLayout implements View {
 	  	 
 	  	 panel.setContent(content);
 	  	 
-
   }
+  
+  
+  
+  private boolean check_login(String username, String password) 
+  {
+	  TheLogin(Username.getValue(),Password.getValue()) ? getUI().getNavigator().navigateTo("main") : Notification.show("login failed")
+  }
+ 
 
 	  	
 	    
