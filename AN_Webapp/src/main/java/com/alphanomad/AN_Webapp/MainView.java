@@ -18,12 +18,6 @@ public class MainView extends VerticalLayout implements View{
 		String[] values = {"1","test"};
 		DBHelper dbh = new DBHelper();
 		
-		/*
-		 * Button button = new Button("Click me", event ->
-		 * Notification.show(dbh.php_request("signin",params,values)));
-		 * 
-		 * addComponent(button);
-		 */
 	    
 	    Button profile_button = new Button("go to profile view",
 	            event -> getUI().getNavigator().navigateTo("profile"));
