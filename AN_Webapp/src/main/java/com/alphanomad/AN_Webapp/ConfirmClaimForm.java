@@ -1,0 +1,109 @@
+package com.alphanomad.AN_Webapp;
+
+import javax.servlet.annotation.WebServlet;
+import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.View;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.Page.UriFragmentChangedListener;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.server.UserError;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.DateTimeField;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+
+public class ConfirmClaimForm extends VerticalLayout implements View {
+	String name, studnum, course, activity, date, venue, startTime, endTime;
+	
+	public ConfirmClaimForm(String str1, String str2, String str3, String str4, String str5, String str6, String str7, String str8){
+		
+		Panel panel=new Panel();
+	  	panel.setHeight("500px");
+	  	panel.setWidthUndefined();
+	  	addComponent(panel);
+	  	setComponentAlignment(panel,Alignment.MIDDLE_CENTER);
+	  	
+	  	FormLayout content=new FormLayout();
+	  	content.addStyleName("Template");
+	  	content.setMargin(true);
+	  	Label test=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n" + 
+	  	  		"       <b><u>Confirm Your Claim</u></b> " + 
+	  	  		"      </p>" ,ContentMode.HTML);
+	  	 content.addComponent(test);
+		
+        
+        name = str1;
+        studnum = str2;
+        course = str3;
+        activity = str4;
+        venue = str5;
+        date = str6;
+        startTime = str7;
+        endTime = str8;
+        
+        
+        Label label1 = new Label();
+        label1.setCaption("Name: " + name);
+        content.addComponent(label1);
+        
+        Label label2 = new Label();
+        label2.setCaption("Student No: " + studnum);
+        content.addComponent(label2);
+        
+        Label label3 = new Label();
+        label3.setCaption("Course Tutored: " + course);
+        content.addComponent(label3);
+        
+        Label label4 = new Label();
+        label4.setCaption("Type of Activity: " + activity);
+        content.addComponent(label4);
+        
+        Label label5 = new Label();
+        label5.setCaption("Venue: " + venue);
+        content.addComponent(label5);
+        
+        Label label6 = new Label();
+        label6.setCaption("Date: " + date);
+        content.addComponent(label6);
+        
+        Label label7 = new Label();
+        label7.setCaption("Time: " + startTime + " - " + endTime);
+        content.addComponent(label7);
+        
+        String[] params = {"name","student_num","date", "course", "venue", "valid", "chkStartTime" , "chkEndTime", "activity"} ;
+		String[] values= {"Tutor","1", date, course, venue, "0", "20:21:00", "20:25:00",  activity};
+		DBHelper dbh = new DBHelper();
+		dbh.php_request("booking", params, values);
+        
+        String ok = name + studnum;
+        String qr = name + "," + studnum + "," + course + "," + activity + "," + venue + "," + date + "," + startTime + "," + endTime;
+        Image sample = new Image();
+        sample.setSource(new ExternalResource(
+                "http://api.qrserver.com/v1/create-qr-code/?data=" + qr + "&size=200x200"));
+        
+        Button generate = new Button("Generate", event ->addComponent(sample));
+        addComponent(generate);
+        
+        Button home_button = new Button("Home",
+	            event -> getUI().getNavigator().navigateTo("main"));
+        addComponent(home_button);
+       
+        panel.setContent(content);
+	}
+
+
+}
