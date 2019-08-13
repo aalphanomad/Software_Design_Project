@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.View;
+import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -77,12 +78,12 @@ public class ClaimForm extends VerticalLayout implements View {
         
         DateTimeField start = new DateTimeField();
         start.setCaption("Select start of duration");
-        start.setValue(LocalDateTime.now());
+        //start.setValue(LocalDateTime.now());
         addComponent(start);
         
         DateTimeField end = new DateTimeField();
         end.setCaption("Select end of duration");
-        end.setValue(LocalDateTime.now());
+        //end.setValue(LocalDateTime.now());
         addComponent(end);
         
         if(!combobox.isEmpty() && !textfield.isEmpty() && !combobox2.isEmpty()) {
@@ -91,12 +92,6 @@ public class ClaimForm extends VerticalLayout implements View {
 	        activity = combobox2.getValue().toString();
         }
         
-
-        String string = start.getValue().toString();
-        String timeStart = string.substring(11, string.length()-13);
-        
-        String string2 = end.getValue().toString();
-        String timeEnd = string2.substring(11, string2.length()-13);
         
 			
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -109,22 +104,20 @@ public class ClaimForm extends VerticalLayout implements View {
 		
 		String date = day + " " + month + " " + year;
 		
-		Button see = new Button("SEE");
+		/*Button see = new Button("SEE");
 		//see.addClickListener(event -> dbh.php_request("booking", params, values));
-        //see.addClickListener(event -> Notification.show(date, Type.TRAY_NOTIFICATION));
-        addComponent(see);
+        see.addClickListener(event -> Notification.show(date, Type.TRAY_NOTIFICATION));
+        addComponent(see);*/
         
-        /*Button confirm = new Button("Confirm",
-	            event -> getUI().getNavigator().navigateTo("confirm"));*/
         
         Button confirm = new Button("Confirm");
         addComponent(confirm);
         confirm.addClickListener(e -> 
-	            addComponent(c = new ConfirmClaimForm("Tutor", "1", combobox.getValue().toString(), combobox2.getValue().toString(), textfield.getValue().toString(), date, timeStart, timeEnd)));
+	            addComponent(c = new ConfirmClaimForm("Tutor", "1", combobox.getValue().toString(), combobox2.getValue().toString(), textfield.getValue().toString(), date, EditString.edit(start.getValue().toString()), EditString.edit(end.getValue().toString()))));
         
-        
-			
-
+            Notification notification=new Notification("PLEASE SCROLL DOWN");
+            confirm.addClickListener(e->{notification.show(Page.getCurrent()); removeComponent(confirm);});
+         
     }
 
 }

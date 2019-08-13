@@ -28,7 +28,7 @@ public class MyUI extends UI {
 	protected static final String MAINVIEW = "main";
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String CLAIMFORM = "claimform";
-	protected static final String CONFIRM = "confirm";
+	//protected static final String CONFIRM = "confirm";
 
     @Override
     protected void init(VaadinRequest request) {
