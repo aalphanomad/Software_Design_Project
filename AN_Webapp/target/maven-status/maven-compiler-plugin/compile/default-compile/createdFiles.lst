@@ -1,8 +1,8 @@
+com\alphanomad\AN_Webapp\MyUI.class
 com\alphanomad\AN_Webapp\DBHelper.class
 com\alphanomad\AN_Webapp\Register.class
-com\alphanomad\AN_Webapp\ProfileView.class
-com\alphanomad\AN_Webapp\LoginView.class
-com\alphanomad\AN_Webapp\MyUI.class
 com\alphanomad\AN_Webapp\DBHelper$1.class
 com\alphanomad\AN_Webapp\MainView.class
+com\alphanomad\AN_Webapp\ProfileView.class
+com\alphanomad\AN_Webapp\LoginView.class
 com\alphanomad\AN_Webapp\MyUI$MyUIServlet.class

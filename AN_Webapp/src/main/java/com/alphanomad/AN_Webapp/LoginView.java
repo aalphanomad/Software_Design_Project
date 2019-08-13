@@ -5,6 +5,7 @@ import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinRequest;
@@ -54,7 +55,7 @@ public class LoginView extends VerticalLayout implements View {
 			   //System.out.println(login_obj.get("name").getAsString());
 			   //System.out.println(login_obj.get("student_num").getAsString());
 			   //System.out.println(login_obj.get("role").getAsString());
-			   this.parent_ui.set_user_info( new UserInfo(login_obj.get("name").getAsString(), login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
+			   ((MyUI) getUI()).set_user_info( new UserInfo(login_obj.get("name").getAsString(), login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
 			   //((MyUI) UI.getCurrent()).set_user_info( new UserInfo(login_obj.get("name").getAsString(), login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
 			   return true;
 		   }else {
@@ -66,8 +67,15 @@ public class LoginView extends VerticalLayout implements View {
 			
 	  }
   public  LoginView(MyUI parent_ui) {
-	  this.parent_ui = parent_ui;
- 
+	  
+	  	 
+  }
+  
+  @Override
+  public void enter(ViewChangeEvent vc_event)
+  {
+	  removeAllComponents();
+	  ((MyUI)getUI()).set_user_info(new UserInfo("", "", ""));
 	  setSizeFull();
 	addStyleName("image-backgound");
 	  	Panel panel=new Panel();
@@ -115,7 +123,6 @@ public class LoginView extends VerticalLayout implements View {
 	  	 content.setComponentAlignment(buttons, Alignment.BOTTOM_LEFT);
 	  	 
 	  	 panel.setContent(content);
-	  	 
   }
   
   
