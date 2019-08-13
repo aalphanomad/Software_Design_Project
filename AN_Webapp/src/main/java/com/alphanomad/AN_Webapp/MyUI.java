@@ -6,6 +6,8 @@ import com.alphanomad.AN_Webapp.DBHelper;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
@@ -30,6 +32,8 @@ public class MyUI extends UI {
 	protected static final String LOGINVIEW="login";
 	protected static final String REGVIEW="register";
 	protected static final String HISTORYVIEW="history";
+	
+	UserInfo user_info;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -41,15 +45,32 @@ public class MyUI extends UI {
 
         // Create and register the views
         navigator.addView(MAINVIEW, new MainView());
-        navigator.addView(PROFILEVIEW, new ProfileView());
-        navigator.addView(LOGINVIEW, new LoginView());
+        navigator.addView(PROFILEVIEW, new ProfileView(this));
+        navigator.addView(LOGINVIEW, new LoginView(this));
         navigator.addView(REGVIEW, new Register());
+        
+        System.out.println("regstration complete");
+      
         
         
         navigator.navigateTo(LOGINVIEW);
     }
         
-
+    public void set_user_info(UserInfo info)
+    {
+    	System.out.println("setting user info");
+    	this.user_info = info;
+    	System.out.println(this.user_info.hashCode());
+    }
+    
+    public UserInfo get_user_info()
+    {
+    	System.out.println("setting user info");
+    	System.out.println(this.user_info.hashCode());
+    	return this.user_info;
+    }
+    
+    
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = true)
     public static class MyUIServlet extends VaadinServlet {

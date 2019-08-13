@@ -2,10 +2,12 @@ package com.alphanomad.AN_Webapp;
 
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 
@@ -15,9 +17,20 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ProfileView extends VerticalLayout implements View{
 
-    public ProfileView() {
+    public ProfileView(MyUI ui) {
+    	
+    }
+    
+    @Override
+    public void enter(ViewChangeEvent event)
+    {
+    	this.removeAllComponents();
     	//TODO: Replace this with actual data
-    	String stud_num = "1";
+    	String stud_num = "";
+    	MyUI ui = (MyUI) getUI();
+    	ui.get_user_info();
+    	stud_num = ui.get_user_info().get_student_num();
+
     	
     	DBHelper dbh = new DBHelper();
     	
@@ -32,12 +45,14 @@ public class ProfileView extends VerticalLayout implements View{
     	JsonObject courses_obj = dbh.parse_json_string(courses);
     	
     	Button home_button = new Button("go to main view",
-	            event -> getUI().getNavigator().navigateTo("main"));
+	            btn_event -> getUI().getNavigator().navigateTo("main"));
     	
     	addComponent(make_user_info_panel(name, stud_num));
     	addComponent(make_courses_panel(courses_obj));
     	addComponent(home_button);
     }
+    
+    
    
     /**
      * simple function to make a view that shows the users email and name
@@ -75,23 +90,30 @@ public class ProfileView extends VerticalLayout implements View{
     private Panel make_courses_panel(JsonObject courses)
     {
     	Panel panel = new Panel();
-    	
-    	JsonObject data = courses.getAsJsonArray("result").get(0).getAsJsonObject();
-    	
     	VerticalLayout courses_inner = new VerticalLayout();
-    	
-    	for(String j : data.keySet())
+    	try
     	{
-    		try
-    		{
-    			courses_inner.addComponent(new Label (data.get(j).getAsString()+"\n"));
-    		}
-    		catch(UnsupportedOperationException e)
-    		{
-    			//courses_inner.addComponent(new Label("probs null value"));
-    		}
-    		
+    		JsonObject data = courses.getAsJsonArray("result").get(0).getAsJsonObject();
+        	
+        	
+        	
+        	for(String j : data.keySet())
+        	{
+        		try
+        		{
+        			courses_inner.addComponent(new Label (data.get(j).getAsString()+"\n"));
+        		}
+        		catch(UnsupportedOperationException e)
+        		{
+        			//courses_inner.addComponent(new Label("probs null value"));
+        		}
+        		
+        	}
     	}
+    	catch (Exception e) {
+			// TODO: handle exception
+		}
+    	
     	
     	panel.setCaption("Courses");
     	panel.setContent(courses_inner);
