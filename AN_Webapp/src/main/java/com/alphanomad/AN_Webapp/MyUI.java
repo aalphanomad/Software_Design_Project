@@ -29,6 +29,8 @@ public class MyUI extends UI {
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String LOGINVIEW="login";
 	protected static final String REGVIEW="register";
+	protected static final String HISTORYVIEW="history";
+
 
     @Override
     protected void init(VaadinRequest request) {
@@ -43,6 +45,7 @@ public class MyUI extends UI {
         navigator.addView(PROFILEVIEW, new ProfileView());
         navigator.addView(LOGINVIEW, new LoginView());
         navigator.addView(REGVIEW, new Register());
+        navigator.addView(HISTORYVIEW,new ClaimHistory());
         
         
         navigator.navigateTo(MAINVIEW);
