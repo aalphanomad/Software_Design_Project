@@ -22,54 +22,40 @@ public class MainView extends VerticalLayout implements View{
 	public void enter(ViewChangeEvent vc_event)
 	{
 		removeAllComponents();
-	    String[] params = {"student_num","password"} ;
-		String[] values = {"1","test"};
 		DBHelper dbh = new DBHelper();
 		
-		/*
-		 * Button button = new Button("Click me", event ->
-		 * Notification.show(dbh.php_request("signin",params,values)));
-		 * 
-		 * addComponent(button);
-		 */
 	    
+		// DEFINE COMPONENTS HERE
+		
 	    Button profile_button = new Button("Profile",
 	            event -> getUI().getNavigator().navigateTo("profile"));
-	    
-	    addComponent(profile_button);
 	    
 	    String studentNum= ((MyUI) getUI()).get_user_info().get_student_num();
         
         String[] parameters= { "table", "target", "student_num" };
 		String[] valuess = { "BOOKINGS", "*", studentNum };
-		
-		
 		Button pdf_button = new Button("Generate Claims Form",
 				event -> UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess),"_blank")
-				//event -> Notification.show(dbh.php_request("select_booking", parameters, valuess))
-				
 				);
 		
 		Button Login=new Button("Logout",event->getUI().getNavigator().navigateTo("login"));
-		
 		//Button Register=new Button("Register",event->getUI().getNavigator().navigateTo("register"));
+	
 		Button History=new Button("History",event->getUI().getNavigator().navigateTo("history"));
 		
-		Button claimForm_button = new Button("New Claim Form",
+		Button claimForm_button = new Button("New Claim",
 	            event -> getUI().getNavigator().navigateTo("claimform"));
 	    
+		
+		// ADD COMPONENTS TO UI HERE
+		
+	    
 	    addComponent(claimForm_button);
+	    addComponent(profile_button);
 		addComponent(History);
-
-		//addComponent(Register);
 		addComponent(pdf_button);
 		addComponent(Login);
-		Button Register=new Button("Register",event->getUI().getNavigator().navigateTo("register"));
-		Button History=new Button("History",event->getUI().getNavigator().navigateTo("history"));
-		addComponent(History);
-
-		addComponent(Register);
-		addComponent(pdf_button);
+		//addComponent(Register);
     }
 	
 }

@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinRequest;
@@ -39,12 +40,20 @@ public class ClaimForm extends VerticalLayout implements View {
 
     @SuppressWarnings("unchecked")
 	public ClaimForm () {
+    	
+         
+    }
+    
+    @Override
+    public void enter(ViewChangeEvent event)
+    {
+    	UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
     	Label test=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n" + 
 	  	  		"       <b><u>Claim Form</u></b> " + 
 	  	  		"      </p>" ,ContentMode.HTML);
 	  	 addComponent(test);
         
-        ArrayList coursesArray = new ArrayList();
+        ArrayList<String> coursesArray = new ArrayList();
         coursesArray.add("COMS3003 (Formal Languages and Automata)");
         coursesArray.add("COMS3005 (Advanced Analysis of Algorithms)");
         coursesArray.add("COMS3009 (Software Design)");
@@ -54,13 +63,13 @@ public class ClaimForm extends VerticalLayout implements View {
         coursesArray.add("COMS3008 (Parallel Computing)");
         coursesArray.add("COMS3011 (Software Design Project)");
         
-        ArrayList activityArray = new ArrayList();
+        ArrayList<String> activityArray = new ArrayList();
         activityArray.add("Tutoring");
         activityArray.add("Invigilating");
         activityArray.add("Marking");
         activityArray.add("Other");
         
-        ComboBox combobox = new ComboBox("Course");
+        ComboBox<String> combobox = new ComboBox<String>("Course");
         combobox.setPlaceholder("Please fill in");
         combobox.setWidth("100%");
         combobox.setItems(coursesArray);
@@ -71,7 +80,7 @@ public class ClaimForm extends VerticalLayout implements View {
         textfield.setCaption("Venue");
         addComponent(textfield);
         
-        ComboBox combobox2 = new ComboBox("Type of Activity");
+        ComboBox<String> combobox2 = new ComboBox<String>("Type of Activity");
         combobox2.setPlaceholder("Please fill in");
         combobox2.setItems(activityArray);
         addComponent(combobox2);
@@ -113,11 +122,10 @@ public class ClaimForm extends VerticalLayout implements View {
         Button confirm = new Button("Confirm");
         addComponent(confirm);
         confirm.addClickListener(e -> 
-	            addComponent(c = new ConfirmClaimForm("Tutor", "1", combobox.getValue().toString(), combobox2.getValue().toString(), textfield.getValue().toString(), date, EditString.edit(start.getValue().toString()), EditString.edit(end.getValue().toString()))));
+	            addComponent(c = new ConfirmClaimForm(tutor_info.name, tutor_info.student_num, combobox.getValue().toString(), combobox2.getValue().toString(), textfield.getValue().toString(), date, EditString.edit(start.getValue().toString()), EditString.edit(end.getValue().toString()))));
         
             Notification notification=new Notification("PLEASE SCROLL DOWN");
             confirm.addClickListener(e->{notification.show(Page.getCurrent()); removeComponent(confirm);});
-         
     }
 
 }
