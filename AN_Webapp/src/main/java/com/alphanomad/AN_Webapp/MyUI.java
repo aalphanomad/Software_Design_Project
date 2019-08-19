@@ -34,6 +34,7 @@ public class MyUI extends UI {
 	protected static final String LOGINVIEW="login";
 	protected static final String REGVIEW="register";
 	protected static final String HISTORYVIEW="history";
+	protected static final String CLAIMFORM = "claimform";
 
 
     @Override
@@ -50,6 +51,7 @@ public class MyUI extends UI {
         navigator.addView(LOGINVIEW, new LoginView(this));
         navigator.addView(REGVIEW, new Register());
         navigator.addView(HISTORYVIEW,new ClaimHistory());
+        navigator.addView(CLAIMFORM, new ClaimForm());
         
         System.out.println("regstration complete");
       

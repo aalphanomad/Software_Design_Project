@@ -54,6 +54,11 @@ public class MainView extends VerticalLayout implements View{
 		
 		//Button Register=new Button("Register",event->getUI().getNavigator().navigateTo("register"));
 		Button History=new Button("History",event->getUI().getNavigator().navigateTo("history"));
+		
+		Button claimForm_button = new Button("New Claim Form",
+	            event -> getUI().getNavigator().navigateTo("claimform"));
+	    
+	    addComponent(claimForm_button);
 		addComponent(History);
 
 		//addComponent(Register);
