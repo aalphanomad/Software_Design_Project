@@ -47,6 +47,8 @@ public class ClaimForm extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event)
     {
+ 	removeAllComponents();
+	    
     	UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
     	Label test=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n" + 
 	  	  		"       <b><u>Claim Form</u></b> " + 
