@@ -85,7 +85,7 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
         content.addComponent(label7);
         
         String[] params = {"name","student_num","date", "course", "venue", "valid", "chkStartTime" , "chkEndTime", "activity"} ;
-		String[] values= {"Tutor","1", date, course, venue, "0", "20:21:00", "20:25:00",  activity};
+		String[] values= {name,studnum, date, course, venue, "0", startTime, endTime,  activity};
 		DBHelper dbh = new DBHelper();
 		dbh.php_request("booking", params, values);
         
