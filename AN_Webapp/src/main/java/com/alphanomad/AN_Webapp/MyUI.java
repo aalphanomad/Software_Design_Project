@@ -38,7 +38,7 @@ public class MyUI extends UI {
 
 
     @Override
-    protected void init(VaadinRequest request) {
+	public void init(VaadinRequest request) {
     	addStyleName("image-backgound");
         getPage().setTitle("Alpha Nomad");
 
