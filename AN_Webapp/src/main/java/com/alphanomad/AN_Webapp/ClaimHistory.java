@@ -17,6 +17,7 @@ public class ClaimHistory  extends VerticalLayout implements View{
 
 	TextField Username;
 	PasswordField Password;
+	ConfirmClaimForm c;
 	
 			public String[][] Display(String info,int size) {
 				String[][]Matrix=new String[size][size];
