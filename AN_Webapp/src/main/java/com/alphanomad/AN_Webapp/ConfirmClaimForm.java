@@ -3,6 +3,7 @@ package com.alphanomad.AN_Webapp;
 import javax.servlet.annotation.WebServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page.UriFragmentChangedListener;
@@ -21,6 +22,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -28,6 +30,7 @@ import com.vaadin.ui.VerticalLayout;
 
 public class ConfirmClaimForm extends VerticalLayout implements View {
 	String name, studnum, course, activity, date, venue, startTime, endTime;
+	String[] array = new String[8];
 	
 	public ConfirmClaimForm(String str1, String str2, String str3, String str4, String str5, String str6, String str7, String str8){
 		
@@ -55,6 +58,14 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
         startTime = str7;
         endTime = str8;
         
+        array[0] = name;
+        array[1] = studnum;
+        array[2] = date;
+        array[3] = course;
+        array[4] = venue;
+        array[5] = startTime;
+        array[6] = endTime;
+        array[7] = activity;
         
         Label label1 = new Label();
         label1.setCaption("Name: " + name);
@@ -85,7 +96,7 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
         content.addComponent(label7);
         
         String[] params = {"name","student_num","date", "course", "venue", "valid", "chkStartTime" , "chkEndTime", "activity"} ;
-		String[] values= {"Tutor","1", date, course, venue, "0", "20:21:00", "20:25:00",  activity};
+		String[] values= {name,studnum, date, course, venue, "0", startTime, endTime,  activity};
 		DBHelper dbh = new DBHelper();
 		dbh.php_request("booking", params, values);
         
@@ -101,7 +112,22 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
         Button home_button = new Button("Home",
 	            event -> getUI().getNavigator().navigateTo("main"));
         addComponent(home_button);
-       
+        
+		 
+		  
+		   TextField LecturerUsername=new TextField();
+		   LecturerUsername.setIcon(VaadinIcons.USER);
+		   LecturerUsername.setCaption("Lecturer Username"); 
+		   LecturerUsername.setPlaceholder("Username");
+		  addComponent(LecturerUsername);
+		
+		  
+		  TextField LecturerPassword=new PasswordField();
+		  LecturerPassword.setCaption("Lecturer Password");
+		  LecturerPassword.setIcon(VaadinIcons.PASSWORD);
+		  LecturerPassword.setPlaceholder("Password");
+		  addComponent(LecturerPassword);
+		  
         panel.setContent(content);
 	}
 
