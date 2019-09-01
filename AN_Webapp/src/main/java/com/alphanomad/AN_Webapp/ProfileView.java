@@ -2,20 +2,35 @@ package com.alphanomad.AN_Webapp;
 
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 
 /**
- * The main view contains a button and a click listener.
+ * This view is the view which shows the profile
+ * it shows the users name and email and all subjects they are linked to
  */
 public class ProfileView extends VerticalLayout implements View{
 
-    public ProfileView() {
+    public ProfileView(MyUI ui) {
+    	
+    }
+    
+    @Override
+    public void enter(ViewChangeEvent event)
+    {
+    	this.removeAllComponents();
     	//TODO: Replace this with actual data
-    	String stud_num = "1";
+    	String stud_num = "";
+    	MyUI ui = (MyUI) getUI();
+    	ui.get_user_info();
+    	stud_num = ui.get_user_info().get_student_num();
+
     	
     	DBHelper dbh = new DBHelper();
     	
@@ -30,16 +45,25 @@ public class ProfileView extends VerticalLayout implements View{
     	JsonObject courses_obj = dbh.parse_json_string(courses);
     	
     	Button home_button = new Button("go to main view",
-	            event -> getUI().getNavigator().navigateTo("main"));
+	            btn_event -> getUI().getNavigator().navigateTo("main"));
     	
     	addComponent(make_user_info_panel(name, stud_num));
     	addComponent(make_courses_panel(courses_obj));
     	addComponent(home_button);
     }
+    
+    
    
-    private VerticalLayout make_user_info_panel(String name, String student_number)
+    /**
+     * simple function to make a view that shows the users email and name
+     * @param name
+     * @param student_number
+     * @return a Vertical layout to be added to a page
+     */
+    private Panel make_user_info_panel(String name, String student_number)
     {
-    	VerticalLayout panel = new VerticalLayout();
+    	Panel panel = new Panel();
+    	VerticalLayout inner = new VerticalLayout();
     	
     	
     	HorizontalLayout stud_num_line = new HorizontalLayout();
@@ -50,8 +74,11 @@ public class ProfileView extends VerticalLayout implements View{
     	email_line.addComponent(new Label("Email Address:"));
     	email_line.addComponent(new Label(student_number+"@students.wits.ac.za"));
     	
-    	panel.addComponent(stud_num_line);
-    	panel.addComponent(email_line);
+    	inner.addComponent(stud_num_line);
+    	inner.addComponent(email_line);
+    	
+    	panel.setCaption("User Information");
+    	panel.setContent(inner);
     	return panel;
     }
     
@@ -60,29 +87,36 @@ public class ProfileView extends VerticalLayout implements View{
      * @param courses a Json Object
      * @return a vertical layout containing a collapseable list of courses that the user is linked to
      */
-    private VerticalLayout make_courses_panel(JsonObject courses)
+    private Panel make_courses_panel(JsonObject courses)
     {
-    	VerticalLayout panel = new VerticalLayout();
-    	
-    	JsonObject data = courses.getAsJsonArray("result").get(0).getAsJsonObject();
-    	
+    	Panel panel = new Panel();
     	VerticalLayout courses_inner = new VerticalLayout();
-    	
-    	for(String j : data.keySet())
+    	try
     	{
-    		try
-    		{
-    			courses_inner.addComponent(new Label (data.get(j).getAsString()+"\n"));
-    		}
-    		catch(UnsupportedOperationException e)
-    		{
-    			courses_inner.addComponent(new Label("probs null value"));
-    		}
-    		
+    		JsonObject data = courses.getAsJsonArray("result").get(0).getAsJsonObject();
+        	
+        	
+        	
+        	for(String j : data.keySet())
+        	{
+        		try
+        		{
+        			courses_inner.addComponent(new Label (data.get(j).getAsString()+"\n"));
+        		}
+        		catch(UnsupportedOperationException e)
+        		{
+        			//courses_inner.addComponent(new Label("probs null value"));
+        		}
+        		
+        	}
     	}
+    	catch (Exception e) {
+			// TODO: handle exception
+		}
     	
-
-    	panel.addComponent(courses_inner);
+    	
+    	panel.setCaption("Courses");
+    	panel.setContent(courses_inner);
     	
     	
     	return panel;

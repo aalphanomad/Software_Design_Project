@@ -1,9 +1,11 @@
 package com.alphanomad.AN_Webapp;
 
+import com.google.gson.JsonObject;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinRequest;
@@ -26,7 +28,9 @@ import com.vaadin.ui.Window;
 public class LoginView extends VerticalLayout implements View {
 	TextField Username;
 	PasswordField Password;
-	  public String TheLogin(String student_num,String password) {
+	MyUI parent_ui;
+	
+	  public boolean TheLogin(String student_num,String password) {
 		
 		  Username.setComponentError(null);
 		  Password.setComponentError(null);
@@ -39,26 +43,39 @@ public class LoginView extends VerticalLayout implements View {
 			}
 			if(Password.isEmpty()) {
 				Password.setComponentError(new UserError("Please Enter your Password"));
-				return "Fail";
+				return false;
 	
 			}
 			else {
 		   String ans=dbh.php_request("signin", params, values);
-		   if(ans.length()>14) {
-			   return "Pass";
+		   
+		   JsonObject login_obj = dbh.parse_json_string(ans);
+		   
+		   if(login_obj.get("result").getAsString().equals("1")) {
+			   //System.out.println(login_obj.get("name").getAsString());
+			   //System.out.println(login_obj.get("student_num").getAsString());
+			   //System.out.println(login_obj.get("role").getAsString());
+			   ((MyUI) getUI()).set_user_info( new UserInfo(login_obj.get("name").getAsString(), login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
+			   //((MyUI) UI.getCurrent()).set_user_info( new UserInfo(login_obj.get("name").getAsString(), login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
+			   return true;
 		   }else {
-			   return "Fail";
-			  // Password.setComponentError(new UserError("Incorrect Username/Password. Please Try Again."));
+			   //Password.setComponentError(new UserError("Incorrect Username/Password. Please Try Again."));
+			   return false;
+			  
 		   }
 			}
 			
 	  }
-  public  LoginView() {
+  public  LoginView(MyUI parent_ui) {
 	  
-		String[] values = {"1","test"};
-		DBHelper dbh = new DBHelper();
-
- 
+	  	 
+  }
+  
+  @Override
+  public void enter(ViewChangeEvent vc_event)
+  {
+	  removeAllComponents();
+	  ((MyUI)getUI()).set_user_info(new UserInfo("", "", ""));
 	  setSizeFull();
 	addStyleName("image-backgound");
 	  	Panel panel=new Panel();
@@ -92,7 +109,7 @@ public class LoginView extends VerticalLayout implements View {
 	  	 HorizontalLayout buttons=new HorizontalLayout();
 	  	
 	  	  Button button1 = new Button("Login",
-				event -> Notification.show(TheLogin(Username.getValue(),Password.getValue())));
+				event -> handle_login(Username.getValue(), Password.getValue()));
 	  	 Button button2=new Button("Register",
 	  			 event ->getUI().getNavigator().navigateTo("register"));
 	  	 buttons.addComponent(button1);
@@ -106,9 +123,23 @@ public class LoginView extends VerticalLayout implements View {
 	  	 content.setComponentAlignment(buttons, Alignment.BOTTOM_LEFT);
 	  	 
 	  	 panel.setContent(content);
-	  	 
-
   }
+  
+  
+  private void handle_login(String username, String password)
+  {
+	  if(TheLogin(username, password))
+	  {
+		  getUI().getNavigator().navigateTo("main");
+	  }
+	  else
+	  {
+		  Password.setComponentError(new UserError("Incorrect Username/Password. Please Try Again."));
+		  Notification.show("Login Failed");
+	  }
+	  
+  }
+
 
 	  	
 	    

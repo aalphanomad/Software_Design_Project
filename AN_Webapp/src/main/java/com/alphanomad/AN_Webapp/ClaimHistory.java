@@ -17,6 +17,7 @@ public class ClaimHistory  extends VerticalLayout implements View{
 
 	TextField Username;
 	PasswordField Password;
+	ConfirmClaimForm c;
 	
 			public String[][] Display(String info,int size) {
 				String[][]Matrix=new String[size][size];
@@ -67,8 +68,15 @@ public  ClaimHistory() {
 
 		Grid<HistoryItem> grid=new Grid<>(HistoryItem.class);
 		grid.setItems(History);
-		grid.addColumn(unused -> "Validate!", new ButtonRenderer(
-				event ->Notification.show("Test") ) {}).setCaption("Validate");		//GO TO QR GENERATOR!
+		grid.addColumn(unused -> "Validate", new ButtonRenderer(
+			event ->{removeAllComponents();
+				addComponent( c = new ConfirmClaimForm("Tutor", "1", (((HistoryItem) event.getItem()).getCourse()),
+				(((HistoryItem) event.getItem()).getActivity()),
+				(((HistoryItem) event.getItem()).getVenue()),
+				(((HistoryItem) event.getItem()).getDate()),
+				(((HistoryItem) event.getItem()).getStart_Time()),
+				(((HistoryItem) event.getItem()).getEnd_time()))); 
+				}));	//GO TO QR GENERATOR!
 		grid.setWidth("100%");
 		grid.setHeightUndefined();
 //grid.setStyleName(style);
@@ -76,7 +84,3 @@ addComponent(grid);
   }
 }
 	 
-
-
-
-  
