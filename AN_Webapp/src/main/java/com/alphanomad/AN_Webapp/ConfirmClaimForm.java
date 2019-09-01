@@ -128,6 +128,15 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
 		  LecturerPassword.setPlaceholder("Password");
 		  addComponent(LecturerPassword);
 		  
+		String[] params2 = {"name","student_num","course", "date", "venue"} ;
+		String[] values2= {name,studnum, course, date, venue};
+		DBHelper dbh2 = new DBHelper();
+		
+		  
+		  /*Button validate = new Button("Validate",
+		            event -> dbh2.php_request("verify", params2, values2));
+		  addComponent(validate);*/
+		  
         panel.setContent(content);
 	}
 

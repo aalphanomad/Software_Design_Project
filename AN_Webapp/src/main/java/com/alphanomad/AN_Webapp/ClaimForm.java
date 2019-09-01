@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.servlet.annotation.WebServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -37,6 +38,9 @@ public class ClaimForm extends VerticalLayout implements View {
     String venue;
     String activity;
     ConfirmClaimForm c;
+    
+    Navigator navigator;
+    //protected static final String CONFIRMCLAIMFORM = "confirm";
 
     @SuppressWarnings("unchecked")
 	public ClaimForm () {
@@ -119,15 +123,25 @@ public class ClaimForm extends VerticalLayout implements View {
 		//see.addClickListener(event -> dbh.php_request("booking", params, values));
         see.addClickListener(event -> Notification.show(date, Type.TRAY_NOTIFICATION));
         addComponent(see);*/
+		
         
+        //navigator.addView(CONFIRMCLAIMFORM, new ClaimForm());
+		
         
         Button confirm = new Button("Confirm");
         addComponent(confirm);
         confirm.addClickListener(e -> 
-	            addComponent(c = new ConfirmClaimForm(tutor_info.name, tutor_info.student_num, EditString.editCourse((combobox.getValue().toString())), combobox2.getValue().toString(), textfield.getValue().toString(), date, EditString.editTime(start.getValue().toString()), EditString.editTime(end.getValue().toString()))));
+	            	c = new ConfirmClaimForm(tutor_info.name, tutor_info.student_num, 
+	            		EditString.editCourse((combobox.getValue().toString())), combobox2.getValue().toString(), 
+	            		textfield.getValue().toString(), date, EditString.editTime(start.getValue().toString()), 
+	            		EditString.editTime(end.getValue().toString())));
+        
         
             Notification notification=new Notification("PLEASE SCROLL DOWN");
-            confirm.addClickListener(e->{notification.show(Page.getCurrent()); removeComponent(confirm);});
+            confirm.addClickListener(e->{notification.show(Page.getCurrent()); removeComponent(confirm); 
+            //navigator.addView(CONFIRMCLAIMFORM, c);
+            getUI().getNavigator().navigateTo("confirm");
+            });
     }
 
 }
