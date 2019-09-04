@@ -11,9 +11,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.*;
 
 
-public class MainView extends VerticalLayout implements View{
+public class TutorMainView extends VerticalLayout implements View{
 	
-	public MainView() {
+	public TutorMainView() {
 
 
     }

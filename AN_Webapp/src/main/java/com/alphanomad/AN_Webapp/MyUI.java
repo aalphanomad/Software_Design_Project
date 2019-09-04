@@ -29,7 +29,8 @@ public class MyUI extends UI {
 	
 	Navigator navigator;
 	private UserInfo user_info;
-	protected static final String MAINVIEW = "main";
+	protected static final String TUTORMAINVIEW = "tutormain";
+	protected static final String LECTMAINVIEW = "lectmain";
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String LOGINVIEW="login";
 	protected static final String REGVIEW="register";
@@ -49,7 +50,9 @@ public class MyUI extends UI {
        navigator = new Navigator(this,this);
 
         // Create and register the views
-        navigator.addView(MAINVIEW, new MainView());
+        navigator.addView(TUTORMAINVIEW, new TutorMainView());
+       navigator.addView(LECTMAINVIEW, new LectMainView());
+
         navigator.addView(PROFILEVIEW, new ProfileView(this));
         navigator.addView(LOGINVIEW, new LoginView(this));
         navigator.addView(REGVIEW, new Register());

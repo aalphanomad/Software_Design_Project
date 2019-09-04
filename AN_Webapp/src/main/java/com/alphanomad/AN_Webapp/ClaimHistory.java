@@ -77,10 +77,13 @@ public  ClaimHistory() {
 				(((HistoryItem) event.getItem()).getStart_Time()),
 				(((HistoryItem) event.getItem()).getEnd_time()))); 
 				}));	//GO TO QR GENERATOR!
+				
 		grid.setWidth("100%");
 		grid.setHeightUndefined();
+		
 //grid.setStyleName(style);
-addComponent(grid);		
+addComponent(grid);	
+
   }
 }
 	 
