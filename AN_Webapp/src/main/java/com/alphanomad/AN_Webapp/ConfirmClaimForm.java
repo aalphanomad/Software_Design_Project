@@ -29,7 +29,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class ConfirmClaimForm extends VerticalLayout implements View {
-	String name, studnum, course, activity, date, venue, startTime, endTime;
+	public static String name, studnum, course, activity, date, venue, startTime, endTime;
 	String[] array = new String[8];
 	
 	public ConfirmClaimForm(String str1, String str2, String str3, String str4, String str5, String str6, String str7, String str8){
@@ -132,13 +132,14 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
 		String[] values2= {name,studnum, course, date, venue};
 		DBHelper dbh2 = new DBHelper();
 		
-		  
+		  System.out.println(course);
 		  /*Button validate = new Button("Validate",
 		            event -> dbh2.php_request("verify", params2, values2));
 		  addComponent(validate);*/
 		  
         panel.setContent(content);
 	}
+
 
 
 }

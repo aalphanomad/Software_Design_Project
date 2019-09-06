@@ -54,7 +54,10 @@ public class MyUI extends UI {
         navigator.addView(REGVIEW, new Register());
         navigator.addView(HISTORYVIEW,new ClaimHistory());
         navigator.addView(CLAIMFORM, new ClaimForm());
-        navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(null, null, null, null, null, null, null, null));
+        navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(
+        		ConfirmClaimForm.name, ConfirmClaimForm.studnum, ConfirmClaimForm.course, 
+        		ConfirmClaimForm.activity, ConfirmClaimForm.venue, ConfirmClaimForm.date, 
+        		ConfirmClaimForm.startTime, ConfirmClaimForm.endTime));
        
         
         System.out.println("regstration complete");

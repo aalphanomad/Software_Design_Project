@@ -137,9 +137,9 @@ public class ClaimForm extends VerticalLayout implements View {
 	            		EditString.editTime(end.getValue().toString())));
         
         
-            Notification notification=new Notification("PLEASE SCROLL DOWN");
-            confirm.addClickListener(e->{notification.show(Page.getCurrent()); removeComponent(confirm); 
+            confirm.addClickListener(e->{/*notification.show(Page.getCurrent()); removeComponent(confirm);*/ 
             //navigator.addView(CONFIRMCLAIMFORM, c);
+            //addComponent(c);
             getUI().getNavigator().navigateTo("confirm");
             });
     }
