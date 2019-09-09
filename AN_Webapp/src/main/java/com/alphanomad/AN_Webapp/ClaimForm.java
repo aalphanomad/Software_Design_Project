@@ -47,6 +47,8 @@ public class ClaimForm extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event)
     {
+ 	removeAllComponents();
+	    
     	UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
     	Label test=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n" + 
 	  	  		"       <b><u>Claim Form</u></b> " + 
@@ -122,7 +124,7 @@ public class ClaimForm extends VerticalLayout implements View {
         Button confirm = new Button("Confirm");
         addComponent(confirm);
         confirm.addClickListener(e -> 
-	            addComponent(c = new ConfirmClaimForm(tutor_info.name, tutor_info.student_num, combobox.getValue().toString(), combobox2.getValue().toString(), textfield.getValue().toString(), date, EditString.edit(start.getValue().toString()), EditString.edit(end.getValue().toString()))));
+	            addComponent(c = new ConfirmClaimForm(tutor_info.name, tutor_info.student_num, EditString.editCourse((combobox.getValue().toString())), combobox2.getValue().toString(), textfield.getValue().toString(), date, EditString.editTime(start.getValue().toString()), EditString.editTime(end.getValue().toString()))));
         
             Notification notification=new Notification("PLEASE SCROLL DOWN");
             confirm.addClickListener(e->{notification.show(Page.getCurrent()); removeComponent(confirm);});
