@@ -26,7 +26,6 @@ public class MainView extends VerticalLayout implements View{
 		
 	    
 		// DEFINE COMPONENTS HERE
-		
 	    Button profile_button = new Button("Profile",
 	            event -> getUI().getNavigator().navigateTo("profile"));
 	    
