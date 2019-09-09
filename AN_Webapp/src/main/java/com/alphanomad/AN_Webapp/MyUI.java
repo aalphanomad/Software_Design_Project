@@ -35,6 +35,7 @@ public class MyUI extends UI {
 	protected static final String REGVIEW="register";
 	protected static final String HISTORYVIEW="history";
 	protected static final String CLAIMFORM = "claimform";
+	public boolean logged_in = false;
 
 
     @Override
@@ -57,7 +58,15 @@ public class MyUI extends UI {
       
         
         Responsive.makeResponsive(this);
-        navigator.navigateTo(LOGINVIEW);
+        if(!logged_in)
+        {
+        	navigator.navigateTo(LOGINVIEW);
+        }
+        else
+        {
+        	navigator.navigateTo(MAINVIEW);
+        }
+        
     }
         
     public void set_user_info(UserInfo info)

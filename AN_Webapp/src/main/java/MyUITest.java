@@ -10,6 +10,7 @@ import org.junit.Test;
 
 public class MyUITest {
 
+	/*
 	MyUI ui;
 	MainView mainView;
 	@Before
@@ -43,10 +44,10 @@ public class MyUITest {
 		 * Navigator navigator=new Navigator(ui, ui);
 		 * 
 		 * assertNotNull(navigator); assertNotNull(ui);
-		 */
+		 
 		
 		//For MainView.java
 		
 	}
-
+	*/
 }
