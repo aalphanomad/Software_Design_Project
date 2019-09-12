@@ -1,4 +1,7 @@
+package com.alphanomad.AN_Webapp;
+/*
 import static org.junit.Assert.*;
+
 import org.junit.*;
 import com.alphanomad.AN_Webapp.*;
 import com.vaadin.*;
@@ -7,6 +10,7 @@ import com.vaadin.navigator.Navigator;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+ */
 
 public class MyUITest {
 

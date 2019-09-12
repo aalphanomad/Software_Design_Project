@@ -35,7 +35,11 @@ public class ProfileView extends VerticalLayout implements View{
     public void enter(ViewChangeEvent event)
     {
     	this.removeAllComponents();
-    	//TODO: Replace this with actual data
+    	
+    	System.out.println("parameters");
+    	System.out.println(event.getParameters());
+    	System.out.println(event.getOldView().toString());
+  	  
     	String stud_num = "";
     	MyUI ui = (MyUI) getUI();
     	ui.get_user_info();
@@ -157,10 +161,24 @@ public class ProfileView extends VerticalLayout implements View{
         course_combo_box.setItems(list);
         course_combo_box.setVisible(false);
         
-    	Button change_courses = new Button("Change courses",
+        Button change_courses = new Button("Change courses",
 	            event -> course_combo_box.setVisible(true));
     	
+    	change_courses.addClickListener(event -> change_courses.setVisible(false));
+    	
+    	Button done = new Button("Done",
+	            event -> change_courses.setVisible(true));
+    	done.addClickListener(event -> done.setVisible(false));
+    	done.addClickListener(event -> course_combo_box.setVisible(false));
+    	done.setVisible(false);
+    	
+    	
+    	
+    	change_courses.addClickListener(event -> done.setVisible(true));
+    	
     	courses_inner.addComponent(change_courses);
+    	courses_inner.addComponent(course_combo_box);
+    	courses_inner.addComponent(done);
     	
     	
     	panel.setCaption("Courses");
@@ -168,5 +186,39 @@ public class ProfileView extends VerticalLayout implements View{
     	
     	
     	return panel;
+    }
+    
+    
+    
+    /**
+     * 
+     * @param stud_num
+     * @param course
+     * @param confirmed
+     * @return
+     */
+    private boolean update_courses(String stud_num, String course, String confirmed)
+    {
+    	boolean result = false;
+    	DBHelper dbh = new DBHelper();
+    	String value;
+    	
+    	
+    	if(confirmed.length() > 0)
+    	{
+    		String[] params = {"student_num","course","confirmed"} ;
+    		String[] values = {stud_num,course,confirmed};
+    		value = dbh.php_request("update_courses", params, values); 
+    	}
+    	else
+    	{
+    		String[] params = {"student_num","course"} ;
+    		String[] values = {stud_num,course};
+    		value = dbh.php_request("update_courses", params, values); 
+    	}
+    	
+    	result = Boolean.parseBoolean(value);
+    	
+    	return result;
     }
 }

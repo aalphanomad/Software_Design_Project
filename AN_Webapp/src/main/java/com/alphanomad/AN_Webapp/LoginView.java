@@ -74,6 +74,7 @@ public class LoginView extends VerticalLayout implements View {
   @Override
   public void enter(ViewChangeEvent vc_event)
   {
+	  
 	  ((MyUI)getUI()).logged_in=false;
 	  removeAllComponents();
 	  ((MyUI)getUI()).set_user_info(new UserInfo("", "", ""));
