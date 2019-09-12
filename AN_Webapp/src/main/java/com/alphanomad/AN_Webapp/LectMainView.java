@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.alphanomad.TutorItem;
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;

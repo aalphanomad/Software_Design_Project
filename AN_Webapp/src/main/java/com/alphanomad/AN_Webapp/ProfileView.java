@@ -61,7 +61,7 @@ Notification.show(stud_num);
      * @param student_number
      * @return a Vertical layout to be added to a page
      */
-    private Panel make_user_info_panel(String name, String student_number)
+    public Panel make_user_info_panel(String name, String student_number)
     {
     	Panel panel = new Panel();
     	VerticalLayout inner = new VerticalLayout();
@@ -88,7 +88,7 @@ Notification.show(stud_num);
      * @param courses a Json Object
      * @return a vertical layout containing a collapseable list of courses that the user is linked to
      */
-    private Panel make_courses_panel(JsonObject courses)
+    public Panel make_courses_panel(JsonObject courses)
     {
     	Panel panel = new Panel();
     	VerticalLayout courses_inner = new VerticalLayout();
