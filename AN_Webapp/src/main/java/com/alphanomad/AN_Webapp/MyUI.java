@@ -69,9 +69,7 @@ public class MyUI extends UI {
         
     public void set_user_info(UserInfo info)
     {
-    	System.out.println("setting user info");
     	this.user_info = info;
-    	System.out.println(this.user_info.hashCode());
     }
     
     public UserInfo get_user_info()

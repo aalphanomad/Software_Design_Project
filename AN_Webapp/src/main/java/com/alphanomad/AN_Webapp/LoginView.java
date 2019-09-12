@@ -97,6 +97,8 @@ public class LoginView extends VerticalLayout implements View {
 	  	  Username.setCaption("Username"); 
 	  	  Username.setPlaceholder("Username");
 	  	content.addComponent(Username);
+	  	Username.focus();
+	  	
 	    
 	  	  
 	  	   Password=new PasswordField();

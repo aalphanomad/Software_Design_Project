@@ -76,7 +76,10 @@ public  ClaimHistory() {
 				(((HistoryItem) event.getItem()).getDate()),
 				(((HistoryItem) event.getItem()).getStart_Time()),
 				(((HistoryItem) event.getItem()).getEnd_time()))); 
-				}));	//GO TO QR GENERATOR!
+				if((((HistoryItem) event.getItem()).getValid()).equals("0")) {
+					//HIDE BUTTON! Involves CSS!!!
+				}
+				}));	
 				
 		grid.setWidth("100%");
 		grid.setHeightUndefined();
