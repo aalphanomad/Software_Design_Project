@@ -6,6 +6,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -30,7 +31,7 @@ public class ProfileView extends VerticalLayout implements View{
     	MyUI ui = (MyUI) getUI();
     	ui.get_user_info();
     	stud_num = ui.get_user_info().get_student_num();
-
+Notification.show(stud_num);
     	
     	DBHelper dbh = new DBHelper();
     	
@@ -60,7 +61,7 @@ public class ProfileView extends VerticalLayout implements View{
      * @param student_number
      * @return a Vertical layout to be added to a page
      */
-    public Panel make_user_info_panel(String name, String student_number)
+    private Panel make_user_info_panel(String name, String student_number)
     {
     	Panel panel = new Panel();
     	VerticalLayout inner = new VerticalLayout();
@@ -87,7 +88,7 @@ public class ProfileView extends VerticalLayout implements View{
      * @param courses a Json Object
      * @return a vertical layout containing a collapseable list of courses that the user is linked to
      */
-    public Panel make_courses_panel(JsonObject courses)
+    private Panel make_courses_panel(JsonObject courses)
     {
     	Panel panel = new Panel();
     	VerticalLayout courses_inner = new VerticalLayout();
