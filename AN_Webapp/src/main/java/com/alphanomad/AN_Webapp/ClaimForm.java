@@ -2,21 +2,37 @@ package com.alphanomad.AN_Webapp;
 
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
+import javax.servlet.annotation.WebServlet;
+
 import com.google.gson.JsonObject;
+import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
+import com.vaadin.server.UserError;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.DateTimeField;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 
@@ -24,12 +40,18 @@ public class ClaimForm extends VerticalLayout implements View {
 	String course;
     String venue;
     String activity;
+    
     String[] AllInfo;
     static JsonObject filtered;
     static DBHelper dbh;
     
+    Booking b;
+    ConfirmClaimForm c;
+    
+    
+    
     public static ArrayList<String>  GetCourses(String FromDB){
-	
+    	
 		//Notification.show(ans);
 		ArrayList<String> new_courses=new ArrayList<String>();
 		
@@ -48,6 +70,8 @@ public class ClaimForm extends VerticalLayout implements View {
 		}
 		return new_courses;
 	}
+    
+    
     public static String Course_corr(String course_code){
         String ans=null;
         switch(course_code){
@@ -122,34 +146,78 @@ public class ClaimForm extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event)
     {
-//navigator=new Navigator(this,this);
-    	removeAllComponents();
-    	 dbh=new DBHelper();
-    	UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
-    	Label test=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n" + 
-	  	  		"       <b><u>Claim Form</u></b> " + 
-	  	  		"      </p>" ,ContentMode.HTML);
-	  	 addComponent(test);
-	  	 String[] params= {"name","student_num"};
-	        String[] values= {tutor_info.name,tutor_info.student_num};
-				String ans=dbh.php_request("get_courses", params, values);
-				filtered=dbh.parse_json_string(ans);
-				ans=filtered.get("result").getAsJsonArray().toString();		
-				
-				
-	  	 ArrayList<String>new_courses=GetCourses(ans);
-        
-        ArrayList<String> coursesArray = new ArrayList();
-        for(int i=0;i<new_courses.size();i++) {
-        coursesArray.add(new_courses.get(i)+" "+Course_corr(new_courses.get(i)));
-        }
-    
+		removeAllComponents();
+	 	dbh=new DBHelper();
+		UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
+		
+		Label test=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n" + 
+		"       <b><u>Claim Form</u></b> " + 
+		"      </p>" ,ContentMode.HTML);
+		 addComponent(test);
+		 
+		String[] params= {"name","student_num"};
+		String[] values= {tutor_info.name,tutor_info.student_num};
+		
+		String ans=dbh.php_request("get_courses", params, values);
+		filtered=dbh.parse_json_string(ans);
+		ans=filtered.get("result").getAsJsonArray().toString();		
+			
+		ArrayList<String>new_courses=GetCourses(ans);
+   
+	    ArrayList<String> coursesArray = new ArrayList();
+	    for(int i=0;i<new_courses.size();i++) {
+	    	coursesArray.add(new_courses.get(i)+" "+Course_corr(new_courses.get(i)));
+	    }
         
         ArrayList<String> activityArray = new ArrayList();
         activityArray.add("Tutoring");
         activityArray.add("Invigilating");
         activityArray.add("Marking");
         activityArray.add("Other");
+        
+        ArrayList<String> hour = new ArrayList();
+        hour.add("00");
+        hour.add("01");
+        hour.add("02");
+        hour.add("03");
+        hour.add("04");
+        hour.add("05");
+        hour.add("06");
+        hour.add("07");
+        hour.add("08");
+        hour.add("09");
+        hour.add("10");
+        hour.add("11");
+        hour.add("12");
+        hour.add("13");
+        hour.add("14");
+        hour.add("15");
+        hour.add("16");
+        hour.add("17");
+        hour.add("18");
+        hour.add("19");
+        hour.add("20");
+        hour.add("21");
+        hour.add("22");
+        hour.add("23");
+        
+        
+        ArrayList<String> minute = new ArrayList();
+        minute.add("00");
+        minute.add("05");
+        minute.add("10");
+        minute.add("15");
+        minute.add("20");
+        minute.add("25");
+        minute.add("30");
+        minute.add("35");
+        minute.add("40");
+        minute.add("45");
+        minute.add("50");
+        minute.add("55");
+        minute.add("60");
+        
+        
         
         ComboBox<String> combobox = new ComboBox<String>("Course");
         combobox.setPlaceholder("Please fill in");
@@ -167,7 +235,46 @@ public class ClaimForm extends VerticalLayout implements View {
         combobox2.setItems(activityArray);
         addComponent(combobox2);
         
-        DateTimeField start = new DateTimeField();
+        ComboBox<String> startHour = new ComboBox<String>("Hour(s)");
+        startHour.setPlaceholder("Please fill in");
+        startHour.setItems(hour);
+        
+        ComboBox<String> startMinute = new ComboBox<String>("Minutes");
+        startMinute.setPlaceholder("Please fill in");
+        startMinute.setItems(minute);
+        
+        ComboBox<String> endHour = new ComboBox<String>("Hour(s)");
+        endHour.setPlaceholder("Please fill in");
+        endHour.setItems(hour);
+        
+        ComboBox<String> endMinute = new ComboBox<String>("Minutes");
+        endMinute.setPlaceholder("Please fill in");
+        endMinute.setItems(minute);
+        
+        
+		HorizontalLayout time1=new HorizontalLayout();
+		
+		Label st=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:15px;\">\r\n" + 
+				"       <u>Start-Time</u> " + 
+				"      </p>" ,ContentMode.HTML);
+		
+		time1.addComponent(startHour);
+		time1.addComponent(startMinute);
+		time1.addComponent(st);
+		addComponent(time1);
+		
+		HorizontalLayout time2=new HorizontalLayout();
+		
+		Label ed=new Label("<p style = \"font-family:georgia,garamond,serif;font-size:15px;\">\r\n" + 
+				"       <u>End-Time</u> " + 
+				"      </p>" ,ContentMode.HTML);
+		  	
+	  	time2.addComponent(endHour);
+	  	time2.addComponent(endMinute);
+	  	time2.addComponent(ed);
+	  	addComponent(time2);
+	  	
+        /*DateTimeField start = new DateTimeField();
         start.setCaption("Select start of duration");
         //start.setValue(LocalDateTime.now());
         addComponent(start);
@@ -175,7 +282,8 @@ public class ClaimForm extends VerticalLayout implements View {
         DateTimeField end = new DateTimeField();
         end.setCaption("Select end of duration");
         //end.setValue(LocalDateTime.now());
-        addComponent(end);
+        addComponent(end);*/
+	  	
         
         if(!combobox.isEmpty() && !textfield.isEmpty() && !combobox2.isEmpty()) {
 	        course = combobox.getValue().toString();
@@ -183,12 +291,7 @@ public class ClaimForm extends VerticalLayout implements View {
 	        activity = combobox2.getValue().toString();
         }
         
-       
-		
-			
-			
-			
-			
+        
 			
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -202,24 +305,41 @@ public class ClaimForm extends VerticalLayout implements View {
 		
 		/*Button see = new Button("SEE");
 		//see.addClickListener(event -> dbh.php_request("booking", params, values));
-        see.addClickListener(event -> Notification.show(date, Type.TRAY_NOTIFICATION));
+        see.addClickListener(e -> Notification.show(startHour.getValue().toString(), Type.TRAY_NOTIFICATION));
         addComponent(see);*/
 		
         
-       /*
-		 String[] AllInfo= {tutor_info.name, tutor_info.student_num, 
-		EditString.editCourse((combobox.getValue().toString())), combobox2.getValue().toString(), 
-		textfield.getValue().toString(), date, EditString.editTime(start.getValue().toString()), 
-		EditString.editTime(end.getValue().toString())};
-		*/
-
+        //navigator.addView(CONFIRMCLAIMFORM, new ClaimForm());
+        
         Button confirm = new Button("Confirm");
-      
-            confirm.addClickListener(e->{
-   getUI().getNavigator().navigateTo("confirm");
-            });
-            addComponent(confirm);
-
+        addComponent(confirm);
+        confirm.addClickListener(e -> {
+        			
+            	b = new Booking(tutor_info.name, 
+        			tutor_info.student_num, 
+            		EditString.editCourse((combobox.getValue().toString())), 
+            		combobox2.getValue().toString(), 
+            		textfield.getValue().toString(), 
+            		date, 
+            		startHour.getValue().toString() + ":" + startMinute.getValue().toString(), 
+            		endHour.getValue().toString() + ":" + endMinute.getValue().toString());
+    
+            	removeAllComponents();
+            	
+		        addComponent(c = new ConfirmClaimForm(tutor_info.name, 
+		        		tutor_info.student_num, 
+		        		EditString.editCourse((combobox.getValue().toString())), 
+		        		combobox2.getValue().toString(), 
+		        		textfield.getValue().toString(), 
+		        		date, 
+		        		startHour.getValue().toString() + ":" + startMinute.getValue().toString(), 
+		        		endHour.getValue().toString() + ":" + endMinute.getValue().toString()));
+          
+				//navigator.addView(CONFIRMCLAIMFORM, c);
+				//addComponent(c);
+				//getUI().getNavigator().navigateTo("confirm");
+	        			
+			});
     }
 
 }

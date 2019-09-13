@@ -3,6 +3,7 @@ package com.alphanomad.AN_Webapp;
 import java.util.ArrayList;
 
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -19,34 +20,48 @@ public class ClaimHistory  extends VerticalLayout implements View{
 	PasswordField Password;
 	ConfirmClaimForm c;
 	
-			public String[][] Display(String info,int size) {
+public String[][] Display(String info,int size) {
 				String[][]Matrix=new String[size][size];
 				String[] first=info.split("\\],");
 				String[] second = null;
+				
 				for(int i=0;i<first.length;i++) {
 				 second=first[i].split(",");
 					for(int j=0;j<second.length;j++) {
-String[] third=second[j].split("\":\"");
-Matrix[i][j]=third[1].substring(0,third[1].length()-2);
+						String[] third=second[j].split("\":\"");
+						Matrix[i][j]=third[1].substring(0,third[1].length()-2);
 
-				}
+					}
 				}
 				
 				Matrix[6][second.length-1]=Matrix[6][second.length-1].substring(0, Matrix[6][second.length-1].length()-3);
 				return Matrix;
 
-			}
+}
 	 
   @SuppressWarnings("unchecked")
 public  ClaimHistory() {
 	  
-		DBHelper dbh = new DBHelper();
-		String[] params= {"name","student_num"};
-		String[] values= {"Tutor","1"};
-	   int size=Integer.parseInt(dbh.php_request("no_of_bookings", params, values));
-	   String ans=dbh.php_request("fetching", params, values);
+  }
+  
+  @SuppressWarnings("unchecked")
+@Override
+  public void enter(ViewChangeEvent event)
+  {
+	  
+	  UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
+	  String Tutor_Name = tutor_info.name;
+	  String Tutor_StudentNum = tutor_info.student_num;
+	  
+	  
+	  DBHelper dbh = new DBHelper();
+	  String[] params= {"name","student_num"};
+	  String[] values= {Tutor_Name, Tutor_StudentNum};
+	  
+	  int size=Integer.parseInt(dbh.php_request("no_of_bookings", params, values));
+	  String ans=dbh.php_request("fetching", params, values);
 	
-	   String[][] Test=Display(ans,size);
+	  String[][] Test=Display(ans,size);
 	
 	   
 
@@ -65,28 +80,35 @@ public  ClaimHistory() {
 	  	 }
 	  	 
 	  	 
-
+	  	
 		Grid<HistoryItem> grid=new Grid<>(HistoryItem.class);
 		grid.setItems(History);
 		grid.addColumn(unused -> "Validate", new ButtonRenderer(
-			event ->{removeAllComponents();
-				addComponent( c = new ConfirmClaimForm("Tutor", "1", (((HistoryItem) event.getItem()).getCourse()),
-				(((HistoryItem) event.getItem()).getActivity()),
-				(((HistoryItem) event.getItem()).getVenue()),
-				(((HistoryItem) event.getItem()).getDate()),
-				(((HistoryItem) event.getItem()).getStart_Time()),
-				(((HistoryItem) event.getItem()).getEnd_time()))); 
-				if((((HistoryItem) event.getItem()).getValid()).equals("0")) {
-					//HIDE BUTTON! Involves CSS!!!
-				}
-				}));	
 				
+				
+			e ->{
+				removeAllComponents();
+				addComponent(c = new ConfirmClaimForm(
+				Tutor_Name, 
+				Tutor_StudentNum, 
+				(((HistoryItem) e.getItem()).getCourse()),
+				(((HistoryItem) e.getItem()).getActivity()),
+				(((HistoryItem) e.getItem()).getVenue()),
+				(((HistoryItem) e.getItem()).getDate()),
+				(((HistoryItem) e.getItem()).getStart_Time()),
+				(((HistoryItem) e.getItem()).getEnd_time()))); 
+			
+				//getUI().getNavigator().navigateTo("confirm");
+				}));	//GO TO QR GENERATOR!
+		
 		grid.setWidth("100%");
 		grid.setHeightUndefined();
-		
-//grid.setStyleName(style);
-addComponent(grid);	
-
-  }
+		//grid.setStyleName(style);
+		addComponent(grid);		
+  	}
 }
 	 
+
+
+
+  
