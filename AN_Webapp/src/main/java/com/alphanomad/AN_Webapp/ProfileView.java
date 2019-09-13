@@ -188,6 +188,16 @@ public class ProfileView extends VerticalLayout implements View{
     	return panel;
     }
     
+    boolean handle_course_change(ArrayList<String> courses, String stud_num)
+    {
+    	boolean result = true;
+    	for(String course: courses)
+    	{
+    		update_courses(stud_num, course, "");
+    	}
+    	
+    	return result;
+    }
     
     
     /**
