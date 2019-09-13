@@ -69,7 +69,7 @@ public class LoginView extends VerticalLayout implements View {
 	  
 	  	 
   }
-  
+  /*
   @Override
   public void enter(ViewChangeEvent vc_event)
   {
@@ -124,7 +124,7 @@ public class LoginView extends VerticalLayout implements View {
 	  	 content.setComponentAlignment(buttons, Alignment.BOTTOM_LEFT);
 	  	 
 	  	 panel.setContent(content);
-  }
+  }*/
   
   
   public void handle_login(String username, String password)

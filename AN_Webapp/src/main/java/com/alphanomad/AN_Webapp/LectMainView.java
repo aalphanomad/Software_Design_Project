@@ -48,147 +48,116 @@ public class LectMainView extends VerticalLayout implements View{
 
     }
 	
-	@Override
-	public void enter(ViewChangeEvent vc_event)
-	{
-	
-		UserInfo lect_info=((MyUI) getUI()).get_user_info();
-		removeAllComponents();
-		DBHelper dbh = new DBHelper();
-		 String[]params1= {"name","student_num"};
-		 String[]values1= {lect_info.name,lect_info.student_num};
-		 String ans1=dbh.php_request("get_courses", params1, values1);
-		 retrieve=dbh.parse_json_string(ans1);
-			ans1=retrieve.get("result").getAsJsonArray().toString();		
-
-				 	
-		 
-	 ArrayList<String>myCourses=ClaimForm.GetCourses(ans1);
-	 for(int i=0;i<myCourses.size();i++) {
-		 myCourses.set(i, myCourses.get(i)+" "+ClaimForm.Course_corr(myCourses.get(i)));
-	 }
-	 
-	 
-
-     String ans2=dbh.php_request("get_students", new String[] {"student_num"}, new String[] {lect_info.student_num});
-     ans2=ans2.substring(1, ans2.length()-1);
-  // Notification.show(ans2);
-     String[]AllInfo=ans2.split("\\],\"");
-     ArrayList<String>TheCourses=Filter_Info(AllInfo[0]);
-     ArrayList<String>Course1=Filter_Info(AllInfo[1]);
-     ArrayList<String>Course2=Filter_Info(AllInfo[2]);
-     ArrayList<String>Course3=Filter_Info(AllInfo[3]);
-     ArrayList<String>Course4=Filter_Info(AllInfo[4]);
-     ArrayList<String>Course5=Filter_Info(AllInfo[5]);
-     
-     ArrayList<String>StudCourse1=Filter_Info(AllInfo[6]);
-     ArrayList<String>StudCourse2=Filter_Info(AllInfo[7]);
-     ArrayList<String>StudCourse3=Filter_Info(AllInfo[8]);
-     ArrayList<String>StudCourse4=Filter_Info(AllInfo[9]);
-     ArrayList<String>StudCourse5=Filter_Info(AllInfo[10]);
-
-    	
-
-
-	        
-	        ComboBox<String> combobox = new ComboBox<String>("Course Selected");
-	        combobox.setPlaceholder("Please Select A Course");
-	        combobox.setWidth("40%");
-	        combobox.setItems(myCourses);
-	        addComponent(combobox);
-	        combobox.setValue(myCourses.get(0));
-
-	        
-	        Grid<TutorItem> grid = new Grid<>(TutorItem.class);
-	        grid.setWidth("100%");
-	      // grid.setWidthUndefined();
-	   grid.addComponentColumn(probe->{
-		   Image image=new Image("",new ThemeResource("imgs/anonymous-250.jpg"));
-		   image.setWidth(100, Unit.PIXELS);
-		   image.setHeight(100, Unit.PIXELS);
-		   return image;
-
-		   
-	   }).setCaption("Profile Picture").setId("Profile Picture");
-	   
-	        grid.setRowHeight(100);
-	        grid.setHeaderRowHeight(30);
-	        
-	        grid.addColumn(unused -> "More Info", new ButtonRenderer<Object>(
-	    			event ->{
-	    				MyUI test=new MyUI();
-	    			test.set_user_info(new UserInfo( (((TutorItem) event.getItem()).getName()).toString(), (((TutorItem) event.getItem()).getStudent_num()).toString(), "0"));
-	    			 new ProfileView(test); //CHECK WHY THIS IS NOT UPDATING!!!!
-	    			getUI().getNavigator().navigateTo("profile");
-	    			}));	
-	        
-	        for(int i=0;i<Course1.size();i++) {
-        		Tutor.add(new TutorItem(Course1.get(i),StudCourse1.get(i)));
-        	}
-	        grid.setItems(Tutor);
-	        addComponent(grid);
-
-	        combobox.addValueChangeListener(event->{combobox.setValue(combobox.getValue());
-	      
-
-	    Tutor.clear();
-	        SelIndex=myCourses.indexOf(combobox.getValue());
-	        switch(SelIndex) {
-	        case 0:
-	        	for(int i=0;i<Course1.size();i++) {
-	        		Tutor.add(new TutorItem(Course1.get(i),StudCourse1.get(i)));
-	        	}
-	        	break;
-	        case 1:
-	        	for(int i=0;i<Course2.size();i++) {
-	        		Tutor.add(new TutorItem(Course2.get(i),StudCourse2.get(i)));
-	        	}
-	        	break;
-	        case 2:
-	        	for(int i=0;i<Course3.size();i++) {
-	        		Tutor.add(new TutorItem(Course3.get(i),StudCourse3.get(i)));
-	        	}
-	        	break;
-	        case 3:
-	        	for(int i=0;i<Course4.size();i++) {
-	        		Tutor.add(new TutorItem(Course4.get(i),StudCourse4.get(i)));
-	        	}
-	        	break;
-	        case 4:
-	        	for(int i=0;i<Course5.size();i++) {
-	        		Tutor.add(new TutorItem(Course5.get(i),StudCourse5.get(i)));
-	        	}
-	        	break;
-	        }
-	        
-	       grid.setItems(Tutor);
-
-
-
-	        
-});
-    
-
-	    
-
- 
-//Sort out empty arrays!!!!!!!!!!!!!!!!!!!!!1
-	        
-	      //  ArrayList<String> CCourse5=Filter_Info(Course5);
-	      //  Notification.show(CCourse5.toString());
-	        
-	        
-	        
-	        
-	        
-
-	        
-
-//Notification.show(Final_Courses.toString());
-
-
-	        
-	}
+	/*
+	 * @Override public void enter(ViewChangeEvent vc_event) {
+	 * 
+	 * UserInfo lect_info=((MyUI) getUI()).get_user_info(); removeAllComponents();
+	 * DBHelper dbh = new DBHelper(); String[]params1= {"name","student_num"};
+	 * String[]values1= {lect_info.name,lect_info.student_num}; String
+	 * ans1=dbh.php_request("get_courses", params1, values1);
+	 * retrieve=dbh.parse_json_string(ans1);
+	 * ans1=retrieve.get("result").getAsJsonArray().toString();
+	 * 
+	 * 
+	 * 
+	 * ArrayList<String>myCourses=ClaimForm.GetCourses(ans1); for(int
+	 * i=0;i<myCourses.size();i++) { myCourses.set(i,
+	 * myCourses.get(i)+" "+ClaimForm.Course_corr(myCourses.get(i))); }
+	 * 
+	 * 
+	 * 
+	 * String ans2=dbh.php_request("get_students", new String[] {"student_num"}, new
+	 * String[] {lect_info.student_num}); ans2=ans2.substring(1, ans2.length()-1);
+	 * // Notification.show(ans2); String[]AllInfo=ans2.split("\\],\"");
+	 * ArrayList<String>TheCourses=Filter_Info(AllInfo[0]);
+	 * ArrayList<String>Course1=Filter_Info(AllInfo[1]);
+	 * ArrayList<String>Course2=Filter_Info(AllInfo[2]);
+	 * ArrayList<String>Course3=Filter_Info(AllInfo[3]);
+	 * ArrayList<String>Course4=Filter_Info(AllInfo[4]);
+	 * ArrayList<String>Course5=Filter_Info(AllInfo[5]);
+	 * 
+	 * ArrayList<String>StudCourse1=Filter_Info(AllInfo[6]);
+	 * ArrayList<String>StudCourse2=Filter_Info(AllInfo[7]);
+	 * ArrayList<String>StudCourse3=Filter_Info(AllInfo[8]);
+	 * ArrayList<String>StudCourse4=Filter_Info(AllInfo[9]);
+	 * ArrayList<String>StudCourse5=Filter_Info(AllInfo[10]);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * ComboBox<String> combobox = new ComboBox<String>("Course Selected");
+	 * combobox.setPlaceholder("Please Select A Course"); combobox.setWidth("40%");
+	 * combobox.setItems(myCourses); addComponent(combobox);
+	 * combobox.setValue(myCourses.get(0));
+	 * 
+	 * 
+	 * Grid<TutorItem> grid = new Grid<>(TutorItem.class); grid.setWidth("100%"); //
+	 * grid.setWidthUndefined(); grid.addComponentColumn(probe->{ Image image=new
+	 * Image("",new ThemeResource("imgs/anonymous-250.jpg")); image.setWidth(100,
+	 * Unit.PIXELS); image.setHeight(100, Unit.PIXELS); return image;
+	 * 
+	 * 
+	 * }).setCaption("Profile Picture").setId("Profile Picture");
+	 * 
+	 * grid.setRowHeight(100); grid.setHeaderRowHeight(30);
+	 * 
+	 * grid.addColumn(unused -> "More Info", new ButtonRenderer<Object>( event ->{
+	 * MyUI test=new MyUI(); test.set_user_info(new UserInfo( (((TutorItem)
+	 * event.getItem()).getName()).toString(), (((TutorItem)
+	 * event.getItem()).getStudent_num()).toString(), "0")); new ProfileView(test);
+	 * //CHECK WHY THIS IS NOT UPDATING!!!!
+	 * getUI().getNavigator().navigateTo("profile"); }));
+	 * 
+	 * for(int i=0;i<Course1.size();i++) { Tutor.add(new
+	 * TutorItem(Course1.get(i),StudCourse1.get(i))); } grid.setItems(Tutor);
+	 * addComponent(grid);
+	 * 
+	 * combobox.addValueChangeListener(event->{combobox.setValue(combobox.getValue()
+	 * );
+	 * 
+	 * 
+	 * Tutor.clear(); SelIndex=myCourses.indexOf(combobox.getValue());
+	 * switch(SelIndex) { case 0: for(int i=0;i<Course1.size();i++) { Tutor.add(new
+	 * TutorItem(Course1.get(i),StudCourse1.get(i))); } break; case 1: for(int
+	 * i=0;i<Course2.size();i++) { Tutor.add(new
+	 * TutorItem(Course2.get(i),StudCourse2.get(i))); } break; case 2: for(int
+	 * i=0;i<Course3.size();i++) { Tutor.add(new
+	 * TutorItem(Course3.get(i),StudCourse3.get(i))); } break; case 3: for(int
+	 * i=0;i<Course4.size();i++) { Tutor.add(new
+	 * TutorItem(Course4.get(i),StudCourse4.get(i))); } break; case 4: for(int
+	 * i=0;i<Course5.size();i++) { Tutor.add(new
+	 * TutorItem(Course5.get(i),StudCourse5.get(i))); } break; }
+	 * 
+	 * grid.setItems(Tutor);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * });
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * //Sort out empty arrays!!!!!!!!!!!!!!!!!!!!!1
+	 * 
+	 * // ArrayList<String> CCourse5=Filter_Info(Course5); //
+	 * Notification.show(CCourse5.toString());
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * //Notification.show(Final_Courses.toString());
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
 	    
 		
 	

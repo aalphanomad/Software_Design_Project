@@ -17,7 +17,7 @@ public class TutorMainView extends VerticalLayout implements View{
 
 
     }
-	
+	/*
 	@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
@@ -56,7 +56,7 @@ public class TutorMainView extends VerticalLayout implements View{
 		addComponent(pdf_button);
 		addComponent(Login);
 		//addComponent(Register);
-    }
+    }*/
 	
 }
 

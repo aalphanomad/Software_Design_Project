@@ -22,36 +22,28 @@ public class ProfileView extends VerticalLayout implements View{
     	
     }
     
-    @Override
-    public void enter(ViewChangeEvent event)
-    {
-    	this.removeAllComponents();
-    	//TODO: Replace this with actual data
-    	String stud_num = "";
-    	MyUI ui = (MyUI) getUI();
-    	ui.get_user_info();
-    	stud_num = ui.get_user_info().get_student_num();
-Notification.show(stud_num);
-    	
-    	DBHelper dbh = new DBHelper();
-    	
-    	
-    	String[] params = {"student_num"} ;
-    	String[] values = {stud_num};
-    	String name = dbh.php_request("get_name", params, values); 
-    	
-    	params = new String[] {"student_num","name"} ;
-    	values = new String[] {stud_num,name};
-    	String courses = dbh.php_request("get_courses", params, values);
-    	JsonObject courses_obj = dbh.parse_json_string(courses);
-    	
-    	Button home_button = new Button("go to main view",
-	            btn_event -> getUI().getNavigator().navigateTo("main"));
-    	
-    	addComponent(make_user_info_panel(name, stud_num));
-    	addComponent(make_courses_panel(courses_obj));
-    	addComponent(home_button);
-    }
+	/*
+	 * @Override public void enter(ViewChangeEvent event) {
+	 * this.removeAllComponents(); //TODO: Replace this with actual data String
+	 * stud_num = ""; MyUI ui = (MyUI) getUI(); ui.get_user_info(); stud_num =
+	 * ui.get_user_info().get_student_num(); Notification.show(stud_num);
+	 * 
+	 * DBHelper dbh = new DBHelper();
+	 * 
+	 * 
+	 * String[] params = {"student_num"} ; String[] values = {stud_num}; String name
+	 * = dbh.php_request("get_name", params, values);
+	 * 
+	 * params = new String[] {"student_num","name"} ; values = new String[]
+	 * {stud_num,name}; String courses = dbh.php_request("get_courses", params,
+	 * values); JsonObject courses_obj = dbh.parse_json_string(courses);
+	 * 
+	 * Button home_button = new Button("go to main view", btn_event ->
+	 * getUI().getNavigator().navigateTo("main"));
+	 * 
+	 * addComponent(make_user_info_panel(name, stud_num));
+	 * addComponent(make_courses_panel(courses_obj)); addComponent(home_button); }
+	 */
     
     
    
