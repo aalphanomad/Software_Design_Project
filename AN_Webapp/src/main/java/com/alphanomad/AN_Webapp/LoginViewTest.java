@@ -50,6 +50,8 @@ public class LoginViewTest {
 		loginView.TheLogin(studNum, studNum);
 		//loginView.enter(ui);
 		
+		//loginView.handle_login(name, studNum);
+		
 	}
 	
 	@After

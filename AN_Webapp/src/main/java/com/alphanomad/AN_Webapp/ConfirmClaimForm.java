@@ -113,7 +113,7 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
         addComponent(generate);
         
         Button home_button = new Button("Home",
-	            event -> getUI().getNavigator().navigateTo("main"));
+	            event -> getUI().getNavigator().navigateTo("tutormain"));
         addComponent(home_button);
         
 		 
