@@ -29,31 +29,54 @@ public class MyUI extends UI {
 	
 	Navigator navigator;
 	private UserInfo user_info;
+	protected static final String TUTORMAINVIEW = "tutormain";
+	protected static final String LECTMAINVIEW = "lectmain";
+	private UserInfo user_info;
 	protected static final String MAINVIEW = "main";
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String LOGINVIEW="login";
 	protected static final String REGVIEW="register";
 	protected static final String HISTORYVIEW="history";
 	protected static final String CLAIMFORM = "claimform";
+	protected static final String CONFIRMCLAIMFORM = "confirm";
 	public boolean logged_in = false;
 
 
+
+
+
     @Override
+    protected void init(VaadinRequest request) {
+    	addStyleName("image-backgound");
+        getPage().setTitle("Alpha Nomad");
 	public void init(VaadinRequest request) {
     	addStyleName("image-backgound");
         getPage().setTitle("Alpha Nomad");
 
         // Create a navigator to control the views
-        navigator = new Navigator(this, this);
+       navigator = new Navigator(this,this);
 
         // Create and register the views
+        navigator.addView(TUTORMAINVIEW, new TutorMainView());
+       navigator.addView(LECTMAINVIEW, new LectMainView());
+
+        navigator.addView(PROFILEVIEW, new ProfileView(this));
+        navigator.addView(LOGINVIEW, new LoginView(this));
+        navigator.addView(REGVIEW, new Register());
+        navigator.addView(HISTORYVIEW,new ClaimHistory());
         navigator.addView(MAINVIEW, new MainView());
         navigator.addView(PROFILEVIEW, new ProfileView(this));
         navigator.addView(LOGINVIEW, new LoginView(this));
         navigator.addView(REGVIEW, new Register());
         navigator.addView(HISTORYVIEW,new ClaimHistory());
         navigator.addView(CLAIMFORM, new ClaimForm());
+        navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(null,null,null,null,null,null,null,null));
+       
         
+      
+        
+        Responsive.makeResponsive(this);
+        navigator.navigateTo(LOGINVIEW);
         System.out.println("regstration complete");
       
         
@@ -69,6 +92,19 @@ public class MyUI extends UI {
         
     }
         
+    public void set_user_info(UserInfo info)
+    {
+    	this.user_info = info;
+    }
+    
+    public UserInfo get_user_info()
+    {
+    	System.out.println("setting user info");
+    	System.out.println(this.user_info.hashCode());
+    	return this.user_info;
+    }
+    
+    
     public void set_user_info(UserInfo info)
     {
     	System.out.println("setting user info");

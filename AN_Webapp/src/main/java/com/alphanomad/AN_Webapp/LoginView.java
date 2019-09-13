@@ -29,6 +29,7 @@ public class LoginView extends VerticalLayout implements View {
 	TextField Username;
 	PasswordField Password;
 	MyUI parent_ui;
+	JsonObject login_obj;
 	
 	  public boolean TheLogin(String student_num,String password) {
 		
@@ -47,14 +48,12 @@ public class LoginView extends VerticalLayout implements View {
 	
 			}
 			else {
-		   String ans=dbh.php_request("signin", params, values);
+		    String ans=dbh.php_request("signin", params, values);
 		   
-		   JsonObject login_obj = dbh.parse_json_string(ans);
+		    login_obj = dbh.parse_json_string(ans);
 		   
 		   if(login_obj.get("result").getAsString().equals("1")) {
-			   //System.out.println(login_obj.get("name").getAsString());
-			   //System.out.println(login_obj.get("student_num").getAsString());
-			   //System.out.println(login_obj.get("role").getAsString());
+			  
 			   ((MyUI) getUI()).set_user_info( new UserInfo(login_obj.get("name").getAsString(), login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
 			   //((MyUI) UI.getCurrent()).set_user_info( new UserInfo(login_obj.get("name").getAsString(), login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
 			   return true;
@@ -74,8 +73,6 @@ public class LoginView extends VerticalLayout implements View {
   @Override
   public void enter(ViewChangeEvent vc_event)
   {
-	  
-	  ((MyUI)getUI()).logged_in=false;
 	  removeAllComponents();
 	  ((MyUI)getUI()).set_user_info(new UserInfo("", "", ""));
 	  setSizeFull();
@@ -100,6 +97,8 @@ public class LoginView extends VerticalLayout implements View {
 	  	  Username.setCaption("Username"); 
 	  	  Username.setPlaceholder("Username");
 	  	content.addComponent(Username);
+	  	Username.focus();
+	  	
 	    
 	  	  
 	  	   Password=new PasswordField();
@@ -132,8 +131,14 @@ public class LoginView extends VerticalLayout implements View {
   {
 	  if(TheLogin(username, password))
 	  {
-		  ((MyUI)getUI()).logged_in = true;
-		  getUI().getNavigator().navigateTo("main");
+		 if(login_obj.get("role").getAsString().equals("0")) {
+		  getUI().getNavigator().navigateTo("tutormain");
+		 }
+		 else {
+			 getUI().getNavigator().navigateTo("lectmain");
+
+		 }
+		 
 	  }
 	  else
 	  {
