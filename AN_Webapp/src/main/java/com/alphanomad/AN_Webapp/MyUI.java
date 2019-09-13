@@ -31,7 +31,6 @@ public class MyUI extends UI {
 	private UserInfo user_info;
 	protected static final String TUTORMAINVIEW = "tutormain";
 	protected static final String LECTMAINVIEW = "lectmain";
-	private UserInfo user_info;
 	protected static final String MAINVIEW = "main";
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String LOGINVIEW="login";
@@ -46,9 +45,6 @@ public class MyUI extends UI {
 
 
     @Override
-    protected void init(VaadinRequest request) {
-    	addStyleName("image-backgound");
-        getPage().setTitle("Alpha Nomad");
 	public void init(VaadinRequest request) {
     	addStyleName("image-backgound");
         getPage().setTitle("Alpha Nomad");
@@ -104,20 +100,6 @@ public class MyUI extends UI {
     	return this.user_info;
     }
     
-    
-    public void set_user_info(UserInfo info)
-    {
-    	System.out.println("setting user info");
-    	this.user_info = info;
-    	System.out.println(this.user_info.hashCode());
-    }
-    
-    public UserInfo get_user_info()
-    {
-    	System.out.println("setting user info");
-    	System.out.println(this.user_info.hashCode());
-    	return this.user_info;
-    }
     
     
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

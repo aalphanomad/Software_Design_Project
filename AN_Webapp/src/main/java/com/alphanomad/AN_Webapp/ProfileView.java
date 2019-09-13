@@ -27,9 +27,26 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ProfileView extends VerticalLayout implements View{
 
-    public ProfileView(MyUI ui) {
+	public UserInfo user; 
+	
+	/**
+	 * make a user profile view for the current user
+	 * @param ui Provided by vaadin.
+	 */
+	public ProfileView(MyUI ui) {
     	
     }
+    
+	/**
+	 * Make a profile view for a specific user
+	 * @param ui Provided by vaadin
+	 * @param user_info a UserInfo object for the user you want to view
+	 */
+	public ProfileView(MyUI ui ,UserInfo user_info) {
+		this.user = user_info;
+	}
+
+    
     
     @Override
     public void enter(ViewChangeEvent event)
@@ -42,9 +59,14 @@ public class ProfileView extends VerticalLayout implements View{
   	  
     	String stud_num = "";
     	MyUI ui = (MyUI) getUI();
-    	ui.get_user_info();
-    	stud_num = ui.get_user_info().get_student_num();
-
+    	
+    	// if no user was provided in the constructor then use the currently logged in user
+    	if(user == null)
+    	{
+    		user = ui.get_user_info(); 	
+    	}
+    	
+    	stud_num = user.get_student_num();
     	
     	DBHelper dbh = new DBHelper();
     	
@@ -74,7 +96,7 @@ public class ProfileView extends VerticalLayout implements View{
      * @param student_number
      * @return a Vertical layout to be added to a page
      */
-    private Panel make_user_info_panel(String name, String student_number)
+    public Panel make_user_info_panel(String name, String student_number)
     {
     	Panel panel = new Panel();
     	HorizontalLayout inner = new HorizontalLayout();
@@ -113,7 +135,7 @@ public class ProfileView extends VerticalLayout implements View{
      * @param courses a Json Object
      * @return a vertical layout containing a collapseable list of courses that the user is linked to
      */
-    private Panel make_courses_panel(JsonObject courses)
+    public Panel make_courses_panel(JsonObject courses)
     {
     	Panel panel = new Panel();
     	VerticalLayout courses_inner = new VerticalLayout();
@@ -188,7 +210,7 @@ public class ProfileView extends VerticalLayout implements View{
     	return panel;
     }
     
-    boolean handle_course_change(ArrayList<String> courses, String stud_num)
+    public boolean handle_course_change(ArrayList<String> courses, String stud_num)
     {
     	boolean result = true;
     	for(String course: courses)
@@ -207,7 +229,7 @@ public class ProfileView extends VerticalLayout implements View{
      * @param confirmed
      * @return
      */
-    private boolean update_courses(String stud_num, String course, String confirmed)
+    public boolean update_courses(String stud_num, String course, String confirmed)
     {
     	boolean result = false;
     	DBHelper dbh = new DBHelper();
