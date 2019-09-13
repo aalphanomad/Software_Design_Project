@@ -43,6 +43,7 @@ public String[][] Display(String info,int size) {
 public  ClaimHistory() {
 	  
   }
+ 
   
   @SuppressWarnings("unchecked")
 @Override

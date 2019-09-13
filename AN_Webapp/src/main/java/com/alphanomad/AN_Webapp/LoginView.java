@@ -127,7 +127,7 @@ public class LoginView extends VerticalLayout implements View {
   }
   
   
-  private void handle_login(String username, String password)
+  public void handle_login(String username, String password)
   {
 	  if(TheLogin(username, password))
 	  {
