@@ -48,7 +48,8 @@ public  ClaimHistory() {
 @Override
   public void enter(ViewChangeEvent event)
   {
-	  
+	  removeAllComponents();
+		
 	  UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
 	  String Tutor_Name = tutor_info.name;
 	  String Tutor_StudentNum = tutor_info.student_num;
@@ -88,6 +89,7 @@ public  ClaimHistory() {
 				
 			e ->{
 				removeAllComponents();
+				
 				addComponent(c = new ConfirmClaimForm(
 				Tutor_Name, 
 				Tutor_StudentNum, 
