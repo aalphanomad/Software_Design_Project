@@ -43,11 +43,13 @@ public String[][] Display(String info,int size) {
 public  ClaimHistory() {
 	  
   }
+ 
   
   @SuppressWarnings("unchecked")
 @Override
   public void enter(ViewChangeEvent event)
   {
+	  removeAllComponents();
 	  
 	  UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
 	  String Tutor_Name = tutor_info.name;

@@ -9,13 +9,12 @@ import org.vaadin.addons.ComboBoxMultiselect;
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FileResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -27,13 +26,20 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ProfileView extends VerticalLayout implements View{
 
-	public UserInfo user; 
-	
-	/**
-	 * make a user profile view for the current user
-	 * @param ui Provided by vaadin.
-	 */
-	public ProfileView(MyUI ui) {
+    public ProfileView(MyUI ui) {
+    	
+    }
+    
+    @Override
+    public void enter(ViewChangeEvent event)
+    {
+    	this.removeAllComponents();
+    	//TODO: Replace this with actual data
+    	String stud_num = "";
+    	MyUI ui = (MyUI) getUI();
+    	ui.get_user_info();
+    	stud_num = ui.get_user_info().get_student_num();
+Notification.show(stud_num);
     	
     }
     
@@ -99,8 +105,7 @@ public class ProfileView extends VerticalLayout implements View{
     public Panel make_user_info_panel(String name, String student_number)
     {
     	Panel panel = new Panel();
-    	HorizontalLayout inner = new HorizontalLayout();
-    	inner.setMargin(true);
+    	VerticalLayout inner = new VerticalLayout();
     	
     	ExternalResource resource = new ExternalResource ("https://ae01.alicdn.com/kf/HTB1w.uMacfrK1RkSnb4q6xHRFXay/Pet-Glasses-Dog-Glasses-Cute-cat-toy-for-Little-Dog-Eye-Wear-Dog-Sunglasses-Photos-Props.jpg");
     	Image image = new Image("Profile Image");
@@ -120,10 +125,8 @@ public class ProfileView extends VerticalLayout implements View{
     	email_line.addComponent(new Label("Email Address:"));
     	email_line.addComponent(new Label(student_number+"@students.wits.ac.za"));
     	
-    	details.addComponent(stud_num_line);
-    	details.addComponent(email_line);
-    	
-    	inner.addComponent(details);
+    	inner.addComponent(stud_num_line);
+    	inner.addComponent(email_line);
     	
     	panel.setCaption("User Information");
     	panel.setContent(inner);
@@ -143,6 +146,8 @@ public class ProfileView extends VerticalLayout implements View{
     	{
     		JsonObject data = courses.getAsJsonArray("result").get(0).getAsJsonObject();
         	
+        	
+        	
         	for(String j : data.keySet())
         	{
         		try
@@ -159,48 +164,6 @@ public class ProfileView extends VerticalLayout implements View{
     	catch (Exception e) {
 			// TODO: handle exception
 		}
-    	
-    	List < String > list = new ArrayList < String > ();
-        list.add("COMS1016-(Discrete Computational Structures)");
-        list.add("COMS2002-(Database Fundementals)");
-        list.add("COMS2013-(Mobile Computing)");
-        list.add("COMS2014-(Computer Networks)");
-        list.add("COMS2015-(Analysis of Algorithms)");
-        list.add("COMS3003-(Formal Languages and Automata)");
-        list.add("COMS3005-(Advanced Analysis of Algorithms)");
-        list.add("COMS3009-(Software Design)");
-        list.add("COMS3010-(Operating Systems & System Programming)");
-        list.add("COMS3007-(Machine Learning)");
-        list.add("COMS3006-(Computer Graphics & Vis.)");
-        list.add("COMS3008-Parallel Computing)");
-        list.add("COMS3011-(Software Design Project)");
-
-        ComboBoxMultiselect < String > course_combo_box = new ComboBoxMultiselect < > ();
-        // Initialize the ComboBoxMultiselect
-        course_combo_box.setPlaceholder("Courses");
-        course_combo_box.setWidth("430px");
-        course_combo_box.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5");
-        course_combo_box.setItems(list);
-        course_combo_box.setVisible(false);
-        
-        Button change_courses = new Button("Change courses",
-	            event -> course_combo_box.setVisible(true));
-    	
-    	change_courses.addClickListener(event -> change_courses.setVisible(false));
-    	
-    	Button done = new Button("Done",
-	            event -> change_courses.setVisible(true));
-    	done.addClickListener(event -> done.setVisible(false));
-    	done.addClickListener(event -> course_combo_box.setVisible(false));
-    	done.setVisible(false);
-    	
-    	
-    	
-    	change_courses.addClickListener(event -> done.setVisible(true));
-    	
-    	courses_inner.addComponent(change_courses);
-    	courses_inner.addComponent(course_combo_box);
-    	courses_inner.addComponent(done);
     	
     	
     	panel.setCaption("Courses");
