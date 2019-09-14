@@ -1,8 +1,12 @@
 package com.alphanomad.AN_Webapp;
 
+import com.google.gson.JsonObject;
+
 public class Booking {
 	
-	public static String name, studnum, course, activity, date, venue, startTime, endTime;
+	public static String name, studnum, course, activity, date, venue, startTime, endTime,ans;
+	JsonObject filtered;
+	
 	
 	public Booking(String str1, String str2, String str3, String str4, String str5, String str6, String str7, String str8){
 		
@@ -18,8 +22,9 @@ public class Booking {
 		String[] params = {"name","student_num","date", "course", "venue", "valid", "chkStartTime" , "chkEndTime", "activity"} ;
 		String[] values= {name,studnum, date, course, venue, "0", startTime, endTime,  activity};
 		DBHelper dbh = new DBHelper();
-		dbh.php_request("booking", params, values);
-		
+		ans=dbh.php_request("booking", params, values);
+		filtered=dbh.parse_json_string(ans);
+		ans=filtered.get("result").getAsString().substring(0,filtered.get("result").getAsString().length());
 	}
 
 }

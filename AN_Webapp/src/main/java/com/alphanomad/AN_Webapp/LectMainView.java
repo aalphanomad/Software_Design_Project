@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
@@ -100,25 +101,29 @@ public class LectMainView extends VerticalLayout implements View{
 
 	        
 	        Grid<TutorItem> grid = new Grid<>(TutorItem.class);
+	        grid.getColumn("image").setRenderer(new ImageRenderer());
+	        grid.setColumnOrder("image","name","student_num");
 	        grid.setWidth("100%");
 	      // grid.setWidthUndefined();
+	        /*
 	   grid.addComponentColumn(probe->{
-		   Image image=new Image("",new ThemeResource("imgs/anonymous-250.jpg"));
+		   Image image=new Image("",new ExternalResource("https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=250"));
 		   image.setWidth(100, Unit.PIXELS);
 		   image.setHeight(100, Unit.PIXELS);
 		   return image;
 
 		   
 	   }).setCaption("Profile Picture").setId("Profile Picture");
-	   
+	   */
 	        grid.setRowHeight(100);
 	        grid.setHeaderRowHeight(30);
 	        
 	        grid.addColumn(unused -> "More Info", new ButtonRenderer<Object>(
 	    			event ->{
-	    				MyUI test=new MyUI();
-	    			test.set_user_info(new UserInfo( (((TutorItem) event.getItem()).getName()).toString(), (((TutorItem) event.getItem()).getStudent_num()).toString(), "0"));
-	    			 new ProfileView(test); //CHECK WHY THIS IS NOT UPDATING!!!!
+	    				//UserInfo test = new UserInfo("1"); 
+	    				//System.out.println("LECTVIEW:  " + test.student_num);
+	    				
+	    			 new ProfileView((MyUI) getUI(),(((TutorItem) event.getItem()).getStudent_num())); 
 	    			getUI().getNavigator().navigateTo("profile");
 	    			}));	
 	        

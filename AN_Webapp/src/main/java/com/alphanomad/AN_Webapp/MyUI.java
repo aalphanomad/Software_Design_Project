@@ -31,18 +31,21 @@ public class MyUI extends UI {
 	private UserInfo user_info;
 	protected static final String TUTORMAINVIEW = "tutormain";
 	protected static final String LECTMAINVIEW = "lectmain";
+	protected static final String MAINVIEW = "main";
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String LOGINVIEW="login";
 	protected static final String REGVIEW="register";
 	protected static final String HISTORYVIEW="history";
 	protected static final String CLAIMFORM = "claimform";
 	protected static final String CONFIRMCLAIMFORM = "confirm";
+	public boolean logged_in = false;
+
 
 
 
 
     @Override
-    protected void init(VaadinRequest request) {
+	public void init(VaadinRequest request) {
     	addStyleName("image-backgound");
         getPage().setTitle("Alpha Nomad");
 
@@ -57,6 +60,10 @@ public class MyUI extends UI {
         navigator.addView(LOGINVIEW, new LoginView(this));
         navigator.addView(REGVIEW, new Register());
         navigator.addView(HISTORYVIEW,new ClaimHistory());
+        navigator.addView(PROFILEVIEW, new ProfileView(this));
+        navigator.addView(LOGINVIEW, new LoginView(this));
+        navigator.addView(REGVIEW, new Register());
+        navigator.addView(HISTORYVIEW,new ClaimHistory());
         navigator.addView(CLAIMFORM, new ClaimForm());
         navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(null,null,null,null,null,null,null,null));
        
@@ -65,6 +72,19 @@ public class MyUI extends UI {
         
         Responsive.makeResponsive(this);
         navigator.navigateTo(LOGINVIEW);
+        System.out.println("regstration complete");
+      
+        
+        Responsive.makeResponsive(this);
+        if(!logged_in)
+        {
+        	navigator.navigateTo(LOGINVIEW);
+        }
+        else
+        {
+        	navigator.navigateTo(MAINVIEW);
+        }
+        
     }
         
     public void set_user_info(UserInfo info)
@@ -78,6 +98,7 @@ public class MyUI extends UI {
     	System.out.println(this.user_info.hashCode());
     	return this.user_info;
     }
+    
     
     
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

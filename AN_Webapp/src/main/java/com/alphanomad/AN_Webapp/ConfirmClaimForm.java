@@ -7,7 +7,7 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
-import com.vaadin.server.Page.UriFragmentChangedListener;
+import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinRequest;
@@ -134,7 +134,6 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
 		  DBHelper dbh1=new DBHelper();
 		  String[] params1= {"student_num","password"};
 		  
-		  Notification notification=new Notification("Claim Validated, Go home now");
 		  
 		  Button validate = new Button("Validate",
 		  event -> {
@@ -148,8 +147,10 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
 					String[] params2 = {"name","student_num","course", "date", "venue"} ;
 					String[] values2= {name,studnum, course, date, venue};
 					ans2=dbh1.php_request("verify", params2, values2);		
-					notification.show(Page.getCurrent());
-				}
+					Notification.show("Claim Has Been Verified Successfully")	;	
+					 getUI().getNavigator().navigateTo("tutormain");
+
+				} 
 				
 				else {
 					LecturerUsername.setComponentError(new UserError("Only Lecturers are permitted to validate."));
@@ -159,10 +160,11 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
 		          			});
 		  addComponent(validate);
 		  
-		
+		/*
 		for(int i=0; i<array.length; i++) {
 		  System.out.println(array[i]);
 		}
+		*/
 		  
         panel.setContent(content);
 	}

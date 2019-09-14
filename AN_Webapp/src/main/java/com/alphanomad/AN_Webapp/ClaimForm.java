@@ -37,18 +37,93 @@ import com.vaadin.ui.VerticalLayout;
 
 
 public class ClaimForm extends VerticalLayout implements View {
-	String course;
-    String venue;
-    String activity;
-    
+	ComboBox<String> Courses;
+	TextField Venue;
+	ComboBox<String> Activity;
+	ComboBox<String> startHour;
+	ComboBox<String> startMinute;
+	ComboBox<String> endHour;
+	ComboBox<String> endMinute;
+	Button confirm;
+	
+	
+	
     String[] AllInfo;
     static JsonObject filtered;
     static DBHelper dbh;
     
     Booking b;
-    ConfirmClaimForm c;
+    String startTime, endTime;
+    
+    public  Boolean validate() {
+    	Boolean valid=true;
+    	if(Courses.isEmpty()) {
+    		valid=false;
+    		Courses.setComponentError(new UserError("Please Select A Course."));
+    	}
+    	if(Venue.isEmpty()) {
+    		valid=false;
+    		Venue.setComponentError(new UserError("Please Select A Venue."));
+    	}if(Activity.isEmpty()) {
+    		valid=false;
+    		Activity.setComponentError(new UserError("Please Select A Activity."));
+    	}
+    	if(startHour.isEmpty()) {
+    		valid=false;
+    		startHour.setComponentError(new UserError("Please Select the Time."));    		
+    	}
+    	if(startMinute.isEmpty()) {
+    		valid=false;
+    		startMinute.setComponentError(new UserError("Please Select the Time."));
+    	}
+    	if(endHour.isEmpty()) {
+    		valid=false;
+    		endHour.setComponentError(new UserError("Please Select the Time."));
+    	}
+    	if(endMinute.isEmpty()) {
+    		valid=false;
+    		endMinute.setComponentError(new UserError("Please Select the Time."));
+    	}
+    	//b.ans.equals("-1") ||
+    	if(startTime!=null && endTime!=null) {
+    	if( checktimings(startTime,endTime)==false) {
+    		valid=false;
+    		startHour.setComponentError(new UserError("Please Select a Valid Time."));    		
+    		startMinute.setComponentError(new UserError("Please Select a Valid Time."));
+    		endHour.setComponentError(new UserError("Please Select a Valid Time."));    		
+    		endMinute.setComponentError(new UserError("Please Select a Valid Time."));
+    	   }
+    	}
+    	return valid;
+    }
     
     
+    private boolean checktimings(String startTime1, String endTime1) {
+
+        String pattern = "HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        startTime1 = startTime1.replaceAll("\\s+", "");
+        endTime1 = endTime1.replaceAll("\\s+", "");
+        try {
+            Date date1 = sdf.parse(startTime1);
+            Date date2 = sdf.parse(endTime1);
+
+            startTime = startTime1;
+            endTime = endTime1;
+            if (date1.before(date2)) {
+                return true;
+            } else {
+
+                return false;
+            }
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     
     public static ArrayList<String>  GetCourses(String FromDB){
     	
@@ -146,6 +221,9 @@ public class ClaimForm extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event)
     {
+    	
+  
+		  
 		removeAllComponents();
 	 	dbh=new DBHelper();
 		UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
@@ -219,35 +297,36 @@ public class ClaimForm extends VerticalLayout implements View {
         
         
         
-        ComboBox<String> combobox = new ComboBox<String>("Course");
-        combobox.setPlaceholder("Please fill in");
-        combobox.setWidth("100%");
-        combobox.setItems(coursesArray);
-        addComponent(combobox);
+        Courses = new ComboBox<String>("Course");
+        Courses.setPlaceholder("Please fill in");
+        Courses.setWidth("100%");
+        Courses.setItems(coursesArray);
+        Courses.setValue(coursesArray.get(0));
+        addComponent(Courses);
         
-        TextField textfield = new TextField();
-        textfield.setPlaceholder("Please fill in");
-        textfield.setCaption("Venue");
-        addComponent(textfield);
+        Venue = new TextField();
+        Venue.setPlaceholder("Please fill in");
+        Venue.setCaption("Venue");
+        addComponent(Venue);
         
-        ComboBox<String> combobox2 = new ComboBox<String>("Type of Activity");
-        combobox2.setPlaceholder("Please fill in");
-        combobox2.setItems(activityArray);
-        addComponent(combobox2);
+         Activity = new ComboBox<String>("Type of Activity");
+        Activity.setPlaceholder("Please fill in");
+        Activity.setItems(activityArray);
+        addComponent(Activity);
         
-        ComboBox<String> startHour = new ComboBox<String>("Hour(s)");
+         startHour = new ComboBox<String>("Hour(s)");
         startHour.setPlaceholder("Please fill in");
         startHour.setItems(hour);
         
-        ComboBox<String> startMinute = new ComboBox<String>("Minutes");
+         startMinute = new ComboBox<String>("Minutes");
         startMinute.setPlaceholder("Please fill in");
         startMinute.setItems(minute);
         
-        ComboBox<String> endHour = new ComboBox<String>("Hour(s)");
+        endHour = new ComboBox<String>("Hour(s)");
         endHour.setPlaceholder("Please fill in");
         endHour.setItems(hour);
         
-        ComboBox<String> endMinute = new ComboBox<String>("Minutes");
+        endMinute = new ComboBox<String>("Minutes");
         endMinute.setPlaceholder("Please fill in");
         endMinute.setItems(minute);
         
@@ -274,27 +353,7 @@ public class ClaimForm extends VerticalLayout implements View {
 	  	time2.addComponent(ed);
 	  	addComponent(time2);
 	  	
-        /*DateTimeField start = new DateTimeField();
-        start.setCaption("Select start of duration");
-        //start.setValue(LocalDateTime.now());
-        addComponent(start);
-        
-        DateTimeField end = new DateTimeField();
-        end.setCaption("Select end of duration");
-        //end.setValue(LocalDateTime.now());
-        addComponent(end);*/
-	  	
-        
-        if(!combobox.isEmpty() && !textfield.isEmpty() && !combobox2.isEmpty()) {
-	        course = combobox.getValue().toString();
-	        venue = textfield.getValue().toString();
-	        activity = combobox2.getValue().toString();
-        }
-        
-        
-			
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
+    
 		Date today = new Date();
 
 		String day = today.toString().substring(8,10);
@@ -303,42 +362,54 @@ public class ClaimForm extends VerticalLayout implements View {
 		
 		String date = day + " " + month + " " + year;
 		
-		/*Button see = new Button("SEE");
-		//see.addClickListener(event -> dbh.php_request("booking", params, values));
-        see.addClickListener(e -> Notification.show(startHour.getValue().toString(), Type.TRAY_NOTIFICATION));
-        addComponent(see);*/
-		
+
         
-        //navigator.addView(CONFIRMCLAIMFORM, new ClaimForm());
-        
-        Button confirm = new Button("Confirm");
+         confirm = new Button("Confirm");
         addComponent(confirm);
         confirm.addClickListener(e -> {
-        			
+           	Courses.setComponentError(null);
+  		  Venue.setComponentError(null);
+  		  Activity.setComponentError(null);
+  		  startHour.setComponentError(null);
+  		  startMinute.setComponentError(null);
+  		  endHour.setComponentError(null);
+  		  endMinute.setComponentError(null);
+        			if(validate()==true) {
+        				startTime=startHour.getValue().toString() + ":" + startMinute.getValue().toString();
+            			endTime=endHour.getValue().toString() + ":" + endMinute.getValue().toString();
             	b = new Booking(tutor_info.name, 
         			tutor_info.student_num, 
-            		EditString.editCourse((combobox.getValue().toString())), 
-            		combobox2.getValue().toString(), 
-            		textfield.getValue().toString(), 
-            		date, 
-            		startHour.getValue().toString() + ":" + startMinute.getValue().toString(), 
-            		endHour.getValue().toString() + ":" + endMinute.getValue().toString());
-    
+            		EditString.editCourse((Courses.getValue().toString())), 
+            		Activity.getValue().toString(), 
+            		Venue.getValue().toString(), 
+            		date, startTime,endTime 
+            		);
+  
+   
+            	if(b.ans.equals("-1")) {
+            		startHour.setComponentError(new UserError("This is a Duplicate Claim."));    		
+            		startMinute.setComponentError(new UserError("This is a Duplicate Claim."));
+            		endHour.setComponentError(new UserError("This is a Duplicate Claim."));    		
+            		endMinute.setComponentError(new UserError("This is a Duplicate Claim."));	
+            	}else { 
+            	
+   
             	removeAllComponents();
             	
-		        addComponent(c = new ConfirmClaimForm(tutor_info.name, 
+		        addComponent(new ConfirmClaimForm(tutor_info.name, 
 		        		tutor_info.student_num, 
-		        		EditString.editCourse((combobox.getValue().toString())), 
-		        		combobox2.getValue().toString(), 
-		        		textfield.getValue().toString(), 
+		        		EditString.editCourse((Courses.getValue().toString())), 
+		        		Activity.getValue().toString(), 
+		        		Venue.getValue().toString(), 
 		        		date, 
-		        		startHour.getValue().toString() + ":" + startMinute.getValue().toString(), 
-		        		endHour.getValue().toString() + ":" + endMinute.getValue().toString()));
+		        		startTime, 
+		        		endTime));
           
 				//navigator.addView(CONFIRMCLAIMFORM, c);
 				//addComponent(c);
 				//getUI().getNavigator().navigateTo("confirm");
-	        			
+   }		 
+        			}
 			});
     }
 
