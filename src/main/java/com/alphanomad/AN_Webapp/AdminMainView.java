@@ -3,13 +3,11 @@ package com.alphanomad.AN_Webapp;
 import java.util.ArrayList;
 import java.util.Set;
 
-import javax.jws.soap.SOAPBinding.Use;
 
 import com.google.gson.JsonArray;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
