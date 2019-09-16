@@ -5,14 +5,14 @@ public class CourseAllocObject
 	String stud_num;
 	String course;
 	String confirmed;
-	
+
 	public CourseAllocObject(String stud_num, String course, String confirmed)
 	{
 		this.stud_num = stud_num;
 		this.course = course;
 		this.confirmed = confirmed;
 	}
-	
+
 	public String getStud_num()
 	{
 		return stud_num;

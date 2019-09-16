@@ -143,8 +143,8 @@ public class LoginView extends VerticalLayout implements View
 			{
 				getUI().getNavigator().navigateTo("lectmain");
 
-			}
-			else if (login_obj.get("role").getAsString().equals("2") || login_obj.get("role").getAsString().equals("3"))
+			} else if (login_obj.get("role").getAsString().equals("2")
+					|| login_obj.get("role").getAsString().equals("3"))
 			{
 				getUI().getNavigator().navigateTo("adminmain");
 
