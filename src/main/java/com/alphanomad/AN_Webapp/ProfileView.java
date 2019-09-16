@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.vaadin.addons.ComboBoxMultiselect;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -93,11 +94,35 @@ public class ProfileView extends VerticalLayout implements View
 		System.out.println(name + " " + stud_num);
 
 		String[] parameters = { "table", "target", "filter", "value" };
-		String[] values2 = { "USER_COURSE_ALLOC", "*", "STUDENT_NUM", stud_num };
-		String courses = dbh.php_request("generic_select", params, values);
-		JsonObject courses_obj = dbh.parse_json_string(courses);
+		String[] values2 = { "USER_COURSE_ALLOC", "COURSE,CONFIRMED", "STUDENT_NUM", stud_num };
+		String courses = dbh.php_request("generic_select", parameters, values2);
+		JsonArray courses_obj = new JsonArray();
+		try
+		{
+			courses_obj = dbh.parse_json_string_arr(courses);
+		} catch (Exception e)
+		{
+			System.out.println("HERE\n HERE\n HERE\n");
+			System.out.println(e);
+		}
 
-		Button home_button = new Button("go to main view", btn_event -> getUI().getNavigator().navigateTo("lectmain"));
+		Button home_button = new Button("go to main view", btn_event -> {
+			if(((MyUI)(getUI())).get_user_info().get_role().equals("1"))
+			{
+				getUI().getNavigator().navigateTo("lectmain");	
+			}
+			else if(((MyUI)(getUI())).get_user_info().get_role().equals("2"))
+			{
+				getUI().getNavigator().navigateTo("adminmain");
+			}
+			else
+			{
+				// this should never happen
+				// but it's always good to be safe
+				getUI().getNavigator().navigateTo("login");
+			}
+			
+		});
 
 		addComponent(make_user_info_panel(name, stud_num));
 		addComponent(make_courses_panel(courses_obj));
@@ -148,32 +173,42 @@ public class ProfileView extends VerticalLayout implements View
 
 	/**
 	 * 
-	 * @param courses a Json Object
+	 * @param courses_obj a Json Object
 	 * @return a vertical layout containing a collapseable list of courses that the
 	 *         user is linked to
 	 */
-	public Panel make_courses_panel(JsonObject courses)
+	public Panel make_courses_panel(JsonArray courses_obj)
 	{
 		Panel panel = new Panel();
 		VerticalLayout courses_inner = new VerticalLayout();
 		try
 		{
-			JsonObject data = courses.getAsJsonArray("result").get(0).getAsJsonObject();
-
-			for (String j : data.keySet())
+			for (int x = 0; x < courses_obj.size(); x++)
 			{
 				try
 				{
-					courses_inner.addComponent(new Label(data.get(j).getAsString() + "\n"));
+					String course_name = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
+					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
+					if(course_conf.equals("1"))
+					{
+						courses_inner.addComponent(new Label( course_name + "\n"));
+					}
+					else
+					{
+						courses_inner.addComponent(new Label( course_name + " (Pending confirmation) \n"));
+					}
+					
 				} catch (UnsupportedOperationException e)
 				{
-					// courses_inner.addComponent(new Label("probs null value"));
+					//System.out.println("HERE\n HERE\n HERE\n");
 				}
-
 			}
+			
+
 		} catch (Exception e)
 		{
-			// TODO: handle exception
+			e.printStackTrace();
+			courses_inner.addComponent(new Label("There's nothing here... \n"));
 		}
 
 		List<String> list = new ArrayList<String>();

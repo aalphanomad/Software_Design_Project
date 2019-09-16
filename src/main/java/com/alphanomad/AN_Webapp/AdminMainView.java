@@ -5,11 +5,14 @@ import java.util.Set;
 
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
@@ -42,6 +45,58 @@ public class AdminMainView extends VerticalLayout implements View
 		addComponent(view_users_btn);
 		addComponent(view_courses_btn);
 		addComponent(login);
+		
+		
+		// This is the code used to migrate the old courses data to the new table
+		// Don't uncomment this unless you know what you are doing
+		/*
+		Button magic_btn = new Button("Magic Button", event -> {
+			ArrayList<UserItem> users = get_all_users();
+			DBHelper dbh = new DBHelper();
+			for(UserItem user : users)
+			{
+				String[] params = { "name", "student_num"};
+				String[] values = { user.getName(), user.getStudent_num() };
+				String courses = dbh.php_request("get_courses", params, values);
+				JsonObject courses_obj = new JsonObject();
+				
+				try
+				{
+					courses_obj = dbh.parse_json_string(courses);
+				} catch (Exception e)
+				{
+					System.out.println(e);
+				}
+				
+				try
+				{
+					JsonObject data = courses_obj.getAsJsonArray("result").get(0).getAsJsonObject();
+
+					for (String j : data.keySet())
+					{
+						try
+						{
+							System.out.println(data.get(j).getAsString() + "\n");
+							String[] params2 = { "student_num", "course", "confirmed"};
+							String[] values2 = { user.getStudent_num(), data.get(j).getAsString(), "0"};
+							
+							dbh.php_request("update_courses", params2, values2);
+						} catch (UnsupportedOperationException e)
+						{
+							//System.out.println(e);
+						}
+
+					}
+				} catch (Exception e)
+				{
+					System.out.println(e);
+				}
+			}
+			
+		});
+		
+		addComponent(magic_btn);
+		*/
 	}
 
 	private void view_courses()
@@ -122,6 +177,16 @@ public class AdminMainView extends VerticalLayout implements View
 			}
 
 		});
+		
+		g.addColumn(unused -> "More Info", new ButtonRenderer<Object>(event ->
+		{
+			// UserInfo test = new UserInfo("1");
+			// System.out.println("LECTVIEW: " + test.student_num);
+
+			new ProfileView((MyUI) getUI(), (((UserItem) event.getItem()).getStudent_num()));
+			getUI().getNavigator().navigateTo("profile");
+		}));
+
 
 		addComponent(make_admin_btn);
 
