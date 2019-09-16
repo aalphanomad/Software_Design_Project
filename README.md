@@ -1,6 +1,10 @@
 AN_Webapp
 ==============
 
+[![Build Status](https://travis-ci.org/aalphanomad/Software_Design_Project.svg?branch=iVBranch)](https://travis-ci.org/aalphanomad/Software_Design_Project)
+
+[![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/iVBranch/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
+
 Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
 
 
@@ -51,4 +55,3 @@ Using Vaadin pre-releases
 If Vaadin pre-releases are not enabled by default, use the Maven parameter
 "-P vaadin-prerelease" or change the activation default value of the profile in pom.xml .
 
-[![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/iVBranch/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
