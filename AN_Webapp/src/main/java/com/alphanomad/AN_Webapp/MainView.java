@@ -21,10 +21,10 @@ public class MainView extends VerticalLayout implements View{
 	@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
-		if(!((MyUI)getUI()).logged_in)
-        {
-			getUI().getNavigator().navigateTo("login");
-        }
+		//if(!((MyUI)getUI()).logged_in)
+        //{
+		//	getUI().getNavigator().navigateTo("login");
+        //}
 		removeAllComponents();
 		DBHelper dbh = new DBHelper();
 		

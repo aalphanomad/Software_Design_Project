@@ -9,6 +9,7 @@ import org.vaadin.addons.ComboBoxMultiselect;
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -26,22 +27,15 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ProfileView extends VerticalLayout implements View{
 
-    public ProfileView(MyUI ui) {
+    private UserInfo user;
+
+
+	public ProfileView(MyUI ui) {
     	
     }
     
-    @Override
-    public void enter(ViewChangeEvent event)
-    {
-    	this.removeAllComponents();
-    	//TODO: Replace this with actual data
-    	String stud_num = "";
-    	MyUI ui = (MyUI) getUI();
-    	ui.get_user_info();
-    	stud_num = ui.get_user_info().get_student_num();
-Notification.show(stud_num);
-    	
-    }
+ 
+
     
 	/**
 	 * Make a profile view for a specific user
