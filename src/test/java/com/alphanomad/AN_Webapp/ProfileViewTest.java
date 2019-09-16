@@ -20,12 +20,12 @@ public class ProfileViewTest {
 	@Test
 	public void testProfileView() {
 		//ProfileView profileView=new ProfileView(ui);
-		String name="Marubini";
-		String password="1";
+		//String name="Marubini";
+		//String password="1";
 		
 		//profileView.make_user_info_panel(name, password);
-		String g="COMS3000";
-		JsonObject k=null;
+		//String g="COMS3000";
+		//JsonObject k=null;
 		//profileView.make_courses_panel(k);
 		DBHelper dbh=new DBHelper();
 		
