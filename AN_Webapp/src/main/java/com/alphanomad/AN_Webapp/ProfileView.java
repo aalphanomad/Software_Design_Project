@@ -75,9 +75,9 @@ public class ProfileView extends VerticalLayout implements View{
     	String[] values = {stud_num};
     	String name = dbh.php_request("get_name", params, values); 
     	
-    	params = new String[] {"student_num","name"} ;
-    	values = new String[] {stud_num,name};
-    	String courses = dbh.php_request("get_courses", params, values);
+    	String[] parameters= { "table", "target","filter", "value" };
+		String[] values2 = { "USER_COURSE_ALLOC", "*", "STUDENT_NUM",stud_num };
+    	String courses = dbh.php_request("generic_select", params, values);
     	JsonObject courses_obj = dbh.parse_json_string(courses);
     	
     	Button home_button = new Button("go to main view",
