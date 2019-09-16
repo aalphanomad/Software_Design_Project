@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\omer\Desktop\github_stuff\sdp\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\ClaimHistory.java
 C:\Users\omer\Desktop\github_stuff\sdp\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\MyUI.java
 C:\Users\omer\Desktop\github_stuff\sdp\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\DBHelper.java
@@ -30,3 +31,20 @@ C:\Users\omer\Desktop\github_stuff\sdp\Software_Design_Project\AN_Webapp\src\mai
 C:\Users\omer\Desktop\github_stuff\sdp\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\BookingTest.java
 C:\Users\omer\Desktop\github_stuff\sdp\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\LectMainView.java
 C:\Users\omer\Desktop\github_stuff\sdp\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\Register.java
+=======
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\ClaimForm.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\DBHelper.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\EditString.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\TutorItem.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\ClaimHistory.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\ConfirmClaimForm.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\UserInfo.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\MyUI.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\LectMainView.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\Register.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\HistoryItem.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\LoginView.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\Booking.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\ProfileView.java
+D:\Mathematical Science\3rd year\Software Design Project\Git\Software_Design_Project\AN_Webapp\src\main\java\com\alphanomad\AN_Webapp\TutorMainView.java
+>>>>>>> mVBranch
