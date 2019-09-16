@@ -5,7 +5,6 @@
 
 	<groupId>com.alphanomad</groupId>
 	<artifactId>AN_Webapp</artifactId>
-	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AN_Webapp</name>
 
@@ -51,6 +50,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+   <groupId>org.vaadin.addons</groupId>
+   <artifactId>vaadin-combobox-multiselect</artifactId>
+   <version>2.7</version>
+</dependency>
+		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
 		</dependency>
@@ -79,19 +83,25 @@
 		</dependency>
 		
 		<dependency>
-    		<groupId>com.vaadin</groupId>
-    		<artifactId>vaadin-testbench</artifactId>
-    		<version>4.1.0.alpha2</version>
-    		<scope>test</scope>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.8.2</version>
+		    <scope>test</scope>
 		</dependency>
 		
 		<dependency>
-			<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+		    <groupId>org.codehaus.sonar</groupId>
+		    <artifactId>sonar-maven-plugin</artifactId>
+		    <version>3.2</version>
+		    <type>pom</type>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+		<dependency>
 		    <groupId>org.jacoco</groupId>
 		    <artifactId>jacoco-maven-plugin</artifactId>
 		    <version>0.8.4</version>
 		</dependency>
-		
 		
 		
 	</dependencies>
@@ -125,18 +135,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>cobertura-maven-plugin</artifactId>
-    <version>2.7</version>
-    <configuration>
-        <formats>
-            <format>html</format>
-            <format>xml</format>
-        </formats>
-        <check />
-    </configuration>
-</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>3.0.0</version>
@@ -164,25 +162,27 @@
 					<scanIntervalSeconds>2</scanIntervalSeconds>
 				</configuration>
 			</plugin>
-			<plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.4</version>
-    <executions>
-        <execution>
-        <goals>
-            <goal>prepare-agent</goal>
-        </goals>
-        </execution>
-        <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-                <goal>report</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+			
+					<plugin>
+					    <groupId>org.jacoco</groupId>
+					    <artifactId>jacoco-maven-plugin</artifactId>
+					    <version>0.8.4</version>
+					    <executions>
+					        <execution>
+					        <goals>
+					            <goal>prepare-agent</goal>
+					        </goals>
+					        </execution>
+					        <execution>
+					            <id>report</id>
+					            <phase>test</phase>
+					            <goals>
+					                <goal>report</goal>
+					            </goals>
+					        </execution>
+					    </executions>
+					</plugin>
+			
 		</plugins>
 	</build>
 
@@ -228,9 +228,5 @@
 			</pluginRepositories>
 		</profile>
 	</profiles>
-	
-	
 
 </project>
-
-
