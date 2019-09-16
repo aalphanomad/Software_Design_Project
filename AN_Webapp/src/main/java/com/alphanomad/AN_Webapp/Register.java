@@ -35,8 +35,9 @@ import com.vaadin.ui.themes.ValoTheme;
 @Theme("mytheme")
 public class Register extends VerticalLayout implements View {
 
-    TextField Name, StudentNumber;
-    PasswordField Password, ConfPassword;
+    public TextField Name, StudentNumber;
+    public PasswordField Password;
+	public PasswordField ConfPassword;
     ComboBoxMultiselect < String > comboBoxMultiselect = new ComboBoxMultiselect < > ();
     FormLayout content = new FormLayout();
 

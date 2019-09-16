@@ -26,9 +26,9 @@ import com.vaadin.ui.Window;
 
 @Theme("mytheme")
 public class LoginView extends VerticalLayout implements View {
-	TextField Username;
-	PasswordField Password;
-	MyUI parent_ui;
+	public TextField Username;
+	public PasswordField Password;
+	public MyUI parent_ui;
 	JsonObject login_obj;
 	
 	  public boolean TheLogin(String student_num,String password) {

@@ -1,4 +1,5 @@
-package com.alphanomad.AN_Webapp;
+//package com.alphanomad.AN_Webapp;
+import com.alphanomad.AN_Webapp.*;
 
 import static org.junit.Assert.*;
 
