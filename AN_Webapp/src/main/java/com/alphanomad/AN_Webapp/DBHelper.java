@@ -110,6 +110,21 @@ public class DBHelper {
 	public JsonObject parse_json_string(String json_string)
 	{
 		JsonObject jsonObject = new JsonParser().parse(json_string).getAsJsonObject();
+		
 		return jsonObject;
+	}
+	
+	/**
+	 * a method to convert the json string received from the server into a java object
+	 * @param json_string the json to be parsed
+	 * @return a JsonObject, 
+	 * @see ProfileView#make_courses_panel 
+	 * for an example of how to do this
+	 */
+	public JsonArray parse_json_string_arr(String json_string)
+	{
+		JsonArray jsonArr = new JsonParser().parse(json_string).getAsJsonArray();
+		
+		return jsonArr;
 	}
 }
