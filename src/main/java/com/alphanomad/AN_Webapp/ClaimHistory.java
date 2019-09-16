@@ -17,9 +17,9 @@ import com.vaadin.ui.renderers.ButtonRenderer;
 public class ClaimHistory extends VerticalLayout implements View
 {
 
-	TextField Username;
-	PasswordField Password;
-	ConfirmClaimForm c;
+	public TextField Username;
+	public PasswordField Password;
+	public ConfirmClaimForm c;
 
 	public String[][] Display(String info, int size)
 	{
