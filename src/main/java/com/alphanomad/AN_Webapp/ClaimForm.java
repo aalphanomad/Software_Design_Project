@@ -47,7 +47,7 @@ public class ClaimForm extends VerticalLayout implements View
 
 	String[] AllInfo;
 	static JsonObject filtered;
-	static DBHelper dbh;
+	static DBHelper dbh; 
 
 	Booking b;
 	String startTime, endTime;
