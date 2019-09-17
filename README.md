@@ -1,6 +1,10 @@
 AN_Webapp
 ==============
 
+[![Build Status](https://travis-ci.org/aalphanomad/Software_Design_Project.svg?branch=test)](https://travis-ci.org/aalphanomad/Software_Design_Project)
+
+[![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/test/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
+
 Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
 
 
