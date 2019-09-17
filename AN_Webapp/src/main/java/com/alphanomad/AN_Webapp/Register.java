@@ -81,7 +81,7 @@ public class Register extends VerticalLayout implements View {
         	comboBoxMultiselect.setComponentError(new UserError("Please Select Atleast One Course"));
         	valid=false;
         }
-        if(valid) {
+        /*if(valid) {
     	for(int i=0;i<Courses.length;i++) {
     		String[] newCourses=Courses[i].split("-");
     		DummyCourses.add(newCourses[0].toString());
@@ -140,7 +140,7 @@ public class Register extends VerticalLayout implements View {
         	Notification.show(ans);
 
         }
-        }
+        }*/
 
 
     }

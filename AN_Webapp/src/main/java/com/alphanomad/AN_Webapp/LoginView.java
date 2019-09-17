@@ -47,7 +47,7 @@ public class LoginView extends VerticalLayout implements View {
 				return false;
 	
 			}
-			else {
+			/*else {
 		    String ans=dbh.php_request("signin", params, values);
 		   
 		    login_obj = dbh.parse_json_string(ans);
@@ -62,7 +62,8 @@ public class LoginView extends VerticalLayout implements View {
 			   return false;
 			  
 		   }
-			}
+			}*/
+			return false;
 			
 	  }
   public  LoginView(MyUI parent_ui) {
@@ -127,7 +128,7 @@ public class LoginView extends VerticalLayout implements View {
   }*/
   
   
-  public void handle_login(String username, String password)
+  /*public void handle_login(String username, String password)
   {
 	  if(TheLogin(username, password))
 	  {
@@ -146,7 +147,7 @@ public class LoginView extends VerticalLayout implements View {
 		  Notification.show("Login Failed");
 	  }
 	  
-  }
+  }*/
 
 
 	  	

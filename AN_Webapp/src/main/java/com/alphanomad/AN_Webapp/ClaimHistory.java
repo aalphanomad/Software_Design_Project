@@ -20,7 +20,7 @@ public class ClaimHistory  extends VerticalLayout implements View{
 	public PasswordField Password;
 	ConfirmClaimForm c;
 	
-public String[][] Display(String info,int size) {
+/*public String[][] Display(String info,int size) {
 				String[][]Matrix=new String[size][size];
 				String[] first=info.split("\\],");
 				String[] second = null;
@@ -37,7 +37,7 @@ public String[][] Display(String info,int size) {
 				Matrix[6][second.length-1]=Matrix[6][second.length-1].substring(0, Matrix[6][second.length-1].length()-3);
 				return Matrix;
 
-}
+}*/
 	 
   @SuppressWarnings("unchecked")
 public  ClaimHistory() {

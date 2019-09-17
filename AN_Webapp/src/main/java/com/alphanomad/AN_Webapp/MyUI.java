@@ -40,7 +40,7 @@ public class MyUI extends UI {
 
 
 
-
+	/*
     @Override
     protected void init(VaadinRequest request) {
     	addStyleName("image-backgound");
@@ -65,7 +65,7 @@ public class MyUI extends UI {
         
         Responsive.makeResponsive(this);
         navigator.navigateTo(LOGINVIEW);
-    }
+    }*/
         
     public void set_user_info(UserInfo info)
     {
