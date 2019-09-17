@@ -115,6 +115,10 @@ public class ProfileView extends VerticalLayout implements View
 			{
 				getUI().getNavigator().navigateTo("adminmain");
 			}
+			else if(((MyUI)(getUI())).get_user_info().get_role().equals("0"))
+			{
+				getUI().getNavigator().navigateTo("tutormain");
+			}
 			else
 			{
 				// this should never happen

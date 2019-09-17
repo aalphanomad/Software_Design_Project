@@ -361,8 +361,6 @@ public class AdminMainView extends VerticalLayout implements View
 		String[] values = { "USER_COURSE_ALLOC", "*", "CONFIRMED", "1" };
 
 		String result = dbh.php_request("generic_select", parameters, values);
-		System.out.println("result is :");
-		System.out.println(result);
 		JsonArray tutor_alloc_obj;
 		try
 		{
@@ -407,8 +405,6 @@ public class AdminMainView extends VerticalLayout implements View
 		String[] values = { "USER_COURSE_ALLOC", "*", "1", "1" };
 
 		String result = dbh.php_request("generic_select", parameters, values);
-		System.out.println("result is :");
-		System.out.println(result);
 		JsonArray tutor_alloc_obj;
 		try
 		{
@@ -427,10 +423,6 @@ public class AdminMainView extends VerticalLayout implements View
 				JsonArray data = (JsonArray) tutor_alloc_obj.getAsJsonArray().get(x);
 				try
 				{
-					System.out.println(data.get(1).getAsString());
-					System.out.println(data.get(2).getAsString());
-					System.out.println(data.get(3).getAsString());
-
 					CourseAllocObject cao = new CourseAllocObject(data.get(1).getAsString(), data.get(2).getAsString(),
 							data.get(3).getAsString());
 					course_allocs.add(cao);
