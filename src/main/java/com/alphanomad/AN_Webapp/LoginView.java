@@ -3,6 +3,7 @@ package com.alphanomad.AN_Webapp;
 import com.google.gson.JsonObject;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -118,6 +119,7 @@ public class LoginView extends VerticalLayout implements View
 		HorizontalLayout buttons = new HorizontalLayout();
 
 		Button button1 = new Button("Login", event -> handle_login(Username.getValue(), Password.getValue()));
+		button1.setClickShortcut(KeyCode.ENTER);
 		Button button2 = new Button("Register", event -> getUI().getNavigator().navigateTo("register"));
 		buttons.addComponent(button1);
 		buttons.addComponent(button2);

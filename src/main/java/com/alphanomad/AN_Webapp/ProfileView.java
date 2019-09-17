@@ -1,6 +1,8 @@
 package com.alphanomad.AN_Webapp;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,8 +148,18 @@ public class ProfileView extends VerticalLayout implements View
 		HorizontalLayout inner = new HorizontalLayout();
 		inner.setMargin(true);
 
-		ExternalResource resource = new ExternalResource(
-				"https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
+		//ExternalResource resource = new ExternalResource(
+		//		"https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
+		
+		ExternalResource resource;
+		try {
+			resource = new ExternalResource(
+					"https://ui-avatars.com/api/?size=128&background=003B5C&color=FFFFFF&name="+URLEncoder.encode(name,"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			resource = new ExternalResource("https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
+			e.printStackTrace();
+		}
 		Image image = new Image("Profile Image");
 
 		image.setSource(resource);
