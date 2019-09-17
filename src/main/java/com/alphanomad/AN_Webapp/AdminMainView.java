@@ -601,6 +601,5 @@ public class AdminMainView extends VerticalLayout implements View
 			System.out.println(e);
 		}
 		return course_items;
-
 	}
 }

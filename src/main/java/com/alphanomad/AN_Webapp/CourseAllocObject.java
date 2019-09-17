@@ -6,6 +6,12 @@ public class CourseAllocObject
 	String course;
 	String confirmed;
 
+	/**
+	 * like CourseItem but it has confirmed as well
+	 * @param stud_num
+	 * @param course
+	 * @param confirmed
+	 */
 	public CourseAllocObject(String stud_num, String course, String confirmed)
 	{
 		this.stud_num = stud_num;
@@ -18,28 +24,13 @@ public class CourseAllocObject
 		return stud_num;
 	}
 
-	public void setStud_num(String stud_num)
-	{
-		this.stud_num = stud_num;
-	}
-
 	public String getCourse()
 	{
 		return course;
 	}
 
-	public void setCourse(String course)
-	{
-		this.course = course;
-	}
-
 	public String getConfirmed()
 	{
 		return confirmed;
-	}
-
-	public void setConfirmed(String confirmed)
-	{
-		this.confirmed = confirmed;
 	}
 }

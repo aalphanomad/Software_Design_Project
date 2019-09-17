@@ -7,6 +7,12 @@ public class UserItem
 	String student_num;
 	String role;
 
+	/**
+	 * similar to user info just stores some things about the user
+	 * @param name
+	 * @param student_num
+	 * @param role
+	 */
 	public UserItem(String name, String student_num, String role)
 	{
 		this.name = name;
@@ -20,29 +26,13 @@ public class UserItem
 		return name;
 	}
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
 	public String getStudent_num()
 	{
 		return student_num;
-	}
-
-	public void setStudent_num(String student_num)
-	{
-		this.student_num = student_num;
 	}
 
 	public String getRole()
 	{
 		return role;
 	}
-
-	public void setRole(String role)
-	{
-		this.role = role;
-	}
-
 }
