@@ -12,6 +12,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
@@ -132,7 +133,7 @@ public class AdminMainView extends VerticalLayout implements View
 		Grid<UserItem> g = new Grid<UserItem>();
 		ArrayList<UserItem> course_list = get_all_users();
 		g.setSizeFull();
-		g.setHeightByRows(course_list.size());
+		//g.setHeightByRows(course_list.size());
 		g.setItems(course_list);
 		g.addColumn(UserItem::getStudent_num).setCaption("Student/Staff Number");
 		g.addColumn(UserItem::getName).setCaption("Name");
@@ -219,11 +220,45 @@ public class AdminMainView extends VerticalLayout implements View
 				Notification.show("No Items Selected");
 			}
 		});
+		
+		Button filter_tutor_button = new Button("view only tutors", event ->
+		{
+			g.setItems(get_selected_users("0"));
+
+		});
+		
+		Button filter_lecturer_button = new Button("view only lecturers", event ->
+		{
+			g.setItems(get_selected_users("1"));
+
+		});
+		
+		Button filter_admin_button = new Button("view only admins", event ->
+		{
+			ArrayList<UserItem> items = get_selected_users("2");
+			items.addAll(get_selected_users("3"));
+			g.setItems(items);
+
+		});
+		
+		Button no_filter_button = new Button("view ALL user", event ->
+		{
+			g.setItems(get_all_users());
+
+		});
+		
 		Button go_back_to_main_view = new Button("Return to menu", event ->
 		{
 			enter(null);
 
 		});
+		
+		HorizontalLayout button_row = new HorizontalLayout();
+		button_row.addComponent(filter_tutor_button);
+		button_row.addComponent(filter_lecturer_button);
+		button_row.addComponent(filter_admin_button);
+		button_row.addComponent(no_filter_button);
+		addComponent(button_row);
 		addComponent(go_back_to_main_view);
 	}
 
@@ -480,6 +515,49 @@ public class AdminMainView extends VerticalLayout implements View
 		return user_items;
 
 	}
+	
+	ArrayList<UserItem> get_selected_users(String role)
+	{
+		DBHelper dbh = new DBHelper();
+		String[] parameters = { "table", "target", "filter", "value" };
+		// the to 1's add a WHERE 1=1 clause to the query
+		// it's basically a hacky way of excluding the mandatory WHERE clause in the php
+		String[] values = { "USER_INFORMATION", "NAME,STUDENT_NUM,ROLE", "ROLE", role };
+
+		String result = dbh.php_request("generic_select", parameters, values);
+
+		JsonArray user_arr;
+		try
+		{
+			user_arr = dbh.parse_json_string_arr(result);
+		} catch (Exception e)
+		{
+			return new ArrayList<UserItem>();
+		}
+		ArrayList<UserItem> user_items = new ArrayList<UserItem>();
+
+		try
+		{
+			for (int x = 0; x < user_arr.size(); x++)
+			{
+				JsonArray data = (JsonArray) user_arr.getAsJsonArray().get(x);
+				try
+				{
+					UserItem user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),
+							data.get(2).getAsString());
+					user_items.add(user);
+				} catch (UnsupportedOperationException e)
+				{
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		return user_items;
+
+	}
 
 	ArrayList<CourseItem> get_all_courses()
 	{
@@ -523,6 +601,5 @@ public class AdminMainView extends VerticalLayout implements View
 			System.out.println(e);
 		}
 		return course_items;
-
 	}
 }
