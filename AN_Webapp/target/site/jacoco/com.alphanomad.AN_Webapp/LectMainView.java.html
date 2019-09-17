@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LectMainView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">AN_Webapp</a> &gt; <a href="index.source.html" class="el_package">com.alphanomad.AN_Webapp</a> &gt; <span class="el_source">LectMainView.java</span></div><h1>LectMainView.java</h1><pre class="source lang-java linenums">package com.alphanomad.AN_Webapp;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import com.google.gson.JsonObject;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.*;
+import com.vaadin.ui.Grid.Column;
+import com.vaadin.ui.renderers.ButtonRenderer;
+import com.vaadin.ui.renderers.ImageRenderer;
+
+
+public class LectMainView extends VerticalLayout implements View{
+	JsonObject retrieve;
+	int SelIndex;
+<span class="fc" id="L23">	ArrayList&lt;TutorItem&gt;Tutor=new ArrayList&lt;TutorItem&gt;();</span>
+	
+    public ArrayList&lt;String&gt; Filter_Info(String Dirty_Info){
+<span class="fc" id="L26">    	ArrayList&lt;String&gt;final_Array=new ArrayList&lt;String&gt;();</span>
+
+<span class="fc" id="L28">    	String[] test=Dirty_Info.split(&quot;:&quot;);</span>
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">    	if(test[1].length()==1 || test[1].substring(0, 3).equals(&quot;[]}&quot;)) {</span>
+<span class="nc" id="L30">    		final_Array.add(&quot;-1&quot;);</span>
+<span class="nc" id="L31">    		return final_Array;</span>
+    	}
+    	else {
+<span class="fc" id="L34">    	String[] filtered_Array1=Dirty_Info.split(&quot;:&quot;);</span>
+<span class="fc" id="L35">    	filtered_Array1[1]=filtered_Array1[1].substring(1, filtered_Array1[1].length());</span>
+
+<span class="fc" id="L37">    	String[] filtered_Array2=filtered_Array1[1].split(&quot;,&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">    	for(int i=0;i&lt;filtered_Array2.length;i++) {</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">    		if(!filtered_Array2[i].equals(&quot;null&quot;)) {</span>
+<span class="fc" id="L40">    			final_Array.add(filtered_Array2[i].substring(1,filtered_Array2[i].length()-1));</span>
+    		}
+    	}	
+<span class="fc" id="L43">    	return final_Array;</span>
+    	}
+    }
+<span class="fc" id="L46">	public LectMainView() {</span>
+
+
+<span class="fc" id="L49">    }</span>
+	
+	/*
+	 * @Override public void enter(ViewChangeEvent vc_event) {
+	 * 
+	 * UserInfo lect_info=((MyUI) getUI()).get_user_info(); removeAllComponents();
+	 * DBHelper dbh = new DBHelper(); String[]params1= {&quot;name&quot;,&quot;student_num&quot;};
+	 * String[]values1= {lect_info.name,lect_info.student_num}; String
+	 * ans1=dbh.php_request(&quot;get_courses&quot;, params1, values1);
+	 * retrieve=dbh.parse_json_string(ans1);
+	 * ans1=retrieve.get(&quot;result&quot;).getAsJsonArray().toString();
+	 * 
+	 * 
+	 * 
+	 * ArrayList&lt;String&gt;myCourses=ClaimForm.GetCourses(ans1); for(int
+	 * i=0;i&lt;myCourses.size();i++) { myCourses.set(i,
+	 * myCourses.get(i)+&quot; &quot;+ClaimForm.Course_corr(myCourses.get(i))); }
+	 * 
+	 * 
+	 * 
+	 * String ans2=dbh.php_request(&quot;get_students&quot;, new String[] {&quot;student_num&quot;}, new
+	 * String[] {lect_info.student_num}); ans2=ans2.substring(1, ans2.length()-1);
+	 * // Notification.show(ans2); String[]AllInfo=ans2.split(&quot;\\],\&quot;&quot;);
+	 * ArrayList&lt;String&gt;TheCourses=Filter_Info(AllInfo[0]);
+	 * ArrayList&lt;String&gt;Course1=Filter_Info(AllInfo[1]);
+	 * ArrayList&lt;String&gt;Course2=Filter_Info(AllInfo[2]);
+	 * ArrayList&lt;String&gt;Course3=Filter_Info(AllInfo[3]);
+	 * ArrayList&lt;String&gt;Course4=Filter_Info(AllInfo[4]);
+	 * ArrayList&lt;String&gt;Course5=Filter_Info(AllInfo[5]);
+	 * 
+	 * ArrayList&lt;String&gt;StudCourse1=Filter_Info(AllInfo[6]);
+	 * ArrayList&lt;String&gt;StudCourse2=Filter_Info(AllInfo[7]);
+	 * ArrayList&lt;String&gt;StudCourse3=Filter_Info(AllInfo[8]);
+	 * ArrayList&lt;String&gt;StudCourse4=Filter_Info(AllInfo[9]);
+	 * ArrayList&lt;String&gt;StudCourse5=Filter_Info(AllInfo[10]);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * ComboBox&lt;String&gt; combobox = new ComboBox&lt;String&gt;(&quot;Course Selected&quot;);
+	 * combobox.setPlaceholder(&quot;Please Select A Course&quot;); combobox.setWidth(&quot;40%&quot;);
+	 * combobox.setItems(myCourses); addComponent(combobox);
+	 * combobox.setValue(myCourses.get(0));
+	 * 
+	 * 
+	 * Grid&lt;TutorItem&gt; grid = new Grid&lt;&gt;(TutorItem.class); grid.setWidth(&quot;100%&quot;); //
+	 * grid.setWidthUndefined(); grid.addComponentColumn(probe-&gt;{ Image image=new
+	 * Image(&quot;&quot;,new ThemeResource(&quot;imgs/anonymous-250.jpg&quot;)); image.setWidth(100,
+	 * Unit.PIXELS); image.setHeight(100, Unit.PIXELS); return image;
+	 * 
+	 * 
+	 * }).setCaption(&quot;Profile Picture&quot;).setId(&quot;Profile Picture&quot;);
+	 * 
+	 * grid.setRowHeight(100); grid.setHeaderRowHeight(30);
+	 * 
+	 * grid.addColumn(unused -&gt; &quot;More Info&quot;, new ButtonRenderer&lt;Object&gt;( event -&gt;{
+	 * MyUI test=new MyUI(); test.set_user_info(new UserInfo( (((TutorItem)
+	 * event.getItem()).getName()).toString(), (((TutorItem)
+	 * event.getItem()).getStudent_num()).toString(), &quot;0&quot;)); new ProfileView(test);
+	 * //CHECK WHY THIS IS NOT UPDATING!!!!
+	 * getUI().getNavigator().navigateTo(&quot;profile&quot;); }));
+	 * 
+	 * for(int i=0;i&lt;Course1.size();i++) { Tutor.add(new
+	 * TutorItem(Course1.get(i),StudCourse1.get(i))); } grid.setItems(Tutor);
+	 * addComponent(grid);
+	 * 
+	 * combobox.addValueChangeListener(event-&gt;{combobox.setValue(combobox.getValue()
+	 * );
+	 * 
+	 * 
+	 * Tutor.clear(); SelIndex=myCourses.indexOf(combobox.getValue());
+	 * switch(SelIndex) { case 0: for(int i=0;i&lt;Course1.size();i++) { Tutor.add(new
+	 * TutorItem(Course1.get(i),StudCourse1.get(i))); } break; case 1: for(int
+	 * i=0;i&lt;Course2.size();i++) { Tutor.add(new
+	 * TutorItem(Course2.get(i),StudCourse2.get(i))); } break; case 2: for(int
+	 * i=0;i&lt;Course3.size();i++) { Tutor.add(new
+	 * TutorItem(Course3.get(i),StudCourse3.get(i))); } break; case 3: for(int
+	 * i=0;i&lt;Course4.size();i++) { Tutor.add(new
+	 * TutorItem(Course4.get(i),StudCourse4.get(i))); } break; case 4: for(int
+	 * i=0;i&lt;Course5.size();i++) { Tutor.add(new
+	 * TutorItem(Course5.get(i),StudCourse5.get(i))); } break; }
+	 * 
+	 * grid.setItems(Tutor);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * });
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * //Sort out empty arrays!!!!!!!!!!!!!!!!!!!!!1
+	 * 
+	 * // ArrayList&lt;String&gt; CCourse5=Filter_Info(Course5); //
+	 * Notification.show(CCourse5.toString());
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * //Notification.show(Final_Courses.toString());
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
+	    
+		
+	
+}
+
+ 
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

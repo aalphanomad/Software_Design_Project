@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">AN_Webapp</a> &gt; <a href="index.source.html" class="el_package">com.alphanomad.AN_Webapp</a> &gt; <span class="el_source">LoginView.java</span></div><h1>LoginView.java</h1><pre class="source lang-java linenums">package com.alphanomad.AN_Webapp;
+
+import com.google.gson.JsonObject;
+import com.vaadin.annotations.StyleSheet;
+import com.vaadin.annotations.Theme;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ErrorMessage;
+import com.vaadin.server.UserError;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+
+@Theme(&quot;mytheme&quot;)
+public class LoginView extends VerticalLayout implements View {
+	public TextField Username;
+	public PasswordField Password;
+	public MyUI parent_ui;
+	JsonObject login_obj;
+	
+	  public boolean TheLogin(String student_num,String password) {
+		
+<span class="fc" id="L36">		  Username.setComponentError(null);</span>
+<span class="fc" id="L37">		  Password.setComponentError(null);</span>
+		  
+<span class="fc" id="L39">		  String[] params = {&quot;student_num&quot;,&quot;password&quot;} ;</span>
+<span class="fc" id="L40">		  String[] values= {student_num,password};</span>
+<span class="fc" id="L41">			DBHelper dbh = new DBHelper();</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">			if(Username.isEmpty() ) {</span>
+<span class="fc" id="L43">				Username.setComponentError(new UserError(&quot;Please Enter your Username&quot;));</span>
+			}
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">			if(Password.isEmpty()) {</span>
+<span class="fc" id="L46">				Password.setComponentError(new UserError(&quot;Please Enter your Password&quot;));</span>
+<span class="fc" id="L47">				return false;</span>
+	
+			}
+			else {
+<span class="nc" id="L51">		    String ans=dbh.php_request(&quot;signin&quot;, params, values);</span>
+		   
+<span class="nc" id="L53">		    login_obj = dbh.parse_json_string(ans);</span>
+		   
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		   if(login_obj.get(&quot;result&quot;).getAsString().equals(&quot;1&quot;)) {</span>
+			  
+<span class="nc" id="L57">			   ((MyUI) getUI()).set_user_info( new UserInfo(login_obj.get(&quot;name&quot;).getAsString(), login_obj.get(&quot;student_num&quot;).getAsString(), login_obj.get(&quot;role&quot;).getAsString()));</span>
+			   //((MyUI) UI.getCurrent()).set_user_info( new UserInfo(login_obj.get(&quot;name&quot;).getAsString(), login_obj.get(&quot;student_num&quot;).getAsString(), login_obj.get(&quot;role&quot;).getAsString()));
+<span class="nc" id="L59">			   return true;</span>
+		   }else {
+			   //Password.setComponentError(new UserError(&quot;Incorrect Username/Password. Please Try Again.&quot;));
+<span class="nc" id="L62">			   return false;</span>
+			  
+		   }
+			}
+			
+	  }
+<span class="fc" id="L68">  public  LoginView(MyUI parent_ui) {</span>
+	  
+	  	 
+<span class="fc" id="L71">  }</span>
+  /*
+  @Override
+  public void enter(ViewChangeEvent vc_event)
+  {
+	  removeAllComponents();
+	  ((MyUI)getUI()).set_user_info(new UserInfo(&quot;&quot;, &quot;&quot;, &quot;&quot;));
+	  setSizeFull();
+	addStyleName(&quot;image-backgound&quot;);
+	  	Panel panel=new Panel();
+	  	panel.setHeight(&quot;500px&quot;);
+	  	panel.setWidthUndefined();
+	  	addComponent(panel);
+	  	setComponentAlignment(panel,Alignment.MIDDLE_CENTER);
+	  	
+	  	FormLayout content=new FormLayout();
+	  	content.addStyleName(&quot;Template&quot;);
+	  	content.setMargin(true);
+	  	Label test=new Label(&quot;&lt;p style = \&quot;font-family:georgia,garamond,serif;font-size:30px;\&quot;&gt;\r\n&quot; + 
+	  	  		&quot;       &lt;b&gt;&lt;u&gt;Login&lt;/u&gt;&lt;/b&gt; &quot; + 
+	  	  		&quot;      &lt;/p&gt;&quot; ,ContentMode.HTML);
+	  	 content.addComponent(test);
+	  	 
+	  	  
+	  	   Username=new TextField();
+	  	  Username.setIcon(VaadinIcons.USER);
+	  	  Username.setCaption(&quot;Username&quot;); 
+	  	  Username.setPlaceholder(&quot;Username&quot;);
+	  	content.addComponent(Username);
+	  	Username.focus();
+	  	
+	    
+	  	  
+	  	   Password=new PasswordField();
+	  	  Password.setCaption(&quot;Password&quot;);
+	  	  Password.setIcon(VaadinIcons.PASSWORD);
+	  	  Password.setPlaceholder(&quot;Password&quot;);
+	  	 content.addComponent(Password);
+	  	  
+	  	 HorizontalLayout buttons=new HorizontalLayout();
+	  	
+	  	  Button button1 = new Button(&quot;Login&quot;,
+				event -&gt; handle_login(Username.getValue(), Password.getValue()));
+	  	 Button button2=new Button(&quot;Register&quot;,
+	  			 event -&gt;getUI().getNavigator().navigateTo(&quot;register&quot;));
+	  	 buttons.addComponent(button1);
+	  	 buttons.addComponent(button2);
+	  	 content.addComponent(buttons);
+		 buttons.setComponentAlignment(button1, Alignment.BOTTOM_LEFT);
+	  	 buttons.setComponentAlignment(button2, Alignment.BOTTOM_RIGHT);
+	  	 content.setComponentAlignment(test, Alignment.MIDDLE_CENTER);
+	  	 content.setComponentAlignment(Username, Alignment.MIDDLE_CENTER);
+	  	 content.setComponentAlignment(Password, Alignment.MIDDLE_CENTER);
+	  	 content.setComponentAlignment(buttons, Alignment.BOTTOM_LEFT);
+	  	 
+	  	 panel.setContent(content);
+  }*/
+  
+  
+  public void handle_login(String username, String password)
+  {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">	  if(TheLogin(username, password))</span>
+	  {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		 if(login_obj.get(&quot;role&quot;).getAsString().equals(&quot;0&quot;)) {</span>
+<span class="nc" id="L135">		  getUI().getNavigator().navigateTo(&quot;tutormain&quot;);</span>
+		 }
+		 else {
+<span class="nc" id="L138">			 getUI().getNavigator().navigateTo(&quot;lectmain&quot;);</span>
+
+		 }
+		 
+	  }
+	  else
+	  {
+<span class="nc" id="L145">		  Password.setComponentError(new UserError(&quot;Incorrect Username/Password. Please Try Again.&quot;));</span>
+<span class="nc" id="L146">		  Notification.show(&quot;Login Failed&quot;);</span>
+	  }
+	  
+<span class="nc" id="L149">  }</span>
+
+
+	  	
+	    
+	  
+  }
+	 
+
+
+
+  
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
