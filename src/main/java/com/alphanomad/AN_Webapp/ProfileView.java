@@ -19,6 +19,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -27,8 +28,7 @@ import com.vaadin.ui.VerticalLayout;
  * This view is the view which shows the profile it shows the users name and
  * email and all subjects they are linked to
  */
-public class ProfileView extends VerticalLayout implements View
-{
+public class ProfileView extends VerticalLayout implements View {
 	UserInfo test;
 	public static UserInfo user;
 
@@ -37,8 +37,7 @@ public class ProfileView extends VerticalLayout implements View
 	 * 
 	 * @param ui Provided by vaadin.
 	 */
-	public ProfileView(MyUI ui)
-	{
+	public ProfileView(MyUI ui) {
 
 	}
 
@@ -48,8 +47,7 @@ public class ProfileView extends VerticalLayout implements View
 	 * @param ui        Provided by vaadin
 	 * @param user_info a UserInfo object for the user you want to view
 	 */
-	public ProfileView(MyUI ui, UserInfo user_info)
-	{
+	public ProfileView(MyUI ui, UserInfo user_info) {
 		System.out.println("PROFILEVIEW " + user_info.get_student_num());
 		this.user = user_info.copy();
 		System.out.println("PROFILEVIEW COPY" + this.user.get_student_num());
@@ -61,15 +59,13 @@ public class ProfileView extends VerticalLayout implements View
 	 * @param ui        Provided by vaadin
 	 * @param user_info a UserInfo object for the user you want to view
 	 */
-	public ProfileView(MyUI ui, String student_num)
-	{
+	public ProfileView(MyUI ui, String student_num) {
 		this.user = new UserInfo(student_num);
 		System.out.println("STRING PROF VIEW " + this.user.get_student_num());
 	}
 
 	@Override
-	public void enter(ViewChangeEvent event)
-	{
+	public void enter(ViewChangeEvent event) {
 
 		test = ((MyUI) getUI()).get_user_info();
 		System.out.println("HELLLLLLLLO" + test.student_num);
@@ -78,8 +74,7 @@ public class ProfileView extends VerticalLayout implements View
 		String stud_num = "";
 		MyUI ui = (MyUI) getUI();
 
-		if (this.user == null)
-		{
+		if (this.user == null) {
 			this.user = ui.get_user_info();
 		}
 
@@ -99,35 +94,26 @@ public class ProfileView extends VerticalLayout implements View
 		String[] values2 = { "USER_COURSE_ALLOC", "COURSE,CONFIRMED", "STUDENT_NUM", stud_num };
 		String courses = dbh.php_request("generic_select", parameters, values2);
 		JsonArray courses_obj = new JsonArray();
-		try
-		{
+		try {
 			courses_obj = dbh.parse_json_string_arr(courses);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println("HERE\n HERE\n HERE\n");
 			System.out.println(e);
 		}
 
 		Button home_button = new Button("go to main view", btn_event -> {
-			if(((MyUI)(getUI())).get_user_info().get_role().equals("1"))
-			{
-				getUI().getNavigator().navigateTo("lectmain");	
-			}
-			else if(((MyUI)(getUI())).get_user_info().get_role().equals("2"))
-			{
+			if (((MyUI) (getUI())).get_user_info().get_role().equals("1")) {
+				getUI().getNavigator().navigateTo("lectmain");
+			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("2")) {
 				getUI().getNavigator().navigateTo("adminmain");
-			}
-			else if(((MyUI)(getUI())).get_user_info().get_role().equals("0"))
-			{
+			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("0")) {
 				getUI().getNavigator().navigateTo("tutormain");
-			}
-			else
-			{
+			} else {
 				// this should never happen
 				// but it's always good to be safe
 				getUI().getNavigator().navigateTo("login");
 			}
-			
+
 		});
 
 		addComponent(make_user_info_panel(name, stud_num));
@@ -142,19 +128,16 @@ public class ProfileView extends VerticalLayout implements View
 	 * @param student_number
 	 * @return a Vertical layout to be added to a page
 	 */
-	public Panel make_user_info_panel(String name, String student_number)
-	{
+	public Panel make_user_info_panel(String name, String student_number) {
 		Panel panel = new Panel();
 		HorizontalLayout inner = new HorizontalLayout();
 		inner.setMargin(true);
 
-		//ExternalResource resource = new ExternalResource(
-		//		"https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
-		
+		// User profile images are created based on their names
 		ExternalResource resource;
 		try {
-			resource = new ExternalResource(
-					"https://ui-avatars.com/api/?size=128&background=003B5C&color=FFFFFF&name="+URLEncoder.encode(name,"UTF-8"));
+			resource = new ExternalResource("https://ui-avatars.com/api/?size=128&background=003B5C&color=FFFFFF&name="
+					+ URLEncoder.encode(name, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			resource = new ExternalResource("https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
@@ -173,12 +156,53 @@ public class ProfileView extends VerticalLayout implements View
 		stud_num_line.addComponent(new Label("Student Number:"));
 		stud_num_line.addComponent(new Label(student_number));
 
+		HorizontalLayout name_line = new HorizontalLayout();
+		name_line.addComponent(new Label("Name:"));
+		name_line.addComponent(new Label(name));
+
 		HorizontalLayout email_line = new HorizontalLayout();
+		String[] parameters = { "table", "target", "filter", "value" };
+		String[] values1 = { "USER_INFORMATION", "EMAIL_ADDRESS", "STUDENT_NUM", student_number };
+		DBHelper dbh = new DBHelper();
+		String email_result = dbh.php_request("generic_select", parameters, values1);
+		String email_addr;
+		if (!email_result.startsWith("<br")) {
+			email_addr = dbh.parse_json_string_arr(email_result).get(0).getAsString();
+		} else {
+			email_addr = "Unknown";
+		}
+		Button email_button = new Button("Email User",
+				event -> UI.getCurrent().getPage().open("mailto:" + email_addr, "_blank"));
 		email_line.addComponent(new Label("Email Address:"));
-		email_line.addComponent(new Label(student_number + "@students.wits.ac.za"));
+		email_line.addComponent(new Label(email_addr));
+
+		MyUI ui = (MyUI) getUI();
+		if (!ui.get_user_info().role.equals("0") && !email_addr.endsWith(".com")) {
+			email_line.addComponent(email_button);
+		}
+
+		HorizontalLayout transcript_line = new HorizontalLayout();
+		transcript_line.addComponent(new Label("View Transcript:"));
+		String[] values2 = { "USER_TRANSCRIPTS", "filename", "user_id", student_number };
+		Button pdf_button = new Button("View Transcript", event -> {
+			String result = dbh.php_request("generic_select", parameters, values2);
+
+			if (!result.startsWith("<br")) {
+				result = dbh.parse_json_string_arr(result).get(0).getAsString();
+				// Notification.show(result);
+				UI.getCurrent().getPage().open(result, "_blank");
+
+			} else {
+				Notification.show("No transcript associated with this user");
+			}
+
+		});
+		transcript_line.addComponent(pdf_button);
 
 		details.addComponent(stud_num_line);
+		details.addComponent(name_line);
 		details.addComponent(email_line);
+		details.addComponent(transcript_line);
 
 		inner.addComponent(details);
 
@@ -193,54 +217,14 @@ public class ProfileView extends VerticalLayout implements View
 	 * @return a vertical layout containing a collapseable list of courses that the
 	 *         user is linked to
 	 */
-	public Panel make_courses_panel(JsonArray courses_obj)
-	{
+	public Panel make_courses_panel(JsonArray courses_obj) {
 		Panel panel = new Panel();
 		VerticalLayout courses_inner = new VerticalLayout();
-		try
-		{
-			for (int x = 0; x < courses_obj.size(); x++)
-			{
-				try
-				{
-					String course_name = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
-					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
-					if(course_conf.equals("1"))
-					{
-						courses_inner.addComponent(new Label( course_name + "\n"));
-					}
-					else
-					{
-						courses_inner.addComponent(new Label( course_name + " (Pending confirmation) \n"));
-					}
-					
-				} catch (UnsupportedOperationException e)
-				{
-					//System.out.println("HERE\n HERE\n HERE\n");
-				}
-			}
-			
-
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			courses_inner.addComponent(new Label("There's nothing here... \n"));
-		}
-
 		List<String> list = new ArrayList<String>();
-		list.add("COMS1016-(Discrete Computational Structures)");
-		list.add("COMS2002-(Database Fundementals)");
-		list.add("COMS2013-(Mobile Computing)");
-		list.add("COMS2014-(Computer Networks)");
-		list.add("COMS2015-(Analysis of Algorithms)");
-		list.add("COMS3003-(Formal Languages and Automata)");
-		list.add("COMS3005-(Advanced Analysis of Algorithms)");
-		list.add("COMS3009-(Software Design)");
-		list.add("COMS3010-(Operating Systems & System Programming)");
-		list.add("COMS3007-(Machine Learning)");
-		list.add("COMS3006-(Computer Graphics & Vis.)");
-		list.add("COMS3008-Parallel Computing)");
-		list.add("COMS3011-(Software Design Project)");
+		for(CourseItem item: get_all_courses())
+		{
+			list.add(item.getCourse_code());
+		}
 
 		ComboBoxMultiselect<String> course_combo_box = new ComboBoxMultiselect<>();
 		// Initialize the ComboBoxMultiselect
@@ -249,26 +233,62 @@ public class ProfileView extends VerticalLayout implements View
 		course_combo_box.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5");
 		course_combo_box.setItems(list);
 		course_combo_box.setVisible(false);
-		if (test.role.equals("0"))
-		{
-			Button change_courses = new Button("Change courses", event -> course_combo_box.setVisible(true));
+		try {
+			for (int x = 0; x < courses_obj.size(); x++) {
+				try {
+					String course_name = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
+					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
+					course_combo_box.select(course_name);
+					if (course_conf.equals("1")) {
+						courses_inner.addComponent(new Label(course_name + "\n"));
+					} else {
+						courses_inner.addComponent(new Label(course_name + " (Pending confirmation) \n"));
+					}
 
-			change_courses.addClickListener(event -> change_courses.setVisible(false));
+				} catch (UnsupportedOperationException e) {
+					// System.out.println("HERE\n HERE\n HERE\n");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			courses_inner.addComponent(new Label("There's nothing here... \n"));
 		}
-		/*
-		 * Button done = new Button("Done", event -> change_courses.setVisible(true));
-		 * done.addClickListener(event -> done.setVisible(false));
-		 * done.addClickListener(event -> course_combo_box.setVisible(false));
-		 * done.setVisible(false);
-		 * 
-		 * 
-		 * 
-		 * change_courses.addClickListener(event -> done.setVisible(true));
-		 * 
-		 * courses_inner.addComponent(change_courses);
-		 * courses_inner.addComponent(course_combo_box);
-		 * courses_inner.addComponent(done);
-		 */
+
+		
+
+		if (test.role.equals("0")) {
+			Button change_courses = new Button("Change courses", event -> course_combo_box.setVisible(true));
+			change_courses.addClickListener(event -> change_courses.setVisible(false));
+			Button done = new Button("Done", event -> change_courses.setVisible(true));
+			done.addClickListener(event -> done.setVisible(false));
+			done.addClickListener(event -> course_combo_box.setVisible(false));
+			done.addClickListener(event -> {
+				DBHelper dbh = new DBHelper();
+				String[] params = {"student_num","course"}; 
+				for(String item : list)
+				{
+					String[] values = {user.get_student_num(),item};
+					if(course_combo_box.getSelectedItems().contains(item))
+					{
+						dbh.php_request("add_course", params, values);
+					}
+					else
+					{
+						dbh.php_request("remove_course", params, values);
+					}
+					
+				}
+				
+			});
+			done.setVisible(false);
+
+			change_courses.addClickListener(event -> done.setVisible(true));
+
+			courses_inner.addComponent(change_courses);
+			courses_inner.addComponent(course_combo_box);
+			courses_inner.addComponent(done);
+		}
 
 		panel.setCaption("Courses");
 		panel.setContent(courses_inner);
@@ -276,11 +296,9 @@ public class ProfileView extends VerticalLayout implements View
 		return panel;
 	}
 
-	public boolean handle_course_change(ArrayList<String> courses, String stud_num)
-	{
+	public boolean handle_course_change(ArrayList<String> courses, String stud_num) {
 		boolean result = true;
-		for (String course : courses)
-		{
+		for (String course : courses) {
 			update_courses(stud_num, course, "");
 		}
 
@@ -294,19 +312,16 @@ public class ProfileView extends VerticalLayout implements View
 	 * @param confirmed
 	 * @return
 	 */
-	public boolean update_courses(String stud_num, String course, String confirmed)
-	{
+	public boolean update_courses(String stud_num, String course, String confirmed) {
 		boolean result = false;
 		DBHelper dbh = new DBHelper();
 		String value;
 
-		if (confirmed.length() > 0)
-		{
+		if (confirmed.length() > 0) {
 			String[] params = { "student_num", "course", "confirmed" };
 			String[] values = { stud_num, course, confirmed };
 			value = dbh.php_request("update_courses", params, values);
-		} else
-		{
+		} else {
 			String[] params = { "student_num", "course" };
 			String[] values = { stud_num, course };
 			value = dbh.php_request("update_courses", params, values);
@@ -316,4 +331,49 @@ public class ProfileView extends VerticalLayout implements View
 
 		return result;
 	}
+
+	ArrayList<CourseItem> get_all_courses()
+	{
+		DBHelper dbh = new DBHelper();
+		String[] parameters = { "table", "target", "filter", "value" };
+		// the to 1's add a WHERE 1=1 clause to the query
+		// it's basically a hacky way of excluding the mandatory WHERE clause in the php
+		String[] values = { "COURSES", "COURSE_CODE,COURSE_NAME", "1", "1" };
+
+		String result = dbh.php_request("generic_select", parameters, values);
+
+		JsonArray course_arr;
+		try
+		{
+			course_arr = dbh.parse_json_string_arr(result);
+		} catch (Exception e)
+		{
+			return new ArrayList<CourseItem>();
+		}
+		ArrayList<CourseItem> course_items = new ArrayList<CourseItem>();
+
+		try
+		{
+			for (int x = 0; x < course_arr.size(); x++)
+			{
+				JsonArray data = (JsonArray) course_arr.getAsJsonArray().get(x);
+				try
+				{
+					System.out.println(data.get(0).getAsString());
+					System.out.println(data.get(1).getAsString());
+
+					CourseItem course = new CourseItem(data.get(0).getAsString(), data.get(1).getAsString());
+					course_items.add(course);
+				} catch (UnsupportedOperationException e)
+				{
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		return course_items;
+	}
 }
+

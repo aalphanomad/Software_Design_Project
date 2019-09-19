@@ -284,7 +284,7 @@ public class AdminMainView extends VerticalLayout implements View
 		});
 		addComponent(g);
 
-		Button confirm_btn = new Button("Confirm/Deny selected applications", event ->
+		Button confirm_btn = new Button("Confirm selected applications", event ->
 		{
 			if (selected_course_allocs != null)
 			{
@@ -293,12 +293,31 @@ public class AdminMainView extends VerticalLayout implements View
 
 				for (CourseAllocObject cao : selected_course_allocs)
 				{
-					if (cao.getConfirmed().equals("0"))
+					if (cao.confirmed.equals("0") || cao.confirmed.equals("3"))
 					{
 						String[] vals = { cao.getStud_num(), cao.getCourse(), "1" };
 						dbh.php_request("update_courses", params, vals);
 						g.setItems(get_unconfirmed_course_allocs());
-					} else
+					}
+
+				}
+			} else
+			{
+				Notification.show("No Items Selected");
+			}
+
+		});
+		
+		Button deny_btn = new Button("Deny selected applications", event ->
+		{
+			if (selected_course_allocs != null)
+			{
+				DBHelper dbh = new DBHelper();
+				String[] params = { "student_num", "course", "confirmed" };
+
+				for (CourseAllocObject cao : selected_course_allocs)
+				{
+					if (cao.confirmed.equals("1"))
 					{
 						String[] vals = { cao.getStud_num(), cao.getCourse(), "0" };
 						dbh.php_request("update_courses", params, vals);
@@ -331,10 +350,16 @@ public class AdminMainView extends VerticalLayout implements View
 
 		});
 
-		addComponent(confirm_btn);
-		addComponent(view_confirmed_btn);
-		addComponent(view_unconfirmed_btn);
-		addComponent(view_all_btn);
+		HorizontalLayout conf_deny_row = new HorizontalLayout();
+		HorizontalLayout filter_row = new HorizontalLayout();
+		conf_deny_row.addComponent(confirm_btn);
+		conf_deny_row.addComponent(deny_btn);
+		filter_row.addComponent(view_confirmed_btn);
+		filter_row.addComponent(view_unconfirmed_btn);
+		filter_row.addComponent(view_all_btn);
+		addComponent(conf_deny_row);
+		addComponent(filter_row);
+		
 
 		Button go_back_to_main_view = new Button("Return to menu", event ->
 		{
