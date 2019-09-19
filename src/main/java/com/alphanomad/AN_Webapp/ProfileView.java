@@ -74,7 +74,7 @@ public class ProfileView extends VerticalLayout implements View {
 		String stud_num = "";
 		MyUI ui = (MyUI) getUI();
 
-		if (this.user == null) {
+		if (ui.get_user_info().get_role().equals("0")) {
 			this.user = ui.get_user_info();
 		}
 
