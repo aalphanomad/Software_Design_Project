@@ -82,13 +82,21 @@ public class ClaimHistory extends VerticalLayout implements View
 			}
 			History.add(new HistoryItem(info[0], info[1], info[2], info[3], info[4], info[5], info[6]));
 		}
-
+ButtonRenderer dummy;
 		Grid<HistoryItem> grid = new Grid<>(HistoryItem.class);
 		grid.setItems(History);
-		grid.addColumn(unused -> "Validate", new ButtonRenderer(
-
+		grid.addColumn(unused -> "Validate",
+				
+				
+				dummy= new ButtonRenderer(
+				
+			
 				e ->
 				{
+					if((((HistoryItem) e.getItem()).getValid()).equals("1")) {
+						Notification.show("This Claim Has Already Been Validated!");
+					}
+					else {
 					removeAllComponents();
 
 					addComponent(c = new ConfirmClaimForm(Tutor_Name, Tutor_StudentNum,
@@ -96,9 +104,11 @@ public class ClaimHistory extends VerticalLayout implements View
 							(((HistoryItem) e.getItem()).getVenue()), (((HistoryItem) e.getItem()).getDate()),
 							(((HistoryItem) e.getItem()).getStart_Time()),
 							(((HistoryItem) e.getItem()).getEnd_time())));
+				}
+				}
+				
 
-					// getUI().getNavigator().navigateTo("confirm");
-				})); // GO TO QR GENERATOR!
+				)); 
 
 		grid.setWidth("100%");
 		grid.setHeightUndefined();
