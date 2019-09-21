@@ -10,12 +10,15 @@ import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.renderers.ButtonRenderer;
+import com.vaadin.ui.renderers.ImageRenderer;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -29,6 +32,8 @@ public class AdminMainView extends VerticalLayout implements View
 
 	// what is this for?
 	// https://tinyurl.com/yay5jktn
+	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
+
 	Set<CourseAllocObject> selected_course_allocs;
 	Set<UserItem> selected_users;
 	JsonObject result;
@@ -85,7 +90,7 @@ public class AdminMainView extends VerticalLayout implements View
 			}
 			if(valid) {
 			String[]params= {"adminUsername","adminPassword","course_name","course_code","event"};
-			String[]values= {mySN,Password.getValue(),WordUtils.capitalize(CourseName.getValue().toLowerCase()),WordUtils.capitalize(CourseCode.getValue().toLowerCase()),"1"};
+			String[]values= {mySN,Password.getValue(),WordUtils.capitalize(CourseName.getValue().toLowerCase()),CourseCode.getValue().toUpperCase(),"1"};
 			DBHelper dbh=new DBHelper();
 			String ans=dbh.php_request("ManageCourses", params, values);
 			result=dbh.parse_json_string(ans);
@@ -167,6 +172,7 @@ public class AdminMainView extends VerticalLayout implements View
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	private void view_courses()
 	{
 		components.clear();
@@ -182,7 +188,50 @@ public class AdminMainView extends VerticalLayout implements View
 		g.setItems(course_list);
 		g.addColumn(CourseItem::getCourse_code).setCaption("Course Code");
 		g.addColumn(CourseItem::getCourse_name).setCaption("Course Name");
+g.addColumn(unused -> "View Info",
+				
+				
+				 new ButtonRenderer(
+				e ->
+				{
+					removeAllComponents();
+					DBHelper dbh = new DBHelper();
+			
+					//new String[] {  (((CourseItem) e.getItem()).course_code)});
+					String ans2 = dbh.php_request("AdminV_Tutors", new String[] { "course" },new String[] {(((CourseItem) e.getItem()).course_code)});
+					result=dbh.parse_json_string(ans2);
+					String dirty_name=result.get("name").toString().substring(1,result.get("name").toString().length()-1);
+					String[] names=dirty_name.split(",");
+					String dirty_SN=result.get("student_num").toString().substring(1,result.get("student_num").toString().length()-1);
+					String[] SN=dirty_SN.split(",");
+					for(int i=0;i<names.length;i++) {
+						Tutor.add(new TutorItem(names[i].substring(1, names[i].length()-1),SN[i].substring(1, SN[i].length()-1)));
+					}
+					
+					Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
+							+ "       <b><u>Tutors of: </u></b> " + "<u>"+(((CourseItem) e.getItem()).course_name).toString()+"</u>"+ "      </p>", ContentMode.HTML);
+					addComponent(test);
+					addComponent(new Label("DISJOINT EVERYTHING SO THAT WE CAN GO BACK AND HAVE BETTER CONTROL!!!!"));
+					Grid<TutorItem> grid = new Grid<>(TutorItem.class);
+					grid.getColumn("image").setRenderer(new ImageRenderer());
+					grid.setColumnOrder("image", "name", "student_num");
+					grid.setWidth("100%");
+					grid.setItems(Tutor);
+					grid.addColumn(unused -> "More Info",
+						new ButtonRenderer(
+							
+						
+							event ->
+							{
+								new ProfileView((MyUI) getUI(), (((TutorItem) event.getItem()).getStudent_num()));
+								getUI().getNavigator().navigateTo("profile");							}));
+					grid.setRowHeight(100);
+					grid.setHeaderRowHeight(30);
+					addComponent(grid);
+					
+				}));
 		
+				
 		addComponent(g);
 		Button AddCourses=new Button("Add New Course", event ->
 		{
@@ -226,14 +275,13 @@ EditCourse();
 	private void view_users()
 	{
 		components.clear();
-		Grid<UserItem> g = new Grid<UserItem>();
+		Grid<UserItem> g = new Grid(UserItem.class);
 		ArrayList<UserItem> course_list = get_all_users();
 		g.setSizeFull();
+		g.setColumnOrder("name","student_num","role");
 		//g.setHeightByRows(course_list.size());
 		g.setItems(course_list);
-		g.addColumn(UserItem::getStudent_num).setCaption("Student/Staff Number");
-		g.addColumn(UserItem::getName).setCaption("Name");
-		g.addColumn(UserItem::getRole).setCaption("Role");
+
 
 		// switch to multiselect mode
 		g.setSelectionMode(SelectionMode.MULTI);
@@ -364,13 +412,17 @@ EditCourse();
 		// clear the screen
 		components.clear();
 
-		Grid<CourseAllocObject> g = new Grid<CourseAllocObject>();
+		Grid<CourseAllocObject> g = new Grid(CourseAllocObject.class);
 		g.setSizeFull();
+		
 		g.setItems(get_unconfirmed_course_allocs());
+		/*
+		g.addColumn(CourseAllocObject::getId).setCaption("Application ID");
 		g.addColumn(CourseAllocObject::getStud_num).setCaption("Student Number");
 		g.addColumn(CourseAllocObject::getCourse).setCaption("Course");
 		g.addColumn(CourseAllocObject::getConfirmed).setCaption("Status");
-
+		*/
+g.getColumn("id").setWidthUndefined();
 		// switch to multiselect mode
 		g.setSelectionMode(SelectionMode.MULTI);
 
@@ -379,6 +431,7 @@ EditCourse();
 			selected_course_allocs = event.getAllSelectedItems();
 			Notification.show(selected_course_allocs.size() + " items selected");
 		});
+		g.setColumnOrder("id","stud_num","course","confirmed");
 		addComponent(g);
 
 		Button confirm_btn = new Button("Confirm/Deny selected applications", event ->
@@ -471,7 +524,7 @@ EditCourse();
 				try
 				{
 
-					CourseAllocObject cao = new CourseAllocObject(data.get(1).getAsString(), data.get(2).getAsString(),
+					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(),data.get(1).getAsString(), data.get(2).getAsString(),
 							data.get(3).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
@@ -515,7 +568,7 @@ EditCourse();
 					System.out.println(data.get(2).getAsString());
 					System.out.println(data.get(3).getAsString());
 
-					CourseAllocObject cao = new CourseAllocObject(data.get(1).getAsString(), data.get(2).getAsString(),
+					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(),data.get(1).getAsString(), data.get(2).getAsString(),
 							data.get(3).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
@@ -555,7 +608,7 @@ EditCourse();
 				JsonArray data = (JsonArray) tutor_alloc_obj.getAsJsonArray().get(x);
 				try
 				{
-					CourseAllocObject cao = new CourseAllocObject(data.get(1).getAsString(), data.get(2).getAsString(),
+					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(),data.get(1).getAsString(), data.get(2).getAsString(),
 							data.get(3).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
@@ -589,7 +642,7 @@ EditCourse();
 			return new ArrayList<UserItem>();
 		}
 		ArrayList<UserItem> user_items = new ArrayList<UserItem>();
-
+		UserItem user = null;
 		try
 		{
 			for (int x = 0; x < user_arr.size(); x++)
@@ -597,8 +650,24 @@ EditCourse();
 				JsonArray data = (JsonArray) user_arr.getAsJsonArray().get(x);
 				try
 				{
-					UserItem user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString());
+					
+					if(data.get(2).getAsString().equals("0")) {
+					 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Tutor");
+					}
+					else if(data.get(2).getAsString().equals("1")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Lecturer");
+						}
+					else if(data.get(2).getAsString().equals("2")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Admin");
+						}
+					else if(data.get(2).getAsString().equals("3")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Lecturer/Admin");
+						}
+					else if(data.get(2).getAsString().equals("4")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Super Admin");
+						}
+					
+				
 					user_items.add(user);
 				} catch (UnsupportedOperationException e)
 				{

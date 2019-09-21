@@ -72,7 +72,6 @@ public class ProfileView extends VerticalLayout implements View
 	{
 
 		test = ((MyUI) getUI()).get_user_info();
-		System.out.println("HELLLLLLLLO" + test.student_num);
 		this.removeAllComponents();
 
 		String stud_num = "";
@@ -83,7 +82,6 @@ public class ProfileView extends VerticalLayout implements View
 			this.user = ui.get_user_info();
 		}
 
-		System.out.println("HELLO" + this.user.get_student_num());
 
 		stud_num = user.get_student_num();
 		String role = user.get_role();
