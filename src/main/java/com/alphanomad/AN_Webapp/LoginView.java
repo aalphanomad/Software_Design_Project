@@ -62,6 +62,8 @@ public class LoginView extends VerticalLayout implements View
 
 				((MyUI) getUI()).set_user_info(new UserInfo(login_obj.get("name").getAsString(),
 						login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
+				
+				((MyUI)getUI()).logged_in = true;
 				// ((MyUI) UI.getCurrent()).set_user_info( new
 				// UserInfo(login_obj.get("name").getAsString(),
 				// login_obj.get("student_num").getAsString(),
@@ -87,6 +89,7 @@ public class LoginView extends VerticalLayout implements View
 	public void enter(ViewChangeEvent vc_event)
 	{
 		removeAllComponents();
+		((MyUI)getUI()).logged_in = false;
 		((MyUI) getUI()).set_user_info(new UserInfo("", "", ""));
 		setSizeFull();
 		addStyleName("image-backgound");

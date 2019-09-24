@@ -42,11 +42,15 @@ public class MyUI extends UI
 	protected static final String HISTORYVIEW = "history";
 	protected static final String CLAIMFORM = "claimform";
 	protected static final String CONFIRMCLAIMFORM = "confirm";
+	protected static final String TUTORLISTVIEW = "tutorlist";
+	protected static final String COURSEALLOCVIEW = "coursealloc";
+	protected static final String COURSELISTVIEW = "courselist";
 	public boolean logged_in = false;
 
 	@Override
 	public void init(VaadinRequest request)
 	{
+		
 		addStyleName("image-backgound");
 		getPage().setTitle("Alpha Nomad");
 
@@ -67,12 +71,14 @@ public class MyUI extends UI
 		navigator.addView(HISTORYVIEW, new ClaimHistory());
 		navigator.addView(CLAIMFORM, new ClaimForm());
 		navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(null, null, null, null, null, null, null, null));
-
+		navigator.addView(TUTORLISTVIEW, new TutorListView());
+		navigator.addView(COURSELISTVIEW, new CourseListView());
+		navigator.addView(COURSEALLOCVIEW, new CourseAllocationView());
+		
 		Responsive.makeResponsive(this);
 		navigator.navigateTo(LOGINVIEW);
 		System.out.println("regstration complete");
-
-		Responsive.makeResponsive(this);
+		
 		if (!logged_in)
 		{
 			navigator.navigateTo(LOGINVIEW);
@@ -94,6 +100,8 @@ public class MyUI extends UI
 		System.out.println(this.user_info.hashCode());
 		return this.user_info;
 	}
+	
+	
 
 	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
 	@VaadinServletConfiguration(ui = MyUI.class, productionMode = true)

@@ -21,6 +21,12 @@ public class TutorMainView extends VerticalLayout implements View
 	@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
+		// THIS PREVENTS USERS FROM PRESSING BACK TO LOGIN WITHOUT A PASSWORD
+		if (! ((MyUI)getUI()).logged_in)
+		{
+			getUI().getNavigator().navigateTo("login");
+		} 
+		
 		removeAllComponents();
 		DBHelper dbh = new DBHelper();
 
@@ -35,7 +41,12 @@ public class TutorMainView extends VerticalLayout implements View
 		Button pdf_button = new Button("Generate Claims Form", event -> UI.getCurrent().getPage()
 				.open(dbh.php_request("select_booking", parameters, valuess), "_blank"));
 
-		Button Login = new Button("Logout", event -> getUI().getNavigator().navigateTo("login"));
+		Button Login = new Button("Logout", event -> 
+		 {
+			 getUI().getNavigator().navigateTo("login");
+			 ((MyUI)getUI()).logged_in = false;
+			
+		});
 		// Button Register=new
 		// Button("Register",event->getUI().getNavigator().navigateTo("register"));
 
