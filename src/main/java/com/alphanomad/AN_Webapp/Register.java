@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 
 import org.vaadin.addons.ComboBoxMultiselect;
 
+import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.View;
@@ -39,6 +40,7 @@ public class Register extends VerticalLayout implements View
 	public PasswordField Password, ConfPassword;
 	public ComboBoxMultiselect<String> comboBoxMultiselect = new ComboBoxMultiselect<>();
 	public FormLayout content = new FormLayout();
+	JsonObject result;
 
 	public void TheRegister()
 	{
@@ -105,9 +107,16 @@ public class Register extends VerticalLayout implements View
 
 			for (int i = 4; i < 4 + DummyCourses.size(); i++)
 			{
-				values[i] = DummyCourses.get(i - 4);
+				if(i!=4)
+				values[i] = DummyCourses.get(i - 4).substring(1);
+				else {
+					values[i] = DummyCourses.get(i - 4);
+
+					
+				}
 			}
 			values[3 + DummyCourses.size() + 1] = "0";
+			addComponent(new Label(Arrays.toString(values)));
 
 			if (DummyCourses.size() == 1)
 			{
@@ -205,19 +214,16 @@ public class Register extends VerticalLayout implements View
 		// FILE UPLOAD!!!!!
 		// Initialize a list with items
 		List<String> list = new ArrayList<String>();
-		list.add("COMS1016-(Discrete Computational Structures)");
-		list.add("COMS2002-(Database Fundementals)");
-		list.add("COMS2013-(Mobile Computing)");
-		list.add("COMS2014-(Computer Networks)");
-		list.add("COMS2015-(Analysis of Algorithms)");
-		list.add("COMS3003-(Formal Languages and Automata)");
-		list.add("COMS3005-(Advanced Analysis of Algorithms)");
-		list.add("COMS3009-(Software Design)");
-		list.add("COMS3010-(Operating Systems & System Programming)");
-		list.add("COMS3007-(Machine Learning)");
-		list.add("COMS3006-(Computer Graphics & Vis.)");
-		list.add("COMS3008-Parallel Computing)");
-		list.add("COMS3011-(Software Design Project)");
+		DBHelper dbh=new  DBHelper();
+		String ans=dbh.php_request("get_all_courses",new String[]{""},new String[] {""});
+		result=dbh.parse_json_string(ans);
+		String SAll_Course_Name=result.get("course_name").toString().substring(1, result.get("course_name").toString().length()-1).replace("\"", "");
+		String SAll_Course_Code=result.get("course_code").toString().substring(1,result.get("course_code").toString().length()-1).replace("\"", "");
+String[] The_Course_Names=SAll_Course_Name.split(",");
+String[] The_Course_Codes=SAll_Course_Code.split(",");
+for(int i=0;i<The_Course_Names.length;i++) {
+	list.add(The_Course_Codes[i]+"-("+The_Course_Names[i]+")");
+}
 
 		// Initialize the ComboBoxMultiselect
 		comboBoxMultiselect.setPlaceholder("Courses");

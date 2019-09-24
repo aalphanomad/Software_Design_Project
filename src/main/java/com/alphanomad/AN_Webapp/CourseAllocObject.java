@@ -2,6 +2,7 @@ package com.alphanomad.AN_Webapp;
 
 public class CourseAllocObject
 {
+	String id;
 	String stud_num;
 	String course;
 	String confirmed;
@@ -12,13 +13,16 @@ public class CourseAllocObject
 	 * @param course
 	 * @param confirmed
 	 */
-	public CourseAllocObject(String stud_num, String course, String confirmed)
-	{
+	public CourseAllocObject(String id,String stud_num, String course, String confirmed)
+	{	this.id=id;
 		this.stud_num = stud_num;
 		this.course = course;
 		this.confirmed = confirmed;
 	}
 
+	public String getId() {
+		return id;
+	}
 	public String getStud_num()
 	{
 		return stud_num;

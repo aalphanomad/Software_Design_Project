@@ -10,6 +10,7 @@ import java.util.Date;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -163,6 +164,17 @@ public class ClaimForm extends VerticalLayout implements View
 
 	public static String Course_corr(String course_code)
 	{
+		/*
+		 	DBHelper dbh=new DBHelper();
+		String[] parameters = { "table", "target", "filter", "value" };
+		String[] values = { "COURSES", "COURSE_NAME", "COURSE_CODE", course_code };
+
+		String test = dbh.php_request("generic_select", parameters, values);
+		JsonArray pop=dbh.parse_json_string_arr(test);
+		String result=pop.getAsJsonArray().get(0).toString();
+		result=result.substring(2, result.length()-2);
+		*/
+	
 		String ans = null;
 		switch (course_code)
 		{
@@ -219,6 +231,7 @@ public class ClaimForm extends VerticalLayout implements View
 			break;
 
 		}
+		
 		return ans;
 
 	}

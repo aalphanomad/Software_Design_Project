@@ -3,18 +3,25 @@ package com.alphanomad.AN_Webapp;
 import java.util.ArrayList;
 import java.util.Set;
 
+import org.apache.commons.lang.WordUtils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.UserError;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.renderers.ButtonRenderer;
+import com.vaadin.ui.renderers.ImageRenderer;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class AdminMainView extends VerticalLayout implements View
@@ -25,8 +32,14 @@ public class AdminMainView extends VerticalLayout implements View
 
 	// what is this for?
 	// https://tinyurl.com/yay5jktn
+	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
+
 	Set<CourseAllocObject> selected_course_allocs;
 	Set<UserItem> selected_users;
+	JsonObject result;
+	Grid<CourseItem> g;
+	 Set<CourseItem>DeleteCourses;
+
 
 	public AdminMainView()
 	{
@@ -46,66 +59,126 @@ public class AdminMainView extends VerticalLayout implements View
 		addComponent(view_users_btn);
 		addComponent(view_courses_btn);
 		addComponent(login);
+	}
 		
 		
-		// This is the code used to migrate the old courses data to the new table
-		// Don't uncomment this unless you know what you are doing
-		/*
-		Button magic_btn = new Button("Magic Button", event -> {
-			ArrayList<UserItem> users = get_all_users();
-			DBHelper dbh = new DBHelper();
-			for(UserItem user : users)
-			{
-				String[] params = { "name", "student_num"};
-				String[] values = { user.getName(), user.getStudent_num() };
-				String courses = dbh.php_request("get_courses", params, values);
-				JsonObject courses_obj = new JsonObject();
-				
-				try
-				{
-					courses_obj = dbh.parse_json_string(courses);
-				} catch (Exception e)
-				{
-					System.out.println(e);
-				}
-				
-				try
-				{
-					JsonObject data = courses_obj.getAsJsonArray("result").get(0).getAsJsonObject();
+	public void AddNewCourse() {
+		TextField  CourseName=new TextField();
+		TextField CourseCode=new TextField();
+		PasswordField Password=new PasswordField();
+		CourseName.setCaption("Name of Course to Add");
+		CourseCode.setCaption("Course Code of Course to Add");
+		Password.setCaption("Enter password to Confirm");
+		UserInfo me=((MyUI) getUI()).get_user_info();
+		String mySN=me.get_student_num();
+		
+		Button Confirm=new Button("Confirm", event ->
+		{
+			Boolean valid=true;
+			if(CourseName.isEmpty()) {
+				CourseName.setComponentError(new UserError("Please Enter a Course Name"));
+				valid=false;
+			}
+			if(CourseCode.isEmpty()) {
+				CourseCode.setComponentError(new UserError("Please Enter a Course Code"));
 
-					for (String j : data.keySet())
-					{
-						try
-						{
-							System.out.println(data.get(j).getAsString() + "\n");
-							String[] params2 = { "student_num", "course", "confirmed"};
-							String[] values2 = { user.getStudent_num(), data.get(j).getAsString(), "0"};
-							
-							dbh.php_request("update_courses", params2, values2);
-						} catch (UnsupportedOperationException e)
-						{
-							//System.out.println(e);
-						}
+				valid=false;
+			}
+			if(Password.isEmpty()) {
+				Password.setComponentError(new UserError("Please Enter Your Correct Password"));
+				valid=false;
+			}
+			if(valid) {
+			String[]params= {"adminUsername","adminPassword","course_name","course_code","event"};
+			String[]values= {mySN,Password.getValue(),WordUtils.capitalize(CourseName.getValue().toLowerCase()),CourseCode.getValue().toUpperCase(),"1"};
+			DBHelper dbh=new DBHelper();
+			String ans=dbh.php_request("ManageCourses", params, values);
+			result=dbh.parse_json_string(ans);
+			System.out.println(result.get("user"));
+			System.out.println(result.get("course"));
+			
+			if(result.get("user").toString().equals("0") && result.get("course").toString().equals("0")) {
+				Notification.show("Course Added Successfully");
+				enter(null);
 
-					}
-				} catch (Exception e)
-				{
-					System.out.println(e);
-				}
+			}
+			else {
+				Notification.show("FAILED!");
 			}
 			
+			}
+
 		});
-		
-		addComponent(magic_btn);
-		*/
+		addComponent(CourseName);
+		addComponent(CourseCode);
+		addComponent(Password);
+		addComponent(Confirm);
+	}
+	
+	public void DeleteCourses() {
+		PasswordField Password=new PasswordField();
+		Password.setComponentError(null);
+
+		// switch to multiselect mode
+
+				g.setSelectionMode(SelectionMode.MULTI);
+				Notification.show("Please Select the Courses You Would Like to Delete Then Confirm Below.");
+				g.addSelectionListener(event ->
+				{
+					DeleteCourses = event.getAllSelectedItems();
+				});
+				Password.setCaption("Please Enter You Password to Confirm.");
+				Button Confirm=new Button("Confirm",event-> {
+					if(DeleteCourses.isEmpty()) {
+						g.setComponentError(new UserError("Please Select Atleast one Course You Would Like To Delete."));
+					}
+					if(Password.isEmpty()) {
+						Password.setComponentError(new UserError("Please Enter The Admin's Password!"));
+					}
+					else {
+						DBHelper dbh=new DBHelper();
+						UserInfo me=((MyUI) getUI()).get_user_info();
+
+						String[] params= {"adminUsername","adminPassword","course_code","course_name","event"};
+						
+						for(CourseItem i: DeleteCourses) {
+							String[] values= {me.student_num,Password.getValue(),i.course_code,i.course_name,"2"};
+							String ans=dbh.php_request("ManageCourses", params, values);
+							Notification.show(ans);
+							
+							result=dbh.parse_json_string(ans);
+							if(!result.get("user").toString().equals("0"))
+								Password.setComponentError(new UserError("The Password Does Not Correspond to The Admin's!"));
+							else {
+								Notification.show("Courses Have Been Deleted Successfully");
+								enter(null);
+							}
+							
+						}
+					}
+				});
+				addComponent(Password);
+				addComponent(Confirm);
+	}
+	
+	public void EditCourse() {
+		// switch to multiselect mode
+
+		g.setSelectionMode(SelectionMode.SINGLE);
+		g.addSelectionListener(event ->
+		{
+			Notification.show("HELLO");
+			//DeleteCourses = event.
+		});
 	}
 
+	@SuppressWarnings("unchecked")
 	private void view_courses()
 	{
 		components.clear();
 
 		// grid is just a table to store/display our data
-		Grid<CourseItem> g = new Grid<CourseItem>();
+		 g = new Grid<CourseItem>();
 		ArrayList<CourseItem> course_list = get_all_courses();
 		// without these lines the grid only takes up a small section of the screen
 		g.setSizeFull();
@@ -115,8 +188,80 @@ public class AdminMainView extends VerticalLayout implements View
 		g.setItems(course_list);
 		g.addColumn(CourseItem::getCourse_code).setCaption("Course Code");
 		g.addColumn(CourseItem::getCourse_name).setCaption("Course Name");
+g.addColumn(unused -> "View Info",
+				
+				
+				 new ButtonRenderer(
+				e ->
+				{
+					removeAllComponents();
+					DBHelper dbh = new DBHelper();
+			
+					//new String[] {  (((CourseItem) e.getItem()).course_code)});
+					String ans2 = dbh.php_request("AdminV_Tutors", new String[] { "course" },new String[] {(((CourseItem) e.getItem()).course_code)});
+					result=dbh.parse_json_string(ans2);
+					String dirty_name=result.get("name").toString().substring(1,result.get("name").toString().length()-1);
+					String[] names=dirty_name.split(",");
+					String dirty_SN=result.get("student_num").toString().substring(1,result.get("student_num").toString().length()-1);
+					String[] SN=dirty_SN.split(",");
+					for(int i=0;i<names.length;i++) {
+						Tutor.add(new TutorItem(names[i].substring(1, names[i].length()-1),SN[i].substring(1, SN[i].length()-1)));
+					}
+					
+					Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
+							+ "       <b><u>Tutors of: </u></b> " + "<u>"+(((CourseItem) e.getItem()).course_name).toString()+"</u>"+ "      </p>", ContentMode.HTML);
+					addComponent(test);
+					addComponent(new Label("DISJOINT EVERYTHING SO THAT WE CAN GO BACK AND HAVE BETTER CONTROL!!!!"));
+					Grid<TutorItem> grid = new Grid<>(TutorItem.class);
+					grid.getColumn("image").setRenderer(new ImageRenderer());
+					grid.setColumnOrder("image", "name", "student_num");
+					grid.setWidth("100%");
+					grid.setItems(Tutor);
+					grid.addColumn(unused -> "More Info",
+						new ButtonRenderer(
+							
+						
+							event ->
+							{
+								new ProfileView((MyUI) getUI(), (((TutorItem) event.getItem()).getStudent_num()));
+								getUI().getNavigator().navigateTo("profile");							}));
+					grid.setRowHeight(100);
+					grid.setHeaderRowHeight(30);
+					addComponent(grid);
+					
+				}));
+		
+				
 		addComponent(g);
+		Button AddCourses=new Button("Add New Course", event ->
+		{
+			removeAllComponents();
+			AddNewCourse();
+			
+			
+			
 
+		});
+		Button Delete=new Button("Delete A Course", event ->
+		{
+			
+			DeleteCourses();
+			
+
+		});
+		Button Edit=new Button("Edit A Course", event ->
+		{
+			
+EditCourse();
+		});
+		
+
+		HorizontalLayout button_row = new HorizontalLayout();
+		button_row.addComponent(AddCourses);
+		button_row.addComponent(Delete);
+		button_row.addComponent(Edit);
+		addComponent(button_row);
+		
 		// this just goes back to the menu that is first shown
 		Button go_back_to_main_view = new Button("Return to menu", event ->
 		{
@@ -130,14 +275,13 @@ public class AdminMainView extends VerticalLayout implements View
 	private void view_users()
 	{
 		components.clear();
-		Grid<UserItem> g = new Grid<UserItem>();
+		Grid<UserItem> g = new Grid(UserItem.class);
 		ArrayList<UserItem> course_list = get_all_users();
 		g.setSizeFull();
+		g.setColumnOrder("name","student_num","role");
 		//g.setHeightByRows(course_list.size());
 		g.setItems(course_list);
-		g.addColumn(UserItem::getStudent_num).setCaption("Student/Staff Number");
-		g.addColumn(UserItem::getName).setCaption("Name");
-		g.addColumn(UserItem::getRole).setCaption("Role");
+
 
 		// switch to multiselect mode
 		g.setSelectionMode(SelectionMode.MULTI);
@@ -146,6 +290,7 @@ public class AdminMainView extends VerticalLayout implements View
 			selected_users = event.getAllSelectedItems();
 			// Notification.show(selected_course_allocs.size() + " items selected");
 		});
+		
 		addComponent(g);
 
 		Button make_admin_btn = new Button("Make Selected users admin", event ->
@@ -267,13 +412,17 @@ public class AdminMainView extends VerticalLayout implements View
 		// clear the screen
 		components.clear();
 
-		Grid<CourseAllocObject> g = new Grid<CourseAllocObject>();
+		Grid<CourseAllocObject> g = new Grid(CourseAllocObject.class);
 		g.setSizeFull();
+		
 		g.setItems(get_unconfirmed_course_allocs());
+		/*
+		g.addColumn(CourseAllocObject::getId).setCaption("Application ID");
 		g.addColumn(CourseAllocObject::getStud_num).setCaption("Student Number");
 		g.addColumn(CourseAllocObject::getCourse).setCaption("Course");
 		g.addColumn(CourseAllocObject::getConfirmed).setCaption("Status");
-
+		*/
+g.getColumn("id").setWidthUndefined();
 		// switch to multiselect mode
 		g.setSelectionMode(SelectionMode.MULTI);
 
@@ -282,6 +431,7 @@ public class AdminMainView extends VerticalLayout implements View
 			selected_course_allocs = event.getAllSelectedItems();
 			Notification.show(selected_course_allocs.size() + " items selected");
 		});
+		g.setColumnOrder("id","stud_num","course","confirmed");
 		addComponent(g);
 
 		Button confirm_btn = new Button("Confirm selected applications", event ->
@@ -399,7 +549,7 @@ public class AdminMainView extends VerticalLayout implements View
 				try
 				{
 
-					CourseAllocObject cao = new CourseAllocObject(data.get(1).getAsString(), data.get(2).getAsString(),
+					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(),data.get(1).getAsString(), data.get(2).getAsString(),
 							data.get(3).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
@@ -443,7 +593,7 @@ public class AdminMainView extends VerticalLayout implements View
 					System.out.println(data.get(2).getAsString());
 					System.out.println(data.get(3).getAsString());
 
-					CourseAllocObject cao = new CourseAllocObject(data.get(1).getAsString(), data.get(2).getAsString(),
+					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(),data.get(1).getAsString(), data.get(2).getAsString(),
 							data.get(3).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
@@ -483,7 +633,7 @@ public class AdminMainView extends VerticalLayout implements View
 				JsonArray data = (JsonArray) tutor_alloc_obj.getAsJsonArray().get(x);
 				try
 				{
-					CourseAllocObject cao = new CourseAllocObject(data.get(1).getAsString(), data.get(2).getAsString(),
+					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(),data.get(1).getAsString(), data.get(2).getAsString(),
 							data.get(3).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
@@ -517,7 +667,7 @@ public class AdminMainView extends VerticalLayout implements View
 			return new ArrayList<UserItem>();
 		}
 		ArrayList<UserItem> user_items = new ArrayList<UserItem>();
-
+		UserItem user = null;
 		try
 		{
 			for (int x = 0; x < user_arr.size(); x++)
@@ -525,8 +675,24 @@ public class AdminMainView extends VerticalLayout implements View
 				JsonArray data = (JsonArray) user_arr.getAsJsonArray().get(x);
 				try
 				{
-					UserItem user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString());
+					
+					if(data.get(2).getAsString().equals("0")) {
+					 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Tutor");
+					}
+					else if(data.get(2).getAsString().equals("1")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Lecturer");
+						}
+					else if(data.get(2).getAsString().equals("2")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Admin");
+						}
+					else if(data.get(2).getAsString().equals("3")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Lecturer/Admin");
+						}
+					else if(data.get(2).getAsString().equals("4")) {
+						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Super Admin");
+						}
+					
+				
 					user_items.add(user);
 				} catch (UnsupportedOperationException e)
 				{
