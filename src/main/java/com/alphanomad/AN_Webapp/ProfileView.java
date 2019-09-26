@@ -175,9 +175,17 @@ public class ProfileView extends VerticalLayout implements View {
 		email_line.addComponent(new Label(email_addr));
 
 		MyUI ui = (MyUI) getUI();
-		if (!ui.get_user_info().role.equals("0") && !email_addr.endsWith(".com")) {
-			email_line.addComponent(email_button);
+		try
+		{
+			if (!ui.get_user_info().role.equals("0") && !email_addr.endsWith(".com")) {
+				email_line.addComponent(email_button);
+			}
 		}
+		catch(Exception e)
+		{
+			//TODO
+		}
+		
 
 		HorizontalLayout transcript_line = new HorizontalLayout();
 		transcript_line.addComponent(new Label("View Transcript:"));
