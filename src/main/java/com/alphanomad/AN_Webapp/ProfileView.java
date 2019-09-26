@@ -181,7 +181,7 @@ public class ProfileView extends VerticalLayout implements View {
 
 		HorizontalLayout transcript_line = new HorizontalLayout();
 		transcript_line.addComponent(new Label("View Transcript:"));
-		String[] values2 = { "USER_TRANSCRIPTS", "filename", "user_id", student_number };
+		String[] values2 = { "USER_INFORMATION", "user_transcript", "user_id", student_number };
 		Button pdf_button = new Button("View Transcript", event -> {
 			String result = dbh.php_request("generic_select", parameters, values2);
 
