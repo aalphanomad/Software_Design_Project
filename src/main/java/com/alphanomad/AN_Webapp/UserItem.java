@@ -33,6 +33,22 @@ public class UserItem
 
 	public String getRole()
 	{
+		if (role.equals("0"))
+		{
+			return "Tutor";
+		}
+		else if (role.equals("1"))
+		{
+			return "Lecturer";
+		}
+		else if (role.equals("2"))
+		{
+			return "Admin";
+		}
+		else if (role.equals("3"))
+		{
+			return "Lecturer/Admin";
+		}
 		return role;
 	}
 }

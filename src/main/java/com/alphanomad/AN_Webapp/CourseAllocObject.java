@@ -35,6 +35,20 @@ public class CourseAllocObject
 
 	public String getConfirmed()
 	{
+		if (confirmed.equals("1"))
+		{
+			return "accepted";
+		}
+		else if (confirmed.equals("0"))
+		{
+			return "pending";
+		}
+		else if (confirmed.equals("3"))
+		{
+			return "not accepted";
+		}
+		
+		// this should never happen but if it does it'll be a sure sign of error
 		return confirmed;
 	}
 }
