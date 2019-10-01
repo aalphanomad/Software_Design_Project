@@ -10,6 +10,7 @@ class SigninTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        //this stuff creates the table since PDO works nicely I've left it here
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //Create the USER_INFORMATION table
@@ -28,8 +29,8 @@ class SigninTest extends PHPUnit_Framework_TestCase
             UNIQUE KEY `STUDENT_NUMBER` (`STUDENT_NUM`)
            ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
 
-        
-        $link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],"SignInTest");
+        // for our code we need a mysqli lonk and not a PDO object
+        $this->myqli_link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],"test_db");
         
     }
 
