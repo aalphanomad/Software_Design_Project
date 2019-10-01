@@ -32,10 +32,18 @@ function signin($student_num, $password, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
+try
+{
+	$link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
-$student_num = $_REQUEST["student_num"];
-$password = $_REQUEST["password"];
+	$student_num = $_REQUEST["student_num"];
+	$password = $_REQUEST["password"];
 
-echo signin($student_num, $password, $link);
+	echo signin($student_num, $password, $link);
+}
+catch (Exception $e)
+{
+	echo 0;
+}
+
 mysqli_close($link);
