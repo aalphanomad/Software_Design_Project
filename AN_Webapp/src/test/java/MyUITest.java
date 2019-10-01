@@ -28,10 +28,7 @@ public class MyUITest {
 		//For MyUI.java
 		//ui.close();
 		
-		MyUI myUI=new MyUI();
-		UserInfo userInfo=new UserInfo("Tutor", "1", "0");
-		myUI.set_user_info(userInfo);
-		myUI.get_user_info();
+		//For MainView.java
 		
 	}
 
