@@ -11,7 +11,6 @@ class SigninTest extends PHPUnit_Framework_TestCase
     {
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->pdo->query("CREATE TABLE hello (what VARCHAR(50) NOT NULL)");
         //Create the USER_INFORMATION table
         $this->pdo->query(" 	CREATE TABLE `USER_INFORMATION` (
             `NAME` varchar(50) DEFAULT NULL,
@@ -41,11 +40,5 @@ class SigninTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('{"result":1,"name":"Tutor","student_num":"1","role":"0"}', signin("1","test",$this->pdo));
     }
 
-    public function testHello()
-    {
-        $helloWorld = new HelloWorld($this->pdo);
-
-        $this->assertEquals('Hello Bar', $helloWorld->hello('Bar'));
-    }
 }
 
