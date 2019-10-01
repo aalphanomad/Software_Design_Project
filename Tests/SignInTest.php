@@ -29,7 +29,7 @@ class SigninTest extends PHPUnit_Framework_TestCase
            ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
 
         
-        $link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],$GLOBALS['db_dsn']);
+        $link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],"SignInTest");
         
     }
 
