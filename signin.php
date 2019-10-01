@@ -40,10 +40,11 @@ try
 	$password = $_REQUEST["password"];
 
 	echo signin($student_num, $password, $link);
+	mysqli_close($link);
 }
 catch (Exception $e)
 {
 	echo 0;
 }
 
-mysqli_close($link);
+
