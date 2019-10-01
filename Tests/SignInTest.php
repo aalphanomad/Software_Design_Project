@@ -36,7 +36,7 @@ class SigninTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->pdo->query("DROP TABLE hello");
+        $this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
     public function testSignIn()
