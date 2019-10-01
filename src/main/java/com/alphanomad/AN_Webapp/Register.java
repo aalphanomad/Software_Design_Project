@@ -212,6 +212,13 @@ public class Register extends VerticalLayout implements View
 		content.setComponentAlignment(PMA, Alignment.BOTTOM_LEFT);
 
 		// FILE UPLOAD!!!!!
+		Button load = new Button("Upload Tanscript",
+				event->getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/upload_transcript.html", "_blank") 
+	    
+				);
+		
+		content.addComponent(load);
+		
 		// Initialize a list with items
 		List<String> list = new ArrayList<String>();
 		DBHelper dbh=new  DBHelper();
@@ -219,11 +226,11 @@ public class Register extends VerticalLayout implements View
 		result=dbh.parse_json_string(ans);
 		String SAll_Course_Name=result.get("course_name").toString().substring(1, result.get("course_name").toString().length()-1).replace("\"", "");
 		String SAll_Course_Code=result.get("course_code").toString().substring(1,result.get("course_code").toString().length()-1).replace("\"", "");
-String[] The_Course_Names=SAll_Course_Name.split(",");
-String[] The_Course_Codes=SAll_Course_Code.split(",");
-for(int i=0;i<The_Course_Names.length;i++) {
-	list.add(The_Course_Codes[i]+"-("+The_Course_Names[i]+")");
-}
+		String[] The_Course_Names=SAll_Course_Name.split(",");
+		String[] The_Course_Codes=SAll_Course_Code.split(",");
+		for(int i=0;i<The_Course_Names.length;i++) {
+			list.add(The_Course_Codes[i]+"-("+The_Course_Names[i]+")");
+		}
 
 		// Initialize the ComboBoxMultiselect
 		comboBoxMultiselect.setPlaceholder("Courses");
