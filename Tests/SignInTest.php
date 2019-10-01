@@ -35,7 +35,7 @@ class SigninTest extends PHPUnit_Framework_TestCase
 
     public function testSignIn()
     {
-        include '../fsignin.php';
+        //include '../fsignin.php';
         
         $this->assertEquals('{"result":1,"name":"Tutor","student_num":"1","role":"0"}', signin("1","test",$this->pdo));
     }
