@@ -6,6 +6,7 @@ class SigninTest extends PHPUnit_Framework_TestCase
      * @var PDO
      */
     private $pdo;
+    private $myqli_link;
 
     public function setUp()
     {
@@ -26,6 +27,10 @@ class SigninTest extends PHPUnit_Framework_TestCase
             `TRANSCRIPT` varchar(100) DEFAULT NULL,
             UNIQUE KEY `STUDENT_NUMBER` (`STUDENT_NUM`)
            ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
+
+        
+        $link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],$GLOBALS['db_dsn']);
+        
     }
 
     public function tearDown()
@@ -36,7 +41,7 @@ class SigninTest extends PHPUnit_Framework_TestCase
     public function testSignIn()
     {
         include 'signin.php';
-        $this->assertEquals('{"result":1,"name":"Tutor","student_num":"1","role":"0"}', signin("1","test",$this->pdo));
+        $this->assertEquals('{"result":1,"name":"Tutor","student_num":"1","role":"0"}', signin("1","test",$this->myqli_link));
     }
 
 }
