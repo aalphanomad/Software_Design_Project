@@ -1,5 +1,7 @@
 package com.alphanomad.AN_Webapp;
 
+import java.util.ArrayList;
+
 import com.google.gson.JsonObject;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -21,6 +23,12 @@ public class TutorMainView extends VerticalLayout implements View
 	@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
+		// THIS PREVENTS USERS FROM PRESSING BACK TO LOGIN WITHOUT A PASSWORD
+		if (! ((MyUI)getUI()).logged_in)
+		{
+			getUI().getNavigator().navigateTo("login");
+		} 
+		
 		removeAllComponents();
 		DBHelper dbh = new DBHelper();
 
@@ -30,12 +38,52 @@ public class TutorMainView extends VerticalLayout implements View
 
 		String studentNum = ((MyUI) getUI()).get_user_info().get_student_num();
 
-		String[] parameters = { "table", "target", "student_num" };
-		String[] valuess = { "BOOKINGS", "*", studentNum };
-		Button pdf_button = new Button("Generate Claims Form", event -> UI.getCurrent().getPage()
-				.open(dbh.php_request("select_booking", parameters, valuess), "_blank"));
+		
+		ArrayList<String> month_strs = new ArrayList<String>();
+		month_strs.add("Jan");
+		month_strs.add("Feb");
+		month_strs.add("Mar");
+		month_strs.add("Apr");
+		month_strs.add("May");
+		month_strs.add("Jun");
+		month_strs.add("Jul");
+		month_strs.add("Aug");
+		month_strs.add("Sep");
+		month_strs.add("Oct");
+		month_strs.add("Nov");
+		month_strs.add("Dec");
+		ComboBox<String> months = new ComboBox<String>();
+		months.setItems(month_strs);
+		months.setDescription("Choose month to generate claim form for. Leave empty to get full claim history");
+		//months.setCaption("Choose month to generate claim form for. Leave Blank to generate full record");
+		months.setEmptySelectionCaption("Choose month...");
+		
+		
+		Button pdf_button = new Button("Generate Claims Form", event -> 
+		{
+			if(months.getSelectedItem() != null)
+			{
+				String[] parameters = { "table", "target", "student_num", "month" };
+				String[] valuess = { "BOOKINGS", "*", studentNum, months.getSelectedItem().get()};
+				UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
+			}
+			else
+			{
+				String[] parameters = { "table", "target", "student_num"};
+				String[] valuess = { "BOOKINGS", "*", studentNum};
+				UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
+			}
+		});
+				
+		
+		
 
-		Button Login = new Button("Logout", event -> getUI().getNavigator().navigateTo("login"));
+		Button Login = new Button("Logout", event -> 
+		 {
+			 getUI().getNavigator().navigateTo("login");
+			 ((MyUI)getUI()).logged_in = false;
+			
+		});
 		// Button Register=new
 		// Button("Register",event->getUI().getNavigator().navigateTo("register"));
 
@@ -48,7 +96,10 @@ public class TutorMainView extends VerticalLayout implements View
 		addComponent(claimForm_button);
 		addComponent(profile_button);
 		addComponent(History);
-		addComponent(pdf_button);
+		HorizontalLayout pdf_row = new HorizontalLayout();
+		pdf_row.addComponent(pdf_button);
+		pdf_row.addComponent(months);
+		addComponent(pdf_row);
 		addComponent(Login);
 		// addComponent(Register);
 	}

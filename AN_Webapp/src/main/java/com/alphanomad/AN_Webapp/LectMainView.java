@@ -23,7 +23,7 @@ public class LectMainView extends VerticalLayout implements View
 	int SelIndex;
 	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
 
-	public ArrayList<String> Filter_Info(String Dirty_Info)
+	public static ArrayList<String> Filter_Info(String Dirty_Info)
 	{
 		ArrayList<String> final_Array = new ArrayList<String>();
 
@@ -57,7 +57,11 @@ public class LectMainView extends VerticalLayout implements View
 	@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
-
+		if (! ((MyUI)getUI()).logged_in)
+		{
+			getUI().getNavigator().navigateTo("login");
+		} 
+		
 		UserInfo lect_info = ((MyUI) getUI()).get_user_info();
 		removeAllComponents();
 		DBHelper dbh = new DBHelper();
@@ -66,12 +70,8 @@ public class LectMainView extends VerticalLayout implements View
 		String ans1 = dbh.php_request("get_courses", params1, values1);
 		retrieve = dbh.parse_json_string(ans1);
 		ans1 = retrieve.get("result").getAsJsonArray().toString();
-		
-		Button logout= new Button("Logout", event -> getUI().getNavigator().navigateTo("login"));
-		addComponent(logout);
-		setComponentAlignment(logout, Alignment.TOP_RIGHT);
-		
 		ArrayList<String> myCourses = ClaimForm.GetCourses(ans1);
+		addComponent(new Label(String.join(",", myCourses)));
 		for (int i = 0; i < myCourses.size(); i++)
 		{
 			myCourses.set(i, myCourses.get(i) + " " + ClaimForm.Course_corr(myCourses.get(i)));
@@ -83,11 +83,13 @@ public class LectMainView extends VerticalLayout implements View
 		// Notification.show(ans2);
 		String[] AllInfo = ans2.split("\\],\"");
 		ArrayList<String> TheCourses = Filter_Info(AllInfo[0]);
+		// THE NAMES
 		ArrayList<String> Course1 = Filter_Info(AllInfo[1]);
 		ArrayList<String> Course2 = Filter_Info(AllInfo[2]);
 		ArrayList<String> Course3 = Filter_Info(AllInfo[3]);
 		ArrayList<String> Course4 = Filter_Info(AllInfo[4]);
 		ArrayList<String> Course5 = Filter_Info(AllInfo[5]);
+		// Student Numbers
 
 		ArrayList<String> StudCourse1 = Filter_Info(AllInfo[6]);
 		ArrayList<String> StudCourse2 = Filter_Info(AllInfo[7]);
@@ -180,6 +182,14 @@ public class LectMainView extends VerticalLayout implements View
 
 		});
 
+		Button logout = new Button("Logout", event ->
+		{
+			getUI().getNavigator().navigateTo("login");
+			((MyUI) getUI()).logged_in = false;
+
+		});
+
+		addComponent(logout);
 //Sort out empty arrays!!!!!!!!!!!!!!!!!!!!!1
 
 		// ArrayList<String> CCourse5=Filter_Info(Course5);

@@ -35,7 +35,6 @@ public class MyUI extends UI
 	protected static final String TUTORMAINVIEW = "tutormain";
 	protected static final String LECTMAINVIEW = "lectmain";
 	protected static final String ADMINMAINVIEW = "adminmain";
-	protected static final String SUPERADMINVIEW = "superadminmain";
 	protected static final String MAINVIEW = "main";
 	protected static final String PROFILEVIEW = "profile";
 	protected static final String LOGINVIEW = "login";
@@ -43,11 +42,16 @@ public class MyUI extends UI
 	protected static final String HISTORYVIEW = "history";
 	protected static final String CLAIMFORM = "claimform";
 	protected static final String CONFIRMCLAIMFORM = "confirm";
+	protected static final String TUTORLISTVIEW = "tutorlist";
+	protected static final String COURSEALLOCVIEW = "coursealloc";
+	protected static final String COURSELISTVIEW = "courselist";
+	protected static final String CHOOSEROLE = "chooserole";
 	public boolean logged_in = false;
 
 	@Override
 	public void init(VaadinRequest request)
 	{
+		
 		addStyleName("image-backgound");
 		getPage().setTitle("Alpha Nomad");
 
@@ -58,7 +62,6 @@ public class MyUI extends UI
 		navigator.addView(TUTORMAINVIEW, new TutorMainView());
 		navigator.addView(LECTMAINVIEW, new LectMainView());
 		navigator.addView(ADMINMAINVIEW, new AdminMainView());
-		navigator.addView(SUPERADMINVIEW, new SuperAdminView());
 		navigator.addView(PROFILEVIEW, new ProfileView(this));
 		navigator.addView(LOGINVIEW, new LoginView(this));
 		navigator.addView(REGVIEW, new Register());
@@ -69,12 +72,15 @@ public class MyUI extends UI
 		navigator.addView(HISTORYVIEW, new ClaimHistory());
 		navigator.addView(CLAIMFORM, new ClaimForm());
 		navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(null, null, null, null, null, null, null, null));
-
+		navigator.addView(TUTORLISTVIEW, new TutorListView());
+		navigator.addView(COURSELISTVIEW, new CourseListView());
+		navigator.addView(COURSEALLOCVIEW, new CourseAllocationView());
+		navigator.addView(CHOOSEROLE, new ChooseRole());
+		
 		Responsive.makeResponsive(this);
 		navigator.navigateTo(LOGINVIEW);
 		System.out.println("regstration complete");
-
-		Responsive.makeResponsive(this);
+		
 		if (!logged_in)
 		{
 			navigator.navigateTo(LOGINVIEW);
@@ -96,6 +102,8 @@ public class MyUI extends UI
 		System.out.println(this.user_info.hashCode());
 		return this.user_info;
 	}
+	
+	
 
 	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
 	@VaadinServletConfiguration(ui = MyUI.class, productionMode = true)

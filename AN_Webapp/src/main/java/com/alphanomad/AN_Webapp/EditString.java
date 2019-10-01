@@ -11,7 +11,7 @@ public class EditString
 
 	public static String editCourse(String course)
 	{
-		course = course.substring(0, 8);
+		course = course.substring(0, 9);
 		return course;
 	}
 
