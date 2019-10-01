@@ -1,0 +1,12 @@
+1 DONE Edit the courses that I tutor → Elgoni
+2 DONE VIEW File transcript view and upload → Innocent & Elgoni
+3 Make claim form for specific month → Elgoni
+4 DONE? Fix the PDF claim form(Format it properly like the actual claim form) → 
+    Fix the inverted commas and brackets for the claim form. 
+    Specifically put the bottom section so it can be signed (Also include the total amount of time done for a month) → Elgoni
+5 DONE For the PDF Claim form, add a signature section →  Elgoni
+6 Tutor should be able to re upload their transcript → Innocent & Elgoni
+    Add point 8 to register screen as well → Innocent & Elgoni
+7 DONE Encode 0 and 1 properly on admin view → Elgoni
+8 DONE Add seperate confirm and deny buttons → Elgoni
+9 The admin should be able to change the role for any user(from anything to anything,except for super-admin) → Hamza & Elgoni
