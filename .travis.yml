@@ -19,9 +19,14 @@ matrix:
 
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
+  - composer require satooshi/php-coveralls:dev-master
+  - composer install
   - mysql -e "create database IF NOT EXISTS test_db;" -uroot;
 
 # omitting "script:" will default to phpunit
 # use the $DB env variable to determine the phpunit.xml to use
-script: phpunit --configuration phpunit_mysql.xml --coverage-text
+script: phpunit --configuration phpunit_mysql.xml --coverage-text --coverage-clover ./tests/logs/clover.xml
+
+after_script:
+- php vendor/bin/coveralls -v
 

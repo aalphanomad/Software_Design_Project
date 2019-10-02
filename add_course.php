@@ -21,11 +21,12 @@ function add_course($student_num,$course,$link)
     }
 
     echo json_encode($result);
+    mysqli_close($link);
 }
 
 add_course($_REQUEST["student_num"],$_REQUEST["course"],$link)
 
-mysqli_close($link);
+
 ?>
 
 
