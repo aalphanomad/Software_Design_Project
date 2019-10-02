@@ -37,11 +37,11 @@ public class CourseAllocObject
 	{
 		if (confirmed.equals("1"))
 		{
-			return "accepted";
+			return "Accepted";
 		}
 		else if (confirmed.equals("0"))
 		{
-			return "pending";
+			return "Pending";
 		}
 		else if (confirmed.equals("3"))
 		{

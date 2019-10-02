@@ -71,7 +71,6 @@ public class LectMainView extends VerticalLayout implements View
 		retrieve = dbh.parse_json_string(ans1);
 		ans1 = retrieve.get("result").getAsJsonArray().toString();
 		ArrayList<String> myCourses = ClaimForm.GetCourses(ans1);
-		addComponent(new Label(String.join(",", myCourses)));
 		for (int i = 0; i < myCourses.size(); i++)
 		{
 			myCourses.set(i, myCourses.get(i) + " " + ClaimForm.Course_corr(myCourses.get(i)));

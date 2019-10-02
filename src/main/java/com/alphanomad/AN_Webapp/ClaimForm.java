@@ -164,73 +164,19 @@ public class ClaimForm extends VerticalLayout implements View
 
 	public static String Course_corr(String course_code)
 	{
-		/*
+		
 		 	DBHelper dbh=new DBHelper();
 		String[] parameters = { "table", "target", "filter", "value" };
 		String[] values = { "COURSES", "COURSE_NAME", "COURSE_CODE", course_code };
 
 		String test = dbh.php_request("generic_select", parameters, values);
-		JsonArray pop=dbh.parse_json_string_arr(test);
-		String result=pop.getAsJsonArray().get(0).toString();
-		result=result.substring(2, result.length()-2);
-		*/
+		JsonArray course_name;
+		
+			course_name = dbh.parse_json_string_arr(test);
+		
+		
 	
-		String ans = null;
-		switch (course_code)
-		{
-		case "COMS1015":
-			ans = "(Basic Computer Organisation)";
-			break;
-		case "COMS1018":
-			ans = "(Introduction to Algorithms and Programming)";
-			break;
-		case "COMS1017":
-			ans = "(Introduction to Data Structures and Algorithms)";
-			break;
-		case "COMS1016":
-			ans = "(Discrete Computational Structures)";
-			break;
-		case "COMS2002":
-			ans = "(Database Fundamentals)";
-			break;
-		case "COMS2013":
-			ans = "(Mobile Computing)";
-			break;
-		case "COMS2014":
-			ans = "(Computer Networks)";
-			break;
-		case "COMS2015":
-			ans = "(Analysis of Algorithms)";
-			break;
-		case "COMS3002":
-			ans = "(Software Engineering)";
-			break;
-		case "COMS3003":
-			ans = "(Formal Languages and Automata)";
-			break;
-		case "COMS3005":
-			ans = "(Advanced Analysis of Algorithms)";
-			break;
-		case "COMS3009":
-			ans = "(Software Design)";
-			break;
-		case "COMS3010":
-			ans = "(Operating Systems and System Programming)";
-			break;
-		case "COMS3007":
-			ans = "(Machine Learning)";
-			break;
-		case "COMS3006":
-			ans = "(Computer Graphics and Visualisation)";
-			break;
-		case "COMS3008":
-			ans = "(Parallel Computing)";
-			break;
-		case "COMS3011":
-			ans = "(Software Design Project)";
-			break;
-
-		}
+		String ans = "("+course_name.get(0).getAsString()+")";
 		
 		return ans;
 

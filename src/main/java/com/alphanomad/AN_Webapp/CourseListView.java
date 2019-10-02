@@ -3,13 +3,18 @@ package com.alphanomad.AN_Webapp;
 import java.util.ArrayList;
 import java.util.Set;
 
+
 import org.apache.commons.lang.WordUtils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.vaadin.data.Binder;
+import com.vaadin.data.Binder.Binding;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -19,6 +24,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.components.grid.EditorImpl;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ImageRenderer;
@@ -173,7 +179,7 @@ public class CourseListView extends VerticalLayout implements View
 		components.clear();
 
 		// grid is just a table to store/display our data
-		g = new Grid<CourseItem>();
+		g = new Grid<CourseItem>(CourseItem.class);
 		ArrayList<CourseItem> course_list = get_all_courses();
 		// without these lines the grid only takes up a small section of the screen
 		g.setSizeFull();
@@ -181,8 +187,6 @@ public class CourseListView extends VerticalLayout implements View
 
 		// this is where we set the data for the grid
 		g.setItems(course_list);
-		g.addColumn(CourseItem::getCourse_code).setCaption("Course Code");
-		g.addColumn(CourseItem::getCourse_name).setCaption("Course Name");
 		g.addColumn(unused -> "View Info",
 
 				new ButtonRenderer(e ->
@@ -212,7 +216,6 @@ public class CourseListView extends VerticalLayout implements View
 									+ (((CourseItem) e.getItem()).course_name).toString() + "</u>" + "      </p>",
 							ContentMode.HTML);
 					addComponent(test);
-					addComponent(new Label("DISJOINT EVERYTHING SO THAT WE CAN GO BACK AND HAVE BETTER CONTROL!!!!"));
 					Grid<TutorItem> grid = new Grid<>(TutorItem.class);
 					grid.getColumn("image").setRenderer(new ImageRenderer());
 					grid.setColumnOrder("image", "name", "student_num");
@@ -230,8 +233,14 @@ public class CourseListView extends VerticalLayout implements View
 					addComponent(grid);
 
 				}));
+		
+	
+		
+		
+		
+g.sort("course_code",SortDirection.ASCENDING);
 
-		addComponent(g);
+addComponent(g);
 		Button AddCourses = new Button("Add New Course", event ->
 		{
 			removeAllComponents();

@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.gson.JsonArray;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
@@ -48,6 +49,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 			Notification.show(selected_course_allocs.size() + " items selected");
 		});
 		g.setColumnOrder("id", "stud_num", "course", "confirmed");
+		g.sort("id",SortDirection.DESCENDING);
 		addComponent(g);
 
 		Button confirm_btn = new Button("Confirm selected applications", event ->
