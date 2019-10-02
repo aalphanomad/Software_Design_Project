@@ -221,6 +221,13 @@ public class Register extends VerticalLayout implements View {
 		content.setComponentAlignment(PMA, Alignment.BOTTOM_LEFT);
 
 		// FILE UPLOAD!!!!!
+		Button load = new Button("Upload Tanscript",
+				event->getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/upload_transcript.html", "_blank") 
+	    
+				);
+		
+		content.addComponent(load);
+		
 		// Initialize a list with items
 		List<String> list = new ArrayList<String>();
 		DBHelper dbh = new DBHelper();
