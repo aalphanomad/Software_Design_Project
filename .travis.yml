@@ -22,6 +22,9 @@ before_script:
   - composer require satooshi/php-coveralls '~1.0'
   - composer install
   - mysql -e "create database IF NOT EXISTS test_db;" -uroot;
+  - export CI_BUILD_NUMBER="$TRAVIS_BUILD_NUMBER"
+  - export CI_PULL_REQUEST="$TRAVIS_PULL_REQUEST"
+  - export CI_BRANCH="$TRAVIS_BRANCH"
 
 # omitting "script:" will default to phpunit
 # use the $DB env variable to determine the phpunit.xml to use
