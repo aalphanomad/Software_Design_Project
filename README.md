@@ -1,16 +1,9 @@
-Example PHP project
+PHP API for AlphaNomad app
 ===================
 
-The purpose of this repository is to show how to use Travis CI to do
-continuous integration with a PHP project.
-
-Here is a sample status icon showing the state of the master branch.
+The purpose of this branch is to host all the php files which make up the api and test them
 
 [![Build Status](https://travis-ci.org/aalphanomad/Software_Design_Project.svg?branch=php_test)](https://travis-ci.org/aalphanomad/Software_Design_Project)
 
 [![Coverage Status](https://coveralls.io/repos/github/aalphanomad/Software_Design_Project/badge.svg?branch=php_test)](https://coveralls.io/github/aalphanomad/Software_Design_Project?branch=php_test)
 
-In order to run this project just fork it on github.com and then [enable](http://about.travis-ci.org/docs/user/getting-started/)
-your fork on your [travis-ci profile](http://travis-ci.org/profile). Every push will then trigger a new build on Travis CI.
-
-(Don't forget to update the badge url in the README to point to your own travis project.)
