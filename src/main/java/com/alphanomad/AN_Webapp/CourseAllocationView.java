@@ -48,8 +48,8 @@ public class CourseAllocationView extends VerticalLayout implements View
 			selected_course_allocs = event.getAllSelectedItems();
 			Notification.show(selected_course_allocs.size() + " items selected");
 		});
-		g.setColumnOrder("id", "stud_num", "course", "confirmed");
-		g.sort("id",SortDirection.DESCENDING);
+		g.setColumnOrder("id","name","stud_num","role", "course", "confirmed");
+		//g.sort("id",SortDirection.DESCENDING);
 		addComponent(g);
 
 		Button confirm_btn = new Button("Confirm selected applications", event ->
@@ -166,7 +166,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 				{
 
 					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString(), data.get(3).getAsString());
+							data.get(2).getAsString(), data.get(3).getAsString(),data.get(4).getAsString(),data.get(5).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
 				{
@@ -210,7 +210,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 					System.out.println(data.get(3).getAsString());
 
 					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString(), data.get(3).getAsString());
+							data.get(2).getAsString(), data.get(3).getAsString(),data.get(4).getAsString(),data.get(5).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
 				{
@@ -250,7 +250,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 				try
 				{
 					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString(), data.get(3).getAsString());
+							data.get(2).getAsString(), data.get(3).getAsString(),data.get(4).getAsString(),data.get(5).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
 				{
