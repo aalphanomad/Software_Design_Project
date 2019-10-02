@@ -70,6 +70,7 @@ public class Register extends VerticalLayout implements View {
 	JsonObject result1, result2;
 
 	public void TheRegister() {
+		removeAllComponents();
 
 		ArrayList<String> FCourses = new ArrayList<String>();
 		String[] Courses = comboBoxMultiselect.getValue().toString().split(",");
@@ -107,7 +108,7 @@ public class Register extends VerticalLayout implements View {
 			valid = false;
 
 		}
-		if (Courses.length == 0)// FIX THIS! NOT CHECKING PROPERLY IF NO COURSE IS SELECED!
+		if (Arrays.toString(Courses).equals("[[]]"))// FIX THIS! NOT CHECKING PROPERLY IF NO COURSE IS SELECED!
 		{
 			comboBoxMultiselect.setComponentError(new UserError("Please Select Atleast One Course"));
 			valid = false;
