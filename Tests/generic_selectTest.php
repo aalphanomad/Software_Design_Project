@@ -1,6 +1,6 @@
 <?php
 
-class SigninTest extends PHPUnit_Framework_TestCase
+class generic_selectTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PDO
