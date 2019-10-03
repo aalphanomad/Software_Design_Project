@@ -60,7 +60,7 @@ class get_user_infoTest extends PHPUnit_Framework_TestCase
     public function testGet_user_info()
     {
         include 'get_user_info.php';
-        $this->assertEquals('{"NAME":"Tutor","ROLE":"0"} ', get_user_info("1", $this->myqli_link));
+        $this->assertEquals('{"NAME":"Tutor","ROLE":"0"}', get_user_info("1", $this->myqli_link));
     }
 }
 ?>
