@@ -13,7 +13,7 @@ function get_user_info($student_num, $link)
     while($row=mysqli_fetch_assoc($result1)){
         return json_encode($row);
         }
-    return $result1;
+    //return $result1;
 }
 
 
