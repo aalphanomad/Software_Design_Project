@@ -57,10 +57,10 @@ class generic_selectTest extends PHPUnit_Framework_TestCase
         $this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
-    public function testSignIn()
+    public function testGeneric_select()
     {
         include 'generic_select.php';
-        $this->assertEquals('{"result":1,"name":"Tutor","student_num":"1","role":"0"}', generic_select("USER_INFORMATION","*","STUDENT_NUM","1",$this->myqli_link));
+        $this->assertEquals('[["Tutor","1","1@students.wits.ac.za","test","0","COMS3007","COMS2015","COMS1017",null,null,null]]', generic_select("USER_INFORMATION","*","STUDENT_NUM","1",$this->myqli_link));
     }
 }
 ?>

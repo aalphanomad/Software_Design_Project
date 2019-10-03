@@ -10,6 +10,9 @@ function get_user_info($student_num, $link)
         $output["role"]=mysqli_fetch_assoc($result1)["ROLE"];
     }
     */
+    while($row=mysqli_fetch_assoc($result1)){
+        return json_encode($row);
+        }
     return $result1;
 }
 
@@ -21,10 +24,8 @@ try {
     $link = mysqli_connect("127.0.0.1", $username, $password, $database);
     $student_num=$_REQUEST["student_num"];
 
-    $final_result = get_user_info($student_num, $link);
-    while($row=mysqli_fetch_assoc($final_result)){
-        print json_encode($row);
-        }
+    
+    print get_user_info($student_num, $link);
 
     mysqli_close($link);
 } catch (Exception $e) {

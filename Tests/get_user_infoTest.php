@@ -57,7 +57,7 @@ class get_user_infoTest extends PHPUnit_Framework_TestCase
         $this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
-    public function testSignIn()
+    public function testGet_user_info()
     {
         include 'get_user_info.php';
         $this->assertEquals(json_decode('{"NAME":"Tutor","ROLE":"0"} '), get_user_info("1", $this->myqli_link));
