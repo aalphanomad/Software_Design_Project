@@ -18,7 +18,7 @@ try {
     echo get_name($student_num, $link);
     mysqli_close($link);
 
-} catch (\Throwable $th) {
+} catch (Exception $e) {
     echo 0;
 }
 
