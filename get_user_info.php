@@ -14,18 +14,23 @@ function get_user_info($student_num, $link)
 }
 
 
-$username = "s1601745";
-$password = "s1601745";	
-$database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
-$student_num=$_REQUEST["student_num"];
+try {
+    $username = "s1601745";
+    $password = "s1601745";	
+    $database = "d1601745";
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
+    $student_num=$_REQUEST["student_num"];
 
-$final_result = get_user_info($student_num, $link);
-while($row=mysqli_fetch_assoc($final_result)){
-    print json_encode($row);
-    }
+    $final_result = get_user_info($student_num, $link);
+    while($row=mysqli_fetch_assoc($final_result)){
+        print json_encode($row);
+        }
 
-mysqli_close($link);
+    mysqli_close($link);
+} catch (Exception $e) {
+    echo 0;
+}
+
 
 ?>
 

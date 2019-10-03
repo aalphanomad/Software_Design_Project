@@ -15,17 +15,23 @@ function generic_select($table, $target, $filter, $value, $link)
 	return $encoded;
 }
 
-$username = "s1601745";
-$password = "s1601745";
-$database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
-$table=$_REQUEST["table"];
-$target=$_REQUEST["target"];
-$filter=$_REQUEST["filter"];
-$value = $_REQUEST["value"];
 
-echo generic_select($table, $target, $filter, $value, $link);
-mysqli_close($link);
+try {
+	$username = "s1601745";
+	$password = "s1601745";
+	$database = "d1601745";
+	$link = mysqli_connect("127.0.0.1", $username, $password, $database);
+	$table=$_REQUEST["table"];
+	$target=$_REQUEST["target"];
+	$filter=$_REQUEST["filter"];
+	$value = $_REQUEST["value"];
+
+	echo generic_select($table, $target, $filter, $value, $link);
+	mysqli_close($link);
+} catch (Exception $e) {
+	echo 0;
+}
+
 ?>
 
 
