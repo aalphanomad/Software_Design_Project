@@ -24,9 +24,7 @@ function add_course($student_num,$course,$link)
     mysqli_close($link);
 }
 
-add_course($_REQUEST["student_num"],$_REQUEST["course"],$link)
-
-
+add_course($_REQUEST["student_num"],$_REQUEST["course"],$link);
 ?>
 
 

@@ -1,6 +1,6 @@
 <?php
 
-class SigninTest extends PHPUnit_Framework_TestCase
+class get_nameTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PDO
@@ -57,10 +57,10 @@ class SigninTest extends PHPUnit_Framework_TestCase
         $this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
-    public function testSignIn()
+    public function testGet_name()
     {
-        include 'signin.php';
-        $this->assertEquals('{"result":1,"name":"Tutor","student_num":"1","role":"0"}', signin("1","test",$this->myqli_link));
+        include 'get_name.php';
+        $this->assertEquals('Tutor', get_name("1",$this->myqli_link));
     }
 }
 ?>
