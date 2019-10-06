@@ -60,8 +60,11 @@ class generic_studentsTest extends PHPUnit_Framework_TestCase
     public function testGet_students()
     {
         include 'get_students.php';
-        $expected = '{"Courses":["COMS2013","COMS1018",null,null,null],"Course1":["DUMMY","Omer","Juno Reactor","Mayur","Innocent","kjeljlq"],"Course2":["oupa","Lecturer"],"Course3":[],"Course4":[],"Course5":[],"stu_Course1":["-1","011852","10000090","101","11","83092"],"stu_Course2":["12345","2"],"stu_Course3":[],"stu_Course4":[],"stu_Course5":[]} ';
-        $this->assertEquals('[["Tutor","1","1@students.wits.ac.za","test","0","COMS3007","COMS2015","COMS1017",null,null,null]]', get_students("2",$this->myqli_link));
+        // Test on empty database
+        $expected = '"Courses":[null,null,null,null,null],"Course1":[],"Course2":[],"Course3":[],"Course4":[],"Course5":[],"stu_Course1":[],"stu_Course2":[],"stu_Course3":[],"stu_Course4":[],"stu_Course5":[]}';
+        $this->assertEquals($expected, get_students("2",$this->myqli_link));
+
+        //TODO import actual database for more robust testing
     }
 }
 ?>
