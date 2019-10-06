@@ -61,7 +61,7 @@ class generic_studentsTest extends PHPUnit_Framework_TestCase
     {
         include 'get_students.php';
         // Test on empty database
-        $expected = '"Courses":[null,null,null,null,null],"Course1":[],"Course2":[],"Course3":[],"Course4":[],"Course5":[],"stu_Course1":[],"stu_Course2":[],"stu_Course3":[],"stu_Course4":[],"stu_Course5":[]}';
+        $expected = '{"Courses":[null,null,null,null,null],"Course1":[],"Course2":[],"Course3":[],"Course4":[],"Course5":[],"stu_Course1":[],"stu_Course2":[],"stu_Course3":[],"stu_Course4":[],"stu_Course5":[]}';
         $this->assertEquals($expected, get_students("2",$this->myqli_link));
 
         //TODO import actual database for more robust testing
