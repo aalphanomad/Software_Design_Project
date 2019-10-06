@@ -1,6 +1,6 @@
 <?php
 
-class generic_selectTest extends PHPUnit_Framework_TestCase
+class generic_studentsTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PDO
@@ -57,7 +57,7 @@ class generic_selectTest extends PHPUnit_Framework_TestCase
         $this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
-    public function testGeneric_select()
+    public function testGet_students()
     {
         include 'gets_students.php';
         $expected = '{"Courses":["COMS2013","COMS1018",null,null,null],"Course1":["DUMMY","Omer","Juno Reactor","Mayur","Innocent","kjeljlq"],"Course2":["oupa","Lecturer"],"Course3":[],"Course4":[],"Course5":[],"stu_Course1":["-1","011852","10000090","101","11","83092"],"stu_Course2":["12345","2"],"stu_Course3":[],"stu_Course4":[],"stu_Course5":[]} ';
