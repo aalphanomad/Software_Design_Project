@@ -90,13 +90,20 @@ function get_students($student_num, $link)
     return json_encode($data);
 }
 
+try
+{
+    $username = "s1601745";
+    $password = "s1601745";
+    $database = "d1601745";
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
+    
+    $student_num = $_REQUEST["student_num"];
+    
+    print get_students($student_num, $link);
+}
+catch(Exception $e)
+{
+    echo 0;
+}
 
-$username = "s1601745";
-$password = "s1601745";
-$database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
-
-$student_num = $_REQUEST["student_num"];
-
-print get_students($student_num, $link);
 ?>
