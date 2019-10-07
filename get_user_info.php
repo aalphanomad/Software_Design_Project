@@ -16,7 +16,7 @@ function get_user_info($student_num, $link)
     //return $result1;
 }
 
-
+// @codeCoverageIgnoreStart
 try {
     $username = "s1601745";
     $password = "s1601745";	
@@ -31,7 +31,7 @@ try {
 } catch (Exception $e) {
     echo 0;
 }
-
+// @codeCoverageIgnoreEnd
 
 ?>
 

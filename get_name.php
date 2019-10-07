@@ -8,6 +8,7 @@ function get_name($student_num, $link)
     return mysqli_fetch_assoc($output["result"])["NAME"];
 }
 
+// @codeCoverageIgnoreStart
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
@@ -21,6 +22,6 @@ try {
 } catch (Exception $e) {
     echo 0;
 }
-
+// @codeCoverageIgnoreEnd
 ?>
 

@@ -15,7 +15,7 @@ function generic_select($table, $target, $filter, $value, $link)
 	return $encoded;
 }
 
-
+// @codeCoverageIgnoreStart
 try {
 	$username = "s1601745";
 	$password = "s1601745";
@@ -31,7 +31,7 @@ try {
 } catch (Exception $e) {
 	echo 0;
 }
-
+// @codeCoverageIgnoreEnd
 ?>
 
 

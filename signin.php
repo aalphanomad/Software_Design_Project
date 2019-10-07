@@ -29,6 +29,7 @@ function signin($student_num, $password, $link)
 	}
 }
 
+// @codeCoverageIgnoreStart
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
@@ -46,5 +47,6 @@ catch (Exception $e)
 {
 	echo 0;
 }
+// @codeCoverageIgnoreEnd
 
 ?>

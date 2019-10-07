@@ -90,6 +90,7 @@ function get_students($student_num, $link)
     return json_encode($data);
 }
 
+// @codeCoverageIgnoreStart
 try
 {
     $username = "s1601745";
@@ -105,5 +106,5 @@ catch(Exception $e)
 {
     echo 0;
 }
-
+// @codeCoverageIgnoreEnd
 ?>
