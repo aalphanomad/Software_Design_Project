@@ -43,7 +43,7 @@ class bookingTest extends PHPUnit_Framework_TestCase
     {
         include 'booking.php';
         // Test on empty database
-        $expected = json_encode("0");
+        $expected = '{"result":"0"}';
         $this->assertEquals($expected, booking("Tutor","1","25 Mar 2019","COMS2002","fjff","0","09:15:00","12:15:00","Tutoring",$this->myqli_link));
 
         //TODO import actual database for more robust testing
