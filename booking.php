@@ -1,19 +1,6 @@
 
 <?php
-$username = "s1601745";
-$password = "s1601745";
-$database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
-$name = $_REQUEST["name"];
-$student_num = $_REQUEST["student_num"];
-$date = $_REQUEST["date"];
-$course = $_REQUEST["course"];
-$venue = $_REQUEST["venue"];
-$valid = $_REQUEST["valid"];
-$chkStartTime = $_REQUEST["chkStartTime"];
-$chkEndTime = $_REQUEST["chkEndTime"];
-$activity = $_REQUEST["activity"];
 
 function booking($name,$student_num, $date,$course, $venue, $valid, $chkStartTime, $chkEndTime, $activity, $link)
 {
@@ -62,7 +49,29 @@ function booking($name,$student_num, $date,$course, $venue, $valid, $chkStartTim
     return json_encode($output);
 }
 
+try
+{
+    $username = "s1601745";
+    $password = "s1601745";
+    $database = "d1601745";
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
+    
+    $name = $_REQUEST["name"];
+    $student_num = $_REQUEST["student_num"];
+    $date = $_REQUEST["date"];
+    $course = $_REQUEST["course"];
+    $venue = $_REQUEST["venue"];
+    $valid = $_REQUEST["valid"];
+    $chkStartTime = $_REQUEST["chkStartTime"];
+    $chkEndTime = $_REQUEST["chkEndTime"];
+    $activity = $_REQUEST["activity"];
+    
+    print booking($name,$student_num, $date,$course, $venue, $valid, $chkStartTime, $chkEndTime, $activity, $link);
+}
+catch(Exception $e)
+{
+    echo 0;
+}
 
-print booking($name,$student_num, $date,$course, $venue, $valid, $chkStartTime, $chkEndTime, $activity, $link);
 ?>
 
