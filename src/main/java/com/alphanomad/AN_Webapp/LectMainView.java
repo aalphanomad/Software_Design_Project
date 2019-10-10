@@ -18,11 +18,11 @@ import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ImageRenderer;
 
 public class LectMainView extends VerticalLayout implements View
-{
+{	//A JsonObject to stre the return alue from the database
 	JsonObject retrieve;
 	int SelIndex;
 	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
-
+//Filters the data received from the database as it currently contains [],{},and inverted commas
 	public static ArrayList<String> Filter_Info(String Dirty_Info)
 	{
 		ArrayList<String> final_Array = new ArrayList<String>();
@@ -61,13 +61,14 @@ public class LectMainView extends VerticalLayout implements View
 		{
 			getUI().getNavigator().navigateTo("login");
 		} 
-		
+		//Get the details of the currently logged in lecturer
 		UserInfo lect_info = ((MyUI) getUI()).get_user_info();
 		removeAllComponents();
 		DBHelper dbh = new DBHelper();
 		String[] params1 = { "name", "student_num" };
 		String[] values1 = { lect_info.name, lect_info.student_num };
 		String ans1 = dbh.php_request("get_courses", params1, values1);
+		//The code above retrieves the courses that the lecturer is responsible fore and in turn, the tutors of those courses as well
 		retrieve = dbh.parse_json_string(ans1);
 		ans1 = retrieve.get("result").getAsJsonArray().toString();
 		ArrayList<String> myCourses = ClaimForm.GetCourses(ans1);
@@ -107,24 +108,14 @@ public class LectMainView extends VerticalLayout implements View
 		grid.getColumn("image").setRenderer(new ImageRenderer());
 		grid.setColumnOrder("image", "name", "student_num");
 		grid.setWidth("100%");
-		// grid.setWidthUndefined();
-		/*
-		 * grid.addComponentColumn(probe->{ Image image=new Image("",new
-		 * ExternalResource(
-		 * "https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=250"));
-		 * image.setWidth(100, Unit.PIXELS); image.setHeight(100, Unit.PIXELS); return
-		 * image;
-		 * 
-		 * 
-		 * }).setCaption("Profile Picture").setId("Profile Picture");
-		 */
+		
+		 
 		grid.setRowHeight(100);
 		grid.setHeaderRowHeight(30);
 
 		grid.addColumn(unused -> "More Info", new ButtonRenderer<Object>(event ->
 		{
-			// UserInfo test = new UserInfo("1");
-			// System.out.println("LECTVIEW: " + test.student_num);
+			//Allows us to view the selected tutors profile
 
 			new ProfileView((MyUI) getUI(), (((TutorItem) event.getItem()).getStudent_num()));
 			getUI().getNavigator().navigateTo("profile");
@@ -143,6 +134,7 @@ public class LectMainView extends VerticalLayout implements View
 
 			Tutor.clear();
 			SelIndex = myCourses.indexOf(combobox.getValue());
+			//The switch statement basically determines for which course that the lecturer tutors shuld we display it's tutors
 			switch (SelIndex)
 			{
 			case 0:
@@ -189,12 +181,6 @@ public class LectMainView extends VerticalLayout implements View
 		});
 
 		addComponent(logout);
-//Sort out empty arrays!!!!!!!!!!!!!!!!!!!!!1
-
-		// ArrayList<String> CCourse5=Filter_Info(Course5);
-		// Notification.show(CCourse5.toString());
-
-//Notification.show(Final_Courses.toString());
 
 	}
 

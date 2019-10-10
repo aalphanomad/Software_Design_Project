@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.vaadin.addons.ComboBoxMultiselect;
@@ -95,7 +96,6 @@ public class ProfileView extends VerticalLayout implements View {
 		try {
 			courses_obj = dbh.parse_json_string_arr(courses);
 		} catch (Exception e) {
-			System.out.println("HERE\n HERE\n HERE\n");
 			System.out.println(e);
 		}
 
@@ -369,6 +369,7 @@ public class ProfileView extends VerticalLayout implements View {
 					System.out.println(data.get(1).getAsString());
 
 					CourseItem course = new CourseItem(data.get(0).getAsString(), data.get(1).getAsString());
+					Notification.show(data.get(0).getAsString()+data.get(1).getAsString());
 					course_items.add(course);
 				} catch (UnsupportedOperationException e)
 				{

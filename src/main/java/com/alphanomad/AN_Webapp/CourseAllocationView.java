@@ -49,7 +49,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 			Notification.show(selected_course_allocs.size() + " items selected");
 		});
 		g.setColumnOrder("id","name","stud_num","role", "course", "confirmed");
-		//g.sort("id",SortDirection.DESCENDING);
+		g.sort("id",SortDirection.DESCENDING);
 		addComponent(g);
 
 		Button confirm_btn = new Button("Confirm selected applications", event ->

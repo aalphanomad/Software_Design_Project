@@ -74,10 +74,11 @@ public class MyUI extends UI
 		navigator.addView(TUTORLISTVIEW, new TutorListView());
 		navigator.addView(COURSELISTVIEW, new CourseListView());
 		navigator.addView(COURSEALLOCVIEW, new CourseAllocationView());
+
+		
 		
 		Responsive.makeResponsive(this);
 		navigator.navigateTo(LOGINVIEW);
-		System.out.println("regstration complete");
 		
 		if (!logged_in)
 		{
