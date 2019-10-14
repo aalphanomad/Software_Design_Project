@@ -1,6 +1,6 @@
 <?php
 
-class bookingTest extends PHPUnit_Framework_TestCase
+class createTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PDO
