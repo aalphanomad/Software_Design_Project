@@ -25,7 +25,7 @@ before_script:
   - export CI_BUILD_NUMBER="$TRAVIS_BUILD_NUMBER"
   - export CI_PULL_REQUEST="$TRAVIS_PULL_REQUEST"
   - export CI_BRANCH="$TRAVIS_BRANCH"
-  - mysql -u root -p "" test_db < Tests/d1601745.sql
+  - mysql -u root test_db < Tests/d1601745.sql
 
 script: phpunit --configuration phpunit_mysql.xml --coverage-clover ./tests/logs/clover.xml
 
