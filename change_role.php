@@ -18,15 +18,17 @@ function change_role($student_num, $role, $link)
     
     return json_encode($result);
 }
+
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
+// @codeCoverageIgnoreStart
 $link = mysqli_connect("127.0.0.1", $username, $password,$database);
 
 $output=array();
 $student_num=$_REQUEST["student_num"];
 $role=$_REQUEST["role"];
-
+// @codeCoverageIgnoreStart
 
 echo change_role($student_num, $role, $link);
 mysqli_close($link);

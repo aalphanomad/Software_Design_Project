@@ -55,7 +55,7 @@ try
     $password = "s1601745";
     $database = "d1601745";
     $link = mysqli_connect("127.0.0.1", $username, $password, $database);
-    
+    // @codeCoverageIgnoreStart
     $name = $_REQUEST["name"];
     $student_num = $_REQUEST["student_num"];
     $date = $_REQUEST["date"];
@@ -67,6 +67,7 @@ try
     $activity = $_REQUEST["activity"];
     
     print booking($name,$student_num, $date,$course, $venue, $valid, $chkStartTime, $chkEndTime, $activity, $link);
+    // @codeCoverageIgnoreEnd
 }
 catch(Exception $e)
 {
