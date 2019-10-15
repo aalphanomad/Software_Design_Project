@@ -14,7 +14,7 @@ class get_nameTest extends PHPUnit_Framework_TestCase
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //Create the USER_INFORMATION table
-        $this->pdo->query(" 	CREATE TABLE `USER_INFORMATION` (
+        $this->pdo->query(" 	CREATE TABLE IF NOT EXISTS `USER_INFORMATION` (
             `NAME` varchar(50) DEFAULT NULL,
             `STUDENT_NUM` varchar(10) NOT NULL,
             `EMAIL_ADDRESS` varchar(50) DEFAULT NULL,

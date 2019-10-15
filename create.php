@@ -53,30 +53,35 @@ $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
 // @codeCoverageIgnoreStart
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
+try {
+        $link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
 
-$name = $_REQUEST["name"];
-$student_num = $_REQUEST["student_num"];
-$email = $_REQUEST["email"];
-$password = $_REQUEST["password"];
-if (isset($_REQUEST["course1"])) {
-        $course1 = $_REQUEST["course1"];
+        $name = $_REQUEST["name"];
+        $student_num = $_REQUEST["student_num"];
+        $email = $_REQUEST["email"];
+        $password = $_REQUEST["password"];
+        if (isset($_REQUEST["course1"])) {
+                $course1 = $_REQUEST["course1"];
+        }
+        if (isset($_REQUEST["course2"])) {
+                $course2 = $_REQUEST["course2"];
+        }
+        if (isset($_REQUEST["course3"])) {
+                $course3 = $_REQUEST["course3"];
+        }
+        if (isset($_REQUEST["course4"])) {
+                $course4 = $_REQUEST["course4"];
+        }
+        if (isset($_REQUEST["course5"])) {
+                $course5 = $_REQUEST["course5"];
+        }
+        $role = $_REQUEST["role"];
+        echo create($student_num,$name,$course1, $course2, $course3, $course4, $course5, $role, $link);
+        mysqli_close($link);
+} catch (Exception $e) {
+        echo "failed to make link in create.php";
 }
-if (isset($_REQUEST["course2"])) {
-        $course2 = $_REQUEST["course2"];
-}
-if (isset($_REQUEST["course3"])) {
-        $course3 = $_REQUEST["course3"];
-}
-if (isset($_REQUEST["course4"])) {
-        $course4 = $_REQUEST["course4"];
-}
-if (isset($_REQUEST["course5"])) {
-        $course5 = $_REQUEST["course5"];
-}
-$role = $_REQUEST["role"];
-echo create($student_num,$name,$course1, $course2, $course3, $course4, $course5, $role, $link);
-mysqli_close($link);
+
 // @codeCoverageIgnoreEnd
 ?>
