@@ -27,7 +27,7 @@ function fetching($name, $student_num, $link)
             $output1[]=$row;
             }
         }
-    } catch (\Throwable $th) {
+    } catch (Exception $e) {
         //throw $th;
     
     
