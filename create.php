@@ -3,7 +3,7 @@
 
 
 
-function create($student_num, $name, $course1, $course2, $course3, $course4, $course5, $role, $link)
+function create($student_num, $name, $email, $password, $course1, $course2, $course3, $course4, $course5, $role, $link)
 {
         $output = array();
         $test = mysqli_query($link, "SELECT * FROM USER_INFORMATION WHERE STUDENT_NUM='$student_num'");
@@ -77,7 +77,7 @@ try {
                 $course5 = $_REQUEST["course5"];
         }
         $role = $_REQUEST["role"];
-        echo create($student_num,$name,$course1, $course2, $course3, $course4, $course5, $role, $link);
+        echo create($student_num,$name,$email,$password,$course1, $course2, $course3, $course4, $course5, $role, $link);
         mysqli_close($link);
 } catch (Exception $e) {
         echo "failed to make link in create.php";
