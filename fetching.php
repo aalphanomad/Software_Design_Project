@@ -27,8 +27,6 @@ function fetching($name, $student_num, $link)
             $output1[]=$row;
             }
         }
-    } catch (Exception $e) {
-        //throw $th;
     
     
     
@@ -54,7 +52,7 @@ function fetching($name, $student_num, $link)
     while($row=mysqli_fetch_assoc($result7)){
     $output7[]=$row;
     }
-    }
+    
     
     $data["dates"]=$output1;
     $data["courses"]=$output2;
@@ -63,6 +61,9 @@ function fetching($name, $student_num, $link)
     $data["valid"]=$output5;
     $data["venue"]=$output6;
     $data["activity"]=$output7;
+    } catch (Exception $e) {
+        return "0"
+    }
     return json_encode($data);
 }
 
