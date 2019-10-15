@@ -130,32 +130,32 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 		DBHelper dbh1 = new DBHelper();
 		String[] params1 = { "student_num", "password","role" };
 
-		Button validate = new Button("Validate", event ->
-		{
-			String[] values1 = { LecturerUsername.getValue(), LecturerPassword.getValue(),"1" };
-			ans1 = dbh1.php_request("is_lecturer", params1, values1);
-
-			String[] part1 = ans1.split(":");
-			String FinalAns = part1[1].substring(1, 2);
-
-			if (FinalAns.equals("0"))
-			{
-				String[] params2 = { "name", "student_num", "course", "date", "venue" };
-				String[] values2 = { name, studnum, course, date, venue };
-				ans2 = dbh1.php_request("verify", params2, values2);
-				Notification.show("Claim Has Been Verified Successfully");
-				getUI().getNavigator().navigateTo("tutormain");
-
-			}
-
-			else
-			{
-				LecturerUsername.setComponentError(new UserError("Only Lecturers are permitted to validate."));
-				LecturerPassword.setComponentError(new UserError("Only Lecturers are permitted to validate."));
-
-			}
-		});
-		addComponent(validate);
+//		Button validate = new Button("Validate", event ->
+//		{
+//			String[] values1 = { LecturerUsername.getValue(), LecturerPassword.getValue(),"1" };
+//			ans1 = dbh1.php_request("is_lecturer", params1, values1);
+//
+//			String[] part1 = ans1.split(":");
+//			String FinalAns = part1[1].substring(1, 2);
+//
+//			if (FinalAns.equals("0"))
+//			{
+//				String[] params2 = { "name", "student_num", "course", "date", "venue" };
+//				String[] values2 = { name, studnum, course, date, venue };
+//				ans2 = dbh1.php_request("verify", params2, values2);
+//				Notification.show("Claim Has Been Verified Successfully");
+//				getUI().getNavigator().navigateTo("tutormain");
+//
+//			}
+//
+//			else
+//			{
+//				LecturerUsername.setComponentError(new UserError("Only Lecturers are permitted to validate."));
+//				LecturerPassword.setComponentError(new UserError("Only Lecturers are permitted to validate."));
+//
+//			}
+//		});
+		//addComponent(validate);
 
 		/*
 		 * for(int i=0; i<array.length; i++) { System.out.println(array[i]); }

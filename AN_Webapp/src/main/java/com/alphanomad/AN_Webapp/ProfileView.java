@@ -76,48 +76,7 @@ public class ProfileView extends VerticalLayout implements View {
 		if (ui.get_user_info().get_role().equals("0")) {
 			this.user = ui.get_user_info();
 		}
-
-
-		stud_num = user.get_student_num();
-		String role = user.get_role();
-
-		DBHelper dbh = new DBHelper();
-
-		String[] params = { "student_num" };
-		String[] values = { stud_num };
-		String name = dbh.php_request("get_name", params, values);
-		System.out.println(name + " " + stud_num);
-
-		String[] parameters = { "table", "target", "filter", "value" };
-		String[] values2 = { "USER_COURSE_ALLOC", "COURSE,CONFIRMED", "STUDENT_NUM", stud_num };
-		String courses = dbh.php_request("generic_select", parameters, values2);
-		JsonArray courses_obj = new JsonArray();
-		try {
-			courses_obj = dbh.parse_json_string_arr(courses);
-		} catch (Exception e) {
-			System.out.println("HERE\n HERE\n HERE\n");
-			System.out.println(e);
-		}
-
-		Button home_button = new Button("go to main view", btn_event -> {
-			if (((MyUI) (getUI())).get_user_info().get_role().equals("1")) {
-				getUI().getNavigator().navigateTo("lectmain");
-			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("2")) {
-				getUI().getNavigator().navigateTo("adminmain");
-			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("0")) {
-				getUI().getNavigator().navigateTo("tutormain");
-			} else {
-				// this should never happen
-				// but it's always good to be safe
-				getUI().getNavigator().navigateTo("login");
-			}
-
-		});
-
-		addComponent(make_user_info_panel(name, stud_num));
-		addComponent(make_courses_panel(courses_obj));
-		addComponent(home_button);
-	}*/
+		*/
 
 	/**
 	 * simple function to make a view that shows the users email and name
@@ -239,68 +198,8 @@ public class ProfileView extends VerticalLayout implements View {
 		course_combo_box.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5");
 		course_combo_box.setItems(list);
 		course_combo_box.setVisible(false);
-		try {
-			for (int x = 0; x < courses_obj.size(); x++) {
-				try {
-					String course_name = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
-					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
-					course_combo_box.select(course_name);
-					if (course_conf.equals("1")) {
-						courses_inner.addComponent(new Label(course_name + "\n"));
-					} else {
-						courses_inner.addComponent(new Label(course_name + " (Pending confirmation) \n"));
-					}
 
-				} catch (UnsupportedOperationException e) {
-					// System.out.println("HERE\n HERE\n HERE\n");
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			courses_inner.addComponent(new Label("There's nothing here... \n"));
-		}
-
-		
-
-		if (test.role.equals("0")) {
-			Button change_courses = new Button("Change courses", event -> course_combo_box.setVisible(true));
-			change_courses.addClickListener(event -> change_courses.setVisible(false));
-			Button done = new Button("Done", event -> change_courses.setVisible(true));
-			done.addClickListener(event -> done.setVisible(false));
-			done.addClickListener(event -> course_combo_box.setVisible(false));
-			done.addClickListener(event -> {
-				DBHelper dbh = new DBHelper();
-				String[] params = {"student_num","course"}; 
-				for(String item : list)
-				{
-					String[] values = {user.get_student_num(),item};
-					if(course_combo_box.getSelectedItems().contains(item))
-					{
-						dbh.php_request("add_course", params, values);
-					}
-					else
-					{
-						dbh.php_request("remove_course", params, values);
-					}
-					
-				}
-				
-			});
-			done.setVisible(false);
-
-			change_courses.addClickListener(event -> done.setVisible(true));
-
-			courses_inner.addComponent(change_courses);
-			courses_inner.addComponent(course_combo_box);
-			courses_inner.addComponent(done);
-		}
-
-		panel.setCaption("Courses");
-		panel.setContent(courses_inner);
-
-		return panel;
-	}*/
+		*/
 
 	public boolean handle_course_change(ArrayList<String> courses, String stud_num) {
 //		boolean result = true;
@@ -360,28 +259,6 @@ public class ProfileView extends VerticalLayout implements View {
 		}
 		ArrayList<CourseItem> course_items = new ArrayList<CourseItem>();
 
-		try
-		{
-			for (int x = 0; x < course_arr.size(); x++)
-			{
-				JsonArray data = (JsonArray) course_arr.getAsJsonArray().get(x);
-				try
-				{
-					System.out.println(data.get(0).getAsString());
-					System.out.println(data.get(1).getAsString());
-
-					CourseItem course = new CourseItem(data.get(0).getAsString(), data.get(1).getAsString());
-					course_items.add(course);
-				} catch (UnsupportedOperationException e)
-				{
-					System.out.println(e);
-				}
-			}
-		} catch (Exception e)
-		{
-			System.out.println(e);
-		}
-		return course_items;
 	}*/
 }
 

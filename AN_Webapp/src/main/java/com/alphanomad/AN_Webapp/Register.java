@@ -104,59 +104,7 @@ public class Register extends VerticalLayout implements View
 //			values[1] = StudentNumber.getValue().toString();
 //			values[2] = email;
 //			values[3] = Password.getValue().toString();
-//
-//			for (int i = 4; i < 4 + DummyCourses.size(); i++)
-//			{
-//				if(i!=4)
-//				values[i] = DummyCourses.get(i - 4).substring(1);
-//				else {
-//					values[i] = DummyCourses.get(i - 4);
-//
-//					
-//				}
-//			}
-//			values[3 + DummyCourses.size() + 1] = "0";
-//			addComponent(new Label(Arrays.toString(values)));
-//
-//			if (DummyCourses.size() == 1)
-//			{
-//				String[] params = { "name", "student_num", "email", "password", "course1", "role" };
-//				DBHelper dbh = new DBHelper();
-//				String ans = dbh.php_request("create", params, values);
-//				Notification.show(ans);
-//
-//			} else if (DummyCourses.size() == 2)
-//			{
-//				String[] params = { "name", "student_num", "email", "password", "course1", "course2", "role" };
-//				DBHelper dbh = new DBHelper();
-//				String ans = dbh.php_request("create", params, values);
-//				Notification.show(ans);
-//
-//			} else if (DummyCourses.size() == 3)
-//			{
-//				String[] params = { "name", "student_num", "email", "password", "course1", "course2", "course3",
-//						"role" };
-//				DBHelper dbh = new DBHelper();
-//				String ans = dbh.php_request("create", params, values);
-//				Notification.show(ans);
-//
-//			} else if (DummyCourses.size() == 4)
-//			{
-//				String[] params = { "name", "student_num", "email", "password", "course1", "course2", "course3",
-//						"course4", "role" };
-//				DBHelper dbh = new DBHelper();
-//				String ans = dbh.php_request("create", params, values);
-//				Notification.show(ans);
-//
-//			} else
-//			{
-//				String[] params = { "name", "student_num", "email", "password", "course1", "course2", "course3",
-//						"course4", "course5", "role" };
-//				DBHelper dbh = new DBHelper();
-//				String ans = dbh.php_request("create", params, values);
-//				Notification.show(ans);
-//
-//			}
+
 		}
 
 	}

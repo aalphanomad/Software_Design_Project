@@ -85,81 +85,11 @@ public class LoginView extends VerticalLayout implements View
 
 	}
 
-	/*@Override
-	public void enter(ViewChangeEvent vc_event)
-	{
-		removeAllComponents();
-		((MyUI)getUI()).logged_in = false;
-		((MyUI) getUI()).set_user_info(new UserInfo("", "", ""));
-		setSizeFull();
-		addStyleName("image-backgound");
-		Panel panel = new Panel();
-		panel.setHeight("500px");
-		panel.setWidthUndefined();
-		addComponent(panel);
-		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 
-		FormLayout content = new FormLayout();
-		content.addStyleName("Template");
-		content.setMargin(true);
-		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
-				+ "       <b><u>Login</u></b> " + "      </p>", ContentMode.HTML);
-		content.addComponent(test);
-
-		Username = new TextField();
-		Username.setIcon(VaadinIcons.USER);
-		Username.setCaption("Username");
-		Username.setPlaceholder("Username");
-		content.addComponent(Username);
-		Username.focus();
-
-		Password = new PasswordField();
-		Password.setCaption("Password");
-		Password.setIcon(VaadinIcons.PASSWORD);
-		Password.setPlaceholder("Password");
-		content.addComponent(Password);
-
-		HorizontalLayout buttons = new HorizontalLayout();
-
-		Button button1 = new Button("Login", event -> handle_login(Username.getValue(), Password.getValue()));
-		button1.setClickShortcut(KeyCode.ENTER);
-		Button button2 = new Button("Register", event -> getUI().getNavigator().navigateTo("register"));
-		buttons.addComponent(button1);
-		buttons.addComponent(button2);
-		content.addComponent(buttons);
-		buttons.setComponentAlignment(button1, Alignment.BOTTOM_LEFT);
-		buttons.setComponentAlignment(button2, Alignment.BOTTOM_RIGHT);
-		content.setComponentAlignment(test, Alignment.MIDDLE_CENTER);
-		content.setComponentAlignment(Username, Alignment.MIDDLE_CENTER);
-		content.setComponentAlignment(Password, Alignment.MIDDLE_CENTER);
-		content.setComponentAlignment(buttons, Alignment.BOTTOM_LEFT);
-
-		panel.setContent(content);
-	}*/
 
 	public void handle_login(String username, String password)
 	{
-		if (TheLogin(username, password))
-		{
-			if (login_obj.get("role").getAsString().equals("0"))
-			{
-				getUI().getNavigator().navigateTo("tutormain");
-			} else if (login_obj.get("role").getAsString().equals("1"))
-			{
-				getUI().getNavigator().navigateTo("lectmain");
 
-			} else if (login_obj.get("role").getAsString().equals("2")
-					|| login_obj.get("role").getAsString().equals("3"))
-			{
-				getUI().getNavigator().navigateTo("adminmain");
-
-			}
-
-		} else
-		{
-			Password.setComponentError(new UserError("Incorrect Username/Password. Please Try Again."));
-			Notification.show("Login Failed");
-		}
 
 	}
 
