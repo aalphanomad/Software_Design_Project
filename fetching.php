@@ -62,7 +62,7 @@ function fetching($name, $student_num, $link)
     $data["venue"]=$output6;
     $data["activity"]=$output7;
     } catch (Exception $e) {
-        return "0"
+        return "0";
     }
     return json_encode($data);
 }
