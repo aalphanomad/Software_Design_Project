@@ -49,7 +49,7 @@ class createTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, create("rey","621","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015",NULL,NULL,0,$this->myqli_link));
         $this->assertEquals($expected, create("rey","622","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015","COMS2013",NULL,0,$this->myqli_link));
         $this->assertEquals($expected, create("rey","623","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015","COMS2013","COMS2014",0,$this->myqli_link));
-        $expected = '{"result":"You didn\'t send the required values"}';
+        $expected = '{"result":"1"}';
         $this->assertEquals($expected, create("rey","624","619@students.wits.ac.za","test",NULL,NULL,NULL,NULL,NULL,0,$this->myqli_link));
     }
 }
