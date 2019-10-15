@@ -44,6 +44,7 @@ class createTest extends PHPUnit_Framework_TestCase
         // Test on empty database
         $expected = '{"result":"0"}';
         $this->assertEquals($expected, create("rey","619","619@students.wits.ac.za","test","COMS3007",NULL,NULL,NULL,NULL,0,$this->myqli_link));
+        $expected = '{"result":"1"}';
         $this->assertEquals($expected, create("rey","620","619@students.wits.ac.za","test","COMS3007","COMS2002",NULL,NULL,NULL,0,$this->myqli_link));
         $this->assertEquals($expected, create("rey","621","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015",NULL,NULL,0,$this->myqli_link));
         $this->assertEquals($expected, create("rey","622","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015","COMS2013",NULL,0,$this->myqli_link));
