@@ -1,6 +1,7 @@
 <?php
 function errors($name, $student_num, $date, $chkStartTime, $chkEndTime, $link)
 {
+    // @codeCoverageIgnoreStart
     $errors = 0;
     //$result1=mysqli_query($link,"SELECT *  FROM BOOKINGS  WHERE NAME='$name' and  STUDENT_NO='$student_no' and DATE='$date' and START_TIME='$chkStartTime' and END_TIME='$
     $result1 = mysqli_query($link, "SELECT * FROM BOOKINGS WHERE NAME='$name' and STUDENT_NUM='$student_num' and DATE='$date'");
@@ -50,5 +51,6 @@ $date = $_REQUEST["date"];
 $chkStartTime = $_REQUEST["chkStartTime"];
 $chkEndTime = $_REQUEST["chkEndTime"];
 echo errors($name, $student_num, $date, $chkStartTime, $chkEndTime, $link);
+// @codeCoverageIgnoreEnd
 ?>
 
