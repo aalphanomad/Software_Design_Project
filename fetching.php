@@ -20,10 +20,17 @@ function fetching($name, $student_num, $link)
     $result6=mysqli_query($link,"SELECT VENUE FROM BOOKINGS  WHERE NAME='$name' and  STUDENT_NUM='$student_num'");
     $result7=mysqli_query($link,"SELECT ACTIVITY FROM BOOKINGS  WHERE NAME='$name' and  STUDENT_NUM='$student_num'");
     
-    if(mysqli_num_rows($result1)>0){
-    while($row=mysqli_fetch_assoc($result1)){
-    $output1[]=$row;
-    }
+    try {
+        if(mysqli_num_rows($result1)>0)
+        {
+            while($row=mysqli_fetch_assoc($result1)){
+            $output1[]=$row;
+            }
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    
+    
     
     while($row=mysqli_fetch_assoc($result2)){
     $output2[]=$row;
