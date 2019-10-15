@@ -1,11 +1,5 @@
 <?php
-$username = "s1601745";
-$password = "s1601745";
-$database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password,$database);
 
-$name=$_REQUEST["name"];
-$student_num=$_REQUEST["student_num"];
 
 function fetching($name, $student_num, $link)
 {
@@ -65,6 +59,18 @@ function fetching($name, $student_num, $link)
     return json_encode($data);
 }
 
-print fetching($name, $student_num, $link);
+$username = "s1601745";
+$password = "s1601745";
+$database = "d1601745";
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password,$database);
+
+    $name=$_REQUEST["name"];
+    $student_num=$_REQUEST["student_num"];
+    print fetching($name, $student_num, $link);
+} catch (Exception $e) {
+    echo "failed to create link in fetching.php";
+}
+
 //$output["result"]=(string)$answer;
 //echo json_encode($output);
