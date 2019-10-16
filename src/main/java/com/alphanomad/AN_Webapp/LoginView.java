@@ -27,7 +27,8 @@ import com.vaadin.ui.Window;
 
 @Theme("mytheme")
 public class LoginView extends VerticalLayout implements View
-{	//Declares the Components that need to be accessed globally
+{
+	//Declares the Components that need to be accessed globally
 	public TextField Username;
 	public PasswordField Password;
 	public MyUI parent_ui;
@@ -42,7 +43,8 @@ public class LoginView extends VerticalLayout implements View
 		String[] params = { "student_num", "password" };
 		String[] values = { student_num, password };
 		DBHelper dbh = new DBHelper();
-		//Below,  we perform validation to ensure that the necessary data is entered  
+		//Below,  we perform validation to ensure that the necessary data is entered 
+		
 		if (Username.isEmpty())
 		{
 			Username.setComponentError(new UserError("Please Enter your Username"));
@@ -53,11 +55,13 @@ public class LoginView extends VerticalLayout implements View
 			return false;
 
 		} else
-		{	//We attempt to login here
+		{
+			//We attempt to login here
 			String ans = dbh.php_request("signin", params, values);
 
 			login_obj = dbh.parse_json_string(ans);
 			//If the login is successful, we set the details of the newly logged in user and proceed to the relavant home screen
+			
 			if (login_obj.get("result").getAsString().equals("1"))
 			{
 
@@ -65,11 +69,12 @@ public class LoginView extends VerticalLayout implements View
 						login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
 				
 				((MyUI)getUI()).logged_in = true;
-		
+				
 				return true;
 			} else
 			{
-				
+				// Password.setComponentError(new UserError("Incorrect Username/Password. Please
+				// Try Again."));
 				return false;
 
 			}
@@ -86,16 +91,19 @@ public class LoginView extends VerticalLayout implements View
 	public void enter(ViewChangeEvent vc_event)
 	{
 		removeAllComponents();
+		
 		((MyUI)getUI()).logged_in = false;
 		((MyUI) getUI()).set_user_info(new UserInfo("", "", ""));
 		setSizeFull();
 		addStyleName("image-backgound");
+		
 		//The panel is where all the useful components such as the TextFields and Buttons will be added in order to improve the appearance
 		Panel panel = new Panel();
 		panel.setHeight("500px");
 		panel.setWidthUndefined();
 		addComponent(panel);
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+
 		//Adds a login label
 		FormLayout content = new FormLayout();
 		content.addStyleName("Template");
@@ -103,7 +111,8 @@ public class LoginView extends VerticalLayout implements View
 		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
 				+ "       <b><u>Login</u></b> " + "      </p>", ContentMode.HTML);
 		content.addComponent(test);
-//Creates the field for the user to enter their student number
+
+		//Creates the field for the user to enter their student number
 		Username = new TextField();
 		Username.setIcon(VaadinIcons.USER);
 		Username.setCaption("Username");
@@ -119,14 +128,17 @@ public class LoginView extends VerticalLayout implements View
 		content.addComponent(Password);
 
 		HorizontalLayout buttons = new HorizontalLayout();
-//Creates the login and register button
+
+		//Creates the login and register button
 		Button button1 = new Button("Login", event -> handle_login(Username.getValue(), Password.getValue()));
 		button1.setClickShortcut(KeyCode.ENTER);
 		Button button2 = new Button("Register", event -> getUI().getNavigator().navigateTo("register"));
 		//Below aligns the components o the panel
+		
 		buttons.addComponent(button1);
 		buttons.addComponent(button2);
 		content.addComponent(buttons);
+		
 		buttons.setComponentAlignment(button1, Alignment.BOTTOM_LEFT);
 		buttons.setComponentAlignment(button2, Alignment.BOTTOM_RIGHT);
 		content.setComponentAlignment(test, Alignment.MIDDLE_CENTER);
@@ -136,7 +148,8 @@ public class LoginView extends VerticalLayout implements View
 
 		panel.setContent(content);
 	}
-//	This function ensures that the user is navigated to the correct home screen based on their role
+
+	//This function ensures that the user is navigated to the correct home screen based on their role
 	public void handle_login(String username, String password)
 	{
 		if (TheLogin(username, password))
@@ -149,9 +162,15 @@ public class LoginView extends VerticalLayout implements View
 				getUI().getNavigator().navigateTo("lectmain");
 
 			} else if (login_obj.get("role").getAsString().equals("2")
-					|| login_obj.get("role").getAsString().equals("3"))
+					|| login_obj.get("role").getAsString().equals("4"))
 			{
 				getUI().getNavigator().navigateTo("adminmain");
+
+			}
+			
+			else if (login_obj.get("role").getAsString().equals("3"))
+			{
+				getUI().getNavigator().navigateTo("chooserole");
 
 			}
 

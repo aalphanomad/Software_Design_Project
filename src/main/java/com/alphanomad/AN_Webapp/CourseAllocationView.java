@@ -117,6 +117,9 @@ public class CourseAllocationView extends VerticalLayout implements View
 			g.setItems(get_all_course_allocs());
 
 		});
+		
+		confirm_btn.setStyleName("test");
+		deny_btn.setStyleName("another");
 
 		HorizontalLayout conf_deny_row = new HorizontalLayout();
 		HorizontalLayout filter_row = new HorizontalLayout();

@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 
-
 import org.apache.commons.lang.WordUtils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.vaadin.data.Binder;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
@@ -24,8 +21,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.components.grid.EditorImpl;
-import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ImageRenderer;
@@ -62,9 +57,9 @@ public class CourseListView extends VerticalLayout implements View
 		String mySN = me.get_student_num();
 		
 		//Creates the buttons and Textfields to allow the admin to add a new course
-		 CourseName = new TextField();
-		 CourseCode = new TextField();
-		 Password = new PasswordField();
+		CourseName = new TextField();
+		CourseCode = new TextField();
+		Password = new PasswordField();
 		CourseName.setCaption("Name of Course to Add");
 		CourseCode.setCaption("Course Code of Course to Add");
 		Password.setCaption("Enter password to Confirm");
@@ -108,7 +103,7 @@ public class CourseListView extends VerticalLayout implements View
 				//The code above send the data to the database to add the new course
 				result = dbh.parse_json_string(ans);
 		
-//Checks if there were any issues when adding the new course
+				//Checks if there were any issues when adding the new course
 				//Sample Output:{"user":0,"course":0,"delete":-1,"edit":0}
 				if (result.get("user").toString().equals("0") && result.get("course").toString().equals("0"))
 				{
@@ -171,7 +166,7 @@ public class CourseListView extends VerticalLayout implements View
 				{
 					String[] values = { me.student_num, Password.getValue(), i.course_code, i.course_name, "2" };
 					String ans = dbh.php_request("ManageCourses", params, values);
-//Sample Output:{"user":0,"course":0,"delete":0,"edit":0}
+					//Sample Output:{"user":0,"course":0,"delete":0,"edit":0}
 					result = dbh.parse_json_string(ans);
 					if (!result.get("user").toString().equals("0"))
 						Password.setComponentError(new UserError("The Password Does Not Correspond to The Admin's!"));
@@ -308,7 +303,7 @@ public class CourseListView extends VerticalLayout implements View
 		// this is where we set the data for the grid
 		g.setItems(course_list);
 		g.addColumn(unused -> "View Info",
-//Allows the admin to view all the tutors for a given course
+				//Allows the admin to view all the tutors for a given course
 				new ButtonRenderer(e ->
 				{
 					removeAllComponents();
@@ -386,9 +381,9 @@ public class CourseListView extends VerticalLayout implements View
 		
 		
 		//Ensures that the course courses are sorted in alphabetical order
-g.sort("course_code",SortDirection.ASCENDING);
+		g.sort("course_code",SortDirection.ASCENDING);
 
-addComponent(g);
+		addComponent(g);
 		Button AddCourses = new Button("Add New Course", event ->
 		{
 			removeAllComponents();
@@ -422,7 +417,7 @@ addComponent(g);
 		addComponent(go_back_to_main_view);
 
 	}
-//I (mayur) have not idea what is going on below, this is Elgoni's code, please ask himm to comment it if you need it to be.
+	//I (mayur) have not idea what is going on below, this is Elgoni's code, please ask him to comment it if you need it to be.
 	ArrayList<CourseItem> get_all_courses()
 	{
 		DBHelper dbh = new DBHelper();

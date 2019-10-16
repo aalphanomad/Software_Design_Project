@@ -39,4 +39,3 @@ public class EditCourse extends VerticalLayout implements View
 		
 	}
 }
-

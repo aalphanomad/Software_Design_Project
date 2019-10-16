@@ -189,11 +189,11 @@ public class ProfileView extends VerticalLayout implements View {
 
 		HorizontalLayout transcript_line = new HorizontalLayout();
 		transcript_line.addComponent(new Label("View Transcript:"));
-		String[] values2 = { "USER_INFORMATION", "user_transcript", "user_id", student_number };
+		String[] values2 = { "USER_INFORMATION", "TRANSCRIPT", "STUDENT_NUM", student_number};
 		Button pdf_button = new Button("View Transcript", event -> {
 			String result = dbh.php_request("generic_select", parameters, values2);
 
-			if (!result.startsWith("<br")) {
+			if (/*!result.startsWith("<br")*/result.length()>2) {
 				result = dbh.parse_json_string_arr(result).get(0).getAsString();
 				// Notification.show(result);
 				UI.getCurrent().getPage().open(result, "_blank");
@@ -203,6 +203,16 @@ public class ProfileView extends VerticalLayout implements View {
 			}
 
 		});
+		Button load = new Button("Re-upload Transcript", 
+				event -> {
+					DBHelper dbh1=new DBHelper();
+					String[] params = {"student_num"};
+					String[] values = {student_number.toString()};
+					dbh1.php_request("sendStudentNum", params, values1);
+					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
+					dbh1.php_request("update_transcipt", params, values);
+				});
+		transcript_line.addComponent(load);
 		transcript_line.addComponent(pdf_button);
 
 		details.addComponent(stud_num_line);
@@ -369,7 +379,7 @@ public class ProfileView extends VerticalLayout implements View {
 					System.out.println(data.get(1).getAsString());
 
 					CourseItem course = new CourseItem(data.get(0).getAsString(), data.get(1).getAsString());
-					Notification.show(data.get(0).getAsString()+data.get(1).getAsString());
+					//Notification.show(data.get(0).getAsString()+data.get(1).getAsString());
 					course_items.add(course);
 				} catch (UnsupportedOperationException e)
 				{
@@ -383,4 +393,3 @@ public class ProfileView extends VerticalLayout implements View {
 		return course_items;
 	}
 }
-

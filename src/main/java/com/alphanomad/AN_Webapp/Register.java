@@ -23,7 +23,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CheckBoxGroup;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
@@ -35,32 +34,24 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @Theme("mytheme")
-public class Register extends VerticalLayout implements View {
-//Creates the components that need to be accessed globally
-	public static TextField Name, StudentNumber;
-	public static PasswordField Password, ConfPassword;
-	public static ComboBoxMultiselect<String> comboBoxMultiselect = new ComboBoxMultiselect<>();
-	public FormLayout content = new FormLayout();
-	public static RadioButtonGroup radio_group;
-	JsonObject result1, result2;
-	//Ensures that after we leave the register form, the form is cleared
-	public static void Empty() {
-		Name.clear();
-		StudentNumber.clear();
-		Password.clear();
-		ConfPassword.clear();
-		radio_group.setValue("Tutor");
-		comboBoxMultiselect.clear();
-	}
+public class Register extends VerticalLayout implements View
+{
 	
-	//This function performs the database communication
+	
+	public TextField Name, StudentNumber;
+	public PasswordField Password, ConfPassword;
+	public ComboBoxMultiselect<String> comboBoxMultiselect = new ComboBoxMultiselect<>();
+	public FormLayout content = new FormLayout();
+	public RadioButtonGroup radio_group;
+	JsonObject result1, result2;
+	
+	
 	public void Handle_DB_Interaction(String[] params, String[] values) {
 		DBHelper dbh = new DBHelper();
 		String ans = dbh.php_request("create", params, values);
 		result2 = dbh.parse_json_string(ans);
 		ans = result2.get("result").getAsString();
-		
-		if (ans.equals("0")) {//If the registration is successful, we need to navigate to the correct home screen based on the user's role
+		if (ans.equals("0")) {
 			Notification.show("Registration Successful");
 
 			if (radio_group.getValue().equals("Tutor")) {
@@ -74,18 +65,17 @@ public class Register extends VerticalLayout implements View {
 				((MyUI) getUI()).logged_in = true;
 				getUI().getNavigator().navigateTo("lectmain");
 			}
-			Empty();
 		} else {
-
 			StudentNumber.setComponentError(new UserError("A Profile With This Student Number Already Exists."));
 		}
 
 	}
 
+	
+	
 
 
 	public void TheRegister() {
-		//removeAllComponents();
 
 		ArrayList<String> FCourses = new ArrayList<String>();
 		String[] Courses = comboBoxMultiselect.getValue().toString().split(",");
@@ -98,7 +88,7 @@ public class Register extends VerticalLayout implements View {
 		ConfPassword.setComponentError(null);
 		comboBoxMultiselect.setComponentError(null);
 		radio_group.setComponentError(null);
-//Below performs validation to check that all the necessary information has been entered
+
 		if (Name.isEmpty()) {
 			Name.setComponentError(new UserError("Please Enter Your Name"));
 			valid = false;
@@ -123,15 +113,13 @@ public class Register extends VerticalLayout implements View {
 			valid = false;
 
 		}
-		if (Arrays.toString(Courses).equals("[[]]"))
+		if (Arrays.toString(Courses).equals("[[]]"))// FIX THIS! NOT CHECKING PROPERLY IF NO COURSE IS SELECED!
 		{
 			comboBoxMultiselect.setComponentError(new UserError("Please Select Atleast One Course"));
 			valid = false;
 		}
 
-		if (valid==true) {
-			//If all the necessary data has been entered, we proceed to structuring the data that we have 
-			//to  send the data to the database appropriately
+		if (valid) {
 
 			for (int i = 0; i < Courses.length; i++) {
 				String[] newCourses = Courses[i].split("-");
@@ -188,10 +176,11 @@ public class Register extends VerticalLayout implements View {
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public Register() {
+	public Register()
+	{
+
 		Panel panel = new Panel();
-		panel.setHeight("600px");
+		panel.setHeight("700px");
 		panel.setWidthUndefined();
 		addComponent(panel);
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
@@ -237,23 +226,40 @@ public class Register extends VerticalLayout implements View {
 		PMA.addValueChangeListener(event -> PMA.setValue(!PMA.getValue()));
 		content.addComponent(PMA);
 		content.setComponentAlignment(PMA, Alignment.BOTTOM_LEFT);
+		
+		
+		DBHelper dbh1 = new DBHelper();
+		
+		Button load = new Button("Upload transcript", 
+				event -> {
+					String[] params1 = {"student_num"};
+					String[] values1 = {StudentNumber.getValue().toString()};
+					dbh1.php_request("sendStudentNum", params1, values1);
+					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
+				});
+		content.addComponent(load);
+		
 
 		// FILE UPLOAD!!!!!
 		// Initialize a list with items
 		List<String> list = new ArrayList<String>();
 		DBHelper dbh = new DBHelper();
+		
 		String ans = dbh.php_request("get_all_courses", new String[] { "" }, new String[] { "" });
 		result1 = dbh.parse_json_string(ans);
+		
 		String SAll_Course_Name = result1.get("course_name").toString()
 				.substring(1, result1.get("course_name").toString().length() - 1).replace("\"", "");
 		String SAll_Course_Code = result1.get("course_code").toString()
 				.substring(1, result1.get("course_code").toString().length() - 1).replace("\"", "");
 		String[] The_Course_Names = SAll_Course_Name.split(",");
 		String[] The_Course_Codes = SAll_Course_Code.split(",");
+		
+		
 		for (int i = 0; i < The_Course_Names.length; i++) {
 			list.add(The_Course_Codes[i] + "-(" + The_Course_Names[i] + ")");
 		}
-//Allows the user to select whether they are registering as a tutor or a register
+		//Allows the user to select whether they are registering as a tutor or a register
 		radio_group = new RadioButtonGroup();
 		ArrayList<String> items = new ArrayList<>();
 		items.add("Tutor");
@@ -269,6 +275,7 @@ public class Register extends VerticalLayout implements View {
 
 			}
 		});
+		
 		// make the radio group display horizontally
 		radio_group.setCaption("Are you a: ");
 		content.addComponent(radio_group);
@@ -282,7 +289,7 @@ public class Register extends VerticalLayout implements View {
 		content.addComponent(comboBoxMultiselect);
 
 		panel.setContent(content);
-//Attempts to registers
+		//Attempts to registers
 		Button button = new Button("Register", event -> TheRegister());
 		content.addComponent(button);
 	}
