@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.gson.JsonArray;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
@@ -47,7 +48,8 @@ public class CourseAllocationView extends VerticalLayout implements View
 			selected_course_allocs = event.getAllSelectedItems();
 			Notification.show(selected_course_allocs.size() + " items selected");
 		});
-		g.setColumnOrder("id", "stud_num", "course", "confirmed");
+		g.setColumnOrder("id","name","stud_num","role", "course", "confirmed");
+		g.sort("id",SortDirection.DESCENDING);
 		addComponent(g);
 
 		Button confirm_btn = new Button("Confirm selected applications", event ->
@@ -115,6 +117,9 @@ public class CourseAllocationView extends VerticalLayout implements View
 			g.setItems(get_all_course_allocs());
 
 		});
+		
+		confirm_btn.setStyleName("test");
+		deny_btn.setStyleName("another");
 
 		HorizontalLayout conf_deny_row = new HorizontalLayout();
 		HorizontalLayout filter_row = new HorizontalLayout();
@@ -164,7 +169,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 				{
 
 					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString(), data.get(3).getAsString());
+							data.get(2).getAsString(), data.get(3).getAsString(),data.get(4).getAsString(),data.get(5).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
 				{
@@ -208,7 +213,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 					System.out.println(data.get(3).getAsString());
 
 					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString(), data.get(3).getAsString());
+							data.get(2).getAsString(), data.get(3).getAsString(),data.get(4).getAsString(),data.get(5).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
 				{
@@ -248,7 +253,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 				try
 				{
 					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(), data.get(1).getAsString(),
-							data.get(2).getAsString(), data.get(3).getAsString());
+							data.get(2).getAsString(), data.get(3).getAsString(),data.get(4).getAsString(),data.get(5).getAsString());
 					course_allocs.add(cao);
 				} catch (UnsupportedOperationException e)
 				{

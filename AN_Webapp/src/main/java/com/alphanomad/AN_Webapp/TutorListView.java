@@ -53,8 +53,9 @@ public class TutorListView extends VerticalLayout implements View
 		
 		addComponent(g);
 		
+		//if the login user is a super admin then fill the arraylist with the appropriate choices that can be done
 		UserInfo info = ((MyUI) getUI()).get_user_info();
-		if(info.student_num.equals("5")) {
+		if(info.role.equals("4")) {
 			
 			ArrayList<String> Options_For_SuperAdmin= new ArrayList<String>();
 			
@@ -66,6 +67,7 @@ public class TutorListView extends VerticalLayout implements View
 			
 		}
 		
+		//if the login user is an admin then fill the arraylist with the appropriate choices that can be done (same as the super asmin except no choice for admin)
 		else {
 			
 			ArrayList<String> Options_For_Admin = new ArrayList<String>();
@@ -85,7 +87,7 @@ public class TutorListView extends VerticalLayout implements View
 		{
 			//Notification.show(cb.getValue().toString());
 				
-			
+			//if you wish to make someone admin
 			if (cb.getValue().toString().equals("Admin")) {
 			
 				if (selected_users != null)
@@ -95,8 +97,7 @@ public class TutorListView extends VerticalLayout implements View
 	
 					for (UserItem user : selected_users)
 					{
-						// we can't make a tutor admin
-						// nor can we make an admin or lectureradmin more of an admin
+						//if the selected user is a tutor or a lecturer, and you would like to make them admin, then communicate with php to update database
 						if (user.getRole().equals("Tutor") || user.getRole().equals("Lecturer"))
 						{
 							String[] vals = { user.getStudent_num() };
@@ -115,7 +116,7 @@ public class TutorListView extends VerticalLayout implements View
 			}
 			
 			
-			
+			//if you wish to make someone lecturer
 			if (cb.getValue().toString().equals("Lecturer")) {
 			
 				if (selected_users != null)
@@ -125,17 +126,27 @@ public class TutorListView extends VerticalLayout implements View
 	
 					for (UserItem user : selected_users)
 					{
-						// we can't make a tutor admin
-						// nor can we make an admin or lectureradmin more of an admin
-						if (user.getRole().equals("Tutor") || user.getRole().equals("Lecturer/Admin"))
+						//if the selected user is a tutor, and you would like to make them lecturer, then communicate with php to update database
+						if (user.getRole().equals("Tutor"))
 						{
 							String[] vals = { user.getStudent_num() };
 							// this sets the lecturer to a lectureradmin
 							dbh.php_request("make_lecturer", params, vals);
 							g.setItems(get_all_users());
-						} else
+						} 
+						
+						//if the selected user is a lecturer and admin, and you would like to make them lecturer only, then communicate with php to update database
+						//this is kept separate from the above condition so that we check that only the super-admin can demote a lecturer/admin to lecturer
+						else if (user.getRole().equals("Lecturer/Admin") && info.role.equals("4"))
 						{
-							Notification.show("Only Admins/Tutors can be lecturers");
+							String[] vals = { user.getStudent_num() };
+							// this sets the lecturer to a lectureradmin
+							dbh.php_request("make_lecturer", params, vals);
+							g.setItems(get_all_users());
+						}
+						
+						else {
+							Notification.show("Only Super Admin can do this");
 							g.setItems(get_all_users());
 						}
 	
@@ -144,7 +155,7 @@ public class TutorListView extends VerticalLayout implements View
 			}
 			
 			
-			
+			//if you wish to make someone tutor
 			if (cb.getValue().toString().equals("Tutor")) {
 				
 				if (selected_users != null)
@@ -154,9 +165,17 @@ public class TutorListView extends VerticalLayout implements View
 	
 					for (UserItem user : selected_users)
 					{
-						// we can't make a tutor admin
-						// nor can we make an admin or lectureradmin more of an admin
+						//if the selected user is a lecturer, and you would like to make them tutor, then communicate with php to update database
 						if (user.getRole().equals("Lecturer"))
+						{
+							String[] vals = { user.getStudent_num() };
+							// this sets the lecturer to a lectureradmin
+							dbh.php_request("make_tutor", params, vals);
+							g.setItems(get_all_users());
+						}
+						
+						//provided you are a super admin and if the selected user is an admin, and you would like to make them tutor, then communicate with php to update database
+						if (user.getRole().equals("Admin") && info.role.equals("4"))
 						{
 							String[] vals = { user.getStudent_num() };
 							// this sets the lecturer to a lectureradmin
@@ -164,9 +183,10 @@ public class TutorListView extends VerticalLayout implements View
 							g.setItems(get_all_users());
 						} else
 						{
-							Notification.show("Only Lecturers can be made tutors");
+							Notification.show("Only Super Admin can demote Admins");
 							g.setItems(get_all_users());
 						}
+						
 	
 					}
 				}

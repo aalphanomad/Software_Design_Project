@@ -2,7 +2,7 @@ package com.alphanomad.AN_Webapp;
 
 public class HistoryItem
 {
-	// Set the stuff here
+	//Initialize the class variables which will later become the columns of our grid
 	String Date;
 	String Course;
 	String Start_time;
@@ -11,9 +11,12 @@ public class HistoryItem
 	String Venue;
 	String Activity;
 
+	
+	//Constructor of a HistoryItem
 	public HistoryItem(String Date, String Course, String Start_time, String End_time, String Valid, String Venue,
 			String Activity)
 	{
+		
 		this.Date = Date;
 		this.Course = Course;
 		this.Start_time = Start_time;

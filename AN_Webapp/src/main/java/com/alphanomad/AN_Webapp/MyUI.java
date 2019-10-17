@@ -109,5 +109,6 @@ public class MyUI extends UI
 	@VaadinServletConfiguration(ui = MyUI.class, productionMode = true)
 	public static class MyUIServlet extends VaadinServlet
 	{
+		
 	}
 }
