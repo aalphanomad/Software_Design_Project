@@ -64,9 +64,9 @@ public class CourseAllocObject
 		{
 			return "Pending";
 		}
-		else if (confirmed.equals("3"))
+		else if (confirmed.equals("-1"))
 		{
-			return "not accepted";
+			return "Declined";
 		}
 		
 		// this should never happen but if it does it'll be a sure sign of error

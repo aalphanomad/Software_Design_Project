@@ -32,7 +32,7 @@ public class LectMainView extends VerticalLayout implements View
 		String[] test = Dirty_Info.split(":");
 		if (test[1].length() == 1 || test[1].substring(0, 3).equals("[]}"))
 		{
-			final_Array.add("-1");
+			//final_Array.add("-10");
 			return final_Array;
 		} else
 		{
@@ -80,7 +80,6 @@ public class LectMainView extends VerticalLayout implements View
 		//The code above retrieves the courses that the lecturer is responsible fore and in turn, the tutors of those courses as well
 		
 		ArrayList<String> myCourses = ClaimForm.GetCourses(ans1);
-		addComponent(new Label(String.join(",", myCourses)));
 		for (int i = 0; i < myCourses.size(); i++)
 		{
 			myCourses.set(i, myCourses.get(i) + " " + ClaimForm.Course_corr(myCourses.get(i)));
@@ -103,6 +102,8 @@ public class LectMainView extends VerticalLayout implements View
 		ArrayList<String> StudCourse1 = Filter_Info(AllInfo[6]);
 		ArrayList<String> StudCourse2 = Filter_Info(AllInfo[7]);
 		ArrayList<String> StudCourse3 = Filter_Info(AllInfo[8]);
+		System.out.println("HELLO1");
+		System.out.println(AllInfo[8]);
 		ArrayList<String> StudCourse4 = Filter_Info(AllInfo[9]);
 		ArrayList<String> StudCourse5 = Filter_Info(AllInfo[10]);
 
@@ -174,6 +175,8 @@ public class LectMainView extends VerticalLayout implements View
 				for (int i = 0; i < Course3.size(); i++)
 				{
 					Tutor.add(new TutorItem(Course3.get(i), StudCourse3.get(i)));
+
+
 				}
 				break;
 			case 3:

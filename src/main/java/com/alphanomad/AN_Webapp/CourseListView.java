@@ -62,7 +62,7 @@ public class CourseListView extends VerticalLayout implements View
 		Password = new PasswordField();
 		CourseName.setCaption("Name of Course to Add");
 		CourseCode.setCaption("Course Code of Course to Add");
-		Password.setCaption("Enter password to Confirm");
+		Password.setCaption("Enter Your Password to Confirm");
 		CourseName.setWidth("40%");
 		CourseCode.setWidth("40%");
 		Password.setWidth("40%");
@@ -145,7 +145,7 @@ public class CourseListView extends VerticalLayout implements View
 			DeleteCourses = event.getAllSelectedItems();
 		});
 		//adds a field to the admin to enter their password so that only admins can manage courses
-		Password.setCaption("Please Enter You Password to Confirm.");
+		Password.setCaption("Please Enter Your Password to Confirm.");
 		Button Confirm = new Button("Confirm", event ->
 		{//Checks if tleast one course is selected
 			if (DeleteCourses.isEmpty())
@@ -169,7 +169,7 @@ public class CourseListView extends VerticalLayout implements View
 					//Sample Output:{"user":0,"course":0,"delete":0,"edit":0}
 					result = dbh.parse_json_string(ans);
 					if (!result.get("user").toString().equals("0"))
-						Password.setComponentError(new UserError("The Password Does Not Correspond to The Admin's!"));
+						Password.setComponentError(new UserError("Please Enter Your Admin Password"));
 					else
 					{
 						Notification.show("Courses Have Been Deleted Successfully");
@@ -211,7 +211,7 @@ public class CourseListView extends VerticalLayout implements View
 					theCode=(((CourseItem) e.getItem()).getCourse_code());
 					
 					Label test2 = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
-							+ "       <b><u>Editting Course: " + "<u>"+theCourse+"</u></b>"+"    </p>", ContentMode.HTML);
+							+ "       <b><u>Editing Course: " + "<u>"+theCourse+"</u></b>"+"    </p>", ContentMode.HTML);
 					addComponent(test2);
 					//Sets up the textfields to the user to enter the edited details of the course
 					TextField name=new TextField();

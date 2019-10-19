@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
@@ -15,6 +16,8 @@ import com.vaadin.ui.*;
 
 public class TutorMainView extends VerticalLayout implements View
 {
+	Button pdf_button;
+
 
 	public TutorMainView()
 	{
@@ -66,9 +69,9 @@ public class TutorMainView extends VerticalLayout implements View
         
    
         
-        Button pdf_button = new Button("Generate Claims Form", event -> 
+         pdf_button = new Button("Generate Claims Form", event -> 
 		{
-			if(months.getSelectedItem() != null)
+			if(months.isEmpty())
 			{
 				String[] parameters = { "table", "target", "student_num", "month" };
 				String[] valuess = { "BOOKINGS", "*", studentNum, months.getSelectedItem().get()};
@@ -76,9 +79,12 @@ public class TutorMainView extends VerticalLayout implements View
 			}
 			else
 			{
+				pdf_button.setComponentError(new UserError("Please Select A Month"));
+				/*
 				String[] parameters = { "table", "target", "student_num"};
 				String[] valuess = { "BOOKINGS", "*", studentNum};
 				UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
+				*/
 			}
 		});
         

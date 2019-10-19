@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.gson.JsonArray;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
@@ -34,6 +35,7 @@ public class TutorListView extends VerticalLayout implements View
 	
 	private void view_users()
 	{
+		cb.setComponentError(null);
 		components.clear();
 		Grid<UserItem> g = new Grid(UserItem.class);
 		ArrayList<UserItem> course_list = get_all_users();
@@ -86,7 +88,7 @@ public class TutorListView extends VerticalLayout implements View
 		Button confirm = new Button("confirm", event ->
 		{
 			//Notification.show(cb.getValue().toString());
-				
+				if(cb.isEmpty()==false) {
 			//if you wish to make someone admin
 			if (cb.getValue().toString().equals("Admin")) {
 			
@@ -192,8 +194,13 @@ public class TutorListView extends VerticalLayout implements View
 				}
 			}
 			
+			
 			cb.setValue(null);
 			cb.setPlaceholder("Change Role to:");
+				}
+				else {
+					cb.setComponentError(new UserError("Please Select A Role That You Would Like To Assign To The Selected User."));
+				}
 
 		});
 		

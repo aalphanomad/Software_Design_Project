@@ -1,6 +1,8 @@
 package com.alphanomad.AN_Webapp;
 
 import javax.servlet.annotation.WebServlet;
+
+import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.icons.VaadinIcons;
@@ -28,6 +30,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
 
 public class ConfirmClaimForm extends VerticalLayout implements View
 {
@@ -128,17 +131,19 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 		addComponent(LecturerPassword);
 
 		DBHelper dbh1 = new DBHelper();
-		String[] params1 = { "student_num", "password","role" };
+		String[] params1 = { "student_num", "password","course"};
 
 		Button validate = new Button("Validate", event ->
 		{
-			String[] values1 = { LecturerUsername.getValue(), LecturerPassword.getValue(),"1" };
+			String[] values1 = { LecturerUsername.getValue(), LecturerPassword.getValue(), course};
 			ans1 = dbh1.php_request("is_lecturer", params1, values1);
+ JsonObject dummy=dbh1.parse_json_string(ans1);
+ ans1=dummy.get("result").getAsString();
+ System.out.println("VERDICT"+ans1);
 
-			String[] part1 = ans1.split(":");
-			String FinalAns = part1[1].substring(1, 2);
 
-			if (FinalAns.equals("0"))
+
+			if (ans1.equals("0"))
 			{
 				String[] params2 = { "name", "student_num", "course", "date", "venue" };
 				String[] values2 = { name, studnum, course, date, venue };
@@ -150,8 +155,8 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 
 			else
 			{
-				LecturerUsername.setComponentError(new UserError("Only Lecturers are permitted to validate."));
-				LecturerPassword.setComponentError(new UserError("Only Lecturers are permitted to validate."));
+				LecturerUsername.setComponentError(new UserError("Please Enter Login Credentials Belonging To A Lecturer Responsible For This Course And Try Again."));
+				LecturerPassword.setComponentError(new UserError("Please Enter Login Credentials Belonging To A Lecturer Responsible For This Course And Try Again."));
 
 			}
 		});

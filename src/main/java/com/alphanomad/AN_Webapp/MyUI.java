@@ -52,8 +52,9 @@ public class MyUI extends UI
 	public void init(VaadinRequest request)
 	{
 		
-		addStyleName("image-backgound");
-		getPage().setTitle("Alpha Nomad");
+		//addStyleName("image-backgound");
+		getPage().setTitle("AlphaNomad");
+	
 
 		// Create a navigator to control the views
 		navigator = new Navigator(this, this);

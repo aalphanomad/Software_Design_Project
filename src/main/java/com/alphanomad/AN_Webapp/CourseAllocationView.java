@@ -33,12 +33,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 		g.setSizeFull();
 
 		g.setItems(get_unconfirmed_course_allocs());
-		/*
-		 * g.addColumn(CourseAllocObject::getId).setCaption("Application ID");
-		 * g.addColumn(CourseAllocObject::getStud_num).setCaption("Student Number");
-		 * g.addColumn(CourseAllocObject::getCourse).setCaption("Course");
-		 * g.addColumn(CourseAllocObject::getConfirmed).setCaption("Status");
-		 */
+
 		g.getColumn("id").setWidthUndefined();
 		// switch to multiselect mode
 		g.setSelectionMode(SelectionMode.MULTI);
@@ -61,12 +56,11 @@ public class CourseAllocationView extends VerticalLayout implements View
 
 				for (CourseAllocObject cao : selected_course_allocs)
 				{
-					if (cao.confirmed.equals("0") || cao.confirmed.equals("3"))
-					{
+					
 						String[] vals = { cao.getStud_num(), cao.getCourse(), "1" };
 						dbh.php_request("update_courses", params, vals);
 						g.setItems(get_unconfirmed_course_allocs());
-					}
+					
 
 				}
 			} else
@@ -85,12 +79,11 @@ public class CourseAllocationView extends VerticalLayout implements View
 
 				for (CourseAllocObject cao : selected_course_allocs)
 				{
-					if (cao.confirmed.equals("1"))
-					{
-						String[] vals = { cao.getStud_num(), cao.getCourse(), "0" };
+					
+						String[] vals = { cao.getStud_num(), cao.getCourse(), "-1" };
 						dbh.php_request("update_courses", params, vals);
-						g.setItems(get_confirmed_course_allocs());
-					}
+						g.setItems(get_unconfirmed_course_allocs());
+					
 
 				}
 			} else
@@ -111,6 +104,9 @@ public class CourseAllocationView extends VerticalLayout implements View
 			g.setItems(get_unconfirmed_course_allocs());
 
 		});
+		Button view_declined_btn=new Button("View Declined Applications",event-> {
+			g.setItems(get_declined_course_allocs());
+		});
 
 		Button view_all_btn = new Button("View ALL Applications", event ->
 		{
@@ -127,6 +123,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 		conf_deny_row.addComponent(deny_btn);
 		filter_row.addComponent(view_confirmed_btn);
 		filter_row.addComponent(view_unconfirmed_btn);
+		filter_row.addComponent(view_declined_btn);
 		filter_row.addComponent(view_all_btn);
 		addComponent(conf_deny_row);
 		addComponent(filter_row);
@@ -137,6 +134,52 @@ public class CourseAllocationView extends VerticalLayout implements View
 
 		});
 		addComponent(go_back_to_main_view);
+	}
+	
+	
+	ArrayList<CourseAllocObject> get_declined_course_allocs(){
+
+		DBHelper dbh = new DBHelper();
+		String[] parameters = { "table", "target", "filter", "value" };
+		String[] values = { "USER_COURSE_ALLOC", "*", "CONFIRMED", "-1" };
+
+		String result = dbh.php_request("generic_select", parameters, values);
+		JsonArray tutor_alloc_obj;
+		try
+		{
+			// I think that this is an json_array of json_arrays
+			tutor_alloc_obj = dbh.parse_json_string_arr(result);
+		} catch (Exception e)
+		{
+			// if the query fails that means that the query returned nothing
+			return new ArrayList<CourseAllocObject>();
+		}
+
+		ArrayList<CourseAllocObject> course_allocs = new ArrayList<CourseAllocObject>();
+
+		try
+		{
+			// we loop through all of the results from our query
+			for (int x = 0; x < tutor_alloc_obj.size(); x++)
+			{
+				JsonArray data = (JsonArray) tutor_alloc_obj.getAsJsonArray().get(x);
+				try
+				{
+
+					CourseAllocObject cao = new CourseAllocObject(data.get(0).getAsString(), data.get(1).getAsString(),
+							data.get(2).getAsString(), data.get(3).getAsString(),data.get(4).getAsString(),data.get(5).getAsString());
+					course_allocs.add(cao);
+				} catch (UnsupportedOperationException e)
+				{
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		return course_allocs;
+		
 	}
 
 	ArrayList<CourseAllocObject> get_unconfirmed_course_allocs()
