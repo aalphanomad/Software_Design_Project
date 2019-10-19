@@ -10,7 +10,6 @@ import java.util.Date;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -53,7 +52,7 @@ public class ClaimForm extends VerticalLayout implements View
 	Booking b;
 	String startTime, endTime;
 
-	/*public Boolean validate()
+	public Boolean validate()
 	{
 		Boolean valid = true;
 		if (Courses.isEmpty())
@@ -104,9 +103,9 @@ public class ClaimForm extends VerticalLayout implements View
 			}
 		}
 		return valid;
-	}*/
+	}
 
-	public boolean checktimings(String startTime1, String endTime1)
+	private boolean checktimings(String startTime1, String endTime1)
 	{
 
 		String pattern = "HH:mm";
@@ -164,17 +163,6 @@ public class ClaimForm extends VerticalLayout implements View
 
 	public static String Course_corr(String course_code)
 	{
-		/*
-		 	DBHelper dbh=new DBHelper();
-		String[] parameters = { "table", "target", "filter", "value" };
-		String[] values = { "COURSES", "COURSE_NAME", "COURSE_CODE", course_code };
-
-		String test = dbh.php_request("generic_select", parameters, values);
-		JsonArray pop=dbh.parse_json_string_arr(test);
-		String result=pop.getAsJsonArray().get(0).toString();
-		result=result.substring(2, result.length()-2);
-		*/
-	
 		String ans = null;
 		switch (course_code)
 		{
@@ -231,7 +219,6 @@ public class ClaimForm extends VerticalLayout implements View
 			break;
 
 		}
-		
 		return ans;
 
 	}
@@ -247,7 +234,7 @@ public class ClaimForm extends VerticalLayout implements View
 
 	}
 
-	/*@Override
+	@Override
 	public void enter(ViewChangeEvent event)
 	{
 
@@ -356,22 +343,24 @@ public class ClaimForm extends VerticalLayout implements View
 
 		HorizontalLayout time1 = new HorizontalLayout();
 
-		Label st = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:15px;\">\r\n"
-				+ "       <u>Start-Time</u> " + "      </p>", ContentMode.HTML);
+		Label st = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:20px;\">\r\n"
+				+ "       Start-Time " + "      </p>", ContentMode.HTML);
 
+		time1.addComponent(st);
 		time1.addComponent(startHour);
 		time1.addComponent(startMinute);
-		time1.addComponent(st);
+		
 		addComponent(time1);
 
 		HorizontalLayout time2 = new HorizontalLayout();
 
-		Label ed = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:15px;\">\r\n"
-				+ "       <u>End-Time</u> " + "      </p>", ContentMode.HTML);
+		Label ed = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:20px;\">\r\n"
+				+ "       End-Time " + "      </p>", ContentMode.HTML);
 
+		time2.addComponent(ed);
 		time2.addComponent(endHour);
 		time2.addComponent(endMinute);
-		time2.addComponent(ed);
+		
 		addComponent(time2);
 
 		Date today = new Date();
@@ -422,6 +411,6 @@ public class ClaimForm extends VerticalLayout implements View
 				}
 			}
 		});
-	}*/
+	}
 
 }

@@ -45,6 +45,7 @@ public class MyUI extends UI
 	protected static final String TUTORLISTVIEW = "tutorlist";
 	protected static final String COURSEALLOCVIEW = "coursealloc";
 	protected static final String COURSELISTVIEW = "courselist";
+	protected static final String CHOOSEROLE = "chooserole";
 	public boolean logged_in = false;
 
 	@Override
@@ -72,20 +73,21 @@ public class MyUI extends UI
 		navigator.addView(CLAIMFORM, new ClaimForm());
 		navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(null, null, null, null, null, null, null, null));
 		navigator.addView(TUTORLISTVIEW, new TutorListView());
-//		navigator.addView(COURSELISTVIEW, new CourseListView());
-//		navigator.addView(COURSEALLOCVIEW, new CourseAllocationView());
-//		
-//		Responsive.makeResponsive(this);
-//		navigator.navigateTo(LOGINVIEW);
-//		System.out.println("regstration complete");
-//		
-//		if (!logged_in)
-//		{
-//			navigator.navigateTo(LOGINVIEW);
-//		} else
-//		{
-//			navigator.navigateTo(MAINVIEW);
-//		}
+		navigator.addView(COURSELISTVIEW, new CourseListView());
+		navigator.addView(COURSEALLOCVIEW, new CourseAllocationView());
+		navigator.addView(CHOOSEROLE, new ChooseRole());
+		
+		Responsive.makeResponsive(this);
+		navigator.navigateTo(LOGINVIEW);
+		System.out.println("regstration complete");
+		
+		if (!logged_in)
+		{
+			navigator.navigateTo(LOGINVIEW);
+		} else
+		{
+			navigator.navigateTo(MAINVIEW);
+		}
 
 	}
 
@@ -107,5 +109,6 @@ public class MyUI extends UI
 	@VaadinServletConfiguration(ui = MyUI.class, productionMode = true)
 	public static class MyUIServlet extends VaadinServlet
 	{
+		
 	}
 }

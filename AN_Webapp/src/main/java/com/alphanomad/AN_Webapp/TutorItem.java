@@ -24,11 +24,11 @@ public class TutorItem
 					"https://ui-avatars.com/api/?size=100&background=003B5C&color=FFFFFF&name="+URLEncoder.encode(Name,"UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
-//			resource = new ExternalResource("https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
-//			e.printStackTrace();
+			resource = new ExternalResource("https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
+			e.printStackTrace();
 		}
 		
-		//this.Profile_Picture = resource;
+		this.Profile_Picture = resource;
 
 	}
 

@@ -47,7 +47,7 @@ public class LoginViewTest {
 	  	 
 		loginView.Password=Password;
 		loginView.Username=Username;
-		//loginView.TheLogin(studNum, studNum);
+		loginView.TheLogin(studNum, studNum);
 		//loginView.enter(ui);
 		
 		//loginView.handle_login(name, studNum);

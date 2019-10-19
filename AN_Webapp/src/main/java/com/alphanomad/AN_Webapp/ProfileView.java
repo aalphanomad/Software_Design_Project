@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.vaadin.addons.ComboBoxMultiselect;
@@ -16,11 +17,13 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -64,7 +67,7 @@ public class ProfileView extends VerticalLayout implements View {
 		System.out.println("STRING PROF VIEW " + this.user.get_student_num());
 	}
 
-	/*@Override
+	@Override
 	public void enter(ViewChangeEvent event) {
 
 		test = ((MyUI) getUI()).get_user_info();
@@ -76,7 +79,47 @@ public class ProfileView extends VerticalLayout implements View {
 		if (ui.get_user_info().get_role().equals("0")) {
 			this.user = ui.get_user_info();
 		}
-		*/
+
+
+		stud_num = user.get_student_num();
+		String role = user.get_role();
+
+		DBHelper dbh = new DBHelper();
+
+		String[] params = { "student_num" };
+		String[] values = { stud_num };
+		String name = dbh.php_request("get_name", params, values);
+		System.out.println(name + " " + stud_num);
+
+		String[] parameters = { "table", "target", "filter", "value" };
+		String[] values2 = { "USER_COURSE_ALLOC", "COURSE,CONFIRMED", "STUDENT_NUM", stud_num };
+		String courses = dbh.php_request("generic_select", parameters, values2);
+		JsonArray courses_obj = new JsonArray();
+		try {
+			courses_obj = dbh.parse_json_string_arr(courses);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		Button home_button = new Button("go to main view", btn_event -> {
+			if (((MyUI) (getUI())).get_user_info().get_role().equals("1")) {
+				getUI().getNavigator().navigateTo("lectmain");
+			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("2")) {
+				getUI().getNavigator().navigateTo("adminmain");
+			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("0")) {
+				getUI().getNavigator().navigateTo("tutormain");
+			} else {
+				// this should never happen
+				// but it's always good to be safe
+				getUI().getNavigator().navigateTo("login");
+			}
+
+		});
+
+		addComponent(make_user_info_panel(name, stud_num));
+		addComponent(make_courses_panel(courses_obj));
+		addComponent(home_button);
+	}
 
 	/**
 	 * simple function to make a view that shows the users email and name
@@ -148,11 +191,11 @@ public class ProfileView extends VerticalLayout implements View {
 
 		HorizontalLayout transcript_line = new HorizontalLayout();
 		transcript_line.addComponent(new Label("View Transcript:"));
-		String[] values2 = { "USER_INFORMATION", "user_transcript", "user_id", student_number };
+		String[] values2 = { "USER_INFORMATION", "TRANSCRIPT", "STUDENT_NUM", student_number};
 		Button pdf_button = new Button("View Transcript", event -> {
 			String result = dbh.php_request("generic_select", parameters, values2);
 
-			if (!result.startsWith("<br")) {
+			if (/*!result.startsWith("<br")*/result.length()>2) {
 				result = dbh.parse_json_string_arr(result).get(0).getAsString();
 				// Notification.show(result);
 				UI.getCurrent().getPage().open(result, "_blank");
@@ -162,13 +205,86 @@ public class ProfileView extends VerticalLayout implements View {
 			}
 
 		});
+		Button load = new Button("Re-upload Transcript", 
+				event -> {
+					DBHelper dbh1=new DBHelper();
+					String[] params = {"student_num"};
+					String[] values = {student_number.toString()};
+					dbh1.php_request("sendStudentNum", params, values1);
+					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
+					dbh1.php_request("update_transcipt", params, values);
+		});
+		
+		Button updatePassword = new Button("Change Password", 
+				event1 -> {
+					Panel p = new Panel();
+					p.setHeight("200px");
+					p.setWidthUndefined();
+					
+					details.addComponent(p);
+					
+					FormLayout fl = new FormLayout();
+					fl.setMargin(true);
+					
+					
+					TextField current = new TextField();
+					current.setCaption("Enter Current Password:");
+					fl.addComponent(current);
+					
+					TextField new_password = new TextField();
+					new_password.setCaption("Enter New Password:");
+					fl.addComponent(new_password);
+					
+					TextField confirm_new = new TextField();
+					confirm_new.setCaption("Confirm New Password:");
+					fl.addComponent(confirm_new);
+					
+					
+					Button confirmPass = new Button("Confirm Password", 
+							event2 -> {
+								
+								DBHelper dbh1=new DBHelper();
+								String[] par = { "table", "target", "filter", "value" };
+								String[] val = {"USER_INFORMATION","USER_PASSWORD","STUDENT_NUM", student_number};
+								
+								String currPassword=dbh1.php_request("generic_select", par, val);
+								//Notification.show(currPassword);
+								JsonArray test=dbh.parse_json_string_arr(currPassword);
+								String the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
+								the_password=the_password.substring(1, the_password.length()-1);
+								//System.out.println(the_password);
+								
+							    if(the_password.equals(current.getValue().toString()) && new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+							    
+									String[] params = {"password","student_num"};
+									
+									
+									String[] values = {confirm_new.getValue().toString(), student_number};
+									dbh1.php_request("update_password", params, values);
+									Notification.show("Password changed Successfully");
+							    }else {
+							    	Notification.show("Enter Correct Details");
+							    }
+								
+					});
+					
+					fl.addComponent(confirmPass);
+					p.setContent(fl);
+		});
+		
+		
+	
+		
+		
+		transcript_line.addComponent(load);
 		transcript_line.addComponent(pdf_button);
-
+		transcript_line.addComponent(updatePassword);
+		
 		details.addComponent(stud_num_line);
 		details.addComponent(name_line);
 		details.addComponent(email_line);
 		details.addComponent(transcript_line);
-
+		
 		inner.addComponent(details);
 
 		panel.setCaption("User Information");
@@ -182,7 +298,7 @@ public class ProfileView extends VerticalLayout implements View {
 	 * @return a vertical layout containing a collapseable list of courses that the
 	 *         user is linked to
 	 */
-	/*public Panel make_courses_panel(JsonArray courses_obj) {
+	public Panel make_courses_panel(JsonArray courses_obj) {
 		Panel panel = new Panel();
 		VerticalLayout courses_inner = new VerticalLayout();
 		List<String> list = new ArrayList<String>();
@@ -198,17 +314,76 @@ public class ProfileView extends VerticalLayout implements View {
 		course_combo_box.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5");
 		course_combo_box.setItems(list);
 		course_combo_box.setVisible(false);
+		try {
+			for (int x = 0; x < courses_obj.size(); x++) {
+				try {
+					String course_name = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
+					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
+					course_combo_box.select(course_name);
+					if (course_conf.equals("1")) {
+						courses_inner.addComponent(new Label(course_name + "\n"));
+					} else {
+						courses_inner.addComponent(new Label(course_name + " (Pending confirmation) \n"));
+					}
 
-		*/
+				} catch (UnsupportedOperationException e) {
+					// System.out.println("HERE\n HERE\n HERE\n");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			courses_inner.addComponent(new Label("There's nothing here... \n"));
+		}
+
+		
+
+		if (test.role.equals("0")) {
+			Button change_courses = new Button("Change courses", event -> course_combo_box.setVisible(true));
+			change_courses.addClickListener(event -> change_courses.setVisible(false));
+			Button done = new Button("Done", event -> change_courses.setVisible(true));
+			done.addClickListener(event -> done.setVisible(false));
+			done.addClickListener(event -> course_combo_box.setVisible(false));
+			done.addClickListener(event -> {
+				DBHelper dbh = new DBHelper();
+				String[] params = {"student_num","course"}; 
+				for(String item : list)
+				{
+					String[] values = {user.get_student_num(),item};
+					if(course_combo_box.getSelectedItems().contains(item))
+					{
+						dbh.php_request("add_course", params, values);
+					}
+					else
+					{
+						dbh.php_request("remove_course", params, values);
+					}
+					
+				}
+				
+			});
+			done.setVisible(false);
+
+			change_courses.addClickListener(event -> done.setVisible(true));
+
+			courses_inner.addComponent(change_courses);
+			courses_inner.addComponent(course_combo_box);
+			courses_inner.addComponent(done);
+		}
+
+		panel.setCaption("Courses");
+		panel.setContent(courses_inner);
+
+		return panel;
+	}
 
 	public boolean handle_course_change(ArrayList<String> courses, String stud_num) {
-//		boolean result = true;
-//		for (String course : courses) {
-//			update_courses(stud_num, course, "");
-//		}
-//
-//		return result;
-		return true;
+		boolean result = true;
+		for (String course : courses) {
+			update_courses(stud_num, course, "");
+		}
+
+		return result;
 	}
 
 	/**
@@ -219,27 +394,26 @@ public class ProfileView extends VerticalLayout implements View {
 	 * @return
 	 */
 	public boolean update_courses(String stud_num, String course, String confirmed) {
-//		boolean result = false;
-//		DBHelper dbh = new DBHelper();
-//		String value;
-//
-//		if (confirmed.length() > 0) {
-//			String[] params = { "student_num", "course", "confirmed" };
-//			String[] values = { stud_num, course, confirmed };
-//			value = dbh.php_request("update_courses", params, values);
-//		} else {
-//			String[] params = { "student_num", "course" };
-//			String[] values = { stud_num, course };
-//			value = dbh.php_request("update_courses", params, values);
-//		}
-//
-//		result = Boolean.parseBoolean(value);
-//
-//		return result;
-		return false;
+		boolean result = false;
+		DBHelper dbh = new DBHelper();
+		String value;
+
+		if (confirmed.length() > 0) {
+			String[] params = { "student_num", "course", "confirmed" };
+			String[] values = { stud_num, course, confirmed };
+			value = dbh.php_request("update_courses", params, values);
+		} else {
+			String[] params = { "student_num", "course" };
+			String[] values = { stud_num, course };
+			value = dbh.php_request("update_courses", params, values);
+		}
+
+		result = Boolean.parseBoolean(value);
+
+		return result;
 	}
 
-	/*ArrayList<CourseItem> get_all_courses()
+	ArrayList<CourseItem> get_all_courses()
 	{
 		DBHelper dbh = new DBHelper();
 		String[] parameters = { "table", "target", "filter", "value" };
@@ -259,6 +433,28 @@ public class ProfileView extends VerticalLayout implements View {
 		}
 		ArrayList<CourseItem> course_items = new ArrayList<CourseItem>();
 
-	}*/
-}
+		try
+		{
+			for (int x = 0; x < course_arr.size(); x++)
+			{
+				JsonArray data = (JsonArray) course_arr.getAsJsonArray().get(x);
+				try
+				{
+					System.out.println(data.get(0).getAsString());
+					System.out.println(data.get(1).getAsString());
 
+					CourseItem course = new CourseItem(data.get(0).getAsString(), data.get(1).getAsString());
+					//Notification.show(data.get(0).getAsString()+data.get(1).getAsString());
+					course_items.add(course);
+				} catch (UnsupportedOperationException e)
+				{
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		return course_items;
+	}
+}

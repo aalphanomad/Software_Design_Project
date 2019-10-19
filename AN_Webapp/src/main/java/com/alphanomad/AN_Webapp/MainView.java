@@ -18,7 +18,7 @@ public class MainView extends VerticalLayout implements View
 
 	}
 
-	/*@Override
+	@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
 		// if(!((MyUI)getUI()).logged_in)
@@ -54,6 +54,6 @@ public class MainView extends VerticalLayout implements View
 		addComponent(pdf_button);
 		addComponent(Login);
 		// addComponent(Register);
-	}*/
+	}
 
 }

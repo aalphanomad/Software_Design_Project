@@ -21,8 +21,6 @@ public class MyUITest {
 	@Test
 	public void test() {
 		
-		ui.init(null);
-		
 	}
 	
 	@After
