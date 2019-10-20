@@ -71,6 +71,10 @@ public class LectMainView extends VerticalLayout implements View
 		
 		removeAllComponents();
 		
+		Button profile_button = new Button("Profile", event -> getUI().getNavigator().navigateTo("profile"));
+		addComponent(profile_button);
+		setComponentAlignment(profile_button, Alignment.TOP_RIGHT);
+		
 		DBHelper dbh = new DBHelper();
 		String[] params1 = { "name", "student_num" };
 		String[] values1 = { lect_info.name, lect_info.student_num };

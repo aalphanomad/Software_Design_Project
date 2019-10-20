@@ -249,11 +249,12 @@ public class ClaimForm extends VerticalLayout implements View
 		String[] params = { "name", "student_num" };
 		String[] values = { tutor_info.name, tutor_info.student_num };
 
-		String ans = dbh.php_request("get_courses", params, values);
+		String ans = dbh.php_request("get_ValidCourses", params, values);
 		filtered = dbh.parse_json_string(ans);
 		ans = filtered.get("result").getAsJsonArray().toString();
 
 		ArrayList<String> new_courses = GetCourses(ans);
+		new_courses.set(0, new_courses.get(0).substring(0, new_courses.get(0).length()-1));
 
 		ArrayList<String> coursesArray = new ArrayList();
 		for (int i = 0; i < new_courses.size(); i++)

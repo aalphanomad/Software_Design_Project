@@ -268,6 +268,7 @@ public class TutorListView extends VerticalLayout implements View
 		}
 		ArrayList<UserItem> user_items = new ArrayList<UserItem>();
 		UserItem user = null;
+		
 		try
 		{
 			for (int x = 0; x < user_arr.size(); x++)

@@ -353,6 +353,7 @@ public class CourseListView extends VerticalLayout implements View
 								ContentMode.HTML);
 						addComponent(test);
 						
+						
 					for (int i = 0; i < names.length; i++)
 					{
 						Tutor.add(new TutorItem(names[i].substring(1, names[i].length() - 1),
@@ -366,17 +367,25 @@ public class CourseListView extends VerticalLayout implements View
 					}
 					
 					
-					Grid<TutorItem> grid2 = new Grid<>(TutorItem.class);
-					grid2.getColumn("image").setRenderer(new ImageRenderer());
-					grid2.setColumnOrder("image", "name", "student_num");
-					grid2.setWidth("100%");
-					grid2.setItems(Lecturer);
+					Grid<TutorItem> grid_Lecturer = new Grid<>(TutorItem.class);
+					grid_Lecturer.getColumn("image").setRenderer(new ImageRenderer());
+					grid_Lecturer.setColumnOrder("image", "name", "student_num");
+					grid_Lecturer.setWidth("100%");
+					grid_Lecturer.setItems(Lecturer);
+					
+					grid_Lecturer.addColumn(unused -> "More Info", new ButtonRenderer(
+
+							event ->
+							{
+								new ProfileView((MyUI) getUI(), (((TutorItem) event.getItem()).getStudent_num()));
+								getUI().getNavigator().navigateTo("profile");
+							}));
 					
 					
-					grid2.setRowHeight(100);
-					grid2.setHeaderRowHeight(30);
+					grid_Lecturer.setRowHeight(100);
+					grid_Lecturer.setHeaderRowHeight(30);
 					
-					addComponent(grid2);
+					addComponent(grid_Lecturer);
 					
 					Label test2 = new Label(
 							"<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
