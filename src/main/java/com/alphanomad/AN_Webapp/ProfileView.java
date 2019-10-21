@@ -295,6 +295,8 @@ public class ProfileView extends VerticalLayout implements View {
 					}
 					
 				}
+				this.removeAllComponents();
+				this.enter(null);
 				
 			});
 			done.setVisible(false);
