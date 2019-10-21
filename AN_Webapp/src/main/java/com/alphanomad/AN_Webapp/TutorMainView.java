@@ -24,36 +24,6 @@ public class TutorMainView extends VerticalLayout implements View
 
 	}
 	
-	//function below is used to get the courses confirmed for a tutor to tutor in
-	public static ArrayList<String> GetCourses(String FromDB)
-	{
-
-		// Notification.show(ans);
-		ArrayList<String> new_courses = new ArrayList<String>();
-
-		String[] courses1 = FromDB.split(",");
-		for (int i = 0; i < courses1.length; i++)
-		{
-			//System.out.println("hahaha  " + courses1[i]);
-			
-			String[] courses2 = courses1[i].split(":");
-			
-			//System.out.println("lalala  " + courses2[0] + " and " + courses2[1]);
-			if (i == courses1.length - 1)
-			{
-				if (!courses2[1].substring(0, courses2[1].length() - 2).equals("null"))
-				{
-					new_courses.add(courses2[1].substring(1, courses2[1].length() - 3));
-
-				}
-			} else
-			{
-				if (!courses2[1].equals("null"))
-					new_courses.add(courses2[1].substring(1, courses2[1].length() - 1));
-			}
-		}
-		return new_courses;
-	}
 
 	@Override
 	public void enter(ViewChangeEvent vc_event)
@@ -93,12 +63,9 @@ public class TutorMainView extends VerticalLayout implements View
 		if(ans.equals("[]")) {
 			courses = null;
 		}
-		//else we fill the arraylist with the relevant courses 
+		//else we fill the arraylist with the relevant courses confirmed for the tutor
 		else {
-			courses = GetCourses(ans);
-			for(int i = 0; i<courses.size(); i++) {
-				System.out.println("okokokok  " + courses.get(i));
-			}
+			courses = ClaimForm.GetCourses(ans);
 		}
 		
 		
@@ -180,8 +147,14 @@ public class TutorMainView extends VerticalLayout implements View
 			}
 		});
 		//add the following buttons to the navigation bar
+		claimForm_button.setWidth("95%");
+		profile_button.setWidth("95%");
+		History.setWidth("95%");
+		Login.setWidth("95%");
+		title.setWidth("380%");
+		
         CssLayout menu = new CssLayout(title, claimForm_button, profile_button, History, Login);
-        menu.addStyleName(ValoTheme.MENU_ROOT);	//apply certain theme to bar
+        menu.addStyleName(ValoTheme.MENU_ROOT);	//set bar to expand horizontally
 
         //certain css layout to apply to navigation bar
         CssLayout viewContainer = new CssLayout();

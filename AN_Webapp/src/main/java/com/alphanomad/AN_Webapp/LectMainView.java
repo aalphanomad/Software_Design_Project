@@ -12,6 +12,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.renderers.ButtonRenderer;
@@ -24,6 +25,8 @@ public class LectMainView extends VerticalLayout implements View
 	int SelIndex;
 	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
 	//Filters the data received from the database as it currently contains [],{},and inverted commas
+	
+	ArrayList<String> myCourses;
 	
 	public static ArrayList<String> Filter_Info(String Dirty_Info)
 	{
@@ -71,24 +74,40 @@ public class LectMainView extends VerticalLayout implements View
 		
 		removeAllComponents();
 		
-		Button profile_button = new Button("Profile", event -> getUI().getNavigator().navigateTo("profile"));
+		//button for lecturer to view profile
+		Button profile_button = new Button("Profile", event -> {
+			
+			new ProfileView((MyUI) getUI(), lect_info.student_num);
+			getUI().getNavigator().navigateTo("profile");
+		});
+		
 		addComponent(profile_button);
 		setComponentAlignment(profile_button, Alignment.TOP_RIGHT);
 		
 		DBHelper dbh = new DBHelper();
 		String[] params1 = { "name", "student_num" };
 		String[] values1 = { lect_info.name, lect_info.student_num };
-		String ans1 = dbh.php_request("get_courses", params1, values1);
+		String ans1 = dbh.php_request("get_ValidCourses", params1, values1);
 		retrieve = dbh.parse_json_string(ans1);
 		ans1 = retrieve.get("result").getAsJsonArray().toString();
-		//The code above retrieves the courses that the lecturer is responsible fore and in turn, the tutors of those courses as well
+		//The code above retrieves the courses that the lecturer is responsible for and in turn, the tutors of those courses as well
 		
-		ArrayList<String> myCourses = ClaimForm.GetCourses(ans1);
-		addComponent(new Label(String.join(",", myCourses)));
-		for (int i = 0; i < myCourses.size(); i++)
-		{
-			myCourses.set(i, myCourses.get(i) + " " + ClaimForm.Course_corr(myCourses.get(i)));
+		//if no courses are confirmed then the arraylist of courses is empty
+		if(ans1.equals("[]")) {
+			myCourses = null;
 		}
+		//else we fill the arraylist with the relevant courses confirmed for the tutor
+		else {
+			myCourses = ClaimForm.GetCourses(ans1);
+			
+			addComponent(new Label(String.join(",", myCourses)));
+			for (int i = 0; i < myCourses.size(); i++)
+			{
+				myCourses.set(i, myCourses.get(i) + " " + ClaimForm.Course_corr(myCourses.get(i)));
+			}
+		}
+		
+		
 
 		String ans2 = dbh.php_request("get_students", new String[] { "student_num" },
 				new String[] { lect_info.student_num });
@@ -113,9 +132,22 @@ public class LectMainView extends VerticalLayout implements View
 		ComboBox<String> combobox = new ComboBox<String>("Course Selected");
 		combobox.setPlaceholder("Please Select A Course");
 		combobox.setWidth("40%");
-		combobox.setItems(myCourses);
-		addComponent(combobox);
-		combobox.setValue(myCourses.get(0));
+		
+		//if the arraylist does have courses confirmed for the lecturer, then fill the combobox with these courses
+		if(myCourses!=null) {
+			combobox.setItems(myCourses);
+			addComponent(combobox);
+			combobox.setValue(myCourses.get(0));
+		}
+		
+		//else, give a warning to the user that they do not have access yet
+		else {
+			Label warn = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
+					+ "       <b><u>YOU DO NOT HAVE ACCESS</u></b> " + "      </p>", ContentMode.HTML);
+			addComponent(warn);
+			setComponentAlignment(warn, Alignment.MIDDLE_CENTER);
+		}
+		
 
 		Grid<TutorItem> grid = new Grid<>(TutorItem.class);
 		grid.getColumn("image").setRenderer(new ImageRenderer());
@@ -146,6 +178,11 @@ public class LectMainView extends VerticalLayout implements View
 			getUI().getNavigator().navigateTo("profile");
 		}));
 
+		//if the lecturer has no confirmed courses, then remove the grid
+		if(myCourses==null) {
+			grid.setVisible(false);
+		}
+		
 		for (int i = 0; i < Course1.size(); i++)
 		{
 			Tutor.add(new TutorItem(Course1.get(i), StudCourse1.get(i)));

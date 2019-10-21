@@ -155,7 +155,7 @@ public class ClaimForm extends VerticalLayout implements View
 			} else
 			{
 				if (!courses2[1].equals("null"))
-					new_courses.add(courses2[1].substring(1, courses2[1].length() - 1));
+					new_courses.add(courses2[1].substring(1, courses2[1].length() - 2));
 			}
 		}
 		return new_courses;
@@ -254,7 +254,7 @@ public class ClaimForm extends VerticalLayout implements View
 		ans = filtered.get("result").getAsJsonArray().toString();
 
 		ArrayList<String> new_courses = GetCourses(ans);
-		new_courses.set(0, new_courses.get(0).substring(0, new_courses.get(0).length()-1));
+		
 
 		ArrayList<String> coursesArray = new ArrayList();
 		for (int i = 0; i < new_courses.size(); i++)

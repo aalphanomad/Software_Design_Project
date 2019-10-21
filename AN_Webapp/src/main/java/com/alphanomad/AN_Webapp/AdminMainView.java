@@ -61,6 +61,12 @@ public class AdminMainView extends VerticalLayout implements View
 		});
 		
 		//add the following buttons to the navigation bar
+		view_application_btn.setWidth("60%");
+		view_users_btn.setWidth("60%");
+		view_courses_btn.setWidth("60%");
+		login.setWidth("60%");
+		title.setWidth("240%");
+		
 		CssLayout menu = new CssLayout(title, view_application_btn, view_users_btn, view_courses_btn, login);
         menu.addStyleName(ValoTheme.MENU_ROOT);
 
