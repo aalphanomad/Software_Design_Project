@@ -257,6 +257,7 @@ public class ProfileView extends VerticalLayout implements View {
 					
 					String course_name = get_course_name(course_code);
 					course_combo_box.select(course_code);
+					// \t is just a tab
 					if (course_conf.equals("1")) {
 						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + "\n"));
 					} else {
@@ -264,7 +265,7 @@ public class ProfileView extends VerticalLayout implements View {
 					}
 
 				} catch (UnsupportedOperationException e) {
-					// System.out.println("HERE\n HERE\n HERE\n");
+					// TODO
 				}
 			}
 
@@ -283,10 +284,10 @@ public class ProfileView extends VerticalLayout implements View {
 			done.addClickListener(event -> course_combo_box.setVisible(false));
 			done.addClickListener(event -> {
 				DBHelper dbh = new DBHelper();
-				String[] params = {"student_num","course"}; 
+				String[] params = {"student_num","course","role","name"}; 
 				for(String item : list)
 				{
-					String[] values = {user.get_student_num(),item};
+					String[] values = {user.get_student_num(),item,user.get_role(),user.get_name()};
 					if(course_combo_box.getSelectedItems().contains(item))
 					{
 						dbh.php_request("add_course", params, values);
@@ -336,14 +337,16 @@ public class ProfileView extends VerticalLayout implements View {
 		boolean result = false;
 		DBHelper dbh = new DBHelper();
 		String value;
+		String role = ((MyUI)getUI()).get_user_info().get_role();
+		String name = ((MyUI)getUI()).get_user_info().get_name();
 
 		if (confirmed.length() > 0) {
-			String[] params = { "student_num", "course", "confirmed" };
-			String[] values = { stud_num, course, confirmed };
+			String[] params = { "student_num", "course", "confirmed", "role", "name" };
+			String[] values = { stud_num, course, confirmed, role, name };
 			value = dbh.php_request("update_courses", params, values);
 		} else {
-			String[] params = { "student_num", "course" };
-			String[] values = { stud_num, course };
+			String[] params = { "student_num", "course" , "role", "name"};
+			String[] values = { stud_num, course, role, name};
 			value = dbh.php_request("update_courses", params, values);
 		}
 
