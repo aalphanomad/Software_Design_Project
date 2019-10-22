@@ -252,13 +252,15 @@ public class ProfileView extends VerticalLayout implements View {
 		try {
 			for (int x = 0; x < courses_obj.size(); x++) {
 				try {
-					String course_name = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
+					String course_code = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
 					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
-					course_combo_box.select(course_name);
+					
+					String course_name = get_course_name(course_code);
+					course_combo_box.select(course_code);
 					if (course_conf.equals("1")) {
-						courses_inner.addComponent(new Label(course_name + "\n"));
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + "\n"));
 					} else {
-						courses_inner.addComponent(new Label(course_name + " (Pending confirmation) \n"));
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (Pending confirmation) \n"));
 					}
 
 				} catch (UnsupportedOperationException e) {
@@ -393,5 +395,16 @@ public class ProfileView extends VerticalLayout implements View {
 			System.out.println(e);
 		}
 		return course_items;
+	}
+	
+	
+	public String get_course_name(String course_code)
+	{
+		DBHelper dbh = new DBHelper();
+		String[] params = { "table", "target", "filter", "value" };
+		String[] values = {"COURSES", "COURSE_NAME", "COURSE_CODE",course_code};
+		System.out.println("GET_COURSE_NAME "+course_code);
+		String result = dbh.parse_json_string_arr(dbh.php_request("generic_select", params, values)).get(0).getAsString();;
+		return result;
 	}
 }
