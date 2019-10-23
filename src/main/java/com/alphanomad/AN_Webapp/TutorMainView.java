@@ -66,12 +66,13 @@ public class TutorMainView extends VerticalLayout implements View
 		months.setDescription("Choose month to generate claim form for. Leave empty to get full claim history");
 		//months.setCaption("Choose month to generate claim form for. Leave Blank to generate full record");
 		months.setEmptySelectionCaption("Choose month...");
-        
    
         
          pdf_button = new Button("Generate Claims Form", event -> 
 		{
-			if(months.isEmpty())
+	        System.out.println("THE VALUE : "+months.getValue()+"+++");
+
+			if(months.getValue()!=null)
 			{
 				String[] parameters = { "table", "target", "student_num", "month" };
 				String[] valuess = { "BOOKINGS", "*", studentNum, months.getSelectedItem().get()};
@@ -79,7 +80,7 @@ public class TutorMainView extends VerticalLayout implements View
 			}
 			else
 			{
-				pdf_button.setComponentError(new UserError("Please Select A Month"));
+				months.setComponentError(new UserError("Please Select A Month"));
 				/*
 				String[] parameters = { "table", "target", "student_num"};
 				String[] valuess = { "BOOKINGS", "*", studentNum};
