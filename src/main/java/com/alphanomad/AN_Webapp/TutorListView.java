@@ -6,7 +6,9 @@ import java.util.Set;
 import com.google.gson.JsonArray;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -17,6 +19,8 @@ import com.vaadin.ui.renderers.ButtonRenderer;
 public class TutorListView extends VerticalLayout implements View
 {
 	Set<UserItem> selected_users;
+	public ComboBox<String> cb = new ComboBox<>();
+	
 	
 	public TutorListView()
 	{
@@ -31,6 +35,7 @@ public class TutorListView extends VerticalLayout implements View
 	
 	private void view_users()
 	{
+		cb.setComponentError(null);
 		components.clear();
 		Grid<UserItem> g = new Grid(UserItem.class);
 		ArrayList<UserItem> course_list = get_all_users();
@@ -49,79 +54,164 @@ public class TutorListView extends VerticalLayout implements View
 		});
 		
 		addComponent(g);
-
-		Button make_admin_btn = new Button("Make Selected users admin", event ->
+		
+		//if the login user is a super admin then fill the arraylist with the appropriate choices that can be done
+		UserInfo info = ((MyUI) getUI()).get_user_info();
+		if(info.role.equals("4")) {
+			
+			ArrayList<String> Options_For_SuperAdmin= new ArrayList<String>();
+			
+			Options_For_SuperAdmin.add("Tutor");
+			Options_For_SuperAdmin.add("Lecturer");
+			Options_For_SuperAdmin.add("Admin");
+			cb.setItems(Options_For_SuperAdmin);
+			cb.setPlaceholder("Change Role to:");
+			
+		}
+		
+		//if the login user is an admin then fill the arraylist with the appropriate choices that can be done (same as the super asmin except no choice for admin)
+		else {
+			
+			ArrayList<String> Options_For_Admin = new ArrayList<String>();
+			
+			Options_For_Admin.add("Tutor");
+			Options_For_Admin.add("Lecturer");
+			cb.setItems(Options_For_Admin);
+			cb.setPlaceholder("Change Role to:");
+			
+			
+		}
+		
+		
+		
+		
+		Button confirm = new Button("confirm", event ->
 		{
-			if (selected_users != null)
-			{
-				DBHelper dbh = new DBHelper();
-				String[] params = { "student_num" };
-
-				for (UserItem user : selected_users)
+			//Notification.show(cb.getValue().toString());
+				if(cb.isEmpty()==false) {
+			//if you wish to make someone admin
+			if (cb.getValue().toString().equals("Admin")) {
+			
+				if (selected_users != null)
 				{
-					// we can't make a tutor admin
-					// nor can we make an admin or lectureradmin more of an admin
-					if (user.getRole().equals("1"))
+					DBHelper dbh = new DBHelper();
+					String[] params = { "student_num" };
+	
+					for (UserItem user : selected_users)
 					{
-						String[] vals = { user.getStudent_num() };
-						// this sets the lecturer to a lectureradmin
-						dbh.php_request("set_admin", params, vals);
-						g.setItems(get_all_users());
-					} else
-					{
-						Notification.show("Only Lecturers can be made admin");
-						g.setItems(get_all_users());
+						//if the selected user is a tutor or a lecturer, and you would like to make them admin, then communicate with php to update database
+						if (user.getRole().equals("Tutor") || user.getRole().equals("Lecturer"))
+						{
+							String[] vals = { user.getStudent_num() };
+							// this sets the lecturer to a lectureradmin
+							dbh.php_request("set_admin", params, vals);
+							g.setItems(get_all_users());
+						} else
+						{
+							Notification.show("Only Lecturers can be made admin");
+							g.setItems(get_all_users());
+						}
+	
 					}
-
-				}
-			} else
-			{
-				Notification.show("No Items Selected");
+				} 
+	
 			}
+			
+			
+			//if you wish to make someone lecturer
+			if (cb.getValue().toString().equals("Lecturer")) {
+			
+				if (selected_users != null)
+				{
+					DBHelper dbh = new DBHelper();
+					String[] params = { "student_num" };
+	
+					for (UserItem user : selected_users)
+					{
+						//if the selected user is a tutor, and you would like to make them lecturer, then communicate with php to update database
+						if (user.getRole().equals("Tutor"))
+						{
+							String[] vals = { user.getStudent_num() };
+							// this sets the lecturer to a lectureradmin
+							dbh.php_request("make_lecturer", params, vals);
+							g.setItems(get_all_users());
+						} 
+						
+						//if the selected user is a lecturer and admin, and you would like to make them lecturer only, then communicate with php to update database
+						//this is kept separate from the above condition so that we check that only the super-admin can demote a lecturer/admin to lecturer
+						else if (user.getRole().equals("Lecturer/Admin") && info.role.equals("4"))
+						{
+							String[] vals = { user.getStudent_num() };
+							// this sets the lecturer to a lectureradmin
+							dbh.php_request("make_lecturer", params, vals);
+							g.setItems(get_all_users());
+						}
+						
+						else {
+							Notification.show("Only Super Admin can do this");
+							g.setItems(get_all_users());
+						}
+	
+					}
+				}
+			}
+			
+			
+			//if you wish to make someone tutor
+			if (cb.getValue().toString().equals("Tutor")) {
+				
+				if (selected_users != null)
+				{
+					DBHelper dbh = new DBHelper();
+					String[] params = { "student_num" };
+	
+					for (UserItem user : selected_users)
+					{
+						//if the selected user is a lecturer, and you would like to make them tutor, then communicate with php to update database
+						if (user.getRole().equals("Lecturer"))
+						{
+							String[] vals = { user.getStudent_num() };
+							// this sets the lecturer to a lectureradmin
+							dbh.php_request("make_tutor", params, vals);
+							g.setItems(get_all_users());
+						}
+						
+						//provided you are a super admin and if the selected user is an admin, and you would like to make them tutor, then communicate with php to update database
+						if (user.getRole().equals("Admin") && info.role.equals("4"))
+						{
+							String[] vals = { user.getStudent_num() };
+							// this sets the lecturer to a lectureradmin
+							dbh.php_request("make_tutor", params, vals);
+							g.setItems(get_all_users());
+						} else
+						{
+							Notification.show("Only Super Admin can demote Admins");
+							g.setItems(get_all_users());
+						}
+						
+	
+					}
+				}
+			}
+			
+			
+			cb.setValue(null);
+			cb.setPlaceholder("Change Role to:");
+				}
+				else {
+					cb.setComponentError(new UserError("Please Select A Role That You Would Like To Assign To The Selected User."));
+				}
 
 		});
 		
-		g.addColumn(unused -> "More Info", new ButtonRenderer<Object>(event ->
-		{
-			// UserInfo test = new UserInfo("1");
-			// System.out.println("LECTVIEW: " + test.student_num);
-
-			new ProfileView((MyUI) getUI(), (((UserItem) event.getItem()).getStudent_num()));
-			getUI().getNavigator().navigateTo("profile");
-		}));
-
-
-		addComponent(make_admin_btn);
-
-		// We'll probably need this in the future
-		// TODO make the set_lecturer endpoint
-		// and addthis to the component list
-		Button make_lecturer_btn = new Button("Make Selected users lecturers", event ->
-		{
-			if (selected_users != null)
-			{
-				DBHelper dbh = new DBHelper();
-				String[] params = { "student_num" };
-
-				for (UserItem user : selected_users)
-				{
-					if (user.getRole().equals("3") || user.getRole().equals("1"))
-					{
-						String[] vals = { user.getStudent_num() };
-						dbh.php_request("set_lecturer", params, vals);
-						g.setItems(get_all_users());
-					} else
-					{
-						Notification.show("Only Lecturers can be made admin");
-						g.setItems(get_all_users());
-					}
-
-				}
-			} else
-			{
-				Notification.show("No Items Selected");
-			}
-		});
+		
+		HorizontalLayout horiz = new HorizontalLayout();
+		horiz.addComponent(cb);;
+		horiz.addComponent(confirm);
+		
+		addComponent(horiz);
+		cb.setWidth("25%");
+		
 		
 		Button filter_tutor_button = new Button("view only tutors", event ->
 		{
@@ -205,9 +295,9 @@ public class TutorListView extends VerticalLayout implements View
 					else if(data.get(2).getAsString().equals("3")) {
 						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Lecturer/Admin");
 						}
-					else if(data.get(2).getAsString().equals("4")) {
+					/*else if(data.get(2).getAsString().equals("4")) {
 						 user = new UserItem(data.get(0).getAsString(), data.get(1).getAsString(),"Super Admin");
-						}
+						}*/
 					
 				
 					user_items.add(user);

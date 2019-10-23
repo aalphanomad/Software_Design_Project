@@ -13,12 +13,14 @@ import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ImageRenderer;
+import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -41,6 +43,10 @@ public class AdminMainView extends VerticalLayout implements View
 			getUI().getNavigator().navigateTo("login");
 		} 
 		
+		//setting title for navigation bar and theme
+		Label title = new Label("Menu");
+        title.addStyleName(ValoTheme.MENU_TITLE);
+		
 		// empty the screen just in case
 		components.clear();
 		Button view_application_btn = new Button("view pending applications",
@@ -53,10 +59,19 @@ public class AdminMainView extends VerticalLayout implements View
 		 {
 			 getUI().getNavigator().navigateTo("login");	
 		});
-		addComponent(view_application_btn);
-		addComponent(view_users_btn);
-		addComponent(view_courses_btn);
-		addComponent(login);
+		
+		//add the following buttons to the navigation bar
+		CssLayout menu = new CssLayout(title, view_application_btn, view_users_btn, view_courses_btn, login);
+        menu.addStyleName(ValoTheme.MENU_ROOT);
+
+        //certain css layout to apply to navigation bar
+        CssLayout viewContainer = new CssLayout();
+
+        //adding the navigation bar to the page
+        HorizontalLayout mainLayout = new HorizontalLayout(menu, viewContainer);
+        mainLayout.setSizeFull();
+        addComponent(mainLayout);
+		
 	}
 
 }

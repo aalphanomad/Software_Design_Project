@@ -23,7 +23,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CheckBoxGroup;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
@@ -36,6 +35,14 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @Theme("mytheme")
 public class Register extends VerticalLayout implements View {
+
+	public TextField Name, StudentNumber;
+	public PasswordField Password, ConfPassword;
+	public ComboBoxMultiselect<String> comboBoxMultiselect = new ComboBoxMultiselect<>();
+	public FormLayout content = new FormLayout();
+	public RadioButtonGroup<String> radio_group;
+	JsonObject result1, result2;
+	Button load;
 
 	public void Handle_DB_Interaction(String[] params, String[] values) {
 		DBHelper dbh = new DBHelper();
@@ -62,13 +69,6 @@ public class Register extends VerticalLayout implements View {
 
 	}
 
-	public TextField Name, StudentNumber;
-	public PasswordField Password, ConfPassword;
-	public ComboBoxMultiselect<String> comboBoxMultiselect = new ComboBoxMultiselect<>();
-	public FormLayout content = new FormLayout();
-	public RadioButtonGroup radio_group;
-	JsonObject result1, result2;
-
 	public void TheRegister() {
 
 		ArrayList<String> FCourses = new ArrayList<String>();
@@ -82,6 +82,7 @@ public class Register extends VerticalLayout implements View {
 		ConfPassword.setComponentError(null);
 		comboBoxMultiselect.setComponentError(null);
 		radio_group.setComponentError(null);
+		load.setComponentError(null);
 
 		if (Name.isEmpty()) {
 			Name.setComponentError(new UserError("Please Enter Your Name"));
@@ -107,7 +108,7 @@ public class Register extends VerticalLayout implements View {
 			valid = false;
 
 		}
-		if (Courses.length == 0)// FIX THIS! NOT CHECKING PROPERLY IF NO COURSE IS SELECED!
+		if (Arrays.toString(Courses).equals("[[]]"))// FIX THIS! NOT CHECKING PROPERLY IF NO COURSE IS SELECED!
 		{
 			comboBoxMultiselect.setComponentError(new UserError("Please Select Atleast One Course"));
 			valid = false;
@@ -170,11 +171,10 @@ public class Register extends VerticalLayout implements View {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public Register() {
-		// Clear the form when we return!!!!!!
+
 		Panel panel = new Panel();
-		panel.setHeight("600px");
+		panel.setHeight("700px");
 		panel.setWidthUndefined();
 		addComponent(panel);
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
@@ -186,27 +186,28 @@ public class Register extends VerticalLayout implements View {
 				+ "       <b><u>Register</u></b> " + "      </p>", ContentMode.HTML);
 		content.addComponent(test);
 		content.setComponentAlignment(test, Alignment.TOP_CENTER);
-
+		// Create the TextField for the user to enter their name
 		Name = new TextField();
 		Name.setCaption("Name");
 		Name.setWidth("330px");
 		Name.setPlaceholder("Name");
 		content.addComponent(Name);
 		content.setComponentAlignment(Name, Alignment.MIDDLE_CENTER);
-
+		// Create the textfield for the user to enter their student number
 		StudentNumber = new TextField();
 		StudentNumber.setCaption("Student Number");
 		StudentNumber.setWidth("330px");
 		StudentNumber.setPlaceholder("Student Number");
 		content.addComponent(StudentNumber);
 		content.setComponentAlignment(StudentNumber, Alignment.MIDDLE_CENTER);
-
+		// Create the Textfield for the user to enter their password
 		Password = new PasswordField();
 		Password.setCaption("Password");
 		Password.setWidth("330px");
 		Password.setPlaceholder("Password");
 		content.addComponent(Password);
 		content.setComponentAlignment(Password, Alignment.MIDDLE_CENTER);
+		// Create the Textfield for the user to confirm thier password
 
 		ConfPassword = new PasswordField();
 		ConfPassword.setCaption("Confirm Password");
@@ -214,64 +215,82 @@ public class Register extends VerticalLayout implements View {
 		ConfPassword.setPlaceholder("Confirm Password");
 		content.addComponent(ConfPassword);
 		content.setComponentAlignment(ConfPassword, Alignment.MIDDLE_CENTER);
-
+		// Creates a checkbox for the user to select whther they are on PMA
 		CheckBox PMA = new CheckBox("Are you on Postgraduate Merit Award(PMA)?", false);
 		PMA.addValueChangeListener(event -> PMA.setValue(!PMA.getValue()));
 		content.addComponent(PMA);
 		content.setComponentAlignment(PMA, Alignment.BOTTOM_LEFT);
 
-		// FILE UPLOAD!!!!!
-		Button load = new Button("Upload Tanscript",
-				event->getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/upload_transcript.html", "_blank") 
-	    
-				);
-		
-		content.addComponent(load);
-		
+		DBHelper dbh1 = new DBHelper();
+
 		// Initialize a list with items
 		List<String> list = new ArrayList<String>();
 		DBHelper dbh = new DBHelper();
+
 		String ans = dbh.php_request("get_all_courses", new String[] { "" }, new String[] { "" });
 		result1 = dbh.parse_json_string(ans);
+
 		String SAll_Course_Name = result1.get("course_name").toString()
 				.substring(1, result1.get("course_name").toString().length() - 1).replace("\"", "");
 		String SAll_Course_Code = result1.get("course_code").toString()
 				.substring(1, result1.get("course_code").toString().length() - 1).replace("\"", "");
 		String[] The_Course_Names = SAll_Course_Name.split(",");
 		String[] The_Course_Codes = SAll_Course_Code.split(",");
+
 		for (int i = 0; i < The_Course_Names.length; i++) {
 			list.add(The_Course_Codes[i] + "-(" + The_Course_Names[i] + ")");
 		}
 
-		radio_group = new RadioButtonGroup();
+		load = new Button("Upload transcript", event -> {
+			if (StudentNumber.isEmpty()) {
+				load.setComponentError(
+						new UserError("Please Enter Your Student Number Before Uploading Your Transcript."));
+					StudentNumber.setComponentError(new UserError("Please Enter Your Student Number"));
+			} else {
+				String[] params1 = { "student_num" };
+				String[] values1 = { StudentNumber.getValue().toString() };
+				dbh1.php_request("sendStudentNum", params1, values1);
+				getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
+			}
+		});
+		// Allows the user to select whether they are registering as a tutor or a
+		// register
+		radio_group = new RadioButtonGroup<String>();
 		ArrayList<String> items = new ArrayList<>();
 		items.add("Tutor");
 		items.add("Lecturer");
 		radio_group.setItems(items);
+
 		radio_group.setValue(items.get(0));
 		radio_group.addValueChangeListener(event -> {
 			if (radio_group.getValue().equals("Tutor")) {
 				comboBoxMultiselect.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5)");
+				load.setEnabled(true);
 			}
 			if (radio_group.getValue().equals("Lecturer")) {
-				comboBoxMultiselect.setCaption("Please Select The Courses You Will Be Responsiible For.");
-
+				comboBoxMultiselect.setCaption("Please Select The Courses You Will Be Responsible For.");
+				load.setEnabled(false);
 			}
 		});
+
 		// make the radio group display horizontally
 		radio_group.setCaption("Are you a: ");
 		content.addComponent(radio_group);
 		content.setComponentAlignment(radio_group, Alignment.MIDDLE_CENTER);
+
+		content.addComponent(load);
+
 		// Initialize the ComboBoxMultiselect
-		comboBoxMultiselect.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5\"");
+		// Below populates the drop down menu with all the courses
+		comboBoxMultiselect.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5)");
 		comboBoxMultiselect.setPlaceholder("Courses");
 		comboBoxMultiselect.setWidth("430px");
 		comboBoxMultiselect.setItems(list);
 		content.addComponent(comboBoxMultiselect);
 
 		panel.setContent(content);
-
-		Button button = new Button("Register", event -> TheRegister());// Must add to Both Tables NOW!!!
+		// Attempts to registers
+		Button button = new Button("Register", event -> TheRegister());
 		content.addComponent(button);
 	}
 

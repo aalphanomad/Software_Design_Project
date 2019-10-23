@@ -19,10 +19,12 @@ import com.vaadin.ui.renderers.ImageRenderer;
 
 public class LectMainView extends VerticalLayout implements View
 {
+	//A JsonObject to stre the return alue from the database
 	JsonObject retrieve;
 	int SelIndex;
 	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
-
+	//Filters the data received from the database as it currently contains [],{},and inverted commas
+	
 	public static ArrayList<String> Filter_Info(String Dirty_Info)
 	{
 		ArrayList<String> final_Array = new ArrayList<String>();
@@ -30,7 +32,7 @@ public class LectMainView extends VerticalLayout implements View
 		String[] test = Dirty_Info.split(":");
 		if (test[1].length() == 1 || test[1].substring(0, 3).equals("[]}"))
 		{
-			final_Array.add("-1");
+			//final_Array.add("-10");
 			return final_Array;
 		} else
 		{
@@ -61,15 +63,22 @@ public class LectMainView extends VerticalLayout implements View
 		{
 			getUI().getNavigator().navigateTo("login");
 		} 
+		Tutor.clear();
+
 		
+		//Get the details of the currently logged in lecturer
 		UserInfo lect_info = ((MyUI) getUI()).get_user_info();
+		
 		removeAllComponents();
+		
 		DBHelper dbh = new DBHelper();
 		String[] params1 = { "name", "student_num" };
 		String[] values1 = { lect_info.name, lect_info.student_num };
 		String ans1 = dbh.php_request("get_courses", params1, values1);
 		retrieve = dbh.parse_json_string(ans1);
 		ans1 = retrieve.get("result").getAsJsonArray().toString();
+		//The code above retrieves the courses that the lecturer is responsible fore and in turn, the tutors of those courses as well
+		
 		ArrayList<String> myCourses = ClaimForm.GetCourses(ans1);
 		for (int i = 0; i < myCourses.size(); i++)
 		{
@@ -93,6 +102,8 @@ public class LectMainView extends VerticalLayout implements View
 		ArrayList<String> StudCourse1 = Filter_Info(AllInfo[6]);
 		ArrayList<String> StudCourse2 = Filter_Info(AllInfo[7]);
 		ArrayList<String> StudCourse3 = Filter_Info(AllInfo[8]);
+		System.out.println("HELLO1");
+		System.out.println(AllInfo[8]);
 		ArrayList<String> StudCourse4 = Filter_Info(AllInfo[9]);
 		ArrayList<String> StudCourse5 = Filter_Info(AllInfo[10]);
 
@@ -126,6 +137,8 @@ public class LectMainView extends VerticalLayout implements View
 			// UserInfo test = new UserInfo("1");
 			// System.out.println("LECTVIEW: " + test.student_num);
 
+			
+			//Allows us to view the selected tutors profile
 			new ProfileView((MyUI) getUI(), (((TutorItem) event.getItem()).getStudent_num()));
 			getUI().getNavigator().navigateTo("profile");
 		}));
@@ -139,6 +152,7 @@ public class LectMainView extends VerticalLayout implements View
 
 		combobox.addValueChangeListener(event ->
 		{
+			Tutor.clear();
 			combobox.setValue(combobox.getValue());
 
 			Tutor.clear();
@@ -161,6 +175,8 @@ public class LectMainView extends VerticalLayout implements View
 				for (int i = 0; i < Course3.size(); i++)
 				{
 					Tutor.add(new TutorItem(Course3.get(i), StudCourse3.get(i)));
+
+
 				}
 				break;
 			case 3:
@@ -189,12 +205,6 @@ public class LectMainView extends VerticalLayout implements View
 		});
 
 		addComponent(logout);
-//Sort out empty arrays!!!!!!!!!!!!!!!!!!!!!1
-
-		// ArrayList<String> CCourse5=Filter_Info(Course5);
-		// Notification.show(CCourse5.toString());
-
-//Notification.show(Final_Courses.toString());
 
 	}
 
