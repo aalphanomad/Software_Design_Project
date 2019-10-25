@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.xml.soap.Text;
+
 import org.vaadin.addons.ComboBoxMultiselect;
 
 import com.google.gson.JsonArray;
@@ -17,11 +19,13 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -31,6 +35,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ProfileView extends VerticalLayout implements View {
 	UserInfo test;
+	 	Panel p = new Panel();
 	public static UserInfo user;
 
 	/**
@@ -74,7 +79,7 @@ public class ProfileView extends VerticalLayout implements View {
 		String stud_num = "";
 		MyUI ui = (MyUI) getUI();
 
-		if (ui.get_user_info().get_role().equals("0")) {
+		 		if (ui.get_user_info().get_role().equals("0") || ui.get_user_info().get_role().equals("1")) {
 			this.user = ui.get_user_info();
 		}
 
@@ -186,9 +191,11 @@ public class ProfileView extends VerticalLayout implements View {
 			//TODO
 		}
 		
+		
 
 		HorizontalLayout transcript_line = new HorizontalLayout();
-		transcript_line.addComponent(new Label("View Transcript:"));
+		Label text=new Label("View Transcript:");
+		transcript_line.addComponent(text);
 		String[] values2 = { "USER_INFORMATION", "TRANSCRIPT", "STUDENT_NUM", student_number};
 		Button pdf_button = new Button("View Transcript", event -> {
 			String result = dbh.php_request("generic_select", parameters, values2);
@@ -211,21 +218,103 @@ public class ProfileView extends VerticalLayout implements View {
 					dbh1.php_request("sendStudentNum", params, values1);
 					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
 					dbh1.php_request("update_transcipt", params, values);
-				});
+		});
+		
+		//create button for user to click on to change password
+		Button updatePassword = new Button("Change Password", 
+				event1 -> {
+					//create new panel view consisting of widgets below for user to change password
+					
+					removeComponent(p);
+					
+					p.setHeight("250px");
+					p.setWidthUndefined();
+					
+					details.addComponent(p);
+					
+					FormLayout fl = new FormLayout();
+					fl.setMargin(true);
+					
+					
+					PasswordField current = new PasswordField();
+					current.setCaption("Enter Current Password:");
+					fl.addComponent(current);
+					
+					PasswordField new_password = new PasswordField();
+					new_password.setCaption("Enter New Password:");
+					fl.addComponent(new_password);
+					
+					PasswordField confirm_new = new PasswordField();
+					confirm_new.setCaption("Confirm New Password:");
+					fl.addComponent(confirm_new);
+					
+					//once the confirm button to hange password is clicked, do the following:
+					Button confirmPass = new Button("Confirm Password", 
+							event2 -> {
+								
+								//we use generic_select php to get the current password of user
+								DBHelper dbh1=new DBHelper();
+								String[] par = { "table", "target", "filter", "value" };
+								String[] val = {"USER_INFORMATION","USER_PASSWORD","STUDENT_NUM", student_number};
+								
+								//code below formats current password, to get rid of brackets and commas
+								String currPassword=dbh1.php_request("generic_select", par, val);
+								JsonArray test=dbh.parse_json_string_arr(currPassword);
+								String the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
+								the_password=the_password.substring(1, the_password.length()-1);
+								
+								//we check if the current password entered is correct, and if the new password is validated by the user
+							    if(the_password.equals(current.getValue().toString()) 
+					    		&& new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+							    
+							    	//if the above condition is true, then we use php to update the database wit the new password
+							    	
+									String[] params = {"password","student_num"};
+									
+									
+									String[] values = {confirm_new.getValue().toString(), student_number};
+									dbh1.php_request("update_password", params, values);
+									Notification.show("Password changed Successfully");
+									p.setVisible(false);
+									
+							    }else {
+							    	Notification.show("Enter Correct Details");
+							    }
+								
+					});
+					
+					fl.addComponent(confirmPass);
+					p.setContent(fl);
+		});
+		
+		
+	
+		
 		transcript_line.addComponent(load);
 		transcript_line.addComponent(pdf_button);
-
+		transcript_line.addComponent(updatePassword);
+		
+		
+		//if lecturer views profile, remove all buttons regarding transcripts
+		if(ui.get_user_info().get_role().equals("1")) {
+			email_button.setVisible(false);
+			text.setVisible(false);
+			load.setVisible(false);
+			pdf_button.setVisible(false);
+		}
+		
 		details.addComponent(stud_num_line);
 		details.addComponent(name_line);
 		details.addComponent(email_line);
 		details.addComponent(transcript_line);
-
+		
 		inner.addComponent(details);
 
 		panel.setCaption("User Information");
 		panel.setContent(inner);
 		return panel;
 	}
+		
 
 	/**
 	 * 
@@ -252,17 +341,20 @@ public class ProfileView extends VerticalLayout implements View {
 		try {
 			for (int x = 0; x < courses_obj.size(); x++) {
 				try {
-					String course_name = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
+					String course_code = ((JsonArray) courses_obj.get(x)).get(0).getAsString();
 					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
-					course_combo_box.select(course_name);
+					
+					String course_name = get_course_name(course_code);
+					course_combo_box.select(course_code);
+					// \t is just a tab
 					if (course_conf.equals("1")) {
-						courses_inner.addComponent(new Label(course_name + "\n"));
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + "\n"));
 					} else {
-						courses_inner.addComponent(new Label(course_name + " (Pending confirmation) \n"));
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (Pending confirmation) \n"));
 					}
 
 				} catch (UnsupportedOperationException e) {
-					// System.out.println("HERE\n HERE\n HERE\n");
+					// TODO
 				}
 			}
 
@@ -281,10 +373,10 @@ public class ProfileView extends VerticalLayout implements View {
 			done.addClickListener(event -> course_combo_box.setVisible(false));
 			done.addClickListener(event -> {
 				DBHelper dbh = new DBHelper();
-				String[] params = {"student_num","course"}; 
+				String[] params = {"student_num","course","role","name"}; 
 				for(String item : list)
 				{
-					String[] values = {user.get_student_num(),item};
+					String[] values = {user.get_student_num(),item,user.get_role(),user.get_name()};
 					if(course_combo_box.getSelectedItems().contains(item))
 					{
 						dbh.php_request("add_course", params, values);
@@ -295,6 +387,8 @@ public class ProfileView extends VerticalLayout implements View {
 					}
 					
 				}
+				this.removeAllComponents();
+				this.enter(null);
 				
 			});
 			done.setVisible(false);
@@ -332,14 +426,16 @@ public class ProfileView extends VerticalLayout implements View {
 		boolean result = false;
 		DBHelper dbh = new DBHelper();
 		String value;
+		String role = ((MyUI)getUI()).get_user_info().get_role();
+		String name = ((MyUI)getUI()).get_user_info().get_name();
 
 		if (confirmed.length() > 0) {
-			String[] params = { "student_num", "course", "confirmed" };
-			String[] values = { stud_num, course, confirmed };
+			String[] params = { "student_num", "course", "confirmed", "role", "name" };
+			String[] values = { stud_num, course, confirmed, role, name };
 			value = dbh.php_request("update_courses", params, values);
 		} else {
-			String[] params = { "student_num", "course" };
-			String[] values = { stud_num, course };
+			String[] params = { "student_num", "course" , "role", "name"};
+			String[] values = { stud_num, course, role, name};
 			value = dbh.php_request("update_courses", params, values);
 		}
 
@@ -391,5 +487,16 @@ public class ProfileView extends VerticalLayout implements View {
 			System.out.println(e);
 		}
 		return course_items;
+	}
+	
+	
+	public String get_course_name(String course_code)
+	{
+		DBHelper dbh = new DBHelper();
+		String[] params = { "table", "target", "filter", "value" };
+		String[] values = {"COURSES", "COURSE_NAME", "COURSE_CODE",course_code};
+		System.out.println("GET_COURSE_NAME "+course_code);
+		String result = dbh.parse_json_string_arr(dbh.php_request("generic_select", params, values)).get(0).getAsString();;
+		return result;
 	}
 }

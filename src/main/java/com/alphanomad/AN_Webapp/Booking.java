@@ -1,6 +1,7 @@
 package com.alphanomad.AN_Webapp;
 
 import com.google.gson.JsonObject;
+import com.vaadin.ui.Notification;
 
 public class Booking
 {
@@ -26,6 +27,9 @@ public class Booking
 		String[] values = { name, studnum, date, course, venue, "0", startTime, endTime, activity };
 		DBHelper dbh = new DBHelper();
 		ans = dbh.php_request("booking", params, values);
+		System.out.println("STARTTIME"+startTime);
+		System.out.println("ENDTIME"+endTime);
+		Notification.show(ans);
 		filtered = dbh.parse_json_string(ans);
 		ans = filtered.get("result").getAsString().substring(0, filtered.get("result").getAsString().length());
 	}

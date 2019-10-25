@@ -15,7 +15,6 @@ public class EditCourse extends VerticalLayout implements View
 	
 	public void EditCourse()
 	{
-		Notification.show("HELO");
 		String course_name=getUI().getSession().getAttribute("thename").toString();
 		String course_code=getUI().getSession().getAttribute("thecourse").toString();
 		TextField name=new TextField();
