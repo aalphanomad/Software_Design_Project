@@ -217,7 +217,7 @@ public class ProfileView extends VerticalLayout implements View {
 					String[] values = {student_number.toString()};
 					dbh1.php_request("sendStudentNum", params, values1);
 					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
-					dbh1.php_request("update_transcipt", params, values);
+					dbh1.php_request("update_transcript", params, values);
 		});
 		
 		//create button for user to click on to change password
