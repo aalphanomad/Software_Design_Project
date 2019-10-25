@@ -23,6 +23,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -76,7 +77,7 @@ public class ProfileView extends VerticalLayout implements View {
 		String stud_num = "";
 		MyUI ui = (MyUI) getUI();
 
-		if (ui.get_user_info().get_role().equals("0")) {
+		if (ui.get_user_info().get_role().equals("0") || ui.get_user_info().get_role().equals("1")) {
 			this.user = ui.get_user_info();
 		}
 
@@ -190,7 +191,8 @@ public class ProfileView extends VerticalLayout implements View {
 		
 
 		HorizontalLayout transcript_line = new HorizontalLayout();
-		transcript_line.addComponent(new Label("View Transcript:"));
+		Label text = new Label("View Transcript:");
+		transcript_line.addComponent(text);
 		String[] values2 = { "USER_INFORMATION", "TRANSCRIPT", "STUDENT_NUM", student_number};
 		Button pdf_button = new Button("View Transcript", event -> {
 			String result = dbh.php_request("generic_select", parameters, values2);
@@ -215,10 +217,13 @@ public class ProfileView extends VerticalLayout implements View {
 					dbh1.php_request("update_transcipt", params, values);
 		});
 		
+		//create button for user to click on to change password
 		Button updatePassword = new Button("Change Password", 
 				event1 -> {
+					//create new panel view consisting of widgets below for user to change password
+					
 					Panel p = new Panel();
-					p.setHeight("200px");
+					p.setHeight("250px");
 					p.setWidthUndefined();
 					
 					details.addComponent(p);
@@ -227,41 +232,47 @@ public class ProfileView extends VerticalLayout implements View {
 					fl.setMargin(true);
 					
 					
-					TextField current = new TextField();
+					PasswordField current = new PasswordField();
 					current.setCaption("Enter Current Password:");
 					fl.addComponent(current);
 					
-					TextField new_password = new TextField();
+					PasswordField new_password = new PasswordField();
 					new_password.setCaption("Enter New Password:");
 					fl.addComponent(new_password);
 					
-					TextField confirm_new = new TextField();
+					PasswordField confirm_new = new PasswordField();
 					confirm_new.setCaption("Confirm New Password:");
 					fl.addComponent(confirm_new);
 					
-					
+					//once the confirm button to hange password is clicked, do the following:
 					Button confirmPass = new Button("Confirm Password", 
 							event2 -> {
 								
+								//we use generic_select php to get the current password of user
 								DBHelper dbh1=new DBHelper();
 								String[] par = { "table", "target", "filter", "value" };
 								String[] val = {"USER_INFORMATION","USER_PASSWORD","STUDENT_NUM", student_number};
 								
+								//code below formats current password, to get rid of brackets and commas
 								String currPassword=dbh1.php_request("generic_select", par, val);
-								//Notification.show(currPassword);
 								JsonArray test=dbh.parse_json_string_arr(currPassword);
 								String the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
 								the_password=the_password.substring(1, the_password.length()-1);
-								//System.out.println(the_password);
 								
-							    if(the_password.equals(current.getValue().toString()) && new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+								//we check if the current password entered is correct, and if the new password is validated by the user
+							    if(the_password.equals(current.getValue().toString()) 
+					    		&& new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
 							    
+							    	//if the above condition is true, then we use php to update the database wit the new password
+							    	
 									String[] params = {"password","student_num"};
 									
 									
 									String[] values = {confirm_new.getValue().toString(), student_number};
 									dbh1.php_request("update_password", params, values);
 									Notification.show("Password changed Successfully");
+									p.setVisible(false);
+									
 							    }else {
 							    	Notification.show("Enter Correct Details");
 							    }
@@ -279,6 +290,14 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(load);
 		transcript_line.addComponent(pdf_button);
 		transcript_line.addComponent(updatePassword);
+		
+		
+		//if lecturer views profile, remove all buttons regarding transcripts
+		if(ui.get_user_info().get_role().equals("1")) {
+			text.setVisible(false);
+			load.setVisible(false);
+			pdf_button.setVisible(false);
+		}
 		
 		details.addComponent(stud_num_line);
 		details.addComponent(name_line);
