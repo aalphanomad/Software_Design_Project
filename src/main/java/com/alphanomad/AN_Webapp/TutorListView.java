@@ -20,6 +20,7 @@ public class TutorListView extends VerticalLayout implements View
 {
 	Set<UserItem> selected_users;
 	public ComboBox<String> cb = new ComboBox<>();
+
 	
 	
 	public TutorListView()
@@ -108,7 +109,6 @@ public class TutorListView extends VerticalLayout implements View
 							g.setItems(get_all_users());
 						} else
 						{
-							Notification.show("Only Lecturers can be made admin");
 							g.setItems(get_all_users());
 						}
 	
@@ -147,7 +147,7 @@ public class TutorListView extends VerticalLayout implements View
 							g.setItems(get_all_users());
 						}
 						
-						else {
+						else if (user.getRole().equals("Lecturer/Admin") && !info.role.equals("4")) {
 							Notification.show("Only Super Admin can do this");
 							g.setItems(get_all_users());
 						}
@@ -185,7 +185,7 @@ public class TutorListView extends VerticalLayout implements View
 							g.setItems(get_all_users());
 						} else
 						{
-							Notification.show("Only Super Admin can demote Admins");
+							
 							g.setItems(get_all_users());
 						}
 						
@@ -193,16 +193,18 @@ public class TutorListView extends VerticalLayout implements View
 					}
 				}
 			}
-			
-			
+			cb.setComponentError(null);
 			cb.setValue(null);
 			cb.setPlaceholder("Change Role to:");
-				}
-				else {
-					cb.setComponentError(new UserError("Please Select A Role That You Would Like To Assign To The Selected User."));
-				}
-
-		});
+		}
+		else {
+			cb.setComponentError(new UserError("Please Select The Role You Would Like To Assign To The Selected user."));
+		}
+				
+		}
+		
+				
+				);
 		
 		
 		HorizontalLayout horiz = new HorizontalLayout();

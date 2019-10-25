@@ -17,6 +17,8 @@ import com.vaadin.ui.*;
 public class TutorMainView extends VerticalLayout implements View
 {
 	Button pdf_button;
+	 	ArrayList<String> courses;
+	 	static JsonObject filtered;
 
 
 	public TutorMainView()
@@ -45,9 +47,48 @@ public class TutorMainView extends VerticalLayout implements View
         Button profile_button = new Button("Profile", event -> getUI().getNavigator().navigateTo("profile"));
         //profile_button.addStyleNames(ValoTheme.BUTTON_LINK, ValoTheme.MENU_ITEM);
         
+        
+ 
+        
+        DBHelper dbh1 = new DBHelper();
+        String studentName = ((MyUI) getUI()).get_user_info().get_name();
         String studentNum = ((MyUI) getUI()).get_user_info().get_student_num();
         
-        
+        //the code below, gets the courses confirmed for a tutor
+        String[] par = { "name", "student_num" };
+		String[] val = { studentName, studentNum };
+
+		String ans = dbh1.php_request("get_ValidCourses", par, val);
+		filtered = dbh.parse_json_string(ans);
+		ans = filtered.get("result").getAsJsonArray().toString();
+		
+		//if no courses are confirmed then the arraylist of courses is empty
+		if(ans.equals("[]")) {
+			courses = null;
+		}
+		//else we fill the arraylist with the relevant courses confirmed for the tutor
+		else {
+			courses = ClaimForm.GetCourses(ans);
+		}
+		
+		
+		
+		/*for(int i = 3; i<conf.length(); i = i+6) {
+			all.add(conf.charAt(i));
+		}
+		
+		for(int i = 0; i<all.size(); i++) {
+			if(all.get(i).equals('1')) {
+				count++;
+			}
+		}
+		
+		//Notification.show(currPassword);
+		JsonArray test=dbh.parse_json_string_arr(conf);
+		the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
+		//System.out.println("hiiiii  " + the_password);
+		the_password=the_password.substring(1, the_password.length()-1);
+		System.out.println("byeeeeee  " + all.get(0) + " and " + all.get(1));*/
 		ArrayList<String> month_strs = new ArrayList<String>();
 		month_strs.add("Jan");
 		month_strs.add("Feb");
@@ -80,12 +121,12 @@ public class TutorMainView extends VerticalLayout implements View
 			}
 			else
 			{
-				months.setComponentError(new UserError("Please Select A Month"));
-				/*
+				//months.setComponentError(new UserError("Please Select A Month"));
+				
 				String[] parameters = { "table", "target", "student_num"};
 				String[] valuess = { "BOOKINGS", "*", studentNum};
 				UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
-				*/
+				
 			}
 		});
         
@@ -101,11 +142,24 @@ public class TutorMainView extends VerticalLayout implements View
 
 		Button History = new Button("History", event -> getUI().getNavigator().navigateTo("history"));
 
-		Button claimForm_button = new Button("New Claim", event -> getUI().getNavigator().navigateTo("claimform"));
-		
+		//the claim form button below is only accessible to tutors with confirmed courses
+		Button claimForm_button = new Button("New Claim", event -> {
+			if(courses==null) {
+				Notification.show("You do not have access");
+			}
+			else {
+				getUI().getNavigator().navigateTo("claimform");
+			}
+		});
 		//add the following buttons to the navigation bar
+		claimForm_button.setWidth("95%");
+		profile_button.setWidth("95%");
+		History.setWidth("95%");
+		Login.setWidth("95%");
+		title.setWidth("380%");
+		
         CssLayout menu = new CssLayout(title, claimForm_button, profile_button, History, Login);
-        menu.addStyleName(ValoTheme.MENU_ROOT);	//apply certain theme to bar
+        menu.addStyleName(ValoTheme.MENU_ROOT);	//set bar to expand horizontally
 
         //certain css layout to apply to navigation bar
         CssLayout viewContainer = new CssLayout();

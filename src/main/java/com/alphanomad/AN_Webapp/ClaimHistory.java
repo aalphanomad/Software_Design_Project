@@ -80,14 +80,13 @@ public class ClaimHistory extends VerticalLayout implements View
 		//"end_time":[{"END_TIME":"08:58:00"}],"valid":[{"VALID":"0"}],"venue":[{"VENUE":"hehe"}],"activity":[{"ACTIVITY":"Invigilating"}]}
 		
 		String ans = dbh.php_request("fetching", params, values);
-
+		if(!dbh.parse_json_string(ans).get("dates").toString().equals("[]")) {
 		String[][] Test = Display(ans, size);
-
-		//Adds  A Heading
 		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
 				+ "       <b><u>Your Claim History</u></b> " + "      </p>", ContentMode.HTML);
 		addComponent(test);
 		ArrayList<HistoryItem> History = new ArrayList<>();
+		
 		//Gets the Past Claims and formats them
 		String[] info = new String[8];
 		for (int i = 0; i < size; i++)
@@ -105,6 +104,7 @@ public class ClaimHistory extends VerticalLayout implements View
 
 			}
 		}
+		
 		ButtonRenderer dummy;
 		
 		//Creates the actual Grid
@@ -142,6 +142,16 @@ public class ClaimHistory extends VerticalLayout implements View
 		grid.setHeightUndefined();
 		// grid.setStyleName(style); 
 		addComponent(grid);
+	}
+		else {
+			Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
+					+ "       <b><u>You Have Not Made Any Claims As Yet.</u></b> " + "      </p>", ContentMode.HTML);
+			addComponent(test);
+		}
+		
+
+		//Adds  A Heading
+
 		
 		//Navigate to the tutor's home screen
 		Button home=new Button("Home Screen",e->getUI().getNavigator().navigateTo("tutormain"));

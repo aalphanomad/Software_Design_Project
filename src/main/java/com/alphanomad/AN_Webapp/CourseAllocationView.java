@@ -41,7 +41,6 @@ public class CourseAllocationView extends VerticalLayout implements View
 		g.addSelectionListener(event ->
 		{
 			selected_course_allocs = event.getAllSelectedItems();
-			Notification.show(selected_course_allocs.size() + " items selected");
 		});
 		g.setColumnOrder("id","name","stud_num","role", "course", "confirmed");
 		g.sort("id",SortDirection.DESCENDING);
