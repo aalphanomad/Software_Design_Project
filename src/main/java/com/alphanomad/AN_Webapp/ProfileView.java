@@ -226,8 +226,8 @@ public class ProfileView extends VerticalLayout implements View {
 				event1 -> {
 					//create new panel view consisting of widgets below for user to change password
 					
-					removeComponent(p);
 					
+					p.setVisible(true);
 					p.setHeight("260px");
 					p.setWidthUndefined();
 					
@@ -307,17 +307,21 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(pdf_button);
 		transcript_line.addComponent(updatePassword);
 		
-		if(!test.role.equals("0")) {
-			updatePassword.setVisible(false);
-		}
 		
-		
-		//if lecturer views profile, remove all buttons regarding transcripts
-		if(ui.get_user_info().get_role().equals("1")) {
+		//if lecturer views profile or admin view lecturer profile, remove all buttons regarding transcripts
+		if(test.role.equals("1") || user.role.equals("1")) {
 			email_button.setVisible(false);
 			text.setVisible(false);
 			load.setVisible(false);
 			pdf_button.setVisible(false);
+		}
+		
+		//if lecturer views profile, remove upload transcript
+		if(test.role.equals("2") || test.role.equals("4")) {
+			email_button.setVisible(false);
+			text.setVisible(false);
+			load.setVisible(false);
+			updatePassword.setVisible(false);
 		}
 		
 		details.addComponent(stud_num_line);
