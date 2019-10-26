@@ -251,6 +251,7 @@ public class Register extends VerticalLayout implements View {
 				String[] values1 = { StudentNumber.getValue().toString() };
 				dbh1.php_request("sendStudentNum", params1, values1);
 				getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
+				dbh1.php_request("update_transcript", params1, values1);
 			}
 		});
 		// Allows the user to select whether they are registering as a tutor or a
