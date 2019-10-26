@@ -198,7 +198,7 @@ public class TutorListView extends VerticalLayout implements View
 			cb.setPlaceholder("Change Role to:");
 		}
 		else {
-			cb.setComponentError(new UserError("Please Select The Role You Would Like To Assign To The Selected user."));
+			cb.setComponentError(new UserError("Please Select The Role You Would Like To Assign To The Selected User."));
 		}
 				
 		}

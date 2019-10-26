@@ -17,6 +17,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.FormLayout;
@@ -227,7 +228,7 @@ public class ProfileView extends VerticalLayout implements View {
 					
 					removeComponent(p);
 					
-					p.setHeight("250px");
+					p.setHeight("260px");
 					p.setWidthUndefined();
 					
 					details.addComponent(p);
@@ -263,6 +264,18 @@ public class ProfileView extends VerticalLayout implements View {
 								String the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
 								the_password=the_password.substring(1, the_password.length()-1);
 								
+								if(current.isEmpty()) {
+									current.setComponentError(new UserError("Please fill in your current password"));
+								}
+								
+								if(new_password.isEmpty()) {
+									new_password.setComponentError(new UserError("Please fill in your new password"));
+								}
+								
+								if(confirm_new.isEmpty()) {
+									confirm_new.setComponentError(new UserError("Please confirm your new password"));
+								}
+								
 								//we check if the current password entered is correct, and if the new password is validated by the user
 							    if(the_password.equals(current.getValue().toString()) 
 					    		&& new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
@@ -278,7 +291,7 @@ public class ProfileView extends VerticalLayout implements View {
 									p.setVisible(false);
 									
 							    }else {
-							    	Notification.show("Enter Correct Details");
+							    	confirm_new.setComponentError(new UserError("Make sure all entries are correct"));
 							    }
 								
 					});
@@ -293,6 +306,10 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(load);
 		transcript_line.addComponent(pdf_button);
 		transcript_line.addComponent(updatePassword);
+		
+		if(!test.role.equals("0")) {
+			updatePassword.setVisible(false);
+		}
 		
 		
 		//if lecturer views profile, remove all buttons regarding transcripts

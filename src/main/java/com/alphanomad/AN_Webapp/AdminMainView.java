@@ -36,6 +36,8 @@ public class AdminMainView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent vc_event) {
+		
+		UserInfo info = ((MyUI) getUI()).get_user_info();
 		// THIS PREVENTS USERS FROM PRESSING BACK TO LOGIN WITHOUT A PASSWORD
 		if (!((MyUI) getUI()).logged_in) {
 			getUI().getNavigator().navigateTo("login");
@@ -69,7 +71,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		HorizontalLayout password_line = new HorizontalLayout();
 		Button updatePassword = new Button("Change User's Password", event1 -> {
 			Panel p = new Panel();
-			p.setHeight("200px");
+			p.setHeight("310px");
 			p.setWidthUndefined();
 
 			password_line.addComponent(p);
@@ -81,11 +83,11 @@ public class AdminMainView extends VerticalLayout implements View {
 			current.setCaption("Enter Users' Student Number:");
 			fl.addComponent(current);
 
-			TextField new_password = new TextField();
+			PasswordField new_password = new PasswordField();
 			new_password.setCaption("Enter New Password:");
 			fl.addComponent(new_password);
 
-			TextField confirm_new = new TextField();
+			PasswordField confirm_new = new PasswordField();
 			confirm_new.setCaption("Confirm New Password:");
 			fl.addComponent(confirm_new);
 
@@ -135,6 +137,10 @@ public class AdminMainView extends VerticalLayout implements View {
 		});
 
 		password_line.addComponent(updatePassword);
+		
+		if(info.role.equals("2")) {
+			updatePassword.setVisible(false);
+		}
 
 		CssLayout menu = new CssLayout(title, view_application_btn, view_users_btn, view_courses_btn, login);
 		menu.addStyleName(ValoTheme.MENU_ROOT);
