@@ -248,7 +248,7 @@ public class TutorListView extends VerticalLayout implements View
 
 		});
 		
-		Button no_filter_button = new Button("view ALL user", event ->
+		Button no_filter_button = new Button("view all users", event ->
 		{
 			g.setItems(get_all_users());
 

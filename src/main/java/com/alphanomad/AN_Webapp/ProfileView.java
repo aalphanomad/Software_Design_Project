@@ -80,7 +80,7 @@ public class ProfileView extends VerticalLayout implements View {
 		String stud_num = "";
 		MyUI ui = (MyUI) getUI();
 
- 		if (ui.get_user_info().get_role().equals("0") || ui.get_user_info().get_role().equals("1")) {
+ 		if (ui.get_user_info().get_role().equals("0")) {
 			this.user = ui.get_user_info();
 		}
 
@@ -308,24 +308,32 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(updatePassword);
 		
 		
-		//if lecturer views profile or admin view lecturer profile, remove all buttons regarding transcripts
-		if(test.role.equals("1") || user.role.equals("1")) {
+
+		//if admin views tutor profile, remove the upload transcript  and changing password functionality
+		if(test.role.equals("2") || test.role.equals("4")) {
+			text.setVisible(false);
+			load.setVisible(false);
+			pdf_button.setVisible(true);
+			updatePassword.setVisible(false);
+		}
+		
+		//if lecturer views tutor profile remove transcripts and password update
+		if(test.role.equals("1") && user.role.equals("0")) {
+			text.setVisible(false);
+			load.setVisible(false);
+			pdf_button.setVisible(false);
+			updatePassword.setVisible(false);
+		}
+		
+		
+		//when lecturer views own profile, remove transcripts and email button
+		if(user.role.equals("1")) {
+			email_button.setVisible(false);
 			text.setVisible(false);
 			load.setVisible(false);
 			pdf_button.setVisible(false);
 		}
 		
-		//remove email button when lecturer views own profile
-		if(test.role.equals("1") && user.role.equals("1")) {
-			email_button.setVisible(false);
-		}
-		
-		//if lecturer views profile, remove upload transcript
-		if(test.role.equals("2") || test.role.equals("4")) {
-			text.setVisible(false);
-			load.setVisible(false);
-			updatePassword.setVisible(false);
-		}
 		
 		
 		
