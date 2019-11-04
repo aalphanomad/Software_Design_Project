@@ -321,7 +321,7 @@ public class ProfileView extends VerticalLayout implements View {
 		if(test.role.equals("1") && user.role.equals("0")) {
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(false);
+			pdf_button.setVisible(true);
 			updatePassword.setVisible(false);
 		}
 		
