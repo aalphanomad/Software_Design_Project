@@ -17,6 +17,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.FormLayout;
@@ -79,7 +80,7 @@ public class ProfileView extends VerticalLayout implements View {
 		String stud_num = "";
 		MyUI ui = (MyUI) getUI();
 
-		 		if (ui.get_user_info().get_role().equals("0") || ui.get_user_info().get_role().equals("1")) {
+ 		if (ui.get_user_info().get_role().equals("0")) {
 			this.user = ui.get_user_info();
 		}
 
@@ -225,9 +226,9 @@ public class ProfileView extends VerticalLayout implements View {
 				event1 -> {
 					//create new panel view consisting of widgets below for user to change password
 					
-					removeComponent(p);
 					
-					p.setHeight("250px");
+					p.setVisible(true);
+					p.setHeight("260px");
 					p.setWidthUndefined();
 					
 					details.addComponent(p);
@@ -263,6 +264,18 @@ public class ProfileView extends VerticalLayout implements View {
 								String the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
 								the_password=the_password.substring(1, the_password.length()-1);
 								
+								if(current.isEmpty()) {
+									current.setComponentError(new UserError("Please fill in your current password"));
+								}
+								
+								if(new_password.isEmpty()) {
+									new_password.setComponentError(new UserError("Please fill in your new password"));
+								}
+								
+								if(confirm_new.isEmpty()) {
+									confirm_new.setComponentError(new UserError("Please confirm your new password"));
+								}
+								
 								//we check if the current password entered is correct, and if the new password is validated by the user
 							    if(the_password.equals(current.getValue().toString()) 
 					    		&& new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
@@ -278,7 +291,7 @@ public class ProfileView extends VerticalLayout implements View {
 									p.setVisible(false);
 									
 							    }else {
-							    	Notification.show("Enter Correct Details");
+							    	confirm_new.setComponentError(new UserError("Make sure all entries are correct"));
 							    }
 								
 					});
@@ -295,13 +308,34 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(updatePassword);
 		
 		
-		//if lecturer views profile, remove all buttons regarding transcripts
-		if(ui.get_user_info().get_role().equals("1")) {
+
+		//if admin views tutor profile, remove the upload transcript  and changing password functionality
+		if(test.role.equals("2") || test.role.equals("4")) {
+			text.setVisible(false);
+			load.setVisible(false);
+			pdf_button.setVisible(true);
+			updatePassword.setVisible(false);
+		}
+		
+		//if lecturer views tutor profile remove transcripts and password update
+		if(test.role.equals("1") && user.role.equals("0")) {
+			text.setVisible(false);
+			load.setVisible(false);
+			pdf_button.setVisible(false);
+			updatePassword.setVisible(false);
+		}
+		
+		
+		//when lecturer views own profile, remove transcripts and email button
+		if(user.role.equals("1")) {
 			email_button.setVisible(false);
 			text.setVisible(false);
 			load.setVisible(false);
 			pdf_button.setVisible(false);
 		}
+		
+		
+		
 		
 		details.addComponent(stud_num_line);
 		details.addComponent(name_line);
