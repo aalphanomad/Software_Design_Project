@@ -29,7 +29,6 @@ public class Booking
 		ans = dbh.php_request("booking", params, values);
 		System.out.println("STARTTIME"+startTime);
 		System.out.println("ENDTIME"+endTime);
-		Notification.show(ans);
 		filtered = dbh.parse_json_string(ans);
 		ans = filtered.get("result").getAsString().substring(0, filtered.get("result").getAsString().length());
 	}

@@ -107,7 +107,7 @@ public class ProfileView extends VerticalLayout implements View {
 		Button home_button = new Button("go to main view", btn_event -> {
 			if (((MyUI) (getUI())).get_user_info().get_role().equals("1")) {
 				getUI().getNavigator().navigateTo("lectmain");
-			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("2")) {
+			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("2") || ((MyUI) (getUI())).get_user_info().get_role().equals("4")) {
 				getUI().getNavigator().navigateTo("adminmain");
 			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("0")) {
 				getUI().getNavigator().navigateTo("tutormain");
@@ -217,8 +217,8 @@ public class ProfileView extends VerticalLayout implements View {
 					String[] values = {student_number.toString()};
 					dbh1.php_request("sendStudentNum", params, values1);
 					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
-					dbh1.php_request("update_transcipt", params, values);
-		});
+					 					dbh1.php_request("update_transcript", params, values);		
+					 					});
 		
 		//create button for user to click on to change password
 		Button updatePassword = new Button("Change Password", 
@@ -335,7 +335,7 @@ public class ProfileView extends VerticalLayout implements View {
 		// Initialize the ComboBoxMultiselect
 		course_combo_box.setPlaceholder("Courses");
 		course_combo_box.setWidth("430px");
-		course_combo_box.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5");
+		course_combo_box.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5)");
 		course_combo_box.setItems(list);
 		course_combo_box.setVisible(false);
 		try {

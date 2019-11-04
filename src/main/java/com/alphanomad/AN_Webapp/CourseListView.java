@@ -317,8 +317,11 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 					String dirty_SN2 = result_Lecturer.get("student_num").toString().substring(1,
 							result_Lecturer.get("student_num").toString().length() - 1);
 					String[] SN2 = dirty_SN2.split(",");
+					System.out.println("THE TUTOR ARRAY"+Arrays.toString(names));
+					System.out.println("THE LECTURER ARRAY"+Arrays.toString(names_Lecturer));
 
-					if (!Arrays.toString(SN).equals("[]")) {
+
+					if (!Arrays.toString(names_Lecturer).equals("[]")) {
 						Label test = new Label(
 								"<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
 										+ "       <b><u>Lecturers of: </u></b> " + "<u>"
@@ -326,13 +329,7 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 								ContentMode.HTML);
 						addComponent(test);
 						
-						 						
-						  					for (int i = 0; i < names.length; i++)
-					  					{
-						  						Tutor.add(new TutorItem(names[i].substring(1, names[i].length() - 1),
-						  								SN[i].substring(1, SN[i].length() - 1)));
-										}
-										
+						 				
 										for (int i = 0; i < names_Lecturer.length; i++)
 					 					{
 											Lecturer.add(new TutorItem(names_Lecturer[i].substring(1, names_Lecturer[i].length() - 1),
@@ -344,6 +341,7 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 					 					grid_Lecturer.getColumn("image").setRenderer(new ImageRenderer());
 					 					grid_Lecturer.setColumnOrder("image", "name", "student_num");
 					 					grid_Lecturer.setWidth("100%");
+					 					grid_Lecturer.setHeight("190px");
 											grid_Lecturer.setItems(Lecturer);
 											
 											grid_Lecturer.addColumn(unused -> "More Info", new ButtonRenderer(
@@ -359,6 +357,23 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 						 					grid_Lecturer.setHeaderRowHeight(30);
 											
 						 					addComponent(grid_Lecturer);
+					}else {
+						Label test = new Label(
+								"<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
+										+ "       <b><u>There are No Lecturers For : </u></b> " + "<u>"
+										+ (((CourseItem) e.getItem()).course_name).toString() + "</u>" + "      </p>",
+								ContentMode.HTML);
+						addComponent(test);
+					}
+					if(!Arrays.toString(names).equals("[]")) {
+						
+	  					for (int i = 0; i < names.length; i++)
+  					{
+	  						Tutor.add(new TutorItem(names[i].substring(1, names[i].length() - 1),
+	  								SN[i].substring(1, SN[i].length() - 1)));
+					}
+					
+						
 						 					
 						 					Label test2 = new Label(
 						 							"<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"

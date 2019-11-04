@@ -92,6 +92,8 @@ public class ClaimForm extends VerticalLayout implements View
 			endMinute.setComponentError(new UserError("Please Select the Time."));
 		}
 		// b.ans.equals("-1") ||
+		System.out.println("THE STARTTIME"+startTime);
+		System.out.println("THE ENDTIME"+endTime);
 		if (startTime != null && endTime != null)
 		{
 			if (checktimings(startTime, endTime) == false)
@@ -333,6 +335,7 @@ public class ClaimForm extends VerticalLayout implements View
 		addComponent(confirm);
 		confirm.addClickListener(e ->
 		{
+			
 			Courses.setComponentError(null);
 			Venue.setComponentError(null);
 			Activity.setComponentError(null);
@@ -340,10 +343,14 @@ public class ClaimForm extends VerticalLayout implements View
 			startMinute.setComponentError(null);
 			endHour.setComponentError(null);
 			endMinute.setComponentError(null);
+			if(startHour.isEmpty()==false && startMinute.isEmpty()==false && endHour.isEmpty()==false && endMinute.isEmpty()==false) {
+			startTime = startHour.getValue().toString() + ":" + startMinute.getValue().toString()+":00";
+			endTime = endHour.getValue().toString() + ":" + endMinute.getValue().toString()+":00";
+			}
 			if (validate() == true)
 			{
-				startTime = startHour.getValue().toString() + ":" + startMinute.getValue().toString()+":00";
-				endTime = endHour.getValue().toString() + ":" + endMinute.getValue().toString()+":00";
+
+
 				b = new Booking(tutor_info.name, tutor_info.student_num,
 						EditString.editCourse((Courses.getValue().toString())), Activity.getValue().toString(),
 						Venue.getValue().toString(), date, startTime, endTime);
