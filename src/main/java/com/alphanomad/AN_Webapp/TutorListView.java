@@ -1,24 +1,20 @@
 package com.alphanomad.AN_Webapp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 
 import com.google.gson.JsonArray;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.renderers.ButtonRenderer;
-import com.vaadin.ui.renderers.ImageRenderer;
 
 public class TutorListView extends VerticalLayout implements View
 {
@@ -38,7 +34,6 @@ public class TutorListView extends VerticalLayout implements View
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	private void view_users()
 	{
 		cb.setComponentError(null);
@@ -49,13 +44,6 @@ public class TutorListView extends VerticalLayout implements View
 		g.setColumnOrder("name","student_num","role");
 		//g.setHeightByRows(course_list.size());
 		g.setItems(course_list);
-		g.addColumn(unused -> "View More Info",
-				// Allows the admin to view all the tutors and lecturers for a given course
-				new ButtonRenderer(event  -> {
-					//Allows us to view the selected tutors profile
-					new ProfileView((MyUI) getUI(), (((UserItem) event.getItem()).getStudent_num()));
-					getUI().getNavigator().navigateTo("profile");				
-					}));
 
 
 		// switch to multiselect mode
