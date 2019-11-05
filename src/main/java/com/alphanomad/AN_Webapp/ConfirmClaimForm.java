@@ -117,6 +117,9 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 
 		Button home_button = new Button("Home", event -> getUI().getNavigator().navigateTo("tutormain"));
 		addComponent(home_button);
+		
+		//textfields below are for the correct lecturer for the course to validate a tutor's claim
+		//lecturer has to fill his/her student number and password for this to happen
 
 		TextField LecturerUsername = new TextField();
 		LecturerUsername.setIcon(VaadinIcons.USER);
@@ -133,8 +136,13 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 		DBHelper dbh1 = new DBHelper();
 		String[] params1 = { "student_num", "password","course"};
 
+		//once the lecturer validates the claims, the action below will follow
 		Button validate = new Button("Validate", event ->
 		{
+		
+			//first we confirm whether the correct lecturer for the right course is validating the same course
+			//user-errors will be thrwn for incrrect details, or if the wrong lecturer is validating it
+			
 			String[] values1 = { LecturerUsername.getValue(), LecturerPassword.getValue(), course};
 			ans1 = dbh1.php_request("is_lecturer", params1, values1);
  JsonObject dummy=dbh1.parse_json_string(ans1);
