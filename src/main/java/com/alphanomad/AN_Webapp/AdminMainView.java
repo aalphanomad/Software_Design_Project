@@ -61,7 +61,7 @@ public class AdminMainView extends VerticalLayout implements View {
 
 		
 		// add the following buttons to the navigation bar
-		 		//the size adjustments are made to have the bar span the whole page length
+		//the size adjustments are made to have the bar span the whole page length
 		view_application_btn.setWidth("60%");
 		view_users_btn.setWidth("60%");
 		view_courses_btn.setWidth("60%");
@@ -70,8 +70,8 @@ public class AdminMainView extends VerticalLayout implements View {
 		
 
 		HorizontalLayout password_line = new HorizontalLayout();
-	 	
-				//create a button strictly only for super-admin to change any user's password
+	
+		//create a button strictly only for super-admin to change any user's password
 		Button updatePassword = new Button("Change User's Password", event1 -> {
 			Panel p = new Panel();
 			p.setHeight("310px");
@@ -146,6 +146,7 @@ public class AdminMainView extends VerticalLayout implements View {
 
 		password_line.addComponent(updatePassword);
 		
+		//remove the password change functionality for the normal admin
 		if(info.role.equals("2")) {
 			updatePassword.setVisible(false);
 		}
@@ -160,7 +161,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		HorizontalLayout mainLayout = new HorizontalLayout(menu, viewContainer);
 		mainLayout.setSizeFull();
 		addComponent(mainLayout);
-       addComponent(password_line);
+       		addComponent(password_line);
 
 	}
 

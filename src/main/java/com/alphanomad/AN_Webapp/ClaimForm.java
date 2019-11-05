@@ -210,7 +210,7 @@ public class ClaimForm extends VerticalLayout implements View
 		String[] params = { "name", "student_num" };
 		String[] values = { tutor_info.name, tutor_info.student_num };
 
-				String ans = dbh.php_request("get_ValidCourses", params, values);
+		String ans = dbh.php_request("get_ValidCourses", params, values);
 		filtered = dbh.parse_json_string(ans);
 		ans = filtered.get("result").getAsJsonArray().toString();
 
@@ -223,12 +223,14 @@ public class ClaimForm extends VerticalLayout implements View
 			coursesArray.add(new_courses.get(i) + " " + Course_corr(new_courses.get(i)));
 		}
 
+		//arraylist to store different types of work the tutor can do
 		ArrayList<String> activityArray = new ArrayList();
 		activityArray.add("Tutoring");
 		activityArray.add("Invigilating");
 		activityArray.add("Marking");
 		activityArray.add("Other");
 
+		//the 2 arralists below are used to store values for our own custom made time picker
 		ArrayList<String> hour = new ArrayList();
 		hour.add("00");
 		hour.add("01");
