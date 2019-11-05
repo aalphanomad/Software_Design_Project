@@ -201,11 +201,12 @@ public class ClaimForm extends VerticalLayout implements View
 		removeAllComponents();
 		dbh = new DBHelper();
 		UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
-
+		 		//set up heading for UI enhancement
 		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
 				+ "       <b><u>Claim Form</u></b> " + "      </p>", ContentMode.HTML);
 		addComponent(test);
 
+		 		//following action uses the tutor's name and student number to get the validated courses permitted for him/her
 		String[] params = { "name", "student_num" };
 		String[] values = { tutor_info.name, tutor_info.student_num };
 
@@ -213,6 +214,7 @@ public class ClaimForm extends VerticalLayout implements View
 		filtered = dbh.parse_json_string(ans);
 		ans = filtered.get("result").getAsJsonArray().toString();
 
+		 		//fill arraylist with the courses fetched from the database
 		ArrayList<String> new_courses = GetCourses(ans);
 
 		ArrayList<String> coursesArray = new ArrayList();

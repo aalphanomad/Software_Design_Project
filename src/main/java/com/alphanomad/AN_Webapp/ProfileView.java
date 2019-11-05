@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.soap.Text;
-
 import org.vaadin.addons.ComboBoxMultiselect;
 
 import com.google.gson.JsonArray;
