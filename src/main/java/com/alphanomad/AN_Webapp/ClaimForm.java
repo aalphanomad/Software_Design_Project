@@ -202,17 +202,20 @@ public class ClaimForm extends VerticalLayout implements View
 		dbh = new DBHelper();
 		UserInfo tutor_info = ((MyUI) getUI()).get_user_info();
 
+		//set up heading for UI enhancement
 		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
 				+ "       <b><u>Claim Form</u></b> " + "      </p>", ContentMode.HTML);
 		addComponent(test);
 
+		//following action uses the tutor's name and student number to get the validated courses permitted for him/her
 		String[] params = { "name", "student_num" };
 		String[] values = { tutor_info.name, tutor_info.student_num };
 
-				String ans = dbh.php_request("get_ValidCourses", params, values);
+		String ans = dbh.php_request("get_ValidCourses", params, values);
 		filtered = dbh.parse_json_string(ans);
 		ans = filtered.get("result").getAsJsonArray().toString();
 
+		//fill arraylist with the courses fetched from the database
 		ArrayList<String> new_courses = GetCourses(ans);
 
 		ArrayList<String> coursesArray = new ArrayList();
@@ -221,12 +224,14 @@ public class ClaimForm extends VerticalLayout implements View
 			coursesArray.add(new_courses.get(i) + " " + Course_corr(new_courses.get(i)));
 		}
 
+		//arraylist to store different types of work the tutor can do
 		ArrayList<String> activityArray = new ArrayList();
 		activityArray.add("Tutoring");
 		activityArray.add("Invigilating");
 		activityArray.add("Marking");
 		activityArray.add("Other");
 
+		//the 2 arralists below are used to store values for our own custom made time picker
 		ArrayList<String> hour = new ArrayList();
 		hour.add("00");
 		hour.add("01");
