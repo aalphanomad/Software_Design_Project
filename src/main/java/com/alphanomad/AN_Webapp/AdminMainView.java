@@ -61,6 +61,7 @@ public class AdminMainView extends VerticalLayout implements View {
 
 		
 		// add the following buttons to the navigation bar
+		//the size adjustments are made to have the bar span the whole page length
 		view_application_btn.setWidth("60%");
 		view_users_btn.setWidth("60%");
 		view_courses_btn.setWidth("60%");
@@ -69,6 +70,8 @@ public class AdminMainView extends VerticalLayout implements View {
 		
 
 		HorizontalLayout password_line = new HorizontalLayout();
+	
+		//create a button strictly only for super-admin to change any user's password
 		Button updatePassword = new Button("Change User's Password", event1 -> {
 			Panel p = new Panel();
 			p.setHeight("310px");
@@ -79,22 +82,27 @@ public class AdminMainView extends VerticalLayout implements View {
 			FormLayout fl = new FormLayout();
 			fl.setMargin(true);
 
+			//the super-admin fills in the student number of the user whose password needs to be changed
 			TextField current = new TextField();
 			current.setCaption("Enter Users' Student Number:");
 			fl.addComponent(current);
 
+			//the super-admin fills in the new password of the user 
 			PasswordField new_password = new PasswordField();
 			new_password.setCaption("Enter New Password:");
 			fl.addComponent(new_password);
 
+			//the super-admin fills in the new password again for confirmation of the password 
 			PasswordField confirm_new = new PasswordField();
 			confirm_new.setCaption("Confirm New Password:");
 			fl.addComponent(confirm_new);
 
+			//the super-admin needs to enter his/her password for security purposes
 			PasswordField AdminPassword = new PasswordField();
 			AdminPassword.setCaption("Enter Admin's Password:");
 			fl.addComponent(AdminPassword);
 
+			//button below will trigger the action to update the password on the database
 			DBHelper dbh = new DBHelper();
 			Button confirmPass = new Button("Confirm Password", event2 -> {
 
@@ -138,6 +146,7 @@ public class AdminMainView extends VerticalLayout implements View {
 
 		password_line.addComponent(updatePassword);
 		
+		//remove the password change functionality for the normal admin
 		if(info.role.equals("2")) {
 			updatePassword.setVisible(false);
 		}
@@ -152,7 +161,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		HorizontalLayout mainLayout = new HorizontalLayout(menu, viewContainer);
 		mainLayout.setSizeFull();
 		addComponent(mainLayout);
-       addComponent(password_line);
+       		addComponent(password_line);
 
 	}
 
