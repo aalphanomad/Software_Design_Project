@@ -117,7 +117,16 @@ public class TutorMainView extends VerticalLayout implements View
 			{
 				String[] parameters = { "table", "target", "student_num", "month" };
 				String[] valuess = { "BOOKINGS", "*", studentNum, months.getSelectedItem().get()};
-				UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
+				String dest = dbh.php_request("select_booking", parameters, valuess);
+				if(dest.startsWith("<br"))
+				{
+					Notification.show("There was an error generating your claims form. Perhaps you have no claims for that month?");
+				}
+				else
+				{
+					UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
+				}
+				
 			}
 			else
 			{
@@ -125,9 +134,20 @@ public class TutorMainView extends VerticalLayout implements View
 				
 				String[] parameters = { "table", "target", "student_num"};
 				String[] valuess = { "BOOKINGS", "*", studentNum};
-				UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
+				String dest = dbh.php_request("select_booking", parameters, valuess);
+				if(dest.startsWith("<br"))
+				{
+					Notification.show("There was an error generating your claims form. Perhaps you have no claims for that month?");
+				}
+				else
+				{
+					UI.getCurrent().getPage().open(dbh.php_request("select_booking", parameters, valuess), "_blank");
+				}
 				
 			}
+			
+			
+			
 		});
         
         
