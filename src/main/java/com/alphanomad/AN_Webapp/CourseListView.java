@@ -281,6 +281,8 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 
 		// this is where we set the data for the grid
 		g.setItems(course_list);
+		
+		//when the admin clicks o view info, we provide a list of tutors and lecturers for the particular course
 		g.addColumn(unused -> "View Info",
 				// Allows the admin to view all the tutors and lecturers for a given course
 				new ButtonRenderer(e -> {
@@ -320,7 +322,7 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 					System.out.println("THE TUTOR ARRAY"+Arrays.toString(names));
 					System.out.println("THE LECTURER ARRAY"+Arrays.toString(names_Lecturer));
 
-
+					//if there exists lecturers for the course then update the grid with the arraylist of lecturers
 					if (!Arrays.toString(names_Lecturer).equals("[]")) {
 						Label test = new Label(
 								"<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
@@ -357,6 +359,7 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 						 					grid_Lecturer.setHeaderRowHeight(30);
 											
 						 					addComponent(grid_Lecturer);
+					//if no lecturers exist then display a message
 					}else {
 						Label test = new Label(
 								"<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
@@ -365,6 +368,8 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 								ContentMode.HTML);
 						addComponent(test);
 					}
+					
+					//if there exists tutors for the course then update the grid with the arraylist of tutors
 					if(!Arrays.toString(names).equals("[]")) {
 						
 	  					for (int i = 0; i < names.length; i++)
@@ -399,6 +404,7 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 
 						addComponent(grid);
 
+					//if no tutors exist then display a message
 					} else {
 						Label test = new Label(
 								"<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
