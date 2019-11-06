@@ -199,7 +199,7 @@ public class ProfileView extends VerticalLayout implements View {
 		Button pdf_button = new Button("View Transcript", event -> {
 			String result = dbh.php_request("generic_select", parameters, values2);
 
-			if (/*!result.startsWith("<br")*/result.length()>2) {
+			if (!result.startsWith("<br") /*result.length()>2*/) {
 				result = dbh.parse_json_string_arr(result).get(0).getAsString();
 				// Notification.show(result);
 				UI.getCurrent().getPage().open(result, "_blank");
