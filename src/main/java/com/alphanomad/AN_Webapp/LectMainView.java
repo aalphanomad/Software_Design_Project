@@ -90,8 +90,9 @@ public class LectMainView extends VerticalLayout implements View
 		 		String ans1 = dbh.php_request("get_ValidCourses", params1, values1);
 		retrieve = dbh.parse_json_string(ans1);
 		ans1 = retrieve.get("result").getAsJsonArray().toString();
-		 		//The code above retrieves the courses that the lecturer is responsible for and in turn, the tutors of those courses as well		
+		//The code above retrieves the courses that the lecturer is responsible for and in turn, the tutors of those courses as well		
 		//if no courses are confirmed then the arraylist of courses is empty
+		
 		 		if(ans1.equals("[]")) {
 		 			myCourses = null;
 		 		}
