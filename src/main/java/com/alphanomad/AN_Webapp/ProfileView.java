@@ -71,10 +71,12 @@ public class ProfileView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+	
+		//the info for test in this class will be for the user viewing someone else's profile. (e.g. admin or lecturer)
 		test = ((MyUI) getUI()).get_user_info();
 		this.removeAllComponents();
 
+		//ui will refer to the info of the profile being viewed
 		String stud_num = "";
 		MyUI ui = (MyUI) getUI();
 
@@ -199,7 +201,7 @@ public class ProfileView extends VerticalLayout implements View {
 		Button pdf_button = new Button("View Transcript", event -> {
 			String result = dbh.php_request("generic_select", parameters, values2);
 
-			if (/*!result.startsWith("<br")*/result.length()>2) {
+			if (!result.startsWith("<br") /*result.length()>2*/) {
 				result = dbh.parse_json_string_arr(result).get(0).getAsString();
 				// Notification.show(result);
 				UI.getCurrent().getPage().open(result, "_blank");
@@ -234,15 +236,17 @@ public class ProfileView extends VerticalLayout implements View {
 					FormLayout fl = new FormLayout();
 					fl.setMargin(true);
 					
-					
+					//the tutor/lecturer fills in their student number for security purposes
 					PasswordField current = new PasswordField();
 					current.setCaption("Enter Current Password:");
 					fl.addComponent(current);
 					
+					//the tutor/lecturer fills in their new password
 					PasswordField new_password = new PasswordField();
 					new_password.setCaption("Enter New Password:");
 					fl.addComponent(new_password);
 					
+					//the tutor/lecturer confirms their new password
 					PasswordField confirm_new = new PasswordField();
 					confirm_new.setCaption("Confirm New Password:");
 					fl.addComponent(confirm_new);
@@ -262,6 +266,7 @@ public class ProfileView extends VerticalLayout implements View {
 								String the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
 								the_password=the_password.substring(1, the_password.length()-1);
 								
+								//throw the following user-errors if the user does not fill their details correctly
 								if(current.isEmpty()) {
 									current.setComponentError(new UserError("Please fill in your current password"));
 								}
@@ -305,29 +310,33 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(pdf_button);
 		transcript_line.addComponent(updatePassword);
 		
+		if(user.role.equals("0")) {
+			pdf_button.setVisible(true);
+		}
+		else {
+			pdf_button.setVisible(false);
+		}
+		
 		
 
-		//if admin or super-admin views tutor profile, remove the upload transcript  and changing password functionality
+		//if admin or super-admin views tutor profile, remove the upload transcript and password change functionality
 		if(test.role.equals("2") || test.role.equals("4") && user.role.equals("0")) {
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(true);
 			updatePassword.setVisible(false);
 		}
 		
-		//if admin or super-admin views lecturer profile, remove all transcript buttons and changing password functionality
+		//if admin or super-admin views lecturer profile, remove all transcript buttons and password change functionality
 		else if(test.role.equals("2") || test.role.equals("4") && user.role.equals("1")) {
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(false);
 			updatePassword.setVisible(false);
 		}
 		
-		//if lecturer views tutor profile remove transcripts and password update
+		//if lecturer views tutor profile remove transcripts and password change functionality
 		if(test.role.equals("1") && user.role.equals("0")) {
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(true);
 			updatePassword.setVisible(false);
 		}
 		
@@ -337,7 +346,6 @@ public class ProfileView extends VerticalLayout implements View {
 			email_button.setVisible(false);
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(false);
 		}
 		
 		
