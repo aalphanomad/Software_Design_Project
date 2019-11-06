@@ -310,13 +310,19 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(pdf_button);
 		transcript_line.addComponent(updatePassword);
 		
+		if(user.role.equals("0")) {
+			pdf_button.setVisible(true);
+		}
+		else {
+			pdf_button.setVisible(false);
+		}
+		
 		
 
 		//if admin or super-admin views tutor profile, remove the upload transcript and password change functionality
 		if(test.role.equals("2") || test.role.equals("4") && user.role.equals("0")) {
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(true);
 			updatePassword.setVisible(false);
 		}
 		
@@ -324,7 +330,6 @@ public class ProfileView extends VerticalLayout implements View {
 		else if(test.role.equals("2") || test.role.equals("4") && user.role.equals("1")) {
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(false);
 			updatePassword.setVisible(false);
 		}
 		
@@ -332,7 +337,6 @@ public class ProfileView extends VerticalLayout implements View {
 		if(test.role.equals("1") && user.role.equals("0")) {
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(true);
 			updatePassword.setVisible(false);
 		}
 		
@@ -342,7 +346,6 @@ public class ProfileView extends VerticalLayout implements View {
 			email_button.setVisible(false);
 			text.setVisible(false);
 			load.setVisible(false);
-			pdf_button.setVisible(false);
 		}
 		
 		
