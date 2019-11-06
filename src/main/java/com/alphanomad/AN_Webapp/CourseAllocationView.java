@@ -46,6 +46,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 		g.sort("id",SortDirection.DESCENDING);
 		addComponent(g);
 
+		//a button that confirms any pending applications from a user to tutor or lecture a paricular course
 		Button confirm_btn = new Button("Confirm selected applications", event ->
 		{
 			if (selected_course_allocs != null)
@@ -69,6 +70,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 
 		});
 
+		//a button to deny any pending applications from a user to tutor or lecture a paricular course
 		Button deny_btn = new Button("Deny selected applications", event ->
 		{
 			if (selected_course_allocs != null)
@@ -113,6 +115,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 
 		});
 		
+		//we colour these buttons green and red using our custom made theme for buttons (found in theme.scss)
 		confirm_btn.setStyleName("test");
 		deny_btn.setStyleName("another");
 
