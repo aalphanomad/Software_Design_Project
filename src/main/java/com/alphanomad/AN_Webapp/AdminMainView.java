@@ -127,8 +127,33 @@ public class AdminMainView extends VerticalLayout implements View {
 				JsonArray test2 = dbh.parse_json_string_arr(userStudentNum);
 				String theStudentNum = test2.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
 				theStudentNum = theStudentNum.substring(1, theStudentNum.length() - 1);
-
-				if (the_password.equals(AdminPassword.getValue().toString())
+				
+				//throw the following user-errors if the user does not fill their details correctly
+				if(current.isEmpty()) {
+					current.setComponentError(new UserError("Please fill in your current password"));
+				}
+				
+				else if(new_password.isEmpty()) {
+					new_password.setComponentError(new UserError("Please fill in your new password"));
+				}
+				
+				else if(confirm_new.isEmpty()) {
+					confirm_new.setComponentError(new UserError("Please confirm your new password"));
+				}
+				
+				else if(AdminPassword.isEmpty()) {
+					AdminPassword.setComponentError(new UserError("Please enter your password"));
+				}
+				
+				else if(!new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+					confirm_new.setComponentError(new UserError("Please make sure you confirmed the correct password"));
+				}
+				
+				else if(!the_password.equals(AdminPassword.getValue().toString())) {
+					AdminPassword.setComponentError(new UserError("Please enter your correct password to successfully change the password"));
+				}
+				
+				else if (the_password.equals(AdminPassword.getValue().toString())
 						&& new_password.getValue().toString().equals(confirm_new.getValue().toString())
 						&& current.getValue().toString().equals(theStudentNum)) {
 
@@ -137,9 +162,10 @@ public class AdminMainView extends VerticalLayout implements View {
 					String[] values = { confirm_new.getValue().toString(), theStudentNum };
 					dbh1.php_request("update_password", params, values);
 					Notification.show("Password changed Successfully");
-				} else {
-					Notification.show("Enter Correct Details");
-				}
+				} 
+
+				
+				
 
 			});
 

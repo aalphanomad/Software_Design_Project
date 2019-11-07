@@ -272,16 +272,20 @@ public class ProfileView extends VerticalLayout implements View {
 									current.setComponentError(new UserError("Please fill in your current password"));
 								}
 								
-								if(new_password.isEmpty()) {
+								else if(new_password.isEmpty()) {
 									new_password.setComponentError(new UserError("Please fill in your new password"));
 								}
 								
-								if(confirm_new.isEmpty()) {
+								else if(confirm_new.isEmpty()) {
 									confirm_new.setComponentError(new UserError("Please confirm your new password"));
 								}
 								
+								else if(!new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+									confirm_new.setComponentError(new UserError("Please make sure you confirmed the correct password"));
+								}
+								
 								//we check if the current password entered is correct, and if the new password is validated by the user
-							    if(the_password.equals(current.getValue().toString()) 
+								else if(the_password.equals(current.getValue().toString()) 
 					    		&& new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
 							    
 							    	//if the above condition is true, then we use php to update the database wit the new password
