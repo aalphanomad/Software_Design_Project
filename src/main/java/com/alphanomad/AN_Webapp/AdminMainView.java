@@ -105,7 +105,9 @@ public class AdminMainView extends VerticalLayout implements View {
 			//button below will trigger the action to update the password on the database
 			DBHelper dbh = new DBHelper();
 			Button confirmPass = new Button("Confirm Password", event2 -> {
-
+				
+				//we use the generic php to get the super-admin's current password 
+				//so that we can check if the inputs is the correct password
 				DBHelper dbh1 = new DBHelper();
 				String[] par = { "table", "target", "filter", "value" };
 				String[] val = { "USER_INFORMATION", "USER_PASSWORD", "USER_PASSWORD",
@@ -113,6 +115,7 @@ public class AdminMainView extends VerticalLayout implements View {
 
 				String currPassword = dbh1.php_request("generic_select", par, val);
 
+				//lines below are used to clean the string of any extra punctuation marks
 				JsonArray test = dbh.parse_json_string_arr(currPassword);
 				String the_password = test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
 				the_password = the_password.substring(1, the_password.length() - 1);
