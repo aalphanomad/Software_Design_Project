@@ -31,8 +31,9 @@ public class ChooseRole extends VerticalLayout implements View{
 	public void enter(ViewChangeEvent event){
 		
 		//get the details of the role of the login user
+		//if the role is 4 (lecturer and admin), then call the function to provide the user to select a role to sign-in as
 		UserInfo info = ((MyUI) getUI()).get_user_info();
-		if(info.student_num.equals("4")) {	//if the role is 4, call the function for lecturer_admin
+		if(info.student_num.equals("4")) {	
 			Lecturer_Admin();
 		}
 

@@ -260,6 +260,7 @@ public class ProfileView extends VerticalLayout implements View {
 							event2 -> {
 								
 								//we use generic_select php to get the current password of user
+								//so that we can confirm that the user inputs the correct password
 								DBHelper dbh1=new DBHelper();
 								String[] par = { "table", "target", "filter", "value" };
 								String[] val = {"USER_INFORMATION","USER_PASSWORD","STUDENT_NUM", student_number};
@@ -331,9 +332,11 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(pdf_button);
 		transcript_line.addComponent(updatePassword);
 		
+		//when a tutor profile is being viewed, we should display the button to view the tutor's transcript
 		if(user.role.equals("0")) {
 			pdf_button.setVisible(true);
 		}
+		//else remove the button, since no other role requires a transcript
 		else {
 			pdf_button.setVisible(false);
 		}
