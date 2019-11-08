@@ -36,6 +36,7 @@ public class ProfileView extends VerticalLayout implements View {
 	UserInfo test;
 	 	Panel p = new Panel();
 	public static UserInfo user;
+	public PasswordField current,new_password,confirm_new;
 
 	/**
 	 * make a user profile view for the current user
@@ -71,6 +72,7 @@ public class ProfileView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		
 	
 		//the info for test in this class will be for the user viewing someone else's profile. (e.g. admin or lecturer)
 		test = ((MyUI) getUI()).get_user_info();
@@ -133,6 +135,7 @@ public class ProfileView extends VerticalLayout implements View {
 	 * @return a Vertical layout to be added to a page
 	 */
 	public Panel make_user_info_panel(String name, String student_number) {
+		
 		Panel panel = new Panel();
 		HorizontalLayout inner = new HorizontalLayout();
 		inner.setMargin(true);
@@ -220,12 +223,12 @@ public class ProfileView extends VerticalLayout implements View {
 					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
 					 					dbh1.php_request("update_transcript", params, values);		
 					 					});
-		
+	
 		//create button for user to click on to change password
 		Button updatePassword = new Button("Change Password", 
 				event1 -> {
 					//create new panel view consisting of widgets below for user to change password
-					
+			
 					
 					p.setVisible(true);
 					p.setHeight("260px");
@@ -237,21 +240,22 @@ public class ProfileView extends VerticalLayout implements View {
 					fl.setMargin(true);
 					
 					//the tutor/lecturer fills in their student number for security purposes
-					PasswordField current = new PasswordField();
+					 current = new PasswordField();
 					current.setCaption("Enter Current Password:");
 					fl.addComponent(current);
+	
 					
 					//the tutor/lecturer fills in their new password
-					PasswordField new_password = new PasswordField();
+					 new_password = new PasswordField();
 					new_password.setCaption("Enter New Password:");
 					fl.addComponent(new_password);
 					
 					//the tutor/lecturer confirms their new password
-					PasswordField confirm_new = new PasswordField();
+					 confirm_new = new PasswordField();
 					confirm_new.setCaption("Confirm New Password:");
 					fl.addComponent(confirm_new);
 					
-					//once the confirm button to hange password is clicked, do the following:
+					//once the confirm button to change password is clicked, do the following:
 					Button confirmPass = new Button("Confirm Password", 
 							event2 -> {
 								
@@ -266,23 +270,42 @@ public class ProfileView extends VerticalLayout implements View {
 								String the_password=test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
 								the_password=the_password.substring(1, the_password.length()-1);
 								
+								current.setComponentError(null);
+								new_password.setComponentError(null);
+								confirm_new.setComponentError(null);
+								Boolean valid=true;
 								//throw the following user-errors if the user does not fill their details correctly
 								if(current.isEmpty()) {
+									valid=false;
 									current.setComponentError(new UserError("Please fill in your current password"));
+								}
+								else if(!the_password.equals(current.getValue())) {
+									valid=false;
+									current.setComponentError(new UserError("This doe not correspond to your current password."));
 								}
 								
 								if(new_password.isEmpty()) {
+									valid=false;
 									new_password.setComponentError(new UserError("Please fill in your new password"));
 								}
 								
 								if(confirm_new.isEmpty()) {
+									valid=false;
 									confirm_new.setComponentError(new UserError("Please confirm your new password"));
 								}
 								
+								
+								
 								//we check if the current password entered is correct, and if the new password is validated by the user
-							    if(the_password.equals(current.getValue().toString()) 
-					    		&& new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+							 
+							    if(!new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+							    	valid=false;
+									new_password.setComponentError(new UserError("The passwords do not match."));
+									confirm_new.setComponentError(new UserError("The passwords do not match."));
+
+							    }
 							    
+							    if(valid==true) {
 							    	//if the above condition is true, then we use php to update the database wit the new password
 							    	
 									String[] params = {"password","student_num"};
@@ -293,8 +316,6 @@ public class ProfileView extends VerticalLayout implements View {
 									Notification.show("Password changed Successfully");
 									p.setVisible(false);
 									
-							    }else {
-							    	confirm_new.setComponentError(new UserError("Make sure all entries are correct"));
 							    }
 								
 					});

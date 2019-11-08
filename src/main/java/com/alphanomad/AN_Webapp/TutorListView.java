@@ -148,13 +148,11 @@ public class TutorListView extends VerticalLayout implements View
 						}
 						//If a lecturer/admin tries to change another lecturer/admin to lecturer only, a message should pop-up
 						else if (user.getRole().equals("Lecturer/Admin") && !info.role.equals("4")) {
-							Notification.show("Admin cannot change the role of another admin");
-							g.setItems(get_all_users());
+							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 						//If an admin tries to change the role of another admin to lecturer, a message should pop up
 						else if (user.getRole().equals("Admin") && !info.role.equals("4")) {
-							Notification.show("Admin cannot change the role of another admin");
-							g.setItems(get_all_users());
+							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 	
 					}
@@ -191,13 +189,11 @@ public class TutorListView extends VerticalLayout implements View
 						}
 						//If a lecturer/admin tries to change another lecturer/admin to a tutor, a message should pop-up
 						else if (user.getRole().equals("Lecturer/Admin") && !info.role.equals("4")) {
-							Notification.show("Only Super Admin can do this");
-							g.setItems(get_all_users());
+											Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 						//If an admin tries to change the role of another admin to a tutor, a message should pop up
 						else if (user.getRole().equals("Admin") && !info.role.equals("4")) {
-							Notification.show("Admin cannot change the role of another admin");
-							g.setItems(get_all_users());
+					Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 						else
 						{
@@ -251,7 +247,7 @@ public class TutorListView extends VerticalLayout implements View
 
 		});
 		
-		Button no_filter_button = new Button("view ALL user", event ->
+		Button no_filter_button = new Button("view ALL users", event ->
 		{
 			g.setItems(get_all_users());
 
