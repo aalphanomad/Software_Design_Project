@@ -419,9 +419,9 @@ public class ProfileView extends VerticalLayout implements View {
 					String course_name = get_course_name(course_code);
 					course_combo_box.select(course_code + "\t-\t" + course_name);
 					// \t is just a tab
-					if (course_conf.equals("1")) {
+					if (course_conf.trim().equals("1")) {
 						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + "\n"));
-					} else if (course_conf.equals("-1")){
+					} else if (course_conf.trim().equals("-1")){
 						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (denied) \n"));
 					}
 					else
