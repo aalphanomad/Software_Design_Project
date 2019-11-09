@@ -39,7 +39,31 @@ public class ClaimFormTest {
 		claimForm.Course_corr(course_code7);
 		
 		String course_code8="COMS3002";
-
+		claimForm.Course_corr(course_code8);
+		
+		String course_code9="COMS3003";
+		claimForm.Course_corr(course_code9);
+		
+		String course_code99="COMS3005";
+		claimForm.Course_corr(course_code99);
+		
+		String course_code88="COMS3009";
+		claimForm.Course_corr(course_code88);
+		
+		String course_code77="COMS3010";
+		claimForm.Course_corr(course_code77);
+		
+		String course_code66="COMS3007";
+		claimForm.Course_corr(course_code66);
+		
+		String course_code55="COMS3006";
+		claimForm.Course_corr(course_code55);
+		
+		String course_code44="COMS3008";
+		claimForm.Course_corr(course_code44);
+		
+		String course_code33="COMS3011";
+		claimForm.Course_corr(course_code33);
 		
 		//claimForm.getAllInfo();
 		
