@@ -148,12 +148,12 @@ public class AdminMainView extends VerticalLayout implements View {
 					valid = false;
 					confirm_new.setComponentError(new UserError("Please confirm your new password"));
 				}
-
+				//Ensures that the admin has entered their password
 				if (AdminPassword.isEmpty()) {
 					valid = false;
 					AdminPassword.setComponentError(new UserError("Please enter your password"));
 				}
-
+				//Ensures that the new password and the "confirm password" correspond
 				if (new_password.isEmpty() == false && confirm_new.isEmpty()
 						&& !new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
 					valid = false;
@@ -166,14 +166,14 @@ public class AdminMainView extends VerticalLayout implements View {
 					new_password.setComponentError(new UserError("Passwords do not correspond"));
 					confirm_new.setComponentError(new UserError("Passwords do not correspond"));
 				}
-
+				//Ensures that the admin entered their correct password
 				if (AdminPassword.isEmpty() == false && !the_password.equals(AdminPassword.getValue().toString())) {
 					valid = false;
 					AdminPassword.setComponentError(
 							new UserError("Please enter your correct password to successfully change the password"));
 
 				}
-
+				//If there are no irregularities, we can proceed  to actually changing the user's password
 				if (valid == true) {
 
 					String[] val2 = { "USER_INFORMATION", "STUDENT_NUM", "STUDENT_NUM", current.getValue().toString() };
@@ -185,7 +185,6 @@ public class AdminMainView extends VerticalLayout implements View {
 					theStudentNum = theStudentNum.substring(1, theStudentNum.length() - 1);
 
 					String[] params = { "password", "student_num" };
-
 					String[] values = { confirm_new.getValue().toString(), theStudentNum };
 					dbh1.php_request("update_password", params, values);
 					Notification.show("Password changed Successfully");
@@ -204,7 +203,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		if (!info.role.equals("4")) {
 			updatePassword.setVisible(false);
 		}
-
+		//Add the navigation bar
 		CssLayout menu = new CssLayout(title, view_application_btn, view_users_btn, view_courses_btn, login);
 		menu.addStyleName(ValoTheme.MENU_ROOT);
 

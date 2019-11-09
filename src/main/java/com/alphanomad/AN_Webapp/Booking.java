@@ -5,7 +5,7 @@ import com.vaadin.ui.Notification;
 
 public class Booking
 {
-
+	//This is the actual function that is called to make the entry in the databse when a tutor generates a new claim
 	public static String name, studnum, course, activity, date, venue, startTime, endTime, ans;
 	JsonObject filtered;
 
@@ -27,8 +27,7 @@ public class Booking
 		String[] values = { name, studnum, date, course, venue, "0", startTime, endTime, activity };
 		DBHelper dbh = new DBHelper();
 		ans = dbh.php_request("booking", params, values);
-		System.out.println("STARTTIME"+startTime);
-		System.out.println("ENDTIME"+endTime);
+	
 		filtered = dbh.parse_json_string(ans);
 		ans = filtered.get("result").getAsString().substring(0, filtered.get("result").getAsString().length());
 	}
