@@ -248,7 +248,7 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 										"new_course_name", "new_course_code", "event" };
 								String[] values = { mySN, admin.getValue().toString(),
 										WordUtils.capitalize(theCourse.toLowerCase()), theCode.toUpperCase(),
-										name.getValue().toString(), code.getValue().toString(), "3" };
+										WordUtils.capitalize(name.getValue().toLowerCase()), code.getValue().toString().toUpperCase(), "3" };
 								String ans = dbh.php_request("ManageCourses", params, values);
 								result = dbh.parse_json_string(ans);
 								// Below if for the case is no errors have occurred
