@@ -34,40 +34,42 @@ public class ClaimForm extends VerticalLayout implements View {
 
 	Booking b;
 	String startTime, endTime;
-	//The function below validates the textfields to ensure that none of the fields are empty
+
+	// The function below validates the textfields to ensure that none of the fields
+	// are empty
 	public Boolean validate() {
 		Boolean valid = true;
-		//Ensures that the course is not empty
+		// Ensures that the course is not empty
 		if (Courses.isEmpty()) {
 			valid = false;
 			Courses.setComponentError(new UserError("Please Select A Course."));
 		}
-		//Ensures that a course is selected
+		// Ensures that a course is selected
 		if (Venue.isEmpty()) {
 			valid = false;
 			Venue.setComponentError(new UserError("Please Select A Venue."));
 		}
-		//Ensures that a course has been selected
+		// Ensures that a course has been selected
 		if (Activity.isEmpty()) {
 			valid = false;
 			Activity.setComponentError(new UserError("Please Select A Activity."));
 		}
-		//Ensures that a start hour has been entered
+		// Ensures that a start hour has been entered
 		if (startHour.isEmpty()) {
 			valid = false;
 			startHour.setComponentError(new UserError("Please Select the Time."));
 		}
-		//Ensures that a start "minute has been entered
+		// Ensures that a start "minute has been entered
 		if (startMinute.isEmpty()) {
 			valid = false;
 			startMinute.setComponentError(new UserError("Please Select the Time."));
 		}
-		//Ensures that an end hour has been entered
+		// Ensures that an end hour has been entered
 		if (endHour.isEmpty()) {
 			valid = false;
 			endHour.setComponentError(new UserError("Please Select the Time."));
 		}
-		//ensures that an end minute has been entered
+		// ensures that an end minute has been entered
 		if (endMinute.isEmpty()) {
 			valid = false;
 			endMinute.setComponentError(new UserError("Please Select the Time."));
@@ -84,8 +86,9 @@ public class ClaimForm extends VerticalLayout implements View {
 		}
 		return valid;
 	}
-//This function ensures that the times entered are valiid. More specifically
-	//it checks whether the  end time is before the start time
+
+	// This function ensures that the times entered are valiid. More specifically
+	// it checks whether the end time is before the start time
 	private boolean checktimings(String startTime1, String endTime1) {
 
 		String pattern = "HH:mm";
@@ -110,7 +113,8 @@ public class ClaimForm extends VerticalLayout implements View {
 		}
 		return false;
 	}
-//This populates a drop down menu with the courses that the tutor is assigned
+
+	// This populates a drop down menu with the courses that the tutor is assigned
 	public static ArrayList<String> GetCourses(String FromDB) {
 
 		// Notification.show(ans);
@@ -236,8 +240,7 @@ public class ClaimForm extends VerticalLayout implements View {
 		minute.add("55");
 		minute.add("60");
 
-		
-		//Creates the drop down enu containing the courses pertaining to the tutor
+		// Creates the drop down menu containing the courses pertaining to the tutor
 		Courses = new ComboBox<String>("Course");
 		Courses.setPlaceholder("Please fill in");
 		Courses.setWidth("100%");
@@ -245,27 +248,37 @@ public class ClaimForm extends VerticalLayout implements View {
 		Courses.setValue(coursesArray.get(0));
 		addComponent(Courses);
 
+		/// Creates the Textfield where the tutor enters the venue where they have
+		/// tutored
 		Venue = new TextField();
 		Venue.setPlaceholder("Please fill in");
 		Venue.setCaption("Venue");
 		addComponent(Venue);
 
+		// Creates the textfield where the tutor will enter the activity they have
+		// performed
 		Activity = new ComboBox<String>("Type of Activity");
 		Activity.setPlaceholder("Please fill in");
 		Activity.setItems(activityArray);
 		addComponent(Activity);
 
+		// Creates the field where the user enters the start hour
 		startHour = new ComboBox<String>("Hour(s)");
 		startHour.setPlaceholder("Please fill in");
 		startHour.setItems(hour);
 
+		// Creates the field where the user enters the start minute
 		startMinute = new ComboBox<String>("Minutes");
 		startMinute.setPlaceholder("Please fill in");
 		startMinute.setItems(minute);
 
+		// Creates the field where the user enters the end hour
+
 		endHour = new ComboBox<String>("Hour(s)");
 		endHour.setPlaceholder("Please fill in");
 		endHour.setItems(hour);
+
+		// Creates the field where the user enters the end minute
 
 		endMinute = new ComboBox<String>("Minutes");
 		endMinute.setPlaceholder("Please fill in");
@@ -312,11 +325,14 @@ public class ClaimForm extends VerticalLayout implements View {
 			startMinute.setComponentError(null);
 			endHour.setComponentError(null);
 			endMinute.setComponentError(null);
+			// Ensures that the user has entered valid times
 			if (startHour.isEmpty() == false && startMinute.isEmpty() == false && endHour.isEmpty() == false
 					&& endMinute.isEmpty() == false) {
 				startTime = startHour.getValue().toString() + ":" + startMinute.getValue().toString() + ":00";
 				endTime = endHour.getValue().toString() + ":" + endMinute.getValue().toString() + ":00";
 			}
+			// if there is no irregularities in the data, we can proceed to actually
+			// creating the entry in the database
 			if (validate() == true) {
 
 				b = new Booking(tutor_info.name, tutor_info.student_num,
@@ -336,9 +352,6 @@ public class ClaimForm extends VerticalLayout implements View {
 							EditString.editCourse((Courses.getValue().toString())), Activity.getValue().toString(),
 							Venue.getValue().toString(), date, startTime, endTime));
 
-					// navigator.addView(CONFIRMCLAIMFORM, c);
-					// addComponent(c);
-					// getUI().getNavigator().navigateTo("confirm");
 				}
 			}
 		});

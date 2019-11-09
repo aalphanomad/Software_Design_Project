@@ -1,8 +1,6 @@
 package com.alphanomad.AN_Webapp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.ContentMode;
@@ -21,7 +19,8 @@ public class ClaimHistory extends VerticalLayout implements View
 	public TextField Username;
 	public PasswordField Password;
 	public ConfirmClaimForm c;
-
+//This function will correctly format the data received from the database and will add the data into a matrix, making it easy to populate
+	//the grid
 	public String[][] Display(String info, int size)
 	{
 		String[][] Matrix = new String[7][size];
@@ -31,23 +30,15 @@ public class ClaimHistory extends VerticalLayout implements View
 
 		for (int i = 0; i < first.length; i++)
 		{
-			//addComponent(new Label(Integer.toString(i)));
-
 			second = first[i].split(",");
-			
 			for (int j = 0; j < second.length; j++)
 			{	
-
 				String[] third = second[j].split("\":\"");
 				Matrix[i][j] = third[1].substring(0, third[1].length() - 2);
-
 			}
-			
 		}
-
 		Matrix[6][second.length - 1] = Matrix[6][second.length - 1].substring(0,Matrix[6][second.length - 1].length() - 3);
 		return Matrix;
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -140,22 +131,17 @@ public class ClaimHistory extends VerticalLayout implements View
 
 		grid.setWidth("100%");
 		grid.setHeightUndefined();
-		// grid.setStyleName(style); 
 		addComponent(grid);
 	}
+		//Displas a message if the user has not made any claims as yet
 		else {
 			Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
 					+ "       <b><u>You Have Not Made Any Claims As Yet.</u></b> " + "      </p>", ContentMode.HTML);
 			addComponent(test);
 		}
-		
-
-		//Adds  A Heading
-
-		
+	
 		//Navigate to the tutor's home screen
 		Button home=new Button("Home Screen",e->getUI().getNavigator().navigateTo("tutormain"));
-		
 		addComponent(home);
 
 
