@@ -47,7 +47,7 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 		removeAllComponents();
 
 		Panel panel = new Panel();
-		panel.setHeight("500px");
+		panel.setHeight("550px");
 		panel.setWidthUndefined();
 		addComponent(panel);
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
@@ -58,6 +58,7 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
 				+ "       <b><u>Confirm Your Claim</u></b> " + "      </p>", ContentMode.HTML);
 		content.addComponent(test);
+		//setComponentAlignment(test, Alignment.MIDDLE_CENTER);
 
 		name = str1;
 		studnum = str2;
@@ -175,6 +176,7 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 		 */
 
 		panel.setContent(content);
+		
 	}
 
 	public static String getName()
