@@ -25,8 +25,11 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ImageRenderer;
 
-public class CourseListView extends VerticalLayout implements View { // Global Variables
+public class CourseListView extends VerticalLayout implements View {
+	//Initialize the list to display the lecturers for a specified course
 	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
+	//Initialize the list to display the tutors for a specified course
+	
 	ArrayList<TutorItem> Lecturer = new ArrayList<TutorItem>();
 	JsonObject result_Lecturer;
 	Set<UserItem> selected_users;
@@ -44,14 +47,15 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 	}
 
 	@Override
-	public void enter(ViewChangeEvent event) {// Added ensure that additional textfoelds and buttons are not added if
-												// the user continuously clickes the "delete a course" button
+	public void enter(ViewChangeEvent event) {
+		// Added ensures that additional textfields and buttons are not added if
+	// the user continuously clicks the "delete a course" button
 		Added = false;
 		view_courses();
 	}
 
 	public void AddNewCourse() {
-		// Gets the detials of the currently logged in user
+		// Gets the details of the currently logged in user
 		UserInfo me = ((MyUI) getUI()).get_user_info();
 		String mySN = me.get_student_num();
 
@@ -68,7 +72,7 @@ public class CourseListView extends VerticalLayout implements View { // Global V
 
 		// The code below specifies what happens when we attemp to add a new course
 		Button Confirm = new Button("Confirm", event -> { // Ensures that Errors are refreshed everytime the "Confirm"
-															// button is selcetd
+															// button is selected
 			CourseName.setComponentError(null);
 			CourseCode.setComponentError(null);
 			Password.setComponentError(null);
