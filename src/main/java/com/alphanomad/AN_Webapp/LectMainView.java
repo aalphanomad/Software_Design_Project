@@ -130,20 +130,7 @@ public class LectMainView extends VerticalLayout implements View
 		ComboBox<String> combobox = new ComboBox<String>("Course Selected");
 		combobox.setPlaceholder("Please Select A Course");
 		combobox.setWidth("40%");
-		//if the arraylist does have courses confirmed for the lecturer, then fill the combobox with these courses
-		 		if(myCourses!=null) {
-		 			combobox.setItems(myCourses);
-					addComponent(combobox);
-		 			combobox.setValue(myCourses.get(0));
-		 		}
-		 		
-		 		//else, give a warning to the user that they do not have access yet
-				else {
-		 			Label warn = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
-		 					+ "       <b><u>YOU DO NOT HAVE ACCESS</u></b> " + "      </p>", ContentMode.HTML);
-		 			addComponent(warn);
-		 			setComponentAlignment(warn, Alignment.MIDDLE_CENTER);
-		 		}
+		
 
 		Grid<TutorItem> grid = new Grid<>(TutorItem.class);
 		grid.getColumn("image").setRenderer(new ImageRenderer());
@@ -162,6 +149,10 @@ public class LectMainView extends VerticalLayout implements View
 		 */
 		grid.setRowHeight(100);
 		grid.setHeaderRowHeight(30);
+		
+		
+
+		
 
 		grid.addColumn(unused -> "More Info", new ButtonRenderer<Object>(event ->
 		{
@@ -268,6 +259,28 @@ public class LectMainView extends VerticalLayout implements View
 				);
 		addComponent(email_button);
 		addComponent(logout);
+		
+		
+		
+		
+		//if the arraylist does have courses confirmed for the lecturer, then fill the combobox with these courses
+ 		if(myCourses!=null) {
+ 			combobox.setItems(myCourses);
+			addComponent(combobox);
+ 			combobox.setValue(myCourses.get(0));
+ 		}
+ 		
+ 		//else, give a warning to the user that they do not have access yet
+		else {
+ 			Label warn = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
+ 					+ "       <b><u>YOU DO NOT HAVE ACCESS</u></b> " + "      </p>", ContentMode.HTML);
+ 			addComponent(warn);
+ 			setComponentAlignment(warn, Alignment.MIDDLE_CENTER);
+ 			grid.setVisible(false);
+ 			email_button.setVisible(false);
+ 			setComponentAlignment(logout, Alignment.TOP_RIGHT);
+ 			
+ 		}
 
 	}
 

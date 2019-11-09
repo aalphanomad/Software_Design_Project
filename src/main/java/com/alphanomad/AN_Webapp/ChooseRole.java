@@ -32,7 +32,7 @@ public class ChooseRole extends VerticalLayout implements View{
 		
 		//get the details of the role of the login user
 		UserInfo info = ((MyUI) getUI()).get_user_info();
-		if(info.student_num.equals("4")) {	//if the role is 4, call the function for lecturer_admin
+		if(info.role.equals("3")) {	
 			Lecturer_Admin();
 		}
 

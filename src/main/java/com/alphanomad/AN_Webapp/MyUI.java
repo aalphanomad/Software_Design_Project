@@ -69,7 +69,7 @@ public class MyUI extends UI
 		navigator.addView(HISTORYVIEW, new ClaimHistory());
 		navigator.addView(PROFILEVIEW, new ProfileView(this));
 		navigator.addView(LOGINVIEW, new LoginView(this));
-		navigator.addView(REGVIEW, new Register());
+		navigator.addView(REGVIEW, Register.class);
 		navigator.addView(HISTORYVIEW, new ClaimHistory());
 		navigator.addView(CLAIMFORM, new ClaimForm());
 		navigator.addView(CONFIRMCLAIMFORM, new ConfirmClaimForm(null, null, null, null, null, null, null, null));

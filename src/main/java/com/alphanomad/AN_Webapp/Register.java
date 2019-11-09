@@ -7,12 +7,14 @@ import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.jsoup.safety.Cleaner;
 import org.vaadin.addons.ComboBoxMultiselect;
 
 import com.google.gson.JsonObject;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -57,11 +59,13 @@ public class Register extends VerticalLayout implements View {
 						new UserInfo(Name.getValue().toString(), StudentNumber.getValue().toString(), "0"));
 				((MyUI) getUI()).logged_in = true;
 				getUI().getNavigator().navigateTo("tutormain");
+				this.removeAllComponents();
 			} else {
 				((MyUI) getUI()).set_user_info(
 						new UserInfo(Name.getValue().toString(), StudentNumber.getValue().toString(), "1"));
 				((MyUI) getUI()).logged_in = true;
 				getUI().getNavigator().navigateTo("lectmain");
+				this.removeAllComponents();
 			}
 		} else {
 			StudentNumber.setComponentError(new UserError("A Profile With This Student Number Already Exists."));
@@ -170,9 +174,12 @@ public class Register extends VerticalLayout implements View {
 		}
 
 	}
-
-	public Register() {
-
+	
+	@Override
+	public void enter(ViewChangeEvent vc_event)
+	{
+		this.removeAllComponents();
+		this.removeAllComponents();
 		Panel panel = new Panel();
 		panel.setHeight("700px");
 		panel.setWidthUndefined();
@@ -247,11 +254,7 @@ public class Register extends VerticalLayout implements View {
 						new UserError("Please Enter Your Student Number Before Uploading Your Transcript."));
 					StudentNumber.setComponentError(new UserError("Please Enter Your Student Number"));
 			} else {
-				String[] params1 = { "student_num" };
-				String[] values1 = { StudentNumber.getValue().toString() };
-				dbh1.php_request("sendStudentNum", params1, values1);
-				getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
-								dbh1.php_request("update_transcript", params1, values1);
+				getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html?student_num="+StudentNumber.getValue().toString(), "_blank");
 			}
 		});
 		// Allows the user to select whether they are registering as a tutor or a
@@ -266,10 +269,12 @@ public class Register extends VerticalLayout implements View {
 		radio_group.addValueChangeListener(event -> {
 			if (radio_group.getValue().equals("Tutor")) {
 				comboBoxMultiselect.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5)");
+				PMA.setVisible(true);
 				load.setEnabled(true);
 			}
 			if (radio_group.getValue().equals("Lecturer")) {
 				comboBoxMultiselect.setCaption("Please Select The Courses You Will Be Responsible For.");
+				PMA.setVisible(false);
 				load.setEnabled(false);
 			}
 		});
@@ -293,6 +298,11 @@ public class Register extends VerticalLayout implements View {
 		// Attempts to registers
 		Button button = new Button("Register", event -> TheRegister());
 		content.addComponent(button);
+	}
+	
+	
+	public Register() {
+		this.removeAllComponents();
 	}
 
 }

@@ -202,12 +202,16 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(text);
 		String[] values2 = { "USER_INFORMATION", "TRANSCRIPT", "STUDENT_NUM", student_number};
 		Button pdf_button = new Button("View Transcript", event -> {
+			
 			String result = dbh.php_request("generic_select", parameters, values2);
 
-			if (!result.startsWith("<br") /*result.length()>2*/) {
-				result = dbh.parse_json_string_arr(result).get(0).getAsString();
-				// Notification.show(result);
-				UI.getCurrent().getPage().open(result, "_blank");
+			if (!result.startsWith("<br")/*result.length()>2*/) {
+				try {
+					result = dbh.parse_json_string_arr(result).get(0).getAsString();
+					UI.getCurrent().getPage().open(result, "_blank");
+				} catch (Exception e) {
+					Notification.show("No transcript associated with this user");
+				}
 
 			} else {
 				Notification.show("No transcript associated with this user");
@@ -216,13 +220,8 @@ public class ProfileView extends VerticalLayout implements View {
 		});
 		Button load = new Button("Re-upload Transcript", 
 				event -> {
-					DBHelper dbh1=new DBHelper();
-					String[] params = {"student_num"};
-					String[] values = {student_number.toString()};
-					dbh1.php_request("sendStudentNum", params, values1);
-					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
-					 					dbh1.php_request("update_transcript", params, values);		
-					 					});
+					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html?student_num="+student_number, "_blank");
+					});
 	
 		//create button for user to click on to change password
 		Button updatePassword = new Button("Change Password", 
@@ -416,10 +415,14 @@ public class ProfileView extends VerticalLayout implements View {
 					String course_name = get_course_name(course_code);
 					course_combo_box.select(course_code + "\t-\t" + course_name);
 					// \t is just a tab
-					if (course_conf.equals("1")) {
+					if (course_conf.trim().equals("1")) {
 						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + "\n"));
-					} else {
-						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (Pending confirmation) \n"));
+					} else if (course_conf.trim().equals("-1")){
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (denied) \n"));
+					}
+					else
+					{
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (pending confirmation) \n"));
 					}
 
 				} catch (Exception e) {

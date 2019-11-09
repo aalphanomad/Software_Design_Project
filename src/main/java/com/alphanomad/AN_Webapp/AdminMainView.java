@@ -29,6 +29,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class AdminMainView extends VerticalLayout implements View {
+	
+	Panel p = new Panel();
 
 	public AdminMainView() {
 
@@ -41,6 +43,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		// THIS PREVENTS USERS FROM PRESSING BACK TO LOGIN WITHOUT A PASSWORD
 		if (!((MyUI) getUI()).logged_in) {
 			getUI().getNavigator().navigateTo("login");
+			return;
 		}
 
 		// setting title for navigation bar and theme
@@ -73,9 +76,9 @@ public class AdminMainView extends VerticalLayout implements View {
 	
 		//create a button strictly only for super-admin to change any user's password
 		Button updatePassword = new Button("Change User's Password", event1 -> {
-			Panel p = new Panel();
 			p.setHeight("310px");
 			p.setWidthUndefined();
+			p.setVisible(true);
 
 			password_line.addComponent(p);
 
@@ -105,7 +108,11 @@ public class AdminMainView extends VerticalLayout implements View {
 			//button below will trigger the action to update the password on the database
 			DBHelper dbh = new DBHelper();
 			Button confirmPass = new Button("Confirm Password", event2 -> {
-
+				
+				
+				
+				//we use the generic php to get the super-admin's current password 
+				//so that we can check if the inputs is the correct password
 				DBHelper dbh1 = new DBHelper();
 				String[] par = { "table", "target", "filter", "value" };
 				String[] val = { "USER_INFORMATION", "USER_PASSWORD", "USER_PASSWORD",
@@ -157,9 +164,8 @@ public class AdminMainView extends VerticalLayout implements View {
 					String[] values = { confirm_new.getValue().toString(), theStudentNum };
 					dbh1.php_request("update_password", params, values);
 					Notification.show("Password changed Successfully");
-				} else {
-					Notification.show("Enter Correct Details");
-				}
+					p.setVisible(false);
+				} 
 
 			});
 
@@ -170,7 +176,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		password_line.addComponent(updatePassword);
 		
 		//remove the password change functionality for the normal admin
-		if(info.role.equals("2")) {
+		if(!info.role.equals("4")) {
 			updatePassword.setVisible(false);
 		}
 

@@ -106,6 +106,7 @@ public class TutorListView extends VerticalLayout implements View
 							String[] vals = { user.getStudent_num() };
 							// this sets the lecturer to a lectureradmin
 							dbh.php_request("set_admin", params, vals);
+							Notification.show("Successfully promoted lecturer(s) to lecturer and admin");
 							g.setItems(get_all_users());
 						} else
 						{
@@ -132,8 +133,9 @@ public class TutorListView extends VerticalLayout implements View
 						if (user.getRole().equals("Tutor"))
 						{
 							String[] vals = { user.getStudent_num() };
-							// this sets the lecturer to a lectureradmin
+							// this sets a tutor to a lecturer
 							dbh.php_request("make_lecturer", params, vals);
+							Notification.show("Successfully promoted tutor(s) to lecturer(s)");
 							g.setItems(get_all_users());
 						} 
 						
@@ -144,15 +146,16 @@ public class TutorListView extends VerticalLayout implements View
 							String[] vals = { user.getStudent_num() };
 							// this sets the lecturer to a lectureradmin
 							dbh.php_request("make_lecturer", params, vals);
+							Notification.show("Successfully demoted to lecturer only from admin and lecturer");
 							g.setItems(get_all_users());
 						}
 						//If a lecturer/admin tries to change another lecturer/admin to lecturer only, a message should pop-up
 						else if (user.getRole().equals("Lecturer/Admin") && !info.role.equals("4")) {
-							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this.");							g.setItems(get_all_users());
+							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 						//If an admin tries to change the role of another admin to lecturer, a message should pop up
 						else if (user.getRole().equals("Admin") && !info.role.equals("4")) {
-							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this.");							g.setItems(get_all_users());
+							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 	
 					}
@@ -176,6 +179,7 @@ public class TutorListView extends VerticalLayout implements View
 							String[] vals = { user.getStudent_num() };
 							// this sets the lecturer to a lectureradmin
 							dbh.php_request("make_tutor", params, vals);
+							Notification.show("Successfully demoted lecturer(s) to tutor");
 							g.setItems(get_all_users());
 						}
 						
@@ -185,15 +189,16 @@ public class TutorListView extends VerticalLayout implements View
 							String[] vals = { user.getStudent_num() };
 							// this sets the lecturer to a lectureradmin
 							dbh.php_request("make_tutor", params, vals);
+							Notification.show("Successfully demoted admin(s) to tutor");
 							g.setItems(get_all_users());
 						}
 						//If a lecturer/admin tries to change another lecturer/admin to a tutor, a message should pop-up
 						else if (user.getRole().equals("Lecturer/Admin") && !info.role.equals("4")) {
-											Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this.");							g.setItems(get_all_users());
+											Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 						//If an admin tries to change the role of another admin to a tutor, a message should pop up
 						else if (user.getRole().equals("Admin") && !info.role.equals("4")) {
-					Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this.");							g.setItems(get_all_users());
+					Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
 						}
 						else
 						{
