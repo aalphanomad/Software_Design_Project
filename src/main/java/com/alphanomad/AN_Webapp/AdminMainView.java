@@ -41,6 +41,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		// THIS PREVENTS USERS FROM PRESSING BACK TO LOGIN WITHOUT A PASSWORD
 		if (!((MyUI) getUI()).logged_in) {
 			getUI().getNavigator().navigateTo("login");
+			return;
 		}
 
 		// setting title for navigation bar and theme

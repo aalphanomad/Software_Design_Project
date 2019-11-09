@@ -33,6 +33,7 @@ public class TutorMainView extends VerticalLayout implements View
 		if (! ((MyUI)getUI()).logged_in)
 		{
 			getUI().getNavigator().navigateTo("login");
+			return;
 		} 
 		
 		removeAllComponents();
