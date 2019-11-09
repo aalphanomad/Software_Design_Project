@@ -421,8 +421,12 @@ public class ProfileView extends VerticalLayout implements View {
 					// \t is just a tab
 					if (course_conf.equals("1")) {
 						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + "\n"));
-					} else {
-						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (Pending confirmation) \n"));
+					} else if (course_conf.equals("-1")){
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (denied) \n"));
+					}
+					else
+					{
+						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (pending confirmation) \n"));
 					}
 
 				} catch (Exception e) {
