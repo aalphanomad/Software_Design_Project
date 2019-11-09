@@ -205,8 +205,14 @@ public class ProfileView extends VerticalLayout implements View {
 			String result = dbh.php_request("generic_select", parameters, values2);
 
 			if (!result.startsWith("<br") /*result.length()>2*/) {
+				// DON'T DO THIS IT IS A TERRIBLE IDEA
+				//dbh.php_request("update_transcript", new String[] {"student_num"}, new String[] {student_number});
+				
+				
 				result = dbh.parse_json_string_arr(result).get(0).getAsString();
 				// Notification.show(result);
+				
+				
 				UI.getCurrent().getPage().open(result, "_blank");
 
 			} else {
@@ -216,13 +222,8 @@ public class ProfileView extends VerticalLayout implements View {
 		});
 		Button load = new Button("Re-upload Transcript", 
 				event -> {
-					DBHelper dbh1=new DBHelper();
-					String[] params = {"student_num"};
-					String[] values = {student_number.toString()};
-					dbh1.php_request("sendStudentNum", params, values1);
-					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
-					 					dbh1.php_request("update_transcript", params, values);		
-					 					});
+					getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html?student_num="+student_number, "_blank");
+					});
 	
 		//create button for user to click on to change password
 		Button updatePassword = new Button("Change Password", 

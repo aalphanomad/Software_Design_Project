@@ -254,11 +254,7 @@ public class Register extends VerticalLayout implements View {
 						new UserError("Please Enter Your Student Number Before Uploading Your Transcript."));
 					StudentNumber.setComponentError(new UserError("Please Enter Your Student Number"));
 			} else {
-				String[] params1 = { "student_num" };
-				String[] values1 = { StudentNumber.getValue().toString() };
-				dbh1.php_request("sendStudentNum", params1, values1);
-				getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html", "_blank");
-								dbh1.php_request("update_transcript", params1, values1);
+				getUI().getPage().open("http://lamp.ms.wits.ac.za/~s1601745/uploadTranscript.html?student_num="+StudentNumber.getValue().toString(), "_blank");
 			}
 		});
 		// Allows the user to select whether they are registering as a tutor or a
