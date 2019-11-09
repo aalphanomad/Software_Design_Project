@@ -46,7 +46,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 		g.sort("id",SortDirection.DESCENDING);
 		addComponent(g);
 
-		//a button that confirms any pending applications from a user to tutor or lecture a paricular course
+		//a button that confirms any pending applications from a user to tutor or lecture a particular course
 		Button confirm_btn = new Button("Confirm selected applications", event ->
 		{
 			if (selected_course_allocs != null)
@@ -93,18 +93,19 @@ public class CourseAllocationView extends VerticalLayout implements View
 			}
 
 		});
-
+		//Allows the admin to view all confirmed applications
 		Button view_confirmed_btn = new Button("View Confirmed Applications", event ->
 		{
 			g.setItems(get_confirmed_course_allocs());
 
 		});
-
-		Button view_unconfirmed_btn = new Button("View Unconfirmed Applications", event ->
+//Allows the admin to view all pending applications
+		Button view_unconfirmed_btn = new Button("View Pending Applications", event ->
 		{
 			g.setItems(get_unconfirmed_course_allocs());
 
 		});
+		//Alows the admin to view all declined applications
 		Button view_declined_btn=new Button("View Declined Applications",event-> {
 			g.setItems(get_declined_course_allocs());
 		});
