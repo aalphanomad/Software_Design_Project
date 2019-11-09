@@ -175,7 +175,7 @@ public class AdminMainView extends VerticalLayout implements View {
 		password_line.addComponent(updatePassword);
 		
 		//remove the password change functionality for the normal admin
-		if(info.role.equals("2")) {
+		if(!info.role.equals("4")) {
 			updatePassword.setVisible(false);
 		}
 
