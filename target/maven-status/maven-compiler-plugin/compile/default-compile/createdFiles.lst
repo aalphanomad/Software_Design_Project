@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 com\alphanomad\AN_Webapp\ClaimHistory.class
 com\alphanomad\AN_Webapp\TutorItem.class
 com\alphanomad\AN_Webapp\UserItem.class
@@ -27,4 +25,3 @@ com\alphanomad\AN_Webapp\AdminMainView.class
 com\alphanomad\AN_Webapp\CourseAllocationView.class
 com\alphanomad\AN_Webapp\MyUI$MyUIServlet.class
 com\alphanomad\AN_Webapp\CourseListView.class
->>>>>>> VBranch
