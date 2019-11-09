@@ -1,5 +1,6 @@
 package com.alphanomad.AN_Webapp;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -29,6 +30,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class AdminMainView extends VerticalLayout implements View {
+	public TextField current;
+	public PasswordField new_password,confirm_new,AdminPassword;
 	
 	Panel p = new Panel();
 
@@ -71,11 +74,16 @@ public class AdminMainView extends VerticalLayout implements View {
 		login.setWidth("60%");
 		title.setWidth("240%");
 		
+		
+		
+		
+		
 
 		HorizontalLayout password_line = new HorizontalLayout();
 	
 		//create a button strictly only for super-admin to change any user's password
 		Button updatePassword = new Button("Change User's Password", event1 -> {
+			
 			p.setHeight("310px");
 			p.setWidthUndefined();
 			p.setVisible(true);
@@ -86,79 +94,123 @@ public class AdminMainView extends VerticalLayout implements View {
 			fl.setMargin(true);
 
 			//the super-admin fills in the student number of the user whose password needs to be changed
-			TextField current = new TextField();
+			 current = new TextField();
 			current.setCaption("Enter Users' Student Number:");
 			fl.addComponent(current);
 
 			//the super-admin fills in the new password of the user 
-			PasswordField new_password = new PasswordField();
+			 new_password = new PasswordField();
 			new_password.setCaption("Enter New Password:");
 			fl.addComponent(new_password);
 
 			//the super-admin fills in the new password again for confirmation of the password 
-			PasswordField confirm_new = new PasswordField();
+			 confirm_new = new PasswordField();
 			confirm_new.setCaption("Confirm New Password:");
 			fl.addComponent(confirm_new);
 
 			//the super-admin needs to enter his/her password for security purposes
-			PasswordField AdminPassword = new PasswordField();
+			 AdminPassword = new PasswordField();
 			AdminPassword.setCaption("Enter Admin's Password:");
 			fl.addComponent(AdminPassword);
+			
+			
 
 			//button below will trigger the action to update the password on the database
 			DBHelper dbh = new DBHelper();
 			Button confirmPass = new Button("Confirm Password", event2 -> {
 				
-				
-				
 				//we use the generic php to get the super-admin's current password 
 				//so that we can check if the inputs is the correct password
+				current.setComponentError(null);
+				new_password.setComponentError(null);
+				confirm_new.setComponentError(null);
+				AdminPassword.setComponentError(null);
 				DBHelper dbh1 = new DBHelper();
-				String[] par = { "table", "target", "filter", "value" };
-				String[] val = { "USER_INFORMATION", "USER_PASSWORD", "USER_PASSWORD",
-						AdminPassword.getValue().toString() };
+				String student_num = ((MyUI)getUI()).get_user_info().get_student_num();
+					String[] par = { "table", "target", "filter", "value" };
+					String[] val = { "USER_INFORMATION","USER_PASSWORD", "STUDENT_NUM",student_num};
+					
 
-				String currPassword = dbh1.php_request("generic_select", par, val);
+					String currPassword = dbh1.php_request("generic_select", par, val);
 
-				JsonArray test = dbh.parse_json_string_arr(currPassword);
-				String the_password = test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
-				the_password = the_password.substring(1, the_password.length() - 1);
+					//lines below are used to clean the string of any extra punctuation marks
+					JsonArray test = dbh.parse_json_string_arr(currPassword);
+					String the_password = test.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
+					the_password = the_password.substring(1, the_password.length() - 1);
+					Boolean valid=true;
 
-				String[] val2 = { "USER_INFORMATION", "STUDENT_NUM", "STUDENT_NUM", current.getValue().toString() };
+					
+					try {
+						String[]value= { "USER_INFORMATION","STUDENT_NUM", "STUDENT_NUM",current.getValue()};
+						String student = dbh1.php_request("generic_select", par, value);
+						if(student.startsWith("<br"))
+						{
+							valid=false;
+							//invalid
+							current.setComponentError(new UserError("This user does not exist."));
 
-				String userStudentNum = dbh1.php_request("generic_select", par, val2);
+						}
+					
+						
 
-				JsonArray test2 = dbh.parse_json_string_arr(userStudentNum);
-				String theStudentNum = test2.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
-				theStudentNum = theStudentNum.substring(1, theStudentNum.length() - 1);
+						}catch(Exception e) {
+							
+						}
+						
+					
+			
 				 				//throw the following user-errors if the user does not fill their details correctly
 								if(current.isEmpty()) {
+									valid=false;
 				 					current.setComponentError(new UserError("Please fill in your current password"));
 				 				}
 				 				
-				 				else if(new_password.isEmpty()) {
+				 				 if(new_password.isEmpty()) {
+				 					 valid=false;
 				 					new_password.setComponentError(new UserError("Please fill in your new password"));
 				 				}
 				 				
-				 				else if(confirm_new.isEmpty()) {
+				 				 if(confirm_new.isEmpty()) {
+				 					 valid=false;
 				 					confirm_new.setComponentError(new UserError("Please confirm your new password"));
 								}
 				 				
-								else if(AdminPassword.isEmpty()) {
+								 if(AdminPassword.isEmpty()) {
+									 valid=false;
 				 					AdminPassword.setComponentError(new UserError("Please enter your password"));
 								}
 				 				
-				 				else if(!new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+				 				 if(new_password.isEmpty()==false && confirm_new.isEmpty() && !new_password.getValue().toString().equals(confirm_new.getValue().toString())) {
+				 					 valid=false;
 				 					confirm_new.setComponentError(new UserError("Please make sure you confirmed the correct password"));
 								}
+				 				 
+				 				 if(new_password.isEmpty()==false && confirm_new.isEmpty()==false && !new_password.getValue().equals(confirm_new.getValue())) {
+				 					 valid=false;
+			 						 new_password.setComponentError(new UserError("Passwords do not correspond"));
+			 						 confirm_new.setComponentError(new UserError("Passwords do not correspond"));
+			 					 }
 				 				
-				 				else if(!the_password.equals(AdminPassword.getValue().toString())) {
-									AdminPassword.setComponentError(new UserError("Please enter your correct password to successfully change the password"));
-				 				}
+				 			if(AdminPassword.isEmpty()==false && !the_password.equals(AdminPassword.getValue().toString())){
+				 				valid=false;
+								AdminPassword.setComponentError(new UserError("Please enter your correct password to successfully change the password"));
+
+				 			}
 				 				
-				 				else if (the_password.equals(AdminPassword.getValue().toString())
-					  						&& new_password.getValue().toString().equals(confirm_new.getValue().toString())
-					  						&& current.getValue().toString().equals(theStudentNum)) {
+				 				 if (valid==true) {
+				 				
+				 					 
+				 				
+
+				 					String[] val2 = { "USER_INFORMATION", "STUDENT_NUM", "STUDENT_NUM", current.getValue().toString() };
+
+				 					String userStudentNum = dbh1.php_request("generic_select", par, val2);
+
+				 					JsonArray test2 = dbh.parse_json_string_arr(userStudentNum);
+				 					String theStudentNum = test2.getAsJsonArray().get(0).getAsJsonArray().get(0).toString();
+				 					theStudentNum = theStudentNum.substring(1, theStudentNum.length() - 1);
+				 					
+				 					
 					String[] params = { "password", "student_num" };
 
 					String[] values = { confirm_new.getValue().toString(), theStudentNum };
@@ -166,6 +218,9 @@ public class AdminMainView extends VerticalLayout implements View {
 					Notification.show("Password changed Successfully");
 					p.setVisible(false);
 				} 
+
+				
+				
 
 			});
 
