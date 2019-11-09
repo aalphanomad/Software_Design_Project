@@ -281,7 +281,7 @@ public class ProfileView extends VerticalLayout implements View {
 								}
 								else if(!the_password.equals(current.getValue())) {
 									valid=false;
-									current.setComponentError(new UserError("This doe not correspond to your current password."));
+									current.setComponentError(new UserError("This does not correspond to your current password."));
 								}
 								
 								if(new_password.isEmpty()) {
@@ -397,7 +397,7 @@ public class ProfileView extends VerticalLayout implements View {
 		List<String> list = new ArrayList<String>();
 		for(CourseItem item: get_all_courses())
 		{
-			list.add(item.getCourse_code());
+			list.add(item.getCourse_code() + "\t-\t" + item.getCourse_name());
 		}
 
 		ComboBoxMultiselect<String> course_combo_box = new ComboBoxMultiselect<>();
@@ -414,7 +414,7 @@ public class ProfileView extends VerticalLayout implements View {
 					String course_conf = ((JsonArray) courses_obj.get(x)).get(1).getAsString();
 					
 					String course_name = get_course_name(course_code);
-					course_combo_box.select(course_code);
+					course_combo_box.select(course_code + "\t-\t" + course_name);
 					// \t is just a tab
 					if (course_conf.equals("1")) {
 						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + "\n"));
@@ -422,12 +422,13 @@ public class ProfileView extends VerticalLayout implements View {
 						courses_inner.addComponent(new Label(course_code + "\t-\t" + course_name + " (Pending confirmation) \n"));
 					}
 
-				} catch (UnsupportedOperationException e) {
+				} catch (Exception e) {
 					// TODO
 				}
 			}
 
 		} catch (Exception e) {
+			System.out.println("YOU DUN GOOFED IN PROFILE VIEW, make_courses_panel");
 			e.printStackTrace();
 			courses_inner.addComponent(new Label("There's nothing here... \n"));
 		}
@@ -445,7 +446,8 @@ public class ProfileView extends VerticalLayout implements View {
 				String[] params = {"student_num","course","role","name"}; 
 				for(String item : list)
 				{
-					String[] values = {user.get_student_num(),item,user.get_role(),user.get_name()};
+					String course_code = item.split("\\s+")[0];
+					String[] values = {user.get_student_num(), course_code,user.get_role(),user.get_name()};
 					if(course_combo_box.getSelectedItems().contains(item))
 					{
 						dbh.php_request("add_course", params, values);
