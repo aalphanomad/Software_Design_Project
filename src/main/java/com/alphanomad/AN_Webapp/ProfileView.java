@@ -202,18 +202,16 @@ public class ProfileView extends VerticalLayout implements View {
 		transcript_line.addComponent(text);
 		String[] values2 = { "USER_INFORMATION", "TRANSCRIPT", "STUDENT_NUM", student_number};
 		Button pdf_button = new Button("View Transcript", event -> {
+			
 			String result = dbh.php_request("generic_select", parameters, values2);
 
-			if (!result.startsWith("<br") /*result.length()>2*/) {
-				// DON'T DO THIS IT IS A TERRIBLE IDEA
-				//dbh.php_request("update_transcript", new String[] {"student_num"}, new String[] {student_number});
-				
-				
-				result = dbh.parse_json_string_arr(result).get(0).getAsString();
-				// Notification.show(result);
-				
-				
-				UI.getCurrent().getPage().open(result, "_blank");
+			if (!result.startsWith("<br")/*result.length()>2*/) {
+				try {
+					result = dbh.parse_json_string_arr(result).get(0).getAsString();
+					UI.getCurrent().getPage().open(result, "_blank");
+				} catch (Exception e) {
+					Notification.show("No transcript associated with this user");
+				}
 
 			} else {
 				Notification.show("No transcript associated with this user");
