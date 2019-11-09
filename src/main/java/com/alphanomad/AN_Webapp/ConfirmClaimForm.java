@@ -45,20 +45,24 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 	{
 
 		removeAllComponents();
+		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
+				+ "       <b><u>Confirm Your Claim</u></b> " + "      </p>", ContentMode.HTML);
+		
+
+		addComponent(test);
+		setComponentAlignment(test, Alignment.MIDDLE_CENTER);
 
 		Panel panel = new Panel();
-		panel.setHeight("550px");
-		panel.setWidthUndefined();
+		panel.setHeight("400px");
+		panel.setWidth("550px");
 		addComponent(panel);
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 
 		FormLayout content = new FormLayout();
 		content.addStyleName("Template");
 		content.setMargin(true);
-		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
-				+ "       <b><u>Confirm Your Claim</u></b> " + "      </p>", ContentMode.HTML);
-		content.addComponent(test);
-		//setComponentAlignment(test, Alignment.MIDDLE_CENTER);
+
+
 
 		name = str1;
 		studnum = str2;
@@ -176,6 +180,8 @@ public class ConfirmClaimForm extends VerticalLayout implements View
 		 */
 
 		panel.setContent(content);
+		//setComponentAlignment(test, Alignment.TOP_LEFT);
+
 		
 	}
 
