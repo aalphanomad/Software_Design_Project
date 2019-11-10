@@ -47,7 +47,7 @@ public class ClaimHistory extends VerticalLayout implements View
 
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@Override
 	public void enter(ViewChangeEvent event)
 	{
@@ -78,73 +78,6 @@ public class ClaimHistory extends VerticalLayout implements View
 		addComponent(test);
 		ArrayList<HistoryItem> History = new ArrayList<>();
 		
-		//Gets the Past Claims and formats them
-		String[] info = new String[8];
-		for (int i = 0; i < size; i++)
-		{
-			for (int j = 0; j < 7; j++)
-			{
-
-				info[j] = Test[j][i];
-			}
-			System.out.println(info[4]);
-			if(info[4].equals("0"))//If the claim has not been validated
-			History.add(new HistoryItem(info[0], info[1], info[2], info[3], "Not Validated", info[5], info[6]));
-			else {
-				History.add(new HistoryItem(info[0], info[1], info[2], info[3], "Validated", info[5], info[6]));
-
-			}
-		}
-		
-		ButtonRenderer dummy;
-		
-		//Creates the actual Grid
-		Grid<HistoryItem> grid = new Grid<>(HistoryItem.class);
-		grid.setItems(History);
-		
-		//Below specifies how to we add the "Validate" button to the grid
-		grid.addColumn(unused -> "Validate",
-				
-				
-		dummy= new ButtonRenderer(
-				
-			
-			e ->
-			{
-				if((((HistoryItem) e.getItem()).getValid()).equals("Validated")) {
-					Notification.show("This Claim Has Already Been Validated!");
-				}
-				else {
-				removeAllComponents();
-	
-				//Allows us to confirm the selected claim form
-				addComponent(c = new ConfirmClaimForm(Tutor_Name, Tutor_StudentNum,
-						(((HistoryItem) e.getItem()).getCourse()), (((HistoryItem) e.getItem()).getActivity()),
-						(((HistoryItem) e.getItem()).getVenue()), (((HistoryItem) e.getItem()).getDate()),
-						(((HistoryItem) e.getItem()).getStart_Time()),
-						(((HistoryItem) e.getItem()).getEnd_time())));
-				}
-			}
-			
-	
-			)); 
-
-		grid.setWidth("100%");
-		grid.setHeightUndefined();
-		addComponent(grid);
-	}
-		//Displas a message if the user has not made any claims as yet
-		else {
-			Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
-					+ "       <b><u>You Have Not Made Any Claims As Yet.</u></b> " + "      </p>", ContentMode.HTML);
-			addComponent(test);
-		}
-	
-		//Navigate to the tutor's home screen
-		Button home=new Button("Home Screen",e->getUI().getNavigator().navigateTo("tutormain"));
-		addComponent(home);
-
-
-	}
+*/
 }
 
