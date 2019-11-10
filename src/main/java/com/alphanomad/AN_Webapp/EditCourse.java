@@ -15,7 +15,7 @@ public class EditCourse extends VerticalLayout implements View
 	
 	public void EditCourse()
 	{
-		String course_name=getUI().getSession().getAttribute("thename").toString();
+		/*String course_name=getUI().getSession().getAttribute("thename").toString();
 		String course_code=getUI().getSession().getAttribute("thecourse").toString();
 		TextField name=new TextField();
 		name.setCaption("Please Enter The Course Name");
@@ -25,16 +25,7 @@ public class EditCourse extends VerticalLayout implements View
 		TextField code=new TextField();
 		code.setCaption("Please Enter the Course Code");
 		code.setValue(course_code);
-		addComponent(code);
-		
-		PasswordField admin=new PasswordField();
-		admin.setCaption("Please Enter Your Admin Password");
-		addComponent(admin);
-		
-		Button Confirm=new Button("Confirm",event->{
-			Notification.show("HELLLLLLLO");
-		});
-		addComponent(Confirm);
+		addComponent(code);*/
 		
 	}
 }

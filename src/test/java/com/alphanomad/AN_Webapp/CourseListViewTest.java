@@ -12,7 +12,8 @@ public class CourseListViewTest {
 
 	@Test
 	public void test() {
-
+		CourseListView coListView=new CourseListView();
+		
 		
 		
 	}
