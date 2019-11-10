@@ -93,12 +93,12 @@ public class DBHelper
 		} catch (InterruptedException e)
 		{
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 			return ("INTERRUPTED");
 		} catch (ExecutionException e)
 		{
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 			return ("ERROR");
 		}
 
