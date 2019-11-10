@@ -52,38 +52,7 @@ public class TutorListView extends VerticalLayout implements View
 		
 		addComponent(g);
 		
-		//if the login user is a super admin then fill the arraylist with the appropriate choices that can be done
-		//UserInfo info = ((MyUI) getUI()).get_user_info();
-				
-		
-		
-		
 		/*HorizontalLayout horiz = new HorizontalLayout();
-		horiz.addComponent(cb);;
-		
-		addComponent(horiz);
-		cb.setWidth("25%");
-		
-		
-		Button filter_tutor_button = new Button("view only tutors", event ->
-		{
-			g.setItems(get_selected_users("0"));
-
-		});
-		
-		Button filter_lecturer_button = new Button("view only lecturers", event ->
-		{
-			g.setItems(get_selected_users("1"));
-
-		});
-		
-		Button filter_admin_button = new Button("view only admins", event ->
-		{
-			ArrayList<UserItem> items = get_selected_users("2");
-			items.addAll(get_selected_users("3"));
-			g.setItems(items);
-
-		});
 		
 		Button no_filter_button = new Button("view ALL users", event ->
 		{
