@@ -48,185 +48,18 @@ public class TutorListView extends VerticalLayout implements View
 
 		// switch to multiselect mode
 		g.setSelectionMode(SelectionMode.MULTI);
-		g.addSelectionListener(event ->
-		{
-			selected_users = event.getAllSelectedItems();
-			// Notification.show(selected_course_allocs.size() + " items selected");
-		});
+		
 		
 		addComponent(g);
 		
 		//if the login user is a super admin then fill the arraylist with the appropriate choices that can be done
-		UserInfo info = ((MyUI) getUI()).get_user_info();
-		if(info.role.equals("4")) {
-			
-			ArrayList<String> Options_For_SuperAdmin= new ArrayList<String>();
-			
-			Options_For_SuperAdmin.add("Tutor");
-			Options_For_SuperAdmin.add("Lecturer");
-			Options_For_SuperAdmin.add("Admin");
-			cb.setItems(Options_For_SuperAdmin);
-			cb.setPlaceholder("Change Role to:");
-			
-		}
-		
-		//if the login user is an admin then fill the arraylist with the appropriate choices that can be done (same as the super asmin except no choice for admin)
-		else {
-			
-			ArrayList<String> Options_For_Admin = new ArrayList<String>();
-			
-			Options_For_Admin.add("Tutor");
-			Options_For_Admin.add("Lecturer");
-			cb.setItems(Options_For_Admin);
-			cb.setPlaceholder("Change Role to:");
-			
-			
-		}
-		
-		
-		
-		
-		Button confirm = new Button("confirm", event ->
-		{
-			//Notification.show(cb.getValue().toString());
-				if(cb.isEmpty()==false) {
-			//if you wish to make someone admin
-			if (cb.getValue().toString().equals("Admin")) {
-			
-				if (selected_users != null)
-				{
-					DBHelper dbh = new DBHelper();
-					String[] params = { "student_num" };
-	
-					for (UserItem user : selected_users)
-					{
-						//if the selected user is a tutor or a lecturer, and you would like to make them admin, then communicate with php to update database
-						if (user.getRole().equals("Tutor") || user.getRole().equals("Lecturer"))
-						{
-							String[] vals = { user.getStudent_num() };
-							// this sets the lecturer to a lectureradmin
-							dbh.php_request("set_admin", params, vals);
-							Notification.show("Successfully promoted lecturer(s) to lecturer and admin");
-							g.setItems(get_all_users());
-						} else
-						{
-							g.setItems(get_all_users());
-						}
-	
-					}
-				} 
-	
-			}
-			
-			
-			//if you wish to make someone lecturer
-			if (cb.getValue().toString().equals("Lecturer")) {
-			
-				if (selected_users != null)
-				{
-					DBHelper dbh = new DBHelper();
-					String[] params = { "student_num" };
-	
-					for (UserItem user : selected_users)
-					{
-						//if the selected user is a tutor, and you would like to make them lecturer, then communicate with php to update database
-						if (user.getRole().equals("Tutor"))
-						{
-							String[] vals = { user.getStudent_num() };
-							// this sets a tutor to a lecturer
-							dbh.php_request("make_lecturer", params, vals);
-							Notification.show("Successfully promoted tutor(s) to lecturer(s)");
-							g.setItems(get_all_users());
-						} 
-						
-						//if the selected user is a lecturer and admin, and you would like to make them lecturer only, then communicate with php to update database
-						//this is kept separate from the above condition so that we check that only the super-admin can demote a lecturer/admin to lecturer
-						else if (user.getRole().equals("Lecturer/Admin") && info.role.equals("4"))
-						{
-							String[] vals = { user.getStudent_num() };
-							// this sets the lecturer to a lectureradmin
-							dbh.php_request("make_lecturer", params, vals);
-							Notification.show("Successfully demoted to lecturer only from admin and lecturer");
-							g.setItems(get_all_users());
-						}
-						//If a lecturer/admin tries to change another lecturer/admin to lecturer only, a message should pop-up
-						else if (user.getRole().equals("Lecturer/Admin") && !info.role.equals("4")) {
-							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
-						}
-						//If an admin tries to change the role of another admin to lecturer, a message should pop up
-						else if (user.getRole().equals("Admin") && !info.role.equals("4")) {
-							Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
-						}
-	
-					}
-				}
-			}
-			
-			
-			//if you wish to make someone tutor
-			if (cb.getValue().toString().equals("Tutor")) {
+		//UserInfo info = ((MyUI) getUI()).get_user_info();
 				
-				if (selected_users != null)
-				{
-					DBHelper dbh = new DBHelper();
-					String[] params = { "student_num" };
-	
-					for (UserItem user : selected_users)
-					{
-						//if the selected user is a lecturer, and you would like to make them tutor, then communicate with php to update database
-						if (user.getRole().equals("Lecturer"))
-						{
-							String[] vals = { user.getStudent_num() };
-							// this sets the lecturer to a lectureradmin
-							dbh.php_request("make_tutor", params, vals);
-							Notification.show("Successfully demoted lecturer(s) to tutor");
-							g.setItems(get_all_users());
-						}
-						
-						//provided you are a super admin and if the selected user is an admin, and you would like to make them tutor, then communicate with php to update database
-						if (user.getRole().equals("Admin") && info.role.equals("4"))
-						{
-							String[] vals = { user.getStudent_num() };
-							// this sets the lecturer to a lectureradmin
-							dbh.php_request("make_tutor", params, vals);
-							Notification.show("Successfully demoted admin(s) to tutor");
-							g.setItems(get_all_users());
-						}
-						//If a lecturer/admin tries to change another lecturer/admin to a tutor, a message should pop-up
-						else if (user.getRole().equals("Lecturer/Admin") && !info.role.equals("4")) {
-											Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
-						}
-						//If an admin tries to change the role of another admin to a tutor, a message should pop up
-						else if (user.getRole().equals("Admin") && !info.role.equals("4")) {
-					Notification.show("Admin cannot change the role of another admin. Only Super Admin can do this");							g.setItems(get_all_users());
-						}
-						else
-						{
-							
-							g.setItems(get_all_users());
-						}
-						
-	
-					}
-				}
-			}
-			cb.setComponentError(null);
-			cb.setValue(null);
-			cb.setPlaceholder("Change Role to:");
-		}
-		else {
-			cb.setComponentError(new UserError("Please Select The Role You Would Like To Assign To The Selected User."));
-		}
-				
-		}
-		
-				
-				);
 		
 		
-		HorizontalLayout horiz = new HorizontalLayout();
+		
+		/*HorizontalLayout horiz = new HorizontalLayout();
 		horiz.addComponent(cb);;
-		horiz.addComponent(confirm);
 		
 		addComponent(horiz);
 		cb.setWidth("25%");
@@ -270,7 +103,7 @@ public class TutorListView extends VerticalLayout implements View
 		button_row.addComponent(filter_admin_button);
 		button_row.addComponent(no_filter_button);
 		addComponent(button_row);
-		addComponent(go_back_to_main_view);
+		addComponent(go_back_to_main_view);*/
 	}
 	
 	

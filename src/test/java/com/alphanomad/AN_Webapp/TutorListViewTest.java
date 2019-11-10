@@ -10,7 +10,9 @@ public class TutorListViewTest {
 	public void test() {
 		//fail("Not yet implemented");
 		TutorListView tutorListView=new TutorListView();
-		//tutorListView.
+		tutorListView.view_users();
+		
+		tutorListView.get_selected_users("4"); 	
 	}
 
 }
