@@ -27,11 +27,11 @@ public class TutorListView extends VerticalLayout implements View
 	{
 	}
 	
-	@Override
+	/*@Override
 	public void enter(ViewChangeEvent event)
 	{
 		view_users();
-	}
+	}*/
 	
 	
 	public void view_users()
