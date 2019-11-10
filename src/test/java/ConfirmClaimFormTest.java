@@ -18,7 +18,14 @@ public class ConfirmClaimFormTest {
 		String  str8="09:00";
 		
 		ConfirmClaimForm claimForm=new ConfirmClaimForm(str1, str2, str3, str4, str5, str6, str7, str8);
-		
+		claimForm.getName();
+		claimForm.getStud();
+		claimForm.getCourse();
+		claimForm.getActivity();
+		claimForm.getDate();
+		claimForm.getVenue();
+		claimForm.getStart();
+		claimForm.getEnd();
 		
 		
 	}

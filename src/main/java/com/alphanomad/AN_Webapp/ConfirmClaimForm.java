@@ -140,28 +140,28 @@ public class ConfirmClaimForm extends VerticalLayout implements View {
 			// Errors will be thrown for incorrect details, or if the wrong lecturer is
 			// validating the claim
 
-			String[] values1 = { LecturerUsername.getValue(), LecturerPassword.getValue(), course };
-			ans1 = dbh1.php_request("is_lecturer", params1, values1);
-			JsonObject dummy = dbh1.parse_json_string(ans1);
-			ans1 = dummy.get("result").getAsString();
+//			String[] values1 = { LecturerUsername.getValue(), LecturerPassword.getValue(), course };
+//			ans1 = dbh1.php_request("is_lecturer", params1, values1);
+//			JsonObject dummy = dbh1.parse_json_string(ans1);
+//			ans1 = dummy.get("result").getAsString();
+//
+//			// The code below is executed when the claim has been validated successfully
+//			if (ans1.equals("0")) {
+//				String[] params2 = { "name", "student_num", "course", "date", "venue" };
+//				String[] values2 = { name, studnum, course, date, venue };
+//				ans2 = dbh1.php_request("verify", params2, values2);
+//				Notification.show("Claim Has Been Verified Successfully");
+//				getUI().getNavigator().navigateTo("tutormain");
+//
+//			}
+//			// If an error occurred when trying to validate the claim, an error will occur
+//			else {
+//				LecturerUsername.setComponentError(new UserError(
+//						"Please Enter Login Credentials Belonging To A Lecturer Responsible For This Course And Try Again."));
+//				LecturerPassword.setComponentError(new UserError(
+//						"Please Enter Login Credentials Belonging To A Lecturer Responsible For This Course And Try Again."));
 
-			// The code below is executed when the claim has been validated successfully
-			if (ans1.equals("0")) {
-				String[] params2 = { "name", "student_num", "course", "date", "venue" };
-				String[] values2 = { name, studnum, course, date, venue };
-				ans2 = dbh1.php_request("verify", params2, values2);
-				Notification.show("Claim Has Been Verified Successfully");
-				getUI().getNavigator().navigateTo("tutormain");
-
-			}
-			// If an error occurred when trying to validate the claim, an error will occur
-			else {
-				LecturerUsername.setComponentError(new UserError(
-						"Please Enter Login Credentials Belonging To A Lecturer Responsible For This Course And Try Again."));
-				LecturerPassword.setComponentError(new UserError(
-						"Please Enter Login Credentials Belonging To A Lecturer Responsible For This Course And Try Again."));
-
-			}
+			//}
 		});
 		addComponent(validate);
 		panel.setContent(content);

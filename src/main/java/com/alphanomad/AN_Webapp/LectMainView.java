@@ -60,7 +60,7 @@ public class LectMainView extends VerticalLayout implements View
 
 	}
 
-	@Override
+	/*@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
 		if (! ((MyUI)getUI()).logged_in)
@@ -138,16 +138,7 @@ public class LectMainView extends VerticalLayout implements View
 		grid.setColumnOrder("image", "name", "student_num");
 		grid.setWidth("100%");
 		// grid.setWidthUndefined();
-		/*
-		 * grid.addComponentColumn(probe->{ Image image=new Image("",new
-		 * ExternalResource(
-		 * "https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=250"));
-		 * image.setWidth(100, Unit.PIXELS); image.setHeight(100, Unit.PIXELS); return
-		 * image;
-		 * 
-		 * 
-		 * }).setCaption("Profile Picture").setId("Profile Picture");
-		 */
+	
 		grid.setRowHeight(100);
 		grid.setHeaderRowHeight(30);
 		
@@ -288,6 +279,6 @@ public class LectMainView extends VerticalLayout implements View
 		
 	
 
-	}
+	}*/
 
 }
