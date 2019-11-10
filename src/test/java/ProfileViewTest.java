@@ -26,11 +26,11 @@ public class ProfileViewTest {
 		profileView.make_user_info_panel(name, password);
 		String g="COMS3000";
 		JsonObject k=null;
-		profileView.make_courses_panel(k);
+		//profileView.make_courses_panel(k);
 		DBHelper dbh=new DBHelper();
 		
     	JsonObject courses_obj = dbh.parse_json_string("{\"result\":[{\"COURSE_1\":\"COMS3007\",\"COURSE_2\":\"COMS2015\",\"COURSE_3\":\"COMS1017\",\"COURSE_4\":null,\"COURSE_5\":null}]}");
-    	profileView.make_courses_panel(courses_obj);
+    	//profileView.make_courses_panel(courses_obj);
 	}
 
 }
