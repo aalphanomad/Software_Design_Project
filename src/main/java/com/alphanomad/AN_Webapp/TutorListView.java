@@ -34,7 +34,7 @@ public class TutorListView extends VerticalLayout implements View
 	}
 	
 	
-	private void view_users()
+	public void view_users()
 	{
 		cb.setComponentError(null);
 		components.clear();
