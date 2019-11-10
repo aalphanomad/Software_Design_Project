@@ -77,7 +77,7 @@ try {
     $student_num=$_REQUEST["student_num"];
     print fetching($name, $student_num, $link);
 } catch (Exception $e) {
-    echo "failed to create link in fetching.php";
+    //echo "failed to create link in fetching.php \n";
 }
 
 //$output["result"]=(string)$answer;

@@ -17,7 +17,9 @@
         <whitelist>
             <directory>./</directory>
             <exclude>
+                <!-- not sure If i should be excluding this stuff-->
                 <directory>./Tests</directory>
+                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>

@@ -1,0 +1,8 @@
+{
+    "require": {
+        "satooshi/php-coveralls": "^2.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5"
+    }
+}

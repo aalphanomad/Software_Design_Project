@@ -13,8 +13,8 @@ function create($student_num, $name, $email, $password, $course1, $course2, $cou
         
                 if (!isset($name, $student_num, $email, $password, $course1)) {
                         $output["result"] = "You didn't send the required values";
-                        echo json_encode($output);
-                        die();
+                        //return json_encode($output);
+                        //die();
                 } else if (isset($course1) and !isset($course2) and !isset($course3) and !isset($course4) and !isset($course5)) {
                         $result = mysqli_query($link, "INSERT INTO USER_INFORMATION(NAME, STUDENT_NUM, EMAIL_ADDRESS, USER_PASSWORD,ROLE,COURSE_1) VALUES('$name','$student_num','$email','$password','$role','$course1')");
                         $result2 = mysqli_query($link, "INSERT INTO USER_COURSE_ALLOC(STUDENT_NUM,COURSE) VALUES('$student_num','$course1')");
@@ -48,7 +48,6 @@ function create($student_num, $name, $email, $password, $course1, $course2, $cou
         return json_encode($output);
 }
 
-
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
@@ -80,7 +79,7 @@ try {
         echo create($student_num,$name,$email,$password,$course1, $course2, $course3, $course4, $course5, $role, $link);
         mysqli_close($link);
 } catch (Exception $e) {
-        echo "failed to make link in create.php";
+        //echo "failed to make link in create.php \n";
 }
 
 // @codeCoverageIgnoreEnd

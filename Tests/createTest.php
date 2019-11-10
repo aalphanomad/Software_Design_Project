@@ -43,14 +43,16 @@ class createTest extends PHPUnit_Framework_TestCase
         include 'create.php';
         // Test on empty database
         $expected = '{"result":"0"}';
-        $this->assertEquals($expected, create("rey","619","619@students.wits.ac.za","test","COMS3007",NULL,NULL,NULL,NULL,0,$this->myqli_link));
-        $expected = '{"result":"1"}';
-        $this->assertEquals($expected, create("rey","620","619@students.wits.ac.za","test","COMS3007","COMS2002",NULL,NULL,NULL,0,$this->myqli_link));
-        $this->assertEquals($expected, create("rey","621","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015",NULL,NULL,0,$this->myqli_link));
-        $this->assertEquals($expected, create("rey","622","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015","COMS2013",NULL,0,$this->myqli_link));
-        $this->assertEquals($expected, create("rey","623","619@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015","COMS2013","COMS2014",0,$this->myqli_link));
-        $expected = '{"result":"1"}';
-        $this->assertEquals($expected, create("rey","624","619@students.wits.ac.za","test",NULL,NULL,NULL,NULL,NULL,0,$this->myqli_link));
+        $this->assertEquals($expected, create("619","Rey","619@students.wits.ac.za","test","COMS3007",NULL,NULL,NULL,NULL,0,$this->myqli_link));
+        //$expected = '{"result":"1"}';
+        $this->assertEquals($expected, create("620","Rey","620@students.wits.ac.za","test","COMS3007","COMS2002",NULL,NULL,NULL,0,$this->myqli_link));
+        $this->assertEquals($expected, create("621","Rey","621@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015",NULL,NULL,0,$this->myqli_link));
+        $this->assertEquals($expected, create("622","Rey","622@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015","COMS2013",NULL,0,$this->myqli_link));
+        $this->assertEquals($expected, create("623","Rey","623@students.wits.ac.za","test","COMS3007","COMS2002","COMS1015","COMS2013","COMS2014",0,$this->myqli_link));
+        //$expected = '{"result":"1"}';
+        $this->assertEquals($expected, create("624","Rey","624@students.wits.ac.za","test",NULL,NULL,NULL,NULL,NULL,0,$this->myqli_link));
+        //$expected = '{"result":"You didn\'t send the required values"}';
+        $this->assertEquals($expected, create(NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,$this->myqli_link));
     }
 }
 ?>

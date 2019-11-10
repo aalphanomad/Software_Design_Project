@@ -45,7 +45,7 @@ try
 }
 catch (Exception $e)
 {
-	echo 0;
+	//echo "error creating link in signin.php \n";
 }
 // @codeCoverageIgnoreEnd
 

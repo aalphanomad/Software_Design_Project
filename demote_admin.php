@@ -18,10 +18,17 @@ function demote_admin($student_num, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
-$student_num = $_REQUEST["student_num"];
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
-echo demote_admin($student_num, $link);
-mysqli_close($link);
+    $student_num = $_REQUEST["student_num"];
+    mysqli_close($link);
+
+    echo demote_admin($student_num, $link);
+} catch (Exception $th) {
+    //throw $th;
+}
+
+
 ?>

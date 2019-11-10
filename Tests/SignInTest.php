@@ -36,13 +36,14 @@ class SigninTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->pdo->query("DROP TABLE USER_INFORMATION");
+        //$this->pdo->query("DROP TABLE IF EXISTS USER_INFORMATION");
     }
 
     public function testSignIn()
     {
         include 'signin.php';
         $this->assertEquals('{"result":1,"name":"Tutor","student_num":"1","role":"0"}', signin("1","test",$this->myqli_link));
+        $this->assertEquals('{"result":0}', signin("1","junk",$this->myqli_link));
     }
 }
 ?>

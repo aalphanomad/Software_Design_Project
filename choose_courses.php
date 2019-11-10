@@ -8,7 +8,7 @@ function choose_courses($student_num, $course, $link)
         $result = mysqli_query($link, "INSERT INTO USER_COURSE_ALLOC (STUDENT_NUM, COURSE, CONFIRMED) VALUES ('$student_num','$course','0')");
     } else {
         // This is already selected dont change anything
-
+        $result = -1;
         //TODO: remove a course alloc
         //      see remove course.php
     }
@@ -19,11 +19,17 @@ function choose_courses($student_num, $course, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
-$student_num = $_REQUEST["student_num"];
-$course = $_REQUEST["course"];
+    $student_num = $_REQUEST["student_num"];
+    $course = $_REQUEST["course"];
 
-echo choose_courses($student_num, $course, $link);
-mysqli_close($link);
+    echo choose_courses($student_num, $course, $link);
+    mysqli_close($link);
+} catch (Exception $th) {
+    //throw $th;
+}
+
+
 ?>
