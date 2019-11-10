@@ -89,7 +89,7 @@ public class ClaimForm extends VerticalLayout implements View {
 
 	// This function ensures that the times entered are valiid. More specifically
 	// it checks whether the end time is before the start time
-	private boolean checktimings(String startTime1, String endTime1) {
+	public boolean checktimings(String startTime1, String endTime1) {
 
 		String pattern = "HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
