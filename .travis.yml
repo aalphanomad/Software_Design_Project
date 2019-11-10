@@ -19,7 +19,7 @@ matrix:
 
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
-  - composer require satooshi/php-coveralls '~1.0'
+  - composer require satooshi/php-coveralls 
   - composer install
   - mysql -e "create database IF NOT EXISTS test_db;" -uroot;
   - export CI_BUILD_NUMBER="$TRAVIS_BUILD_NUMBER"
