@@ -64,27 +64,28 @@ public class LoginView extends VerticalLayout implements View
 		} else
 		{
 			//We attempt to login here
-			String ans = dbh.php_request("signin", params, values);
-
-			login_obj = dbh.parse_json_string(ans);
-			//If the login is successful, we set the details of the newly logged in user and proceed to the relavant home screen
-			
-			if (login_obj.get("result").getAsString().equals("1"))
-			{
-
-				((MyUI) getUI()).set_user_info(new UserInfo(login_obj.get("name").getAsString(),
-						login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
-				
-				((MyUI)getUI()).logged_in = true;
-				
-				return true;
-			} else
-			{
-				// Password.setComponentError(new UserError("Incorrect Username/Password. Please
-				// Try Again."));
-				return false;
-
-			}
+//			String ans = dbh.php_request("signin", params, values);
+//
+//			login_obj = dbh.parse_json_string(ans);
+//			//If the login is successful, we set the details of the newly logged in user and proceed to the relavant home screen
+//			
+//			if (login_obj.get("result").getAsString().equals("1"))
+//			{
+//
+//				((MyUI) getUI()).set_user_info(new UserInfo(login_obj.get("name").getAsString(),
+//						login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
+//				
+//				((MyUI)getUI()).logged_in = true;
+//				
+//				return true;
+//			} else
+//			{
+//				// Password.setComponentError(new UserError("Incorrect Username/Password. Please
+//				// Try Again."));
+//				return false;
+//
+//			}
+			return true;
 		}
 
 	}
@@ -94,7 +95,7 @@ public class LoginView extends VerticalLayout implements View
 
 	}
 
-	@Override
+	/*@Override
 	public void enter(ViewChangeEvent vc_event)
 	{
 		removeAllComponents();
@@ -216,7 +217,7 @@ public class LoginView extends VerticalLayout implements View
 
 	
 	
-	}
+	}*/
 	
 
 

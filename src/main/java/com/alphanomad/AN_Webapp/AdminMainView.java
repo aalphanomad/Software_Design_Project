@@ -26,7 +26,7 @@ public class AdminMainView extends VerticalLayout implements View {
 
 	}
 
-	@Override
+	/*@Override
 	public void enter(ViewChangeEvent vc_event) {
 
 		UserInfo info = ((MyUI) getUI()).get_user_info();
@@ -215,6 +215,6 @@ public class AdminMainView extends VerticalLayout implements View {
 		addComponent(mainLayout);
 		addComponent(password_line);
 
-	}
+	}*/
 
 }
