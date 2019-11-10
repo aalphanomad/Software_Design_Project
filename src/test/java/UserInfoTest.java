@@ -17,6 +17,8 @@ public class UserInfoTest {
 		assertEquals(name, userInfo.get_name());
 		assertEquals(role, userInfo.get_role());
 		assertEquals(studNum, userInfo.get_student_num());
+		UserInfo userInfo2=new UserInfo("1622636");
+		userInfo.copy();
 	}
 
 }

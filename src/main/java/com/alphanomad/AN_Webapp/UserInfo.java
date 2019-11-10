@@ -28,11 +28,7 @@ public class UserInfo
 		DBHelper dbh = new DBHelper();
 		String ans = dbh.php_request("get_user_info", params, values);
 
-		JsonObject user_obj = dbh.parse_json_string(ans);
-		this.name = user_obj.get("NAME").getAsString();
 
-		this.role = user_obj.get("ROLE").getAsString();
-		;
 	}
 
 	public String get_name()
