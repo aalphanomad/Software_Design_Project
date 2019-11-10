@@ -39,51 +39,6 @@ public class ClaimForm extends VerticalLayout implements View {
 	// are empty
 	public Boolean validate() {
 		Boolean valid = true;
-		// Ensures that the course is not empty
-		if (Courses.isEmpty()) {
-			valid = false;
-			Courses.setComponentError(new UserError("Please Select A Course."));
-		}
-		// Ensures that a course is selected
-		if (Venue.isEmpty()) {
-			valid = false;
-			Venue.setComponentError(new UserError("Please Select A Venue."));
-		}
-		// Ensures that a course has been selected
-		if (Activity.isEmpty()) {
-			valid = false;
-			Activity.setComponentError(new UserError("Please Select A Activity."));
-		}
-		// Ensures that a start hour has been entered
-		if (startHour.isEmpty()) {
-			valid = false;
-			startHour.setComponentError(new UserError("Please Select the Time."));
-		}
-		// Ensures that a start "minute has been entered
-		if (startMinute.isEmpty()) {
-			valid = false;
-			startMinute.setComponentError(new UserError("Please Select the Time."));
-		}
-		// Ensures that an end hour has been entered
-		if (endHour.isEmpty()) {
-			valid = false;
-			endHour.setComponentError(new UserError("Please Select the Time."));
-		}
-		// ensures that an end minute has been entered
-		if (endMinute.isEmpty()) {
-			valid = false;
-			endMinute.setComponentError(new UserError("Please Select the Time."));
-		}
-
-		if (startTime != null && endTime != null) {
-			if (checktimings(startTime, endTime) == false) {
-				valid = false;
-				startHour.setComponentError(new UserError("Please Select a Valid Time."));
-				startMinute.setComponentError(new UserError("Please Select a Valid Time."));
-				endHour.setComponentError(new UserError("Please Select a Valid Time."));
-				endMinute.setComponentError(new UserError("Please Select a Valid Time."));
-			}
-		}
 		return valid;
 	}
 
@@ -162,7 +117,7 @@ public class ClaimForm extends VerticalLayout implements View {
 
 	}
 
-	@Override
+	/*@Override
 	public void enter(ViewChangeEvent event) {
 
 		removeAllComponents();
@@ -282,79 +237,7 @@ public class ClaimForm extends VerticalLayout implements View {
 
 		endMinute = new ComboBox<String>("Minutes");
 		endMinute.setPlaceholder("Please fill in");
-		endMinute.setItems(minute);
 
-		HorizontalLayout time1 = new HorizontalLayout();
-
-		Label st = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:20px;\">\r\n"
-				+ "       Start-Time " + "      </p>", ContentMode.HTML);
-
-		time1.addComponent(st);
-		time1.addComponent(startHour);
-		time1.addComponent(startMinute);
-
-		addComponent(time1);
-
-		HorizontalLayout time2 = new HorizontalLayout();
-
-		Label ed = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:20px;\">\r\n"
-				+ "       End-Time " + "      </p>", ContentMode.HTML);
-
-		time2.addComponent(ed);
-		time2.addComponent(endHour);
-		time2.addComponent(endMinute);
-
-		addComponent(time2);
-
-		Date today = new Date();
-
-		String day = today.toString().substring(8, 10);
-		String month = today.toString().substring(4, 7);
-		String year = today.toString().substring(24, today.toString().length());
-
-		String date = day + " " + month + " " + year;
-
-		confirm = new Button("Confirm");
-		addComponent(confirm);
-		confirm.addClickListener(e -> {
-
-			Courses.setComponentError(null);
-			Venue.setComponentError(null);
-			Activity.setComponentError(null);
-			startHour.setComponentError(null);
-			startMinute.setComponentError(null);
-			endHour.setComponentError(null);
-			endMinute.setComponentError(null);
-			// Ensures that the user has entered valid times
-			if (startHour.isEmpty() == false && startMinute.isEmpty() == false && endHour.isEmpty() == false
-					&& endMinute.isEmpty() == false) {
-				startTime = startHour.getValue().toString() + ":" + startMinute.getValue().toString() + ":00";
-				endTime = endHour.getValue().toString() + ":" + endMinute.getValue().toString() + ":00";
-			}
-			// if there is no irregularities in the data, we can proceed to actually
-			// creating the entry in the database
-			if (validate() == true) {
-
-				b = new Booking(tutor_info.name, tutor_info.student_num,
-						EditString.editCourse((Courses.getValue().toString())), Activity.getValue().toString(),
-						Venue.getValue().toString(), date, startTime, endTime);
-
-				if (b.ans.equals("-1")) {
-					startHour.setComponentError(new UserError("This is a Duplicate Claim."));
-					startMinute.setComponentError(new UserError("This is a Duplicate Claim."));
-					endHour.setComponentError(new UserError("This is a Duplicate Claim."));
-					endMinute.setComponentError(new UserError("This is a Duplicate Claim."));
-				} else {
-
-					removeAllComponents();
-
-					addComponent(new ConfirmClaimForm(tutor_info.name, tutor_info.student_num,
-							EditString.editCourse((Courses.getValue().toString())), Activity.getValue().toString(),
-							Venue.getValue().toString(), date, startTime, endTime));
-
-				}
-			}
-		});
-	}
+	*/
 
 }

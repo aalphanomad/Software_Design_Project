@@ -42,6 +42,7 @@ public class ClaimFormTest {
 		claimForm.checktimings("12:00","13:00");
 		claimForm.checktimings("14:00","13:00");
 		claimForm.checktimings("23009999","13:00");
+		claimForm.validate();
 //		claimForm.Course_corr(course_code8);
 //		
 //		String course_code9="COMS3003";
