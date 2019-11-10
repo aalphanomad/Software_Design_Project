@@ -23,7 +23,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+	/*@Override
 	public void enter(ViewChangeEvent vcevent)
 	{
 		// clear the screen
@@ -46,98 +46,7 @@ public class CourseAllocationView extends VerticalLayout implements View
 		g.sort("id",SortDirection.DESCENDING);
 		addComponent(g);
 
-		//a button that confirms any pending applications from a user to tutor or lecture a particular course
-		Button confirm_btn = new Button("Confirm selected applications", event ->
-		{
-			if (selected_course_allocs != null)
-			{
-				DBHelper dbh = new DBHelper();
-				String[] params = { "student_num", "course", "confirmed" };
-
-				for (CourseAllocObject cao : selected_course_allocs)
-				{
-					
-						String[] vals = { cao.getStud_num(), cao.getCourse(), "1" };
-						dbh.php_request("update_courses", params, vals);
-						g.setItems(get_unconfirmed_course_allocs());
-					
-
-				}
-			} else
-			{
-				Notification.show("No Items Selected");
-			}
-
-		});
-
-		//a button to deny any pending applications from a user to tutor or lecture a paricular course
-		Button deny_btn = new Button("Deny selected applications", event ->
-		{
-			if (selected_course_allocs != null)
-			{
-				DBHelper dbh = new DBHelper();
-				String[] params = { "student_num", "course", "confirmed" };
-
-				for (CourseAllocObject cao : selected_course_allocs)
-				{
-					
-						String[] vals = { cao.getStud_num(), cao.getCourse(), "-1" };
-						dbh.php_request("update_courses", params, vals);
-						g.setItems(get_unconfirmed_course_allocs());
-					
-
-				}
-			} else
-			{
-				Notification.show("No Items Selected");
-			}
-
-		});
-		//Allows the admin to view all confirmed applications
-		Button view_confirmed_btn = new Button("View Confirmed Applications", event ->
-		{
-			g.setItems(get_confirmed_course_allocs());
-
-		});
-//Allows the admin to view all pending applications
-		Button view_unconfirmed_btn = new Button("View Pending Applications", event ->
-		{
-			g.setItems(get_unconfirmed_course_allocs());
-
-		});
-		//Alows the admin to view all declined applications
-		Button view_declined_btn=new Button("View Declined Applications",event-> {
-			g.setItems(get_declined_course_allocs());
-		});
-
-		Button view_all_btn = new Button("View ALL Applications", event ->
-		{
-			g.setItems(get_all_course_allocs());
-
-		});
-		
-		//we colour these buttons green and red using our custom made theme for buttons (found in theme.scss)
-		confirm_btn.setStyleName("test");
-		deny_btn.setStyleName("another");
-
-		HorizontalLayout conf_deny_row = new HorizontalLayout();
-		HorizontalLayout filter_row = new HorizontalLayout();
-		conf_deny_row.addComponent(confirm_btn);
-		conf_deny_row.addComponent(deny_btn);
-		filter_row.addComponent(view_confirmed_btn);
-		filter_row.addComponent(view_unconfirmed_btn);
-		filter_row.addComponent(view_declined_btn);
-		filter_row.addComponent(view_all_btn);
-		addComponent(conf_deny_row);
-		addComponent(filter_row);
-
-		Button go_back_to_main_view = new Button("Return to menu", event ->
-		{
-			getUI().getNavigator().navigateTo("adminmain");
-
-		});
-		addComponent(go_back_to_main_view);
-	}
+*/
 	
 	
 	ArrayList<CourseAllocObject> get_declined_course_allocs(){
