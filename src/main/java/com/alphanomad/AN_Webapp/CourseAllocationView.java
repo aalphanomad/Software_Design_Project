@@ -22,31 +22,6 @@ public class CourseAllocationView extends VerticalLayout implements View
 	{
 		// TODO Auto-generated constructor stub
 	}
-
-	/*@Override
-	public void enter(ViewChangeEvent vcevent)
-	{
-		// clear the screen
-		components.clear();
-
-		Grid<CourseAllocObject> g = new Grid<CourseAllocObject>(CourseAllocObject.class);
-		g.setSizeFull();
-
-		g.setItems(get_unconfirmed_course_allocs());
-
-		g.getColumn("id").setWidthUndefined();
-		// switch to multiselect mode
-		g.setSelectionMode(SelectionMode.MULTI);
-
-		g.addSelectionListener(event ->
-		{
-			selected_course_allocs = event.getAllSelectedItems();
-		});
-		g.setColumnOrder("id","name","stud_num","role", "course", "confirmed");
-		g.sort("id",SortDirection.DESCENDING);
-		addComponent(g);
-
-*/
 	
 	
 	ArrayList<CourseAllocObject> get_declined_course_allocs(){
