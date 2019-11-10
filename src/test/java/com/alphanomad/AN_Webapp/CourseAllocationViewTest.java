@@ -12,7 +12,6 @@ public class CourseAllocationViewTest {
 		courseAllocationView.get_all_course_allocs();
 		courseAllocationView.get_confirmed_course_allocs();
 		courseAllocationView.get_unconfirmed_course_allocs();
-		courseAllocationView.get_declined_course_allocs();
 	}
 
 }

@@ -91,7 +91,19 @@ public class Register extends VerticalLayout implements View
 		}
 		if (valid)
 		{
-
+//			for (int i = 0; i < Courses.length; i++)
+//			{
+//				String[] newCourses = Courses[i].split("-");
+//				DummyCourses.add(newCourses[0].toString());
+//			}
+//			DummyCourses.set(0, DummyCourses.get(0).substring(1, DummyCourses.get(0).length()));
+//			String email = StudentNumber.getValue().toString() + "@students.wits.ac.za";
+//
+//			String[] values = new String[DummyCourses.size() + 5];
+//			values[0] = Name.getValue().toString();
+//			values[1] = StudentNumber.getValue().toString();
+//			values[2] = email;
+//			values[3] = Password.getValue().toString();
 
 		}
 

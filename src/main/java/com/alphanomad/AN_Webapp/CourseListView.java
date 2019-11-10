@@ -1,7 +1,6 @@
 package com.alphanomad.AN_Webapp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 
 import org.apache.commons.lang.WordUtils;
@@ -11,7 +10,6 @@ import com.google.gson.JsonObject;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
-import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -25,50 +23,46 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ImageRenderer;
 
-public class CourseListView extends VerticalLayout implements View {
-	//Initialize the list to display the lecturers for a specified course
+public class CourseListView extends VerticalLayout implements View
+{
 	ArrayList<TutorItem> Tutor = new ArrayList<TutorItem>();
-	//Initialize the list to display the tutors for a specified course
-	
-	ArrayList<TutorItem> Lecturer = new ArrayList<TutorItem>();
-	JsonObject result_Lecturer;
 	Set<UserItem> selected_users;
 	JsonObject result;
 	Grid<CourseItem> g;
 	Set<CourseItem> DeleteCourses;
-	String theCourse = "";
-	String theCode = "";
-	TextField CourseName, CourseCode;
-	PasswordField Password;
-	public static Boolean Added = false;
 
-	public CourseListView() {
+	public CourseListView()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public void AddNewCourse() {
-		
+
+	public void AddNewCourse()
+	{
+
 	}
 
-	public void DeleteCourses() {
+	public void DeleteCourses()
+	{
+
+	}
+
+	public void EditCourse()
+	{
 
 	}
 
 	@SuppressWarnings("unchecked")
-	public void EditCourse() {
+	private void view_courses()
+	{
+
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public void view_courses() {
-
-	}
-
-	// I (mayur) have not idea what is going on below, this is Elgoni's code, please
-	// ask him to comment it if you need it to be.
-	ArrayList<CourseItem> get_all_courses() {
+	ArrayList<CourseItem> get_all_courses()
+	{
 		ArrayList<CourseItem>me=new ArrayList<>();
-		return me;
+	return me;
 	}
 }

@@ -12,12 +12,7 @@ public class CourseListViewTest {
 
 	@Test
 	public void test() {
-		CourseListView coListView=new CourseListView();
-		coListView.AddNewCourse();
-		coListView.DeleteCourses();
-		coListView.EditCourse();
-		coListView.view_courses();
-		coListView.get_all_courses();
+
 		
 		
 	}

@@ -48,7 +48,9 @@ public class ProfileView extends VerticalLayout implements View {
 	 * @param user_info a UserInfo object for the user you want to view
 	 */
 	public ProfileView(MyUI ui, UserInfo user_info) {
-		
+		System.out.println("PROFILEVIEW " + user_info.get_student_num());
+		this.user = user_info.copy();
+		System.out.println("PROFILEVIEW COPY" + this.user.get_student_num());
 	}
 
 	/**
@@ -58,7 +60,8 @@ public class ProfileView extends VerticalLayout implements View {
 	 * @param user_info a UserInfo object for the user you want to view
 	 */
 	public ProfileView(MyUI ui, String student_num) {
-		
+		this.user = new UserInfo(student_num);
+		System.out.println("STRING PROF VIEW " + this.user.get_student_num());
 	}
 
 	/*@Override
@@ -87,10 +90,89 @@ public class ProfileView extends VerticalLayout implements View {
 		HorizontalLayout inner = new HorizontalLayout();
 		inner.setMargin(true);
 
-		// User profile images are created based on their names	
+		// User profile images are created based on their names
+		ExternalResource resource;
+		try {
+			resource = new ExternalResource("https://ui-avatars.com/api/?size=128&background=003B5C&color=FFFFFF&name="
+					+ URLEncoder.encode(name, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			resource = new ExternalResource("https://sophosnews.files.wordpress.com/2014/04/anonymous-250.jpg?w=100");
+			e.printStackTrace();
+		}
+		Image image = new Image("Profile Image");
+
+		image.setSource(resource);
+		image.setHeight("100px");
+
+		inner.addComponent(image);
+
+		VerticalLayout details = new VerticalLayout();
+
+		HorizontalLayout stud_num_line = new HorizontalLayout();
+		stud_num_line.addComponent(new Label("Student Number:"));
+		stud_num_line.addComponent(new Label(student_number));
+
+		HorizontalLayout name_line = new HorizontalLayout();
+		name_line.addComponent(new Label("Name:"));
+		name_line.addComponent(new Label(name));
+
+		HorizontalLayout email_line = new HorizontalLayout();
+		String[] parameters = { "table", "target", "filter", "value" };
+		String[] values1 = { "USER_INFORMATION", "EMAIL_ADDRESS", "STUDENT_NUM", student_number };
+		DBHelper dbh = new DBHelper();
+		String email_result = dbh.php_request("generic_select", parameters, values1);
+		String email_addr;
+		if (!email_result.startsWith("<br")) {
+			email_addr = dbh.parse_json_string_arr(email_result).get(0).getAsString();
+		} else {
+			email_addr = "Unknown";
+		}
+		Button email_button = new Button("Email User",
+				event -> UI.getCurrent().getPage().open("mailto:" + email_addr, "_blank"));
+		email_line.addComponent(new Label("Email Address:"));
+		email_line.addComponent(new Label(email_addr));
+
+		MyUI ui = (MyUI) getUI();
+		try
+		{
+			if (!ui.get_user_info().role.equals("0") && !email_addr.endsWith(".com")) {
+				email_line.addComponent(email_button);
+			}
+		}
+		catch(Exception e)
+		{
+			//TODO
+		}
 		
 
-		
+		HorizontalLayout transcript_line = new HorizontalLayout();
+		transcript_line.addComponent(new Label("View Transcript:"));
+		String[] values2 = { "USER_INFORMATION", "user_transcript", "user_id", student_number };
+		Button pdf_button = new Button("View Transcript", event -> {
+			String result = dbh.php_request("generic_select", parameters, values2);
+
+			if (!result.startsWith("<br")) {
+				result = dbh.parse_json_string_arr(result).get(0).getAsString();
+				// Notification.show(result);
+				UI.getCurrent().getPage().open(result, "_blank");
+
+			} else {
+				Notification.show("No transcript associated with this user");
+			}
+
+		});
+		transcript_line.addComponent(pdf_button);
+
+		details.addComponent(stud_num_line);
+		details.addComponent(name_line);
+		details.addComponent(email_line);
+		details.addComponent(transcript_line);
+
+		inner.addComponent(details);
+
+		panel.setCaption("User Information");
+		panel.setContent(inner);
 		return panel;
 	}
 

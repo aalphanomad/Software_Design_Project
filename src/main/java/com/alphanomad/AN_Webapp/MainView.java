@@ -38,6 +38,22 @@ public class MainView extends VerticalLayout implements View
 		Button pdf_button = new Button("Generate Claims Form", event -> UI.getCurrent().getPage()
 				.open(dbh.php_request("select_booking", parameters, valuess), "_blank"));
 
+		Button Login = new Button("Logout", event -> getUI().getNavigator().navigateTo("login"));
+		// Button Register=new
+		// Button("Register",event->getUI().getNavigator().navigateTo("register"));
+
+		Button History = new Button("History", event -> getUI().getNavigator().navigateTo("history"));
+
+		Button claimForm_button = new Button("New Claim", event -> getUI().getNavigator().navigateTo("claimform"));
+
+		// ADD COMPONENTS TO UI HERE
+
+		addComponent(claimForm_button);
+		addComponent(profile_button);
+		addComponent(History);
+		addComponent(pdf_button);
+		addComponent(Login);
+		// addComponent(Register);
 	}*/
 
 }

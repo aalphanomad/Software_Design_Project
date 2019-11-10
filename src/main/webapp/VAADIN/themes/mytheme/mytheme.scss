@@ -8,18 +8,18 @@
 //$v-font-family: "Open Sans", sans-serif;
 
 // Defines the border used by all components.
-$v-border: 1px solid (v-shade 0.7);
-$v-border-radius: 4px;
+//$v-border: 1px solid (v-shade 0.7);
+//$v-border-radius: 4px;
 
 // Affects the color of some component elements, e.g Button, Panel title, etc
-$v-background-color: rgb(40, 40, 50);
+//$v-background-color: hsl(210, 0%, 98%);
 // Affects the color of content areas, e.g  Panel and Window content, TextField input etc
-$v-app-background-color: $v-background-color;
+//$v-app-background-color: $v-background-color;
 
 // Affects the visual appearance of all components
-$v-gradient: v-linear 8%;
-$v-bevel-depth: 30%;
-$v-shadow-opacity: 5%;
+//$v-gradient: v-linear 8%;
+//$v-bevel-depth: 30%;
+//$v-shadow-opacity: 5%;
 
 // Defines colors for indicating status (focus, success, failure)
 //$v-focus-color: valo-focus-color(); // Calculates a suitable color automatically
@@ -35,23 +35,4 @@ $v-shadow-opacity: 5%;
   @include valo;
 
   // Insert your own theme rules here
-  
-.v-button-test {
-      @include valo-button-style($background-color: #43eb34);
-    }
-    
-.v-button-another {
-      @include valo-button-style($background-color: #fc030f);
-    }
-    .v-label-fancy{
-                letter-spacing: 3px;
-        font-size: 50px;
-    font-family: 'Orbitron', sans-serif;
-color:aliceblue;
-  font-stretch: extra-expanded;
-        font-weight: 120;
-        text-shadow: 2px 2px 6px #FFFFFF;
-    }
-   
-
 }

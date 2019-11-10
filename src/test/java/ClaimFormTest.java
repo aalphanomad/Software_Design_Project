@@ -1,4 +1,5 @@
-package com.alphanomad.AN_Webapp;
+//package com.alphanomad.AN_Webapp;
+import com.alphanomad.AN_Webapp.*;
 
 import static org.junit.Assert.*;
 
@@ -64,12 +65,7 @@ public class ClaimFormTest {
 		String course_code33="COMS3011";
 		claimForm.Course_corr(course_code33);
 		
-		String s1="10:00";
-		String s2="11:00";
-		
-		claimForm.checktimings(s1, s2);
-		claimForm.checktimings("adsc", "cdcdc");
-	
+		//claimForm.getAllInfo();
 		
 	}
 	
