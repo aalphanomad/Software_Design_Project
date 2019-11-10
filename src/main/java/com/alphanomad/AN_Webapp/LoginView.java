@@ -63,28 +63,7 @@ public class LoginView extends VerticalLayout implements View
 
 		} else
 		{
-			//We attempt to login here
-//			String ans = dbh.php_request("signin", params, values);
-//
-//			login_obj = dbh.parse_json_string(ans);
-//			//If the login is successful, we set the details of the newly logged in user and proceed to the relavant home screen
-//			
-//			if (login_obj.get("result").getAsString().equals("1"))
-//			{
-//
-//				((MyUI) getUI()).set_user_info(new UserInfo(login_obj.get("name").getAsString(),
-//						login_obj.get("student_num").getAsString(), login_obj.get("role").getAsString()));
-//				
-//				((MyUI)getUI()).logged_in = true;
-//				
-//				return true;
-//			} else
-//			{
-//				// Password.setComponentError(new UserError("Incorrect Username/Password. Please
-//				// Try Again."));
-//				return false;
-//
-//			}
+
 			return true;
 		}
 
@@ -112,110 +91,6 @@ public class LoginView extends VerticalLayout implements View
 
 		// Image as a file resource
 		FileResource resource = new FileResource(new File("src/main/webapp/WEB_INF/images/image.png"));
-
-		// Show the image in the application
-		Image image = new Image("Image from file", resource);
-		image.setWidth("120px");
-		image.setHeight("120px");
-		layout.addComponent(image,"left:560px;top:0px");
-		
-		Label AlphaNomad = new Label("<p\r\n"+ "<b><u>AlphaNomad</u></b> " + "</p>", ContentMode.HTML);
-		layout.addComponent(AlphaNomad,"left:440px ; top:75px");
-		AlphaNomad.setStyleName("fancy"); 
-		addComponent(layout);
-		//setComponentAlignment(AlphaNomad, Alignment.TOP_CENTER);
-
-		
-		//The panel is where all the useful components such as the TextFields and Buttons will be added in order to improve the appearance
-		Panel panel = new Panel();
-		//panel.setHeight("300px");
-		panel.setWidthUndefined();
-		layout.addComponent(panel,"left:440px;top:210px");
-
-
-	
-
-		//Adds a login label
-		FormLayout content = new FormLayout();
-		content.addStyleName("Template");
-		content.setMargin(true); 
-		Label test = new Label("<p style = \"font-family:georgia,garamond,serif;font-size:30px;\">\r\n"
-				+ "       <b><u>Login</u></b> " + "      </p>", ContentMode.HTML);
-		content.addComponent(test);
-
-
-
-		//Creates the field for the user to enter their student number
-		Username = new TextField();
-		Username.setIcon(VaadinIcons.USER);
-		Username.setCaption("Username");
-		Username.setPlaceholder("Username");
-		content.addComponent(Username);
-		Username.focus();
-		panel.setContent(content);
-
-
-		//Creates a field for the user to enter to enter their password
-		Password = new PasswordField();
-		Password.setCaption("Password");
-		Password.setIcon(VaadinIcons.PASSWORD);
-		Password.setPlaceholder("Password");
-		content.addComponent(Password);
-
-		HorizontalLayout buttons = new HorizontalLayout();
-
-		//Creates the login and register button
-		Button button1 = new Button("Login", event -> handle_login(Username.getValue(), Password.getValue()));
-		button1.setClickShortcut(KeyCode.ENTER);
-		Button button2 = new Button("Register", event -> getUI().getNavigator().navigateTo("register"));
-		//Below aligns the components o the panel
-		
-		buttons.addComponent(button1);
-		buttons.addComponent(button2);
-		content.addComponent(buttons);
-		
-		buttons.setComponentAlignment(button1, Alignment.BOTTOM_LEFT);
-		buttons.setComponentAlignment(button2, Alignment.BOTTOM_RIGHT);
-		content.setComponentAlignment(test, Alignment.MIDDLE_CENTER);
-		content.setComponentAlignment(Username, Alignment.MIDDLE_CENTER);
-		content.setComponentAlignment(Password, Alignment.MIDDLE_CENTER);
-		content.setComponentAlignment(buttons, Alignment.BOTTOM_LEFT);
-
-		panel.setContent(content);
-	}
-
-	//This function ensures that the user is navigated to the correct home screen based on their role
-	public void handle_login(String username, String password)
-	{
-		if (TheLogin(username, password))
-		{
-			if (login_obj.get("role").getAsString().equals("0"))
-			{
-				getUI().getNavigator().navigateTo("tutormain");
-			} else if (login_obj.get("role").getAsString().equals("1"))
-			{
-				getUI().getNavigator().navigateTo("lectmain");
-
-			} else if (login_obj.get("role").getAsString().equals("2")
-					|| login_obj.get("role").getAsString().equals("4"))
-			{
-				getUI().getNavigator().navigateTo("adminmain");
-
-			}
-			
-			else if (login_obj.get("role").getAsString().equals("3"))
-			{
-				getUI().getNavigator().navigateTo("chooserole");
-
-			}
-
-		} else
-		{
-			Password.setComponentError(new UserError("Incorrect Username/Password. Please Try Again."));
-			Notification.show("Login Failed");
-		}
-
-	
 	
 	}*/
 	

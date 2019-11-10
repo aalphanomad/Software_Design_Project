@@ -232,51 +232,7 @@ public class LectMainView extends VerticalLayout implements View
 
 		});
 
-		Button logout = new Button("Logout", event ->
-		{
-			getUI().getNavigator().navigateTo("login");
-			((MyUI) getUI()).logged_in = false;
 
-		});
-		
-		//String me=combobox.getCaption();
-		
-		ArrayList<String>[]list=new ArrayList[5];
-		list[0]=StudCourse1;
-		list[1]=StudCourse2;
-		list[2]=StudCourse3;
-		list[3]=StudCourse4;
-		list[4]=StudCourse5;
-		
-		ArrayList<String>studNumString=new ArrayList<>();
-		for(int i=0;i<5;++i) {
-			ArrayList<String>temp=list[i];
-			for(int j=0;j<temp.size();++j) {
-				studNumString.add(temp.get(j)+"@students.wits.ac.za");
-			}
-		}
-		String emails="";
-		for(int i=0;i<studNumString.size();++i) {
-			emails=emails+studNumString.get(i)+";";
-			
-		}
-		
-		final String mail=emails;
-		
-		Button email_button = new Button("Email All Tutors",
-				//event->Notification.show(mail)
-				event -> UI.getCurrent().getPage().open("mailto:" + mail, "_blank")
-				
-				);
-		addComponent(email_button);
-		addComponent(logout);
-		
-		//if the lecturer does not have any courses validated to lecture, remove email button
-		if(myCourses==null) {
- 			email_button.setVisible(false);
- 			setComponentAlignment(logout, Alignment.TOP_RIGHT);
- 		}
-		
 	
 
 	}*/
