@@ -79,16 +79,16 @@ public class MyUI extends UI
 		navigator.addView(CHOOSEROLE, new ChooseRole());
 		
 		Responsive.makeResponsive(this);
-		navigator.navigateTo(LOGINVIEW);
-		System.out.println("regstration complete");
-		
-		if (!logged_in)
-		{
-			navigator.navigateTo(LOGINVIEW);
-		} else
-		{
-			navigator.navigateTo(MAINVIEW);
-		}
+//		navigator.navigateTo(LOGINVIEW);
+//		System.out.println("regstration complete");
+//		
+//		if (!logged_in)
+//		{
+//			navigator.navigateTo(LOGINVIEW);
+//		} else
+//		{
+//			navigator.navigateTo(MAINVIEW);
+//		}
 
 	}
 
