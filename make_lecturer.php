@@ -26,10 +26,9 @@ $database = "d1601745";
 try {
     $link = mysqli_connect("127.0.0.1", $username, $password,$database);
     $student_num=$_REQUEST["student_num"];
-    
     echo make_lecturer($student_num, $link);
     mysqli_close($link);
-} catch (\Throwable $th) {
+} catch (Exception $th) {
     //throw $th;
 }
 // @codeCoverageIgnoreEnd
