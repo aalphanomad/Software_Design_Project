@@ -13,6 +13,7 @@ public class UserItem
 	 * @param student_num
 	 * @param role
 	 */
+	//Allows us to create instances of objects of type UserItem
 	public UserItem(String name, String student_num, String role)
 	{
 		this.name = name;
