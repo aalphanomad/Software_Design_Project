@@ -12,12 +12,12 @@ public class EditStringTests {
 		String test=time.substring(11, time.length());
 		EditString editString=new EditString();
 		editString.editTime(time);
-		//assertEquals(test,editString.editTime(time));
+		assertEquals(test,editString.editTime(time));
 		
 		String course="SoftwareDesign2";
 		String test2=course.substring(0, 8);
 		editString.editCourse(course);
-		//assertEquals(test,editString.editCourse(course));
+		assertEquals(test2,editString.editCourse(course));
 	}
 
 }

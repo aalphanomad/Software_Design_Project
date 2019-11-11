@@ -27,17 +27,6 @@ public class ChooseRole extends VerticalLayout implements View{
 	
 	}
 	
-	@Override
-	public void enter(ViewChangeEvent event){
-		
-		//get the details of the role of the login user
-		UserInfo info = ((MyUI) getUI()).get_user_info();
-		if(info.role.equals("3")) {	
-			Lecturer_Admin();
-		}
-
-	}
-	
 	public void Lecturer_Admin() {
 		
 		
