@@ -17,7 +17,7 @@ The application comprises of all the decision-making parties involved in the tut
 # 1) The Tutor:
 Tutors will be able to register and apply for courses which they would like to tutor. Once they have been accepted to tutor a specific course, they will have an exclusive account which keeps track of all their tutoring activity.  Tutors may record the details of each tutoring session with the number of hours they tutored. These tuition sessions will appear in their profile history which will automatically give them access to a completed claims form. This claims form may be downloaded as a PDF and handed in for processing and payment. 
 
-# 2) The lecturer:
+# 2) The Lecturer:
 Lecturers will have the capability of viewing the courses that they are responsible for, along with the tutors that are associated to each course. They will have the luxury of emailing each user within a course to relay important information. They will also have the responsibility of verifying the claims of each tutor. 
 
 # 3) The administrator:
