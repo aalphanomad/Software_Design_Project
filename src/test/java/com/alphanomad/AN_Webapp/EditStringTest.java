@@ -17,7 +17,7 @@ public class EditStringTest {
 
 	@Test
 	public void testEditCourse() {
-		String course="Software Design";
+		String course="SoftwareDesign2";
 		String test=course.substring(0, 8);
 		EditString editString=new EditString();
 		editString.editCourse(course);
