@@ -21,10 +21,18 @@ function adminV_Tutors($course, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
-$course = $_REQUEST["course"];
 
-echo adminV_Tutors($student_num, $course, $link);
+// @codeCoverageIgnoreStart
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
+    $course = $_REQUEST["course"];
+
+    echo adminV_Tutors($course, $link);
+} catch (Exception $th) {
+    //throw $th;
+}
+// @codeCoverageIgnoreEnd
+
 ?>
 
 

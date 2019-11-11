@@ -70,6 +70,7 @@ function fetching($name, $student_num, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
+// @codeCoverageIgnoreStart
 try {
     $link = mysqli_connect("127.0.0.1", $username, $password,$database);
 
@@ -79,6 +80,6 @@ try {
 } catch (Exception $e) {
     //echo "failed to create link in fetching.php \n";
 }
-
+// @codeCoverageIgnoreEnd
 //$output["result"]=(string)$answer;
 //echo json_encode($output);

@@ -15,15 +15,22 @@ function is_lecturer($student_num, $password, $role, $link)
 $username = "s1601745";
 $password = "s1601745";	
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
-$output=array();
+// @codeCoverageIgnoreStart
 
-$student_num=$_REQUEST["student_num"];
-$password=$_REQUEST["password"];
-$role=$_REQUEST["role"];
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
-print is_lecturer($student_num, $password, $role, $link);
-mysqli_close($link);
+    $student_num=$_REQUEST["student_num"];
+    $password=$_REQUEST["password"];
+    $role=$_REQUEST["role"];
+    
+    print is_lecturer($student_num, $password, $role, $link);
+    mysqli_close($link);
+} catch (Exception $th) {
+    //throw $th;
+}
+// @codeCoverageIgnoreEnd
+
 
 ?>
 

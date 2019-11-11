@@ -1,6 +1,6 @@
 <?php
 
-class chooseCoursesTest extends PHPUnit_Framework_TestCase
+class ManageCoursesTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PDO
@@ -31,6 +31,7 @@ class chooseCoursesTest extends PHPUnit_Framework_TestCase
            ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
         */
         // for our code we need a mysqli lonk and not a PDO object
+        $this->pdo->query("INSERT INTO `test_db`.`COURSES` (`COURSE_ID`, `COURSE_CODE`, `COURSE_NAME`) VALUES (NULL, 'COMS1011', 'test');");
         $this->myqli_link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],"test_db");
         
     }
@@ -40,11 +41,13 @@ class chooseCoursesTest extends PHPUnit_Framework_TestCase
         //$this->pdo->query("DROP TABLE IF EXISTS USER_INFORMATION");
     }
 
-    public function testChooseCourses()
+    public function testManageCourses()
     {
-        include 'choose_courses.php';
-        $this->assertEquals('false', choose_courses("1","COMS3003",$this->myqli_link));
-        $this->assertEquals('false', choose_courses("1","COMS6969",$this->myqli_link));
+        include 'ManageCourses.php';
+        $this->assertEquals('{"user":0,"course":0,"delete":-1}', manage_courses(3,"test","TEST_COURSE","COMS4242",1,$this->myqli_link));
+        $this->assertEquals('{"user":0,"course":0,"delete":0}', manage_courses(3,"test","TEST_COURSE","COMS4242",2,$this->myqli_link));
+        $this->assertEquals('{"user":0,"course":-1,"delete":-1}', manage_courses(3,"test","test","COMS1011",1,$this->myqli_link));
+        $this->assertEquals('{"user":0,"course":0,"delete":0}', manage_courses(3,"test","test","COMS1011",2,$this->myqli_link));
     }
 }
 ?>

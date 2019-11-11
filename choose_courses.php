@@ -19,6 +19,7 @@ function choose_courses($student_num, $course, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
+// @codeCoverageIgnoreStart
 try {
     $link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
@@ -30,6 +31,6 @@ try {
 } catch (Exception $th) {
     //throw $th;
 }
-
+// @codeCoverageIgnoreEnd
 
 ?>

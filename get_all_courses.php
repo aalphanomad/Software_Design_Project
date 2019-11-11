@@ -18,10 +18,18 @@ function get_all_courses($link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password, $database);
 
-print get_all_courses($link);
-mysqli_close($link);
+// @codeCoverageIgnoreStart
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password, $database);
+
+    print get_all_courses($link);
+    mysqli_close($link);
+} catch (Exception $th) {
+    //throw $th;
+}
+// @codeCoverageIgnoreEnd
+
 
 ?>
 

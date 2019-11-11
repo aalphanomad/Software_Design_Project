@@ -32,8 +32,16 @@ function get_people($course, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password,$database);
-$course=$_REQUEST["course"];
-echo get_people($course, $link);
+// @codeCoverageIgnoreStart
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password,$database);
+    $course=$_REQUEST["course"];
+    echo get_people($course, $link);
+} catch (Exception $th) {
+    //throw $th;
+}
+
+
+// @codeCoverageIgnoreEnd
 ?>
 

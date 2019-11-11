@@ -21,9 +21,17 @@ function make_lecturer($student_num, $link)
 $username = "s1601745";
 $password = "s1601745";
 $database = "d1601745";
-$link = mysqli_connect("127.0.0.1", $username, $password,$database);
-$student_num=$_REQUEST["student_num"];
 
-echo make_lecturer($student_num, $link);
-mysqli_close($link);
+// @codeCoverageIgnoreStart
+try {
+    $link = mysqli_connect("127.0.0.1", $username, $password,$database);
+    $student_num=$_REQUEST["student_num"];
+    
+    echo make_lecturer($student_num, $link);
+    mysqli_close($link);
+} catch (\Throwable $th) {
+    //throw $th;
+}
+// @codeCoverageIgnoreEnd
+
 ?>

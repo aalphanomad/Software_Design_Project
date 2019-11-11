@@ -10,6 +10,7 @@
     <testsuites>
         <testsuite name="Hello World Test Suite">
             <directory>./Tests/</directory>
+
         </testsuite>
     </testsuites>
 
@@ -20,6 +21,9 @@
                 <!-- not sure If i should be excluding this stuff-->
                 <directory>./Tests</directory>
                 <directory>./vendor</directory>
+                <file>./upload_transcript.php</file>
+                <file>./select_booking.php</file>
+                <file>./download_transcript.php</file>
             </exclude>
         </whitelist>
     </filter>

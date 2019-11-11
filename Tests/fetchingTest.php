@@ -10,7 +10,7 @@ class fetchingTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        echo "setting up fetchingTest";
+        //echo "setting up fetchingTest";
         //this stuff creates the table since PDO works nicely I've left it here
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
