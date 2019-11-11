@@ -26,7 +26,7 @@ class isLecturerTest extends PHPUnit_Framework_TestCase
     public function testIsLecturer()
     {
         include 'is_lecturer.php';
-        $this->assertEquals('-1', is_lecturer("1","test","0",$this->myqli_link)); 
+        $this->assertEquals('0', is_lecturer("1","test","0",$this->myqli_link)); // weird
         $this->assertEquals('0', is_lecturer("2","test","1",$this->myqli_link)); 
     }
 }
