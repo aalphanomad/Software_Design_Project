@@ -21,6 +21,7 @@ public class UserItem
 		this.role = role;
 
 	}
+	//Getter and setter methods
 
 	public String getName()
 	{
