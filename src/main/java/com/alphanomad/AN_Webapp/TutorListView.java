@@ -44,7 +44,16 @@ public class TutorListView extends VerticalLayout implements View
 		g.setColumnOrder("name","student_num","role");
 		//g.setHeightByRows(course_list.size());
 		g.setItems(course_list);
+		g.addColumn(unused -> "More Info", new ButtonRenderer<Object>(event ->
+		{
+			// UserInfo test = new UserInfo("1");
+			// System.out.println("LECTVIEW: " + test.student_num);
 
+			
+			//Allows us to view the selected tutors profile
+			new ProfileView((MyUI) getUI(), (((UserItem) event.getItem()).getStudent_num()));
+			getUI().getNavigator().navigateTo("profile");
+		}));
 
 		// switch to multiselect mode
 		g.setSelectionMode(SelectionMode.MULTI);
