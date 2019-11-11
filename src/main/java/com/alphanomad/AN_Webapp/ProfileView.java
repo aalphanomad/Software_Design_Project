@@ -108,7 +108,7 @@ public class ProfileView extends VerticalLayout implements View {
 		}
 
 		Button home_button = new Button("go to main view", btn_event -> {
-			if (((MyUI) (getUI())).get_user_info().get_role().equals("1")) {
+			if (((MyUI) (getUI())).get_user_info().get_role().equals("1") || ((MyUI) (getUI())).get_user_info().get_role().equals("3")) {
 				getUI().getNavigator().navigateTo("lectmain");
 			} else if (((MyUI) (getUI())).get_user_info().get_role().equals("2") || ((MyUI) (getUI())).get_user_info().get_role().equals("4")) {
 				getUI().getNavigator().navigateTo("adminmain");
@@ -368,6 +368,30 @@ public class ProfileView extends VerticalLayout implements View {
 			load.setVisible(false);
 		}
 		
+		//-------------------------------------------------------------------------------------
+		//below, we have restrictions for the profile view for lecturer/admin
+		
+		//when lecturer/admin views own profile, remove transcripts and email button
+		if(test.role.equals("3") && user.role.equals("3")) {
+			email_button.setVisible(false);
+			text.setVisible(false);
+			load.setVisible(false);
+		}
+		
+		//if lecturer/admin views tutor profile remove transcripts and password change functionality
+		if(test.role.equals("3") && user.role.equals("0")) {
+			text.setVisible(false);
+			load.setVisible(false);
+			updatePassword.setVisible(false);
+		}
+		
+		
+		//if admin or super-admin views lecturer profile, remove all transcript buttons and password change functionality
+		if(test.role.equals("2") || test.role.equals("4") && user.role.equals("3")) {
+			text.setVisible(false);
+			load.setVisible(false);
+			updatePassword.setVisible(false);
+		}
 		
 		
 		
