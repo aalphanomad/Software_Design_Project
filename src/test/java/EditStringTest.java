@@ -17,7 +17,7 @@ public class EditStringTest {
 	@Test
 	public void testEditCourse() {
 		String course="Software Design";
-		String test=course.substring(0, 9);
+		String test=course.substring(0, 8);
 		EditString editString=new EditString();
 		assertEquals(test,editString.editCourse(course));
 	}
