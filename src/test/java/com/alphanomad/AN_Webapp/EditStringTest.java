@@ -15,13 +15,6 @@ public class EditStringTest {
 		//assertEquals(test,editString.editTime(time));
 	}
 
-	@Test
-	public void testEditCourse() {
-		String course="SoftwareDesign2";
-		String test=course.substring(0, 8);
-		EditString editString=new EditString();
-		editString.editCourse(course);
-		//assertEquals(test,editString.editCourse(course));
-	}
+
 
 }
