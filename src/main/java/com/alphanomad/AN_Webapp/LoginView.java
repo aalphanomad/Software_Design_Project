@@ -47,6 +47,7 @@ public class LoginView extends VerticalLayout implements View
 		Username.setComponentError(null);
 		Password.setComponentError(null);
 
+		//Perform the actual database query
 		String[] params = { "student_num", "password" };
 		String[] values = { student_num, password };
 		DBHelper dbh = new DBHelper();
