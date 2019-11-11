@@ -20,9 +20,10 @@ public class MyUITest {
 
 	@Test
 	public void test() {
-		
 		ui.init(null);
-		
+		UserInfo user=new UserInfo("1899");
+		ui.set_user_info(user);
+		ui.get_user_info();
 	}
 	
 	@After

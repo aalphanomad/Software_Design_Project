@@ -23,38 +23,38 @@ public class RegisterTest {
 
 	@Test
 	public void test() {
-//		Register register=new Register();
-//		
-//		TextField Name;
-//		Name=new TextField();
-//		Name.setIcon(VaadinIcons.USER);
-//		Name.setCaption("Name"); 
-//		Name.setPlaceholder("Name");
-//	  	  
-//	  	TextField StudentNumber;
-//	  	StudentNumber=new TextField();
-//	  	StudentNumber.setIcon(VaadinIcons.USER);
-//	  	StudentNumber.setCaption("Username"); 
-//	  	StudentNumber.setPlaceholder("Username");
-//	  	
-//	  	PasswordField Password;
-//		 Password=new PasswordField();
-//	  	  Password.setCaption("Password");
-//	  	  Password.setIcon(VaadinIcons.PASSWORD);
-//	  	  Password.setPlaceholder("Password");
-//	  	  
-//	  	PasswordField ConfPassword;
-//	  	ConfPassword=new PasswordField();
-//	  	ConfPassword.setCaption("Password");
-//	  	ConfPassword.setIcon(VaadinIcons.PASSWORD);
-//	  	ConfPassword.setPlaceholder("Password");
-//	  	
-//	  	register.ConfPassword=ConfPassword;
-//	  	register.Name=Name;
-//	  	register.StudentNumber=StudentNumber;
-//	  	register.Password=Password;
+		Register register=new Register();
+		
+		TextField Name;
+		Name=new TextField();
+		Name.setIcon(VaadinIcons.USER);
+		Name.setCaption("Name"); 
+		Name.setPlaceholder("Name");
+	  	  
+	  	TextField StudentNumber;
+	  	StudentNumber=new TextField();
+	  	StudentNumber.setIcon(VaadinIcons.USER);
+	  	StudentNumber.setCaption("Username"); 
+	  	StudentNumber.setPlaceholder("Username");
 	  	
-	  	//register.TheRegister();
+	  	PasswordField Password;
+		 Password=new PasswordField();
+	  	  Password.setCaption("Password");
+	  	  Password.setIcon(VaadinIcons.PASSWORD);
+	  	  Password.setPlaceholder("Password");
+	  	  
+	  	PasswordField ConfPassword;
+	  	ConfPassword=new PasswordField();
+	  	ConfPassword.setCaption("Password");
+	  	ConfPassword.setIcon(VaadinIcons.PASSWORD);
+	  	ConfPassword.setPlaceholder("Password");
+	  	
+	  	register.ConfPassword=ConfPassword;
+	  	register.Name=Name;
+	  	register.StudentNumber=StudentNumber;
+	  	register.Password=Password;
+	  	
+	  	register.TheRegister();
 	}
 	
 	@After
