@@ -50,12 +50,13 @@ public class LoginView extends VerticalLayout implements View
 		String[] params = { "student_num", "password" };
 		String[] values = { student_num, password };
 		DBHelper dbh = new DBHelper();
-		//Below,  we perform validation to ensure that the necessary data is entered 
 		
+		//Raise error if the user name is empty
 		if (Username.isEmpty())
 		{
 			Username.setComponentError(new UserError("Please Enter your Username"));
 		}
+		//Raise eeor if the password is empty
 		if (Password.isEmpty())
 		{
 			Password.setComponentError(new UserError("Please Enter your Password"));
