@@ -61,20 +61,6 @@ public class ProfileView extends VerticalLayout implements View {
 		
 	}
 
-	/*@Override
-	public void enter(ViewChangeEvent event) {
-
-		test = ((MyUI) getUI()).get_user_info();
-		this.removeAllComponents();
-
-		String stud_num = "";
-		MyUI ui = (MyUI) getUI();
-
-		if (ui.get_user_info().get_role().equals("0")) {
-			this.user = ui.get_user_info();
-		}
-		*/
-
 	/**
 	 * simple function to make a view that shows the users email and name
 	 * 
@@ -109,14 +95,6 @@ public class ProfileView extends VerticalLayout implements View {
 			list.add(item.getCourse_code());
 		}
 
-		ComboBoxMultiselect<String> course_combo_box = new ComboBoxMultiselect<>();
-		// Initialize the ComboBoxMultiselect
-		course_combo_box.setPlaceholder("Courses");
-		course_combo_box.setWidth("430px");
-		course_combo_box.setCaption("Please Select The Courses You Would Like to Tutor(Max. 5");
-		course_combo_box.setItems(list);
-		course_combo_box.setVisible(false);
-
 		*/
 
 	public boolean handle_course_change(ArrayList<String> courses, String stud_num) {
@@ -140,43 +118,10 @@ public class ProfileView extends VerticalLayout implements View {
 //		boolean result = false;
 //		DBHelper dbh = new DBHelper();
 //		String value;
-//
-//		if (confirmed.length() > 0) {
-//			String[] params = { "student_num", "course", "confirmed" };
-//			String[] values = { stud_num, course, confirmed };
-//			value = dbh.php_request("update_courses", params, values);
-//		} else {
-//			String[] params = { "student_num", "course" };
-//			String[] values = { stud_num, course };
-//			value = dbh.php_request("update_courses", params, values);
-//		}
-//
-//		result = Boolean.parseBoolean(value);
-//
-//		return result;
+
 		return false;
 	}
 
-	/*ArrayList<CourseItem> get_all_courses()
-	{
-		DBHelper dbh = new DBHelper();
-		String[] parameters = { "table", "target", "filter", "value" };
-		// the to 1's add a WHERE 1=1 clause to the query
-		// it's basically a hacky way of excluding the mandatory WHERE clause in the php
-		String[] values = { "COURSES", "COURSE_CODE,COURSE_NAME", "1", "1" };
 
-		String result = dbh.php_request("generic_select", parameters, values);
-
-		JsonArray course_arr;
-		try
-		{
-			course_arr = dbh.parse_json_string_arr(result);
-		} catch (Exception e)
-		{
-			return new ArrayList<CourseItem>();
-		}
-		ArrayList<CourseItem> course_items = new ArrayList<CourseItem>();
-
-	}*/
 }
 
