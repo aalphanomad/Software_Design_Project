@@ -98,13 +98,8 @@ public class ClaimForm extends VerticalLayout implements View {
 		String[] values = { "COURSES", "COURSE_NAME", "COURSE_CODE", course_code };
 
 		String test = dbh.php_request("generic_select", parameters, values);
-		JsonArray course_name;
 
-		course_name = dbh.parse_json_string_arr(test);
-
-		String ans = "(" + course_name.get(0).getAsString() + ")";
-
-		return ans;
+		return "hi";
 
 	}
 
