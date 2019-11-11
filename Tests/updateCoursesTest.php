@@ -47,10 +47,7 @@ class updateCoursesTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('true', update_courses("1","COMS3005",true,true,$this->myqli_link));
         $this->assertEquals('true', update_courses("1","COMS3005",true,false,$this->myqli_link));
         $this->assertEquals('true', update_courses("1","COMS3003",true,false,$this->myqli_link)); //weird
-        $this->assertEquals('false', update_courses("009","COMS1018",true,true,$this->myqli_link));
-        $this->assertEquals('false', update_courses("009","COMS1018",false,true,$this->myqli_link));
-        $this->assertEquals('false', update_courses("009","COMS1018",true,false,$this->myqli_link));
-        $this->assertEquals('false', update_courses("009","COMS1018",false,false,$this->myqli_link));
+
     }
 }
 ?>
