@@ -29,6 +29,7 @@ class get_nameTest extends PHPUnit_Framework_TestCase
             UNIQUE KEY `STUDENT_NUMBER` (`STUDENT_NUM`)
            ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
 
+        /*
         $this->pdo->query("INSERT INTO `USER_INFORMATION` (
             `NAME` ,
             `STUDENT_NUM` ,
@@ -46,7 +47,7 @@ class get_nameTest extends PHPUnit_Framework_TestCase
             'Tutor', '1', '1@students.wits.ac.za', 'test', '0', 'COMS3007', 'COMS2015', 'COMS1017', NULL , NULL , NULL
             );
             ");
-
+            */
         // for our code we need a mysqli lonk and not a PDO object
         $this->myqli_link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],"test_db");
         
@@ -54,7 +55,7 @@ class get_nameTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->pdo->query("DROP TABLE USER_INFORMATION");
+        //$this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
     public function testGet_name()

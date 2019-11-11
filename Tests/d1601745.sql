@@ -329,7 +329,7 @@ INSERT INTO `USER_INFORMATION` (`NAME`, `STUDENT_NUM`, `EMAIL_ADDRESS`, `USER_PA
 ('Tutor', '1', '1@students.wits.ac.za', 'test', 0, 'COMS3007', 'COMS2015', 'COMS1017', NULL, NULL, NULL),
 ('Elgoni', '10', '10@students.wits.ac.za', 'test', 0, 'COMS1016', 'COMS1017', 'COMS2014', NULL, NULL, NULL),
 ('Juno Reactor', '10000090', '10000090@students.wits.ac.za', 'test', 0, 'COMS3005', 'COMS3003', 'COMS2015', 'COMS2014', 'COMS2013', NULL),
-('Mayur', '101', '101@students.wits.ac.za', 'test', 1, 'COMS3003', 'COMS2014', 'COMS2013', NULL, NULL, NULL),
+('Mayur', '101', '101@students.wits.ac.za', 'test', 1, 'COMS3003', 'COMS2014', 'COMS2013', "COMS3005", "COMS1017", NULL),
 ('Innocent', '11', '11@students.wits.ac.za', 'test', 0, 'COMS1017', 'COMS2014', 'COMS2013', 'COMS1016', 'COMS2015', NULL),
 ('oupa', '12345', '12345@students.wits.ac.za', '12345', 0, 'COMS1015', 'COMS1018', NULL, NULL, NULL, NULL),
 ('Mayur', '1601745', '1601745@students.wits.ac.za', 'test', 3, 'COMS2002', 'COMS2015', NULL, NULL, NULL, NULL),

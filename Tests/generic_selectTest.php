@@ -54,7 +54,7 @@ class generic_selectTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->pdo->query("DROP TABLE USER_INFORMATION");
+        //$this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
     public function testGeneric_select()

@@ -14,7 +14,7 @@ class get_user_infoTest extends PHPUnit_Framework_TestCase
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //Create the USER_INFORMATION table
-        $this->pdo->query(" 	CREATE TABLE `USER_INFORMATION` (
+        $this->pdo->query(" 	CREATE TABLE IF NOT EXISTS`USER_INFORMATION` (
             `NAME` varchar(50) DEFAULT NULL,
             `STUDENT_NUM` varchar(10) NOT NULL,
             `EMAIL_ADDRESS` varchar(50) DEFAULT NULL,
@@ -29,6 +29,7 @@ class get_user_infoTest extends PHPUnit_Framework_TestCase
             UNIQUE KEY `STUDENT_NUMBER` (`STUDENT_NUM`)
            ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
 
+        /*
         $this->pdo->query("INSERT INTO `USER_INFORMATION` (
             `NAME` ,
             `STUDENT_NUM` ,
@@ -46,7 +47,7 @@ class get_user_infoTest extends PHPUnit_Framework_TestCase
             'Tutor', '1', '1@students.wits.ac.za', 'test', '0', 'COMS3007', 'COMS2015', 'COMS1017', NULL , NULL , NULL
             );
             ");
-
+        */
         // for our code we need a mysqli lonk and not a PDO object
         $this->myqli_link = mysqli_connect("127.0.0.1", $GLOBALS['db_username'], $GLOBALS['db_password'],"test_db");
         
@@ -54,7 +55,7 @@ class get_user_infoTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->pdo->query("DROP TABLE USER_INFORMATION");
+       // $this->pdo->query("DROP TABLE USER_INFORMATION");
     }
 
     public function testGet_user_info()
