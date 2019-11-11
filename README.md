@@ -20,7 +20,7 @@ Tutors will be able to register and apply for courses which they would like to t
 # 2) The Lecturer:
 Lecturers will have the capability of viewing the courses that they are responsible for, along with the tutors that are associated to each course. They will have the luxury of emailing each user within a course to relay important information. They will also have the responsibility of verifying the claims of each tutor. 
 
-# 3) The administrator:
+# 3) The Administrator:
 The administrator has the authority to accept and reject applications from tutors to tutor a given course. They will then have the ability to change the roles of users such as promoting a tutor to a lecturer. Admins can also create, edit and remove any courses that are offered by the faculty. They will be able to view all courses that are offered along with all users belonging to each course.
 
 # 4) The super-admin:
