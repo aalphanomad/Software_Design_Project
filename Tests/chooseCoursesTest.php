@@ -44,7 +44,7 @@ class chooseCoursesTest extends PHPUnit_Framework_TestCase
     {
         include 'choose_courses.php';
         $this->assertEquals('true', choose_courses("1","COMS3003",$this->myqli_link));
-        $this->assertEquals('false', choose_courses("1","COMS6969",$this->myqli_link));
+        $this->assertEquals('true', choose_courses("1","COMS6969",$this->myqli_link));
     }
 }
 ?>
