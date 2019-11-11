@@ -14,7 +14,7 @@ The application is carefully curated to transform the endless troubles of record
 
 The application comprises of all the decision-making parties involved in the tutoring process:
 
-# 1) The tutor:
+# 1) The Tutor:
 Tutors will be able to register and apply for courses which they would like to tutor. Once they have been accepted to tutor a specific course, they will have an exclusive account which keeps track of all their tutoring activity.  Tutors may record the details of each tutoring session with the number of hours they tutored. These tuition sessions will appear in their profile history which will automatically give them access to a completed claims form. This claims form may be downloaded as a PDF and handed in for processing and payment. 
 
 # 2) The lecturer:
