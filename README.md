@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/aalphanomad/Software_Design_Project.svg?branch=VBranch)](https://travis-ci.org/aalphanomad/Software_Design_Project)
 
-[![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/VBranch/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
+Primary Codebase: [![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/VBranch/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
 
-[![Coverage Status](https://coveralls.io/repos/github/aalphanomad/Software_Design_Project/badge.svg?branch=php_test)](https://coveralls.io/github/aalphanomad/Software_Design_Project?branch=php_test)
+PHP API: [![Coverage Status](https://coveralls.io/repos/github/aalphanomad/Software_Design_Project/badge.svg?branch=php_test)](https://coveralls.io/github/aalphanomad/Software_Design_Project?branch=php_test)
 
 # About The Project
 
