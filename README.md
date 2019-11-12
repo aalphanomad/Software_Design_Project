@@ -25,7 +25,7 @@ Lecturers will have the capability of viewing the courses that they are responsi
 # 3) The Administrator:
 The administrator has the authority to accept and reject applications from tutors to tutor a given course. They will then have the ability to change the roles of users such as promoting a tutor to a lecturer. Admins can also create, edit and remove any courses that are offered by the faculty. They will be able to view all courses that are offered along with all users belonging to each course.
 
-# 4) The Super-admin:
+# 4) The Superadmin:
 Super-admins have the power to grant admin privileges to lecturers as well as the authority to reset the password of any user. They also possess the ability to do everything that an admin can do.    
 
 Workflow
