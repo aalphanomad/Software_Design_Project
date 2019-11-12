@@ -6,6 +6,7 @@ import com.vaadin.ui.Notification;
 public class Booking
 {
 	//This is the actual function that is called to make the entry in the databse when a tutor generates a new claim
+	//takes in name, studnum, course, activity, date, venue, startTime, endTime
 	public static String name, studnum, course, activity, date, venue, startTime, endTime, ans;
 	JsonObject filtered;
 
