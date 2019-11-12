@@ -29,7 +29,7 @@ The administrator has the authority to accept and reject applications from tutor
 Super-admins have the power to grant admin privileges to lecturers as well as the authority to reset the password of any user. They also possess the ability to do everything that an admin can do.    
 
 Workflow
-========
+=========
 
 To compile the entire project, run "mvn install".
 
