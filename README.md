@@ -1,6 +1,6 @@
 # Software Design Project(AlphaNomad)
 
-[![Build Status](https://travis-ci.org/aalphanomad/Software_Design_Project.svg?branch=VBranch)](https://travis-ci.org/aalphanomad/Software_Design_Project)
+Build : [![Build Status](https://travis-ci.org/aalphanomad/Software_Design_Project.svg?branch=VBranch)](https://travis-ci.org/aalphanomad/Software_Design_Project)
 
 Primary Codebase:   [![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/VBranch/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
 
