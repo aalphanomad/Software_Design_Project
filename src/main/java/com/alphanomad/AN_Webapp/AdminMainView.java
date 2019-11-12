@@ -15,11 +15,11 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-
+//Final sprint: Hamza was here
 public class AdminMainView extends VerticalLayout implements View {
 	public TextField current;
 	public PasswordField new_password, confirm_new, AdminPassword;
-
+	//we create a panel to display the tab to provide user with ability to change password
 	Panel p = new Panel();
 
 	public AdminMainView() {
