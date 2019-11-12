@@ -4,6 +4,8 @@
 
 [![codecov](https://codecov.io/gh/aalphanomad/Software_Design_Project/branch/VBranch/graph/badge.svg)](https://codecov.io/gh/aalphanomad/Software_Design_Project)
 
+[![Coverage Status](https://coveralls.io/repos/github/aalphanomad/Software_Design_Project/badge.svg?branch=php_test)](https://coveralls.io/github/aalphanomad/Software_Design_Project?branch=php_test)
+
 # About The Project
 
 Are you a lecturer or tutor who dreads the paper-based administrative process of handling tutoring claims? Then our system, AlphaNomad, is the solution to your problems which is a web and mobile-based application to make your life easier, while saving a few trees in the process. 
