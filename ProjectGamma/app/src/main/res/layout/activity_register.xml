@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fillViewport="true">
+
+
+    <RelativeLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="359dp"
+
+            android:layout_height="38dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="63dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="364dp"
+            android:layout_height="42dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="274dp"
+            android:layout_marginEnd="34dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textWebPassword" />
+
+        <EditText
+            android:id="@+id/cpassword"
+            android:layout_width="359dp"
+            android:layout_height="38dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="362dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="Confirm Password"
+            android:inputType="textPersonName|textWebPassword" />
+
+        <Button
+            android:id="@+id/test"
+            android:layout_width="171dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="117dp"
+            android:layout_marginTop="753dp"
+            android:layout_marginEnd="123dp"
+            android:layout_marginBottom="48dp"
+            android:backgroundTint="#b18d5b"
+            android:onClick="onClick"
+            android:text="Register"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/name_label"
+            android:layout_width="95dp"
+            android:layout_height="34dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="295dp"
+            android:layout_marginBottom="8dp"
+            android:text="Name" />
+
+        <TextView
+            android:id="@+id/email_label"
+            android:layout_width="132dp"
+            android:layout_height="33dp"
+            android:layout_alignTop="@+id/name_label"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="158dp"
+            android:layout_marginEnd="262dp"
+            android:layout_marginBottom="8dp"
+            android:text="Email" />
+
+        <TextView
+            android:id="@+id/SN_label"
+            android:layout_width="170dp"
+            android:layout_height="29dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="104dp"
+            android:layout_marginEnd="226dp"
+            android:layout_marginBottom="8dp"
+            android:text="Student number" />
+
+        <TextView
+            android:id="@+id/password_label"
+            android:layout_width="129dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="245dp"
+            android:layout_marginEnd="265dp"
+            android:layout_marginBottom="8dp"
+            android:text="Password" />
+
+        <TextView
+            android:id="@+id/cpassword_label"
+            android:layout_width="169dp"
+            android:layout_height="33dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="322dp"
+            android:layout_marginEnd="226dp"
+            android:layout_marginBottom="8dp"
+            android:text="Confirm Password" />
+
+
+        <EditText
+            android:id="@+id/SN_TB"
+            android:layout_width="366dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="133dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="Student Number"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/AG_email"
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="212dp"
+            android:layout_marginEnd="28dp" />
+
+
+        <Button
+            android:id="@+id/showAlertID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="516dp"
+            android:layout_marginEnd="137dp"
+            android:backgroundTint="#003b5c"
+            android:elevation="20dp"
+            android:text="Select Courses"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/Course_err"
+            android:layout_width="387dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="476dp"
+            android:layout_marginEnd="8dp"
+            android:text="Please select the courses that you would like to tutor.          (Max 5)" />
+
+        <TextView
+            android:id="@+id/Course1"
+            android:layout_width="391dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="589dp"
+            android:layout_marginEnd="13dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Course2"
+            android:layout_width="391dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="611dp"
+            android:layout_marginEnd="13dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Course3"
+            android:layout_width="391dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="629dp"
+            android:layout_marginEnd="13dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Course4"
+            android:layout_width="391dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="647dp"
+            android:layout_marginEnd="12dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Course5"
+            android:layout_width="391dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="667dp"
+            android:layout_marginEnd="12dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Course_mes"
+            android:layout_width="255dp"
+            android:layout_height="42dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="567dp"
+            android:layout_marginEnd="139dp"
+            android:text="Your selected courses are:" />
+
+        <TextView
+            android:id="@+id/Course_Error"
+            android:layout_width="391dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="588dp"
+            android:layout_marginEnd="14dp"
+            android:textColor="#ff0000" />
+
+
+        <RadioGroup
+            android:id="@+id/RadioGroup"
+            android:layout_width="362dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="440dp"
+            android:layout_marginEnd="33dp"
+            android:onClick="check_button"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/TutorBut"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:onClick="check_button"
+                android:text="Tutor" />
+
+            <RadioButton
+                android:id="@+id/LecturerBut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="check_button"
+                android:text="Lecturer" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="286dp"
+            android:layout_height="19dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="410dp"
+            android:layout_marginEnd="109dp"
+            android:text="Are you registering as a:" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="378dp"
+            android:layout_height="53dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="697dp"
+            android:layout_marginEnd="14dp"
+            android:text="Please Upload your Transcript using the AlphaNomad Webapp."
+            android:textColor="@android:color/black" />
+
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

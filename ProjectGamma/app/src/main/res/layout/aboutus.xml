@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="true"
+    android:fillViewport="true">
+
+
+    <RelativeLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="359dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="32dp"
+            android:text="This Application Was Proudly Created as Part of Our Software Design Project By:"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="146dp"
+            android:layout_height="165dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="105dp"
+            android:layout_marginEnd="122dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/me" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="284dp"
+            android:layout_marginEnd="73dp"
+            android:text="Mayur Ranchod"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="138dp"
+            android:layout_height="548dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="129dp"
+            android:layout_marginEnd="241dp"
+            app:srcCompat="@drawable/hamza" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="480dp"
+            android:layout_marginEnd="199dp"
+            android:text="Hamza Iqbal"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="142dp"
+            android:layout_height="241dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="280dp"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/elgoni" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="481dp"
+            android:layout_marginEnd="7dp"
+            android:text="Omer Elgoni"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="150dp"
+            android:layout_height="143dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="538dp"
+            android:layout_marginEnd="235dp"
+            app:srcCompat="@drawable/innocent" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="690dp"
+            android:layout_marginEnd="189dp"
+            android:text="Innocent Marubini"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="183dp"
+            android:layout_height="156dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="527dp"
+            android:layout_marginEnd="0dp"
+            app:srcCompat="@drawable/nana" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="689dp"
+            android:layout_marginEnd="27dp"
+            android:text="Abdullah Nana"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="752dp"
+            android:layout_marginEnd="155dp"
+            android:backgroundTint="#B18D5B"
+            android:text="BACK"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
